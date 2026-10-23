@@ -1,0 +1,606 @@
+window.ML_ARTICLES = window.ML_ARTICLES || [];
+window.ML_ARTICLES.push(
+{
+  id: "tenis-01",
+  area: "tenis",
+  cat: "escolher",
+  title: "Como escolher seu primeiro tênis de corrida",
+  dek: "Os critérios que realmente importam na primeira compra: conforto, encaixe, amortecimento adequado e um modelo versátil para treinar sem complicação.",
+  level: "Iniciante",
+  minutes: 3,
+  tags: ["iniciante", "conforto", "encaixe"],
+  body: [
+    { t: "p", x: "Quem começa a correr costuma entrar na loja e encontrar uma parede de modelos com nomes, siglas e promessas. A boa notícia é que o primeiro tênis não precisa de tecnologia de ponta. Ele precisa caber bem no seu pé, ser confortável desde o primeiro passo e aguentar a rotina de treinos leves e regulares." },
+    { t: "p", x: "O erro mais comum do iniciante é comprar pelo visual ou pelo modelo que um atleta de elite usa em prova. Tênis de competição são leves e rápidos, mas foram feitos para outra demanda. No começo, você vai correr devagar, em distâncias curtas, com o corpo ainda se adaptando ao impacto. É para essa fase que o tênis deve servir." },
+    { t: "h", x: "Comece pelo conforto" },
+    { t: "p", x: "A orientação mais aceita hoje entre biomecânicos e treinadores é simples: escolha o tênis que parece mais confortável quando você corre com ele. Pense na sensação de que o calçado acompanha o movimento sem pontos de pressão, sem o calcanhar escapando e sem o arco do pé incomodado. Se possível, dê alguns trotes dentro da loja ou na calçada antes de decidir." },
+    { t: "p", x: "Compare ao menos três modelos diferentes na mesma sessão. Calçar um par de cada vez, no mesmo pé, ajuda a perceber diferenças que passam despercebidas quando você testa só um." },
+    { t: "h", x: "O que observar no tênis" },
+    { t: "ul", items: [
+      "Encaixe no calcanhar: ele deve ficar firme, sem deslizar para cima a cada passada.",
+      "Espaço na ponta: cerca de um dedo de folga entre o dedão e o fim do tênis.",
+      "Largura: os dedos precisam se espalhar sem ficarem espremidos nas laterais.",
+      "Amortecimento: um nível moderado, que proteja sem deixar o tênis instável.",
+      "Flexibilidade: o tênis deve dobrar na região dos dedos, onde o pé dobra.",
+      "Peso: sem obsessão, mas um par muito pesado cansa mais em treinos longos."
+    ] },
+    { t: "h", x: "Um tênis versátil de treino diário" },
+    { t: "p", x: "Para o primeiro par, a categoria mais indicada costuma ser a de treino diário, também chamada de daily trainer. São modelos pensados para rodar muitos quilômetros em ritmo confortável. Eles têm amortecimento suficiente para proteger nas primeiras semanas, borracha resistente no solado e um cabedal, que é a parte de cima do tênis, estruturado o bastante para segurar o pé." },
+    { t: "p", x: "Esses modelos também perdoam mais. Se você ainda não tem técnica refinada e às vezes aterrissa com o calcanhar bem à frente do corpo, um daily trainer absorve melhor essas variações do que um tênis de prova." },
+    { t: "spec", caption: "Faixas típicas de um tênis de treino diário", rows: [
+      ["Peso (masculino, tamanho médio)", "250–310 g"],
+      ["Drop", "6–10 mm"],
+      ["Altura no calcanhar (stack)", "30–38 mm"],
+      ["Placa", "Geralmente sem placa rígida"]
+    ] },
+    { t: "h", x: "O que pode esperar" },
+    { t: "p", x: "Recursos como placa de carbono, espumas de competição e solados muito finos não ajudam quem está começando. Pelo contrário: costumam deixar o tênis menos estável e menos durável. Também não vale gastar energia tentando descobrir seu tipo de pisada em casa com uma pegada molhada no papel. Esse método diz pouco sobre como você corre e quase nada sobre qual tênis vai funcionar." },
+    { t: "p", x: "Também não é preciso ter vários pares de saída. Um bom tênis de treino resolve os primeiros meses. Quando a rotina ficar mais consistente e surgirem treinos de ritmo ou a primeira prova, aí sim faz sentido pensar em um segundo modelo." },
+    { t: "h", x: "Na hora da compra" },
+    { t: "p", x: "Vá à loja no fim do dia, quando o pé está um pouco mais inchado, e leve a meia que você usa para correr. Se você já tem um tênis velho com o qual corre, leve junto: o desgaste do solado e do cabedal dá pistas úteis ao vendedor. E se sentir dor recorrente ao correr, procure um profissional de saúde antes de culpar ou trocar o calçado." },
+    { t: "tip", x: "Se ficar em dúvida entre dois modelos, escolha aquele que você esquece que está calçando depois de alguns minutos de trote." },
+    { t: "quote", x: "O melhor primeiro tênis é aquele que faz você querer sair para correr de novo amanhã." }
+  ]
+},
+{
+  id: "tenis-02",
+  area: "tenis",
+  cat: "escolher",
+  title: "Amortecimento ou estabilidade: o que a pisada diz e o que não diz",
+  dek: "Por que a velha divisão entre pisada pronada, neutra e supinada perdeu força e como conforto e histórico pessoal guiam melhor a escolha.",
+  level: "Todos",
+  minutes: 3,
+  tags: ["pisada", "estabilidade", "amortecimento"],
+  body: [
+    { t: "p", x: "Durante décadas, comprar um tênis de corrida começava com uma pergunta: qual é a sua pisada? A resposta definia a prateleira. Quem pronava ia para os modelos de estabilidade ou controle de movimento. Quem tinha pisada neutra ou supinada ia para os de amortecimento. A lógica parecia sólida, mas a ciência da última década passou a questionar boa parte dela." },
+    { t: "p", x: "Tênis de estabilidade continuam tendo seu lugar. O ponto é que o tipo de pisada, sozinho, virou um critério fraco para escolher o calçado. Entender o porquê ajuda a fazer escolhas melhores." },
+    { t: "h", x: "O que é pronação e supinação" },
+    { t: "p", x: "Pronação é o movimento natural do pé rolando para dentro depois que toca o chão. Ele ajuda a distribuir o impacto e é parte normal da passada. Pronação excessiva, ou hiperpronação, descreve um rolamento maior que a média. Supinação, também chamada de subpronação, é o oposto: o pé rola pouco e o apoio fica mais na borda externa." },
+    { t: "p", x: "O modelo antigo partia da ideia de que desvios desses padrões causavam lesões e que o tênis deveria corrigi-los. Os tênis de estabilidade ganharam estruturas mais firmes na parte interna, como espumas de densidade dupla chamadas de postes mediais, para frear o rolamento." },
+    { t: "h", x: "O que mudou na visão atual" },
+    { t: "p", x: "Pesquisas acompanhando corredores ao longo do tempo não encontraram uma ligação forte e consistente entre o tipo de pisada e o risco de lesão. Pesquisadores em biomecânica, como o grupo de Benno Nigg, no Canadá, propuseram outro critério: o filtro do conforto. A ideia é que o corpo tende a escolher bem quando você compara modelos e fica com o que parece mais confortável correndo." },
+    { t: "p", x: "Outro conceito dessa linha é o do caminho de movimento preferido. Cada pessoa tem um padrão próprio de movimento das articulações, e o bom tênis seria aquele que interfere pouco nesse padrão, em vez de tentar forçar uma correção." },
+    { t: "h", x: "Quando a estabilidade ainda faz sentido" },
+    { t: "p", x: "Os próprios tênis de estabilidade mudaram. Em vez de postes rígidos, muitos modelos atuais usam base mais larga, bordas elevadas na lateral do calcanhar e geometria que guia o pé com sutileza. Para algumas pessoas, essa sensação de apoio é justamente o que torna o tênis confortável." },
+    { t: "ul", items: [
+      "Você sente o tornozelo ou o arco cansarem muito no fim de treinos longos.",
+      "Já correu bem com modelos de estabilidade e não teve problemas.",
+      "Um profissional de saúde que acompanha você recomendou mais suporte.",
+      "Tênis muito macios e altos parecem instáveis, como se você afundasse para dentro."
+    ] },
+    { t: "h", x: "Como decidir na prática" },
+    { t: "p", x: "Considere três fatores juntos. O primeiro é o conforto em movimento, testado com trotes. O segundo é o seu histórico: com quais tênis você correu bem e com quais teve desconforto. O terceiro é o tipo de treino que você faz e o seu volume semanal." },
+    { t: "spec", caption: "Guia rápido de categorias", rows: [
+      ["Neutro com amortecimento", "Base livre, foco em proteção e maciez"],
+      ["Estabilidade leve", "Base larga e laterais guiando o pé"],
+      ["Controle de movimento", "Estrutura mais firme, hoje bem menos comum"]
+    ] },
+    { t: "p", x: "Se você não tem histórico nenhum, comece por um neutro bem estruturado e preste atenção às sensações nas primeiras semanas. Dor persistente, inchaço ou dor que piora com o treino pedem avaliação de um fisioterapeuta ou médico do esporte. Esse profissional pode avaliar fatores que um teste de pisada em loja não enxerga." },
+    { t: "tip", x: "Desconfie de qualquer avaliação que dê o veredito sobre seu tênis apenas por uma foto do pé parado ou uma pegada no papel." },
+    { t: "quote", x: "A pisada conta uma parte da história. O conforto e o histórico contam o resto." }
+  ]
+},
+{
+  id: "tenis-03",
+  area: "tenis",
+  cat: "escolher",
+  title: "Drop e stack: entenda a altura do seu tênis",
+  dek: "O que significam drop e stack, como cada medida muda a sensação da corrida e como escolher sem trocar de extremo de uma vez.",
+  level: "Intermediário",
+  minutes: 3,
+  tags: ["drop", "stack", "altura"],
+  body: [
+    { t: "p", x: "Dois números aparecem em quase toda ficha técnica de tênis de corrida: o drop e o stack. Eles descrevem a geometria da entressola, a camada de espuma entre o pé e a borracha do solado. Entender essas medidas ajuda a prever como o tênis vai se comportar antes mesmo de calçá-lo." },
+    { t: "p", x: "Nenhum dos dois é bom ou ruim em si. O que importa é a combinação com o seu corpo, o seu histórico e o tipo de treino." },
+    { t: "h", x: "O que é stack" },
+    { t: "p", x: "Stack, ou stack height, é a altura total de material sob o pé. Costuma ser informada em dois pontos: no calcanhar e no antepé, a região sob a base dos dedos. Um stack alto significa mais espuma e, em geral, mais proteção contra o impacto. Um stack baixo deixa o pé mais perto do chão e aumenta a sensação de contato com o terreno." },
+    { t: "p", x: "Mais altura também tem custo. Quanto mais alto o tênis, maior a alavanca sobre o tornozelo e maior a chance de instabilidade em curvas ou terreno irregular. Por isso, modelos muito altos costumam compensar com base mais larga." },
+    { t: "h", x: "O que é drop" },
+    { t: "p", x: "Drop é a diferença entre a altura do calcanhar e a altura do antepé. Um tênis com 36 mm no calcanhar e 28 mm no antepé tem drop de 8 mm. Drop zero significa que calcanhar e antepé estão na mesma altura, como um pé descalço, só que com espuma por baixo." },
+    { t: "spec", caption: "Faixas comuns no mercado", rows: [
+      ["Drop baixo", "0–4 mm"],
+      ["Drop médio", "5–8 mm"],
+      ["Drop alto", "9–12 mm"],
+      ["Stack baixo (calcanhar)", "20–26 mm"],
+      ["Stack médio (calcanhar)", "27–34 mm"],
+      ["Stack alto (calcanhar)", "35–40 mm ou mais"]
+    ] },
+    { t: "h", x: "Como o drop muda a corrida" },
+    { t: "p", x: "Drops mais altos tendem a facilitar a aterrissagem com o calcanhar e aliviam parte da carga sobre a panturrilha e o tendão de Aquiles. Drops mais baixos favorecem um apoio mais no meio do pé e transferem mais trabalho para panturrilha, Aquiles e musculatura do pé." },
+    { t: "p", x: "Isso não significa que um drop baixo vá mudar sua técnica sozinho. Muita gente continua aterrissando com o calcanhar mesmo em tênis de drop zero. A mudança é mais na distribuição de carga do que no estilo de corrida." },
+    { t: "h", x: "Trocar de drop com cuidado" },
+    { t: "p", x: "O maior risco está na transição brusca. Quem passou anos em tênis de 10 a 12 mm e muda direto para um modelo de 0 a 4 mm pode sobrecarregar panturrilha e tendão de Aquiles. A transição gradual reduz esse risco." },
+    { t: "ul", items: [
+      "Comece usando o novo drop em treinos curtos e leves.",
+      "Alterne com o tênis antigo durante algumas semanas.",
+      "Aumente o volume aos poucos, observando panturrilha e calcanhar.",
+      "Dor que persiste no dia seguinte é sinal para recuar e, se continuar, buscar um profissional."
+    ] },
+    { t: "h", x: "Qual escolher" },
+    { t: "p", x: "Se você corre bem no seu tênis atual, mantenha um drop próximo ao que já usa. Para iniciantes, a faixa de 6 a 10 mm costuma ser um ponto de partida seguro. Stack médio a alto funciona bem para treinos longos e rodagem. Stack mais baixo combina com quem gosta de sentir o chão ou faz treinos técnicos, desde que o corpo esteja adaptado." },
+    { t: "tip", x: "Confira o drop do seu tênis atual antes de comprar o próximo. Mudar mais de 4 mm de uma vez pede um período de adaptação." },
+    { t: "quote", x: "Altura e inclinação mudam onde a carga cai. O corpo precisa de tempo para acompanhar." }
+  ]
+},
+{
+  id: "tenis-04",
+  area: "tenis",
+  cat: "escolher",
+  title: "Tamanho e forma: como acertar o encaixe do tênis de corrida",
+  dek: "Medir o pé no horário certo, deixar folga na ponta, entender largura e forma e não se perder entre numeração brasileira, europeia e americana.",
+  level: "Todos",
+  minutes: 3,
+  tags: ["tamanho", "forma", "numeração"],
+  body: [
+    { t: "p", x: "Um tênis excelente no número errado vira um tênis ruim. Unha roxa, bolha no calcanhar e dormência nos dedos costumam ter a mesma origem: encaixe inadequado. E o encaixe depende de mais do que o número escrito na etiqueta." },
+    { t: "p", x: "O pé muda ao longo do dia e durante a corrida. Ele incha com o calor e com o esforço, e se alonga um pouco a cada apoio. O tênis precisa ter espaço para isso sem ficar frouxo." },
+    { t: "h", x: "Meça no fim do dia" },
+    { t: "p", x: "Experimente e meça o pé à tarde ou à noite, quando ele já está mais inchado. Fique em pé, com o peso distribuído, e use a meia que você usa para correr. Meça os dois pés. É comum um ser um pouco maior que o outro, e a escolha deve seguir o maior." },
+    { t: "p", x: "Para medir em casa, apoie o pé sobre uma folha de papel encostada na parede, marque a ponta do dedo mais longo e meça a distância em centímetros. Essa medida em centímetros é a referência mais confiável entre marcas." },
+    { t: "h", x: "Um dedo de folga" },
+    { t: "p", x: "Com o tênis calçado e amarrado, deve sobrar cerca de um dedo de largura entre o dedo mais longo e a ponta do tênis. Em descidas e no fim de provas longas, o pé avança, e essa folga evita que os dedos batam na frente. Ao mesmo tempo, o calcanhar precisa ficar firme, sem subir a cada passo." },
+    { t: "spec", caption: "Referências de encaixe", rows: [
+      ["Folga na ponta", "cerca de 1–1,5 cm"],
+      ["Calcanhar", "firme, sem deslizar"],
+      ["Antepé", "dedos se movem sem aperto lateral"],
+      ["Peito do pé", "pressão uniforme do cadarço"]
+    ] },
+    { t: "h", x: "Largura e forma" },
+    { t: "p", x: "Forma é o molde sobre o qual o tênis é construído, e cada marca tem a sua. Algumas são mais estreitas no antepé, outras mais largas e retas. Várias marcas oferecem versões em largura padrão e larga do mesmo modelo, identificadas por letras como D e 2E no masculino ou B e D no feminino." },
+    { t: "p", x: "Se os dedos ficam espremidos ou a lateral do pé encosta forte no cabedal, aumentar o número raramente resolve. Você só ganha comprimento sobrando na ponta. O caminho é procurar uma forma mais larga ou um modelo com caixa de dedos mais ampla." },
+    { t: "h", x: "Numeração BR, EU e US" },
+    { t: "p", x: "A numeração brasileira costuma ficar um ou dois números abaixo da europeia, e a americana usa uma escala própria, diferente para masculino e feminino. No padrão americano, o feminino costuma ser cerca de um número e meio acima do masculino para o mesmo pé. Como cada marca arredonda de um jeito, o mesmo pé pode calçar números diferentes em marcas diferentes." },
+    { t: "ul", items: [
+      "Use a medida do pé em centímetros e confira a tabela da marca.",
+      "Não presuma que seu número em uma marca vale para outra.",
+      "Mesmo dentro de uma marca, versões novas de um modelo podem mudar o encaixe.",
+      "Tênis de corrida costumam pedir meio número a um número acima do calçado casual."
+    ] },
+    { t: "h", x: "Ajustes finos com o cadarço" },
+    { t: "p", x: "Antes de trocar de número, explore o cadarço. Usar o último ilhós para um laço de travamento no tornozelo ajuda a segurar o calcanhar. Pular um ilhós alivia pressão no peito do pé. Se a dormência persistir mesmo com ajustes, ou se surgir dor localizada, vale procurar um profissional para avaliar." },
+    { t: "tip", x: "Leve à loja a medida dos dois pés em centímetros, anotada no celular. Ela vale mais do que lembrar do seu número." },
+    { t: "quote", x: "O número é só o ponto de partida. O encaixe é o que você sente no quilômetro dez." }
+  ]
+},
+{
+  id: "tenis-05",
+  area: "tenis",
+  cat: "escolher",
+  title: "Um tênis para cada objetivo: rodagem, ritmo, prova e trilha",
+  dek: "Como diferenciar tênis de treino diário, de ritmo, de competição e de trilha e escolher o modelo pelo tipo de corrida que você faz.",
+  level: "Intermediário",
+  minutes: 3,
+  tags: ["objetivo", "treino", "prova", "trilha"],
+  body: [
+    { t: "p", x: "Quando a corrida vira rotina, um único tênis começa a parecer limitado. Ele é confortável demais para o treino de tiros ou pesado demais para a prova de 10 km. Isso acontece porque os fabricantes desenham modelos para usos diferentes, e cada uso pede um equilíbrio diferente entre proteção, leveza, resposta e durabilidade." },
+    { t: "p", x: "Escolher pelo objetivo começa por olhar a sua semana: quantos treinos leves, quantos rápidos, se há trechos de terra e se existe uma prova no horizonte." },
+    { t: "h", x: "Treino diário e rodagem" },
+    { t: "p", x: "Rodagem é o treino em ritmo confortável, que forma a maior parte do volume de quase todo corredor. O tênis de treino diário prioriza conforto, proteção e durabilidade. É mais pesado que os outros, com borracha generosa e espuma que aguenta muitos quilômetros. Para quem tem só um par, é a escolha mais segura." },
+    { t: "p", x: "Dentro dessa categoria há os tênis de máximo amortecimento, muito altos e macios, pensados para longões e dias de recuperação, quando as pernas já estão cansadas." },
+    { t: "h", x: "Ritmo e treinos de velocidade" },
+    { t: "p", x: "Treinos de ritmo, intervalados e fartleks, que alternam velocidades, pedem um tênis mais leve e responsivo. Responsivo é o tênis que devolve parte da energia e dá a sensação de impulso. Esses modelos usam espumas mais leves, às vezes uma placa de nylon ou fibra de vidro, e geometria com a ponta curvada para facilitar a transição." },
+    { t: "h", x: "Prova" },
+    { t: "p", x: "Os tênis de competição atuais combinam espuma de alto retorno, placa rígida, frequentemente de carbono, e muita altura dentro do limite das regras. São os mais leves e rápidos, mas também os menos duráveis e, em geral, os menos estáveis. Eles funcionam melhor para quem já tem base de treino e corre em ritmo mais forte. Usá-los em todos os treinos encurta a vida do par e não traz vantagem nas corridas lentas." },
+    { t: "h", x: "Trilha" },
+    { t: "p", x: "Na terra, na lama e na pedra, o problema muda. O tênis de trilha tem solado com cravos, chamados de lugs, para tração, cabedal mais resistente a rasgos e, muitas vezes, uma proteção no antepé contra pedras. Usar tênis de asfalto em trilha técnica aumenta o risco de escorregões. O contrário também vale: cravos altos no asfalto ficam desconfortáveis e se desgastam rápido." },
+    { t: "spec", caption: "Comparativo geral por categoria", rows: [
+      ["Treino diário: peso", "250–310 g"],
+      ["Ritmo: peso", "210–260 g"],
+      ["Prova: peso", "180–230 g"],
+      ["Trilha: peso", "260–320 g"],
+      ["Trilha: altura dos cravos", "3–6 mm"]
+    ] },
+    { t: "h", x: "Como montar seu arsenal aos poucos" },
+    { t: "ul", items: [
+      "Um par: treino diário versátil, que aguenta também um ritmo moderado.",
+      "Dois pares: treino diário mais um leve, para ritmo e provas curtas.",
+      "Três pares: rodagem, ritmo e um modelo de prova para dias-alvo.",
+      "Se corre em terra com frequência, o tênis de trilha entra cedo na lista."
+    ] },
+    { t: "p", x: "Antes de comprar o modelo de prova, use-o em pelo menos alguns treinos de ritmo. Tênis de competição mudam a sensação de passada e exigem mais da panturrilha e do pé. Correr uma maratona com um par nunca testado é uma aposta desnecessária." },
+    { t: "p", x: "Também vale pensar no terreno do dia a dia. Quem corre em parques com trechos de terra batida pode usar um tênis de asfalto com borracha mais aderente sem problema. Quando a trilha fica técnica, com raízes, pedras soltas e lama, o modelo específico deixa de ser luxo e passa a ser questão de segurança. O mesmo raciocínio vale para a esteira: ali, um tênis leve e com menos borracha funciona bem, porque o piso é regular e desgasta pouco o solado." },
+    { t: "tip", x: "Liste os treinos de uma semana típica. O tipo de treino que aparece mais vezes é o que define seu primeiro ou próximo tênis." },
+    { t: "quote", x: "Cada tênis tem um trabalho. Escolher bem é dar o trabalho certo a cada par." }
+  ]
+},
+{
+  id: "tenis-06",
+  area: "tenis",
+  cat: "importancia",
+  title: "Tênis errado e lesões: o que o calçado influencia",
+  dek: "O papel real do tênis nas dores da corrida, os sinais de que ele pode estar contribuindo e quando procurar ajuda profissional.",
+  level: "Todos",
+  minutes: 3,
+  tags: ["lesão", "prevenção", "saúde"],
+  body: [
+    { t: "p", x: "Quando uma dor aparece, o tênis costuma ser o primeiro suspeito. Às vezes com razão. Mas lesões na corrida quase sempre têm várias causas somadas: aumento rápido de volume, pouca recuperação, força muscular insuficiente, histórico de lesões anteriores e, entre outros fatores, o calçado." },
+    { t: "p", x: "Entender esse papel ajuda a não cair em dois erros: ignorar o tênis completamente ou acreditar que um modelo novo vai resolver qualquer dor." },
+    { t: "h", x: "O que o tênis pode influenciar" },
+    { t: "p", x: "O calçado muda como a carga se distribui pelo corpo. Um drop muito diferente do habitual desloca trabalho entre joelho, panturrilha e tendão de Aquiles. Um tênis apertado concentra pressão em pontos do pé. Um modelo muito macio e alto pode exigir mais dos estabilizadores do tornozelo. E uma espuma desgastada protege menos do que quando era nova." },
+    { t: "ul", items: [
+      "Unha escura ou dor nos dedos: tênis curto ou sem folga na ponta.",
+      "Bolhas no calcanhar: calcanhar escapando ou costura incômoda.",
+      "Dormência no peito do pé: cadarço apertado demais ou forma estreita.",
+      "Cansaço incomum na panturrilha: transição brusca para drop mais baixo.",
+      "Desconforto novo em um par antigo: espuma possivelmente no fim da vida útil."
+    ] },
+    { t: "h", x: "O que o tênis não resolve" },
+    { t: "p", x: "Nenhum tênis compensa um aumento de volume rápido demais. Se você dobrou a quilometragem semanal ou incluiu vários treinos fortes de uma vez, a mudança de calçado dificilmente vai segurar a sobrecarga. O mesmo vale para sono ruim, pouca alimentação e falta de fortalecimento." },
+    { t: "p", x: "Também não existe tênis capaz de corrigir sozinho alterações de alinhamento ou de técnica. Calçados com promessas de correção total merecem desconfiança. A visão atual é que o bom tênis interfere pouco no seu padrão de movimento e oferece conforto para que você treine com consistência." },
+    { t: "p", x: "Palmilhas e órteses entram na mesma lógica. Elas podem ajudar em casos específicos, mas a indicação deve vir de um profissional que avaliou você pessoalmente. Comprar palmilhas prontas para tentar resolver uma dor sem diagnóstico pode mascarar o problema e atrasar o tratamento adequado. Se você já usa palmilha prescrita, leve-a ao experimentar tênis novos, porque ela muda o volume interno e o encaixe." },
+    { t: "h", x: "Mudanças que pedem atenção" },
+    { t: "p", x: "Boa parte dos problemas ligados ao calçado vem de mudanças grandes e repentinas. Pular de um tênis tradicional para um minimalista, trocar o drop de forma drástica, estrear um supertênis em treino longo ou mudar de marca às vésperas da prova são exemplos de transições que pedem cautela." },
+    { t: "spec", caption: "Mudanças que merecem adaptação gradual", rows: [
+      ["Queda de drop", "mais de 4 mm"],
+      ["Variação de stack", "mais de 8–10 mm"],
+      ["Placa rígida", "primeiro uso em treino"],
+      ["Tênis minimalista", "qualquer transição"]
+    ] },
+    { t: "h", x: "Quando procurar um profissional" },
+    { t: "p", x: "Dor que muda a sua forma de correr, dor que piora ao longo do treino, inchaço, dor que acorda você à noite ou que persiste por vários dias exigem avaliação. Fisioterapeutas e médicos do esporte podem identificar a origem do problema, que muitas vezes não está no pé. Não tente fazer o próprio diagnóstico com base em vídeos ou na troca sucessiva de tênis." },
+    { t: "p", x: "Leve seus tênis à consulta. O desgaste do solado e a deformação do cabedal oferecem informações úteis ao profissional, e ele pode orientar se vale manter, ajustar ou trocar o modelo." },
+    { t: "tip", x: "Se uma dor nova surgiu logo depois de trocar de tênis, volte ao par anterior por alguns dias e observe. Se não melhorar, procure avaliação." },
+    { t: "quote", x: "O tênis certo não garante uma corrida sem dor, mas o errado pode tornar mais difícil chegar lá." }
+  ]
+},
+{
+  id: "tenis-07",
+  area: "tenis",
+  cat: "importancia",
+  title: "Vida útil do tênis de corrida: quando trocar",
+  dek: "A faixa de quilometragem usual, os sinais de desgaste que importam e os hábitos que ajudam o tênis a durar mais sem perder proteção.",
+  level: "Todos",
+  minutes: 3,
+  tags: ["vida útil", "desgaste", "troca"],
+  body: [
+    { t: "p", x: "Tênis de corrida não duram para sempre, mesmo quando parecem novos por fora. O cabedal pode estar intacto e a borracha quase sem marcas enquanto a espuma, que faz o trabalho principal de absorver impacto, já perdeu parte das suas propriedades." },
+    { t: "p", x: "Saber quando trocar evita dois desperdícios: aposentar cedo um par que ainda tinha muito a oferecer ou insistir em um tênis que já não protege." },
+    { t: "h", x: "A faixa de quilometragem" },
+    { t: "p", x: "A referência mais citada no mercado é algo entre 500 e 800 km por par. É uma faixa, não uma regra. Corredores mais leves, com passada suave e treinos em pista ou asfalto liso, tendem a ir mais longe. Corredores mais pesados, com muito volume em terreno áspero ou com padrão de desgaste concentrado, podem sentir a perda antes." },
+    { t: "spec", caption: "Durabilidade aproximada por tipo", rows: [
+      ["Treino diário", "500–800 km"],
+      ["Ritmo leve", "400–600 km"],
+      ["Prova com placa e espuma de competição", "menor, com variação entre modelos"],
+      ["Trilha", "depende muito do terreno e dos cravos"]
+    ] },
+    { t: "p", x: "Tênis de prova são construídos para serem leves, e isso costuma significar menos borracha e espumas mais delicadas. Por isso, muitos corredores os reservam para provas e alguns treinos-chave." },
+    { t: "p", x: "O tempo também conta. Espumas e colas envelhecem mesmo sem uso intenso, sobretudo em lugares quentes e úmidos. Um par guardado por anos na caixa pode não ter a mesma resposta de um recém-fabricado. Isso vale para quem compra modelos antigos em liquidação para estocar." },
+    { t: "h", x: "Sinais de que está na hora" },
+    { t: "ul", items: [
+      "A borracha do solado gastou até aparecer a espuma por baixo.",
+      "A entressola tem rugas profundas na lateral que não somem.",
+      "O tênis inclina para um lado quando apoiado em uma superfície plana.",
+      "A sensação de amortecimento mudou: parece mais duro ou sem vida.",
+      "Surgem desconfortos recorrentes que não existiam com o par novo.",
+      "O calcanhar do cabedal ficou mole ou rasgado e não segura mais o pé."
+    ] },
+    { t: "p", x: "Os sinais subjetivos importam tanto quanto os visíveis. Se você corre o mesmo percurso, no mesmo ritmo, e as pernas chegam mais castigadas do que antes, o tênis pode ser parte da explicação. Dor persistente, no entanto, deve ser avaliada por um profissional, não só atribuída ao calçado." },
+    { t: "h", x: "Como registrar a quilometragem" },
+    { t: "p", x: "A maioria dos aplicativos e relógios de corrida permite cadastrar cada par e somar os quilômetros automaticamente. Vale configurar um aviso perto dos 500 km para começar a observar o tênis com mais atenção. Sem aplicativo, anote a data da compra e uma estimativa do volume semanal." },
+    { t: "h", x: "Hábitos que prolongam a vida útil" },
+    { t: "p", x: "Use o tênis de corrida só para correr. Caminhar o dia todo com ele, ir à academia ou usá-lo no trabalho acelera o desgaste. Desamarre antes de tirar, em vez de empurrar o calcanhar com o outro pé. Deixe secar à sombra, com a palmilha removida, em vez de colocar ao sol ou perto de fontes de calor, que podem afetar espuma e colas." },
+    { t: "p", x: "Evite a máquina de lavar. Se precisar limpar, use água, sabão neutro e escova macia. Alternar entre dois pares também ajuda, porque dá tempo para a espuma se recuperar e para o tênis secar entre os treinos." },
+    { t: "h", x: "Quando trocar antes da prova" },
+    { t: "p", x: "Se a prova-alvo está perto e o par está no fim da vida, compre o substituto com antecedência e use-o em alguns treinos. Estrear tênis em prova longa é um risco desnecessário." },
+    { t: "tip", x: "Ao comprar um par novo, continue usando o antigo em treinos curtos por algumas semanas. Comparar os dois deixa claro quanto o velho já perdeu." },
+    { t: "quote", x: "O tênis avisa quando cansa. Basta prestar atenção à borracha, à espuma e às suas pernas." }
+  ]
+},
+{
+  id: "tenis-08",
+  area: "tenis",
+  cat: "importancia",
+  title: "Rotação de pares: por que ter mais de um tênis ajuda a evoluir",
+  dek: "Como alternar tênis diferentes ao longo da semana distribui estímulos, prolonga a vida útil dos pares e acompanha a sua evolução no treino.",
+  level: "Intermediário",
+  minutes: 3,
+  tags: ["rotação", "treino", "evolução"],
+  body: [
+    { t: "p", x: "Muitos corredores com alguns anos de prática usam mais de um tênis na mesma semana. Pode parecer exagero, mas a rotação de pares tem razões práticas. Ela permite usar o calçado mais adequado para cada tipo de treino, varia a forma como o corpo recebe carga e faz cada par durar mais." },
+    { t: "p", x: "Rotação não significa comprar vários pares de uma vez. Ela costuma surgir naturalmente quando o treino ganha estrutura e o primeiro tênis começa a não dar conta de todas as sessões." },
+    { t: "h", x: "Variar o estímulo" },
+    { t: "p", x: "Cada tênis tem drop, altura, rigidez e forma diferentes. Ao alternar modelos, você distribui a carga de um jeito um pouco diferente a cada treino. Muitos treinadores e fisioterapeutas veem essa variação como positiva para um corpo que corre com frequência, desde que as diferenças entre os pares não sejam extremas." },
+    { t: "p", x: "Isso não substitui o fortalecimento nem o controle de volume. É um complemento: um corpo que recebe estímulos levemente variados costuma se adaptar melhor do que um que repete exatamente o mesmo padrão em todos os treinos." },
+    { t: "h", x: "Tênis certo para o treino certo" },
+    { t: "p", x: "Uma rodagem lenta pede proteção. Um treino de tiros pede leveza e resposta. Um longão pede conforto por muito tempo. Um único tênis precisa ser um meio-termo entre essas demandas. Com dois ou três pares, cada um pode ser bom no que faz." },
+    { t: "spec", caption: "Exemplo de rotação para quem corre de 4 a 5 vezes por semana", rows: [
+      ["Rodagens leves", "treino diário com amortecimento"],
+      ["Treino de ritmo ou intervalado", "tênis leve e responsivo"],
+      ["Longão", "treino diário ou máximo amortecimento"],
+      ["Prova e ensaios de prova", "tênis de competição"]
+    ] },
+    { t: "h", x: "Durabilidade e economia" },
+    { t: "p", x: "Alternar pares dá tempo para a espuma voltar ao formato e para o tênis secar por completo entre os treinos, o que ajuda na conservação do material. Além disso, a quilometragem total se divide entre os pares. Na prática, você compra tênis com menos frequência, mesmo tendo mais de um em uso." },
+    { t: "p", x: "Há ainda um ganho de clima. Em semanas de chuva ou em cidades úmidas, um tênis molhado pode levar mais de um dia para secar. Correr com o par ainda úmido aumenta o atrito, favorece bolhas e acelera a deterioração do cabedal e das colas. Com dois pares, sempre há um seco esperando." },
+    { t: "p", x: "Outra vantagem é a transição. Quando um dos pares chega ao fim da vida útil, você já tem outro adaptado ao pé e pode introduzir o substituto aos poucos, sem depender de um tênis novo em todos os treinos de uma só vez." },
+    { t: "h", x: "Como a rotação acompanha sua evolução" },
+    { t: "p", x: "No início, um par basta. Quando surgem treinos de velocidade, um tênis mais leve passa a fazer sentido. Ao mirar uma meia maratona ou maratona, entra o modelo de prova e, às vezes, um de máximo amortecimento para o volume maior. Para quem descobre a trilha, um par específico entra cedo." },
+    { t: "ul", items: [
+      "Mantenha os pares da rotação com drops relativamente próximos.",
+      "Introduza um modelo novo em treinos curtos antes de usá-lo em sessões longas.",
+      "Registre a quilometragem de cada par separadamente.",
+      "Reserve o tênis de competição para treinos-chave e provas."
+    ] },
+    { t: "h", x: "Cuidados" },
+    { t: "p", x: "Rotação com pares muito diferentes, como um minimalista e um maximalista, pode ser um salto grande para o corpo. Se notar desconforto ao alternar, simplifique a rotação. E se surgir dor recorrente, procure um profissional antes de testar novos modelos." },
+    { t: "tip", x: "Quando o seu único tênis estiver na metade da vida útil, compre o segundo e comece a alternar. A rotação nasce sem esforço." },
+    { t: "quote", x: "Um tênis para cada tarefa deixa o treino melhor e faz cada par render mais." }
+  ]
+},
+{
+  id: "tenis-09",
+  area: "tenis",
+  cat: "evolucao",
+  title: "Do Cortez ao supertênis: meio século de tênis de corrida",
+  dek: "A história do tênis de corrida desde o boom do jogging nos anos 70, passando pelo minimalismo e pelo maximalismo, até as placas de carbono.",
+  level: "Todos",
+  minutes: 3,
+  tags: ["história", "minimalismo", "maximalismo"],
+  body: [
+    { t: "p", x: "O tênis de corrida moderno é jovem. Até meados do século 20, corredores usavam sapatilhas de couro com pouca ou nenhuma proteção. A transformação começou quando correr deixou de ser coisa de atleta e virou hábito de milhões de pessoas." },
+    { t: "p", x: "Conhecer essa trajetória ajuda a entender por que os tênis atuais são como são e por que certas ideias vão e voltam." },
+    { t: "h", x: "Anos 70: o jogging e o primeiro amortecimento" },
+    { t: "p", x: "Nos Estados Unidos dos anos 70, o jogging virou fenômeno popular. Nesse contexto surgiram modelos como o Nike Cortez, lançado no início da década, com uma entressola de espuma que oferecia mais conforto do que as sapatilhas da época. O treinador Bill Bowerman, cofundador da Nike, experimentou solados com padrão de waffle para melhorar a tração. Outras marcas, como Adidas, Asics e New Balance, também disputavam esse novo corredor amador." },
+    { t: "h", x: "Anos 80 e 90: amortecimento e controle" },
+    { t: "p", x: "Com mais gente correndo, cresceu a preocupação com lesões. As marcas responderam com mais amortecimento e com sistemas para controlar o movimento do pé. Bolsas de ar, géis e espumas mais espessas viraram argumento de venda. Os tênis de estabilidade e controle de movimento ganharam espaço, junto com a ideia de que o tipo de pisada deveria guiar a escolha." },
+    { t: "h", x: "2009: a onda minimalista" },
+    { t: "p", x: "O livro Born to Run, de Christopher McDougall, publicado em 2009, popularizou a ideia de que o ser humano correria melhor com menos tênis. Inspirado em corredores descalços e de sandálias, o movimento minimalista impulsionou calçados de solado fino, sem drop e com pouco amortecimento, como os modelos com dedos separados." },
+    { t: "p", x: "Muitos corredores gostaram da sensação de contato com o chão. Outros mudaram rápido demais e enfrentaram sobrecargas na panturrilha e no pé. A onda perdeu força alguns anos depois, mas deixou heranças: tênis mais leves, drops mais baixos e cabedais mais flexíveis." },
+    { t: "h", x: "Maximalismo e supertênis" },
+    { t: "p", x: "Quase ao mesmo tempo, uma marca francesa fundada em 2009, a Hoka, apostou no oposto: entressolas muito altas e geometria em balanço, com a ponta curvada. O que parecia exótico virou tendência, e o mercado inteiro elevou suas alturas." },
+    { t: "p", x: "Em 2017, a Nike apresentou o Vaporfly, que combinava espuma leve de alto retorno, muita altura e uma placa de carbono. No mesmo ano, o projeto Breaking2 levou Eliud Kipchoge a correr uma maratona perto das duas horas em condições controladas, usando protótipos dessa família. Nos anos seguintes, recordes caíram em série, e as outras marcas lançaram seus próprios modelos com placa." },
+    { t: "spec", caption: "Linha do tempo resumida", rows: [
+      ["Anos 1970", "boom do jogging, primeiras entressolas de espuma"],
+      ["Anos 1980–1990", "sistemas de amortecimento e controle de movimento"],
+      ["2009", "Born to Run e onda minimalista; fundação da Hoka"],
+      ["Anos 2010", "espumas mais leves e popularização do maximalismo"],
+      ["2017 em diante", "supertênis com placa e espuma de alto retorno"]
+    ] },
+    { t: "h", x: "O que essa história ensina" },
+    { t: "p", x: "Cada fase corrigiu exageros da anterior e criou os seus. O resultado atual é um mercado mais diverso, com opções para quem quer sentir o chão e para quem quer máxima proteção. Para o corredor amador, a lição é olhar para as tendências com curiosidade e escolher pelo conforto e pelo uso, não pela moda do momento." },
+    { t: "tip", x: "Quando uma tecnologia nova aparecer, espere ver como ela se comporta nas versões seguintes antes de mudar todo o seu arsenal." },
+    { t: "quote", x: "O tênis de corrida avança em ondas. O corredor esperto aproveita o que cada uma deixou de bom." }
+  ]
+},
+{
+  id: "tenis-10",
+  area: "tenis",
+  cat: "evolucao",
+  title: "Do primeiro 5 km à maratona: como o tênis acompanha o corredor",
+  dek: "As fases típicas da vida de um corredor e o que muda no tênis em cada uma, do primeiro par versátil ao arsenal de maratona.",
+  level: "Todos",
+  minutes: 3,
+  tags: ["evolução", "maratona", "iniciante"],
+  body: [
+    { t: "p", x: "O tênis ideal muda conforme o corredor muda. Quem dá os primeiros trotes tem necessidades diferentes de quem treina para uma maratona. Volume, ritmo, técnica e adaptação do corpo evoluem, e o calçado acompanha essa trajetória." },
+    { t: "p", x: "Não existe um calendário fixo. Há quem corra anos só com tênis de treino e quem chegue rápido à maratona. As fases abaixo são referências para pensar o próximo passo." },
+    { t: "h", x: "Fase 1: os primeiros quilômetros" },
+    { t: "p", x: "No início, o objetivo é criar o hábito e deixar o corpo se adaptar ao impacto. Os treinos são curtos, muitas vezes alternando corrida e caminhada. Um tênis de treino diário, confortável e estável, resolve. Não há necessidade de placa, de espuma de competição ou de vários pares." },
+    { t: "h", x: "Fase 2: consistência e primeira prova" },
+    { t: "p", x: "Com algumas semanas ou meses de regularidade, chegam os primeiros 5 e 10 km. O volume cresce e alguns treinos ganham variação de ritmo. Aqui, o primeiro par provavelmente já soma bons quilômetros. É um bom momento para entender o que funcionou nele: drop, altura, encaixe. O segundo par pode ser um modelo parecido ou um tênis um pouco mais leve para treinos mais rápidos." },
+    { t: "h", x: "Fase 3: meia maratona e treino estruturado" },
+    { t: "p", x: "A preparação para os 21 km costuma trazer longões, treinos de ritmo e intervalados. A rotação de dois pares faz mais sentido: um para rodagens e longões, outro para sessões rápidas. Alguns corredores incluem nessa fase um tênis de prova, desde que o testem em treinos antes." },
+    { t: "h", x: "Fase 4: maratona" },
+    { t: "p", x: "A maratona pede volume semanal maior e longões que passam de duas ou três horas. A proteção nos treinos longos ganha importância, e muitos corredores incluem um tênis de máximo amortecimento para os dias de mais volume. Para a prova, o tênis de competição com placa é uma opção comum entre quem busca desempenho. Para quem quer completar com conforto, um bom tênis de treino continua sendo uma escolha válida." },
+    { t: "spec", caption: "Tênis típico por fase", rows: [
+      ["Primeiros quilômetros", "1 par de treino diário"],
+      ["5 e 10 km", "1–2 pares, um deles mais leve"],
+      ["Meia maratona", "2 pares, opcional de prova"],
+      ["Maratona", "2–3 pares: rodagem, ritmo ou longão e prova"]
+    ] },
+    { t: "h", x: "O que muda além da quantidade" },
+    { t: "ul", items: [
+      "O corredor passa a reconhecer as próprias preferências de drop e altura.",
+      "O corpo tolera melhor tênis mais leves e com menos estrutura.",
+      "Os treinos de ritmo justificam calçados mais responsivos.",
+      "A escolha passa a ser pelo treino do dia, não só pelo tênis favorito.",
+      "O corredor aprende a perceber quando um par chegou ao fim da vida útil."
+    ] },
+    { t: "p", x: "Mesmo corredores experientes não precisam usar tênis de competição. A decisão depende do objetivo pessoal, do conforto e da adaptação do corpo. Um bom tempo na maratona começa nos meses de treino, e o tênis de treino é o que mais trabalha nesse período." },
+    { t: "p", x: "Outra mudança importante é o peso do próprio corredor e a técnica. Com o tempo, muitos corredores ficam mais leves, mais fortes e com passada mais eficiente. Um tênis que parecia firme demais no começo pode passar a parecer ideal, e um muito macio pode começar a parecer lento. Reavaliar as preferências a cada troca de par evita ficar preso a uma escolha que fez sentido só na primeira fase." },
+    { t: "p", x: "Mudanças de fase costumam vir com mais volume, e mais volume aumenta a exposição a sobrecargas. Se surgir dor persistente durante a progressão, procure um profissional antes de mudar o tênis ou acelerar o plano." },
+    { t: "tip", x: "A cada nova fase, mude uma coisa por vez: o volume, o tipo de treino ou o tênis. Assim fica mais fácil entender o que funcionou." },
+    { t: "quote", x: "O arsenal cresce junto com o corredor, um par e uma meta de cada vez." }
+  ]
+},
+{
+  id: "tenis-11",
+  area: "tenis",
+  cat: "evolucao",
+  title: "A regra dos 40 mm: como a World Athletics redesenhou os supertênis",
+  dek: "Por que a federação internacional criou limites de altura e de placa para calçados de competição e o que isso mudou para atletas e amadores.",
+  level: "Avançado",
+  minutes: 3,
+  tags: ["regras", "supertênis", "competição"],
+  body: [
+    { t: "p", x: "A chegada dos tênis com placa de carbono e espuma de alto retorno mudou o ritmo das provas de rua. Recordes caíram em série e a discussão sobre os limites da tecnologia chegou à World Athletics, a federação internacional de atletismo. A resposta foi um conjunto de regras para calçados de competição, anunciado em 2020 e ajustado nos anos seguintes." },
+    { t: "p", x: "Para o amador, as regras parecem distantes. Mas elas moldaram o desenho de quase todos os tênis de prova vendidos hoje." },
+    { t: "h", x: "O que motivou as regras" },
+    { t: "p", x: "Depois do Vaporfly, em 2017, e de protótipos ainda mais altos usados em tentativas especiais de quebrar a barreira das duas horas na maratona, surgiu a preocupação de que a vantagem tecnológica estivesse pesando demais no resultado. A federação queria preservar a ideia de que o desempenho vem principalmente do atleta e garantir que todos tivessem acesso aos mesmos equipamentos." },
+    { t: "h", x: "O que as regras estabelecem" },
+    { t: "ul", items: [
+      "Altura máxima da sola de 40 mm para provas de rua.",
+      "Limites menores para sapatilhas de pista, que variam conforme a prova.",
+      "No máximo uma placa rígida embutida na sola, em geral.",
+      "O modelo precisa estar disponível ao público por um período antes de ser usado em competição de elite.",
+      "Protótipos só podem ser usados em condições específicas e controladas."
+    ] },
+    { t: "p", x: "Os detalhes técnicos, como a forma exata de medir a altura e os prazos de disponibilidade, foram ajustados ao longo do tempo. Quem compete em nível de elite deve conferir o regulamento vigente no site da federação." },
+    { t: "h", x: "O que mudou no mercado" },
+    { t: "p", x: "O limite de 40 mm virou uma espécie de teto de projeto. Os fabricantes passaram a desenhar seus modelos de prova o mais perto possível desse número, buscando o máximo de espuma permitido. Ao mesmo tempo, a regra da disponibilidade comercial fez os modelos de elite chegarem mais rápido às lojas." },
+    { t: "p", x: "Curiosamente, o teto valeu só para competição. Alguns tênis de treino passaram a ultrapassar os 40 mm, já que não precisam seguir a regra. Por isso, um modelo muito alto pode ser ótimo para o longão e irregular para uma prova oficial de elite." },
+    { t: "spec", caption: "Referências de altura máxima", rows: [
+      ["Provas de rua", "40 mm"],
+      ["Tênis de prova atuais", "geralmente 35–40 mm no calcanhar"],
+      ["Treino diário", "30–38 mm, alguns acima de 40 mm"],
+      ["Placas permitidas", "uma, em regra geral"]
+    ] },
+    { t: "h", x: "E para o corredor amador" },
+    { t: "p", x: "Em provas populares, a fiscalização de calçados praticamente não acontece para quem corre fora da elite. Ainda assim, as regras afetam o amador indiretamente: os tênis de prova disponíveis nas lojas seguem esse desenho, e a altura de 35 a 40 mm virou padrão na categoria." },
+    { t: "p", x: "Para quem não está acostumado, tanta altura somada a uma placa rígida pode parecer instável, principalmente em curvas e no fim da prova, quando a técnica se deteriora. Testar o modelo em treinos de ritmo antes da prova continua sendo essencial. E qualquer desconforto persistente ao usar esse tipo de tênis merece avaliação de um profissional." },
+    { t: "h", x: "Um debate que continua" },
+    { t: "p", x: "A discussão sobre tecnologia e justiça esportiva não terminou com as regras. Novas espumas e geometrias seguem surgindo dentro dos limites, e a federação mantém a possibilidade de revisar o regulamento. Para o corredor comum, a mensagem é simples: o tênis ajuda, mas o treino continua decidindo." },
+    { t: "tip", x: "Se você pretende competir em prova com controle de equipamento, confira a lista de calçados aprovados pela federação antes de comprar o modelo de prova." },
+    { t: "quote", x: "O limite de 40 mm virou a régua contra a qual todo tênis de prova é desenhado." }
+  ]
+},
+{
+  id: "tenis-12",
+  area: "tenis",
+  cat: "tecnologia",
+  title: "Espumas de entressola: de EVA a PEBA e supercríticas",
+  dek: "Como funcionam as principais espumas dos tênis de corrida e o que muda entre EVA, TPU expandido, PEBA e espumas supercríticas.",
+  level: "Intermediário",
+  minutes: 3,
+  tags: ["espuma", "entressola", "materiais"],
+  body: [
+    { t: "p", x: "A entressola é a camada de espuma entre o cabedal e o solado. Ela concentra boa parte da tecnologia de um tênis de corrida e define três características centrais: amortecimento, que é a capacidade de absorver impacto; retorno de energia, que é quanto da energia comprimida volta na impulsão; e durabilidade." },
+    { t: "p", x: "Nos últimos anos, as espumas evoluíram mais do que qualquer outra parte do tênis. Conhecer as famílias principais ajuda a interpretar fichas técnicas e nomes comerciais." },
+    { t: "h", x: "EVA: a base clássica" },
+    { t: "p", x: "O EVA, sigla de etileno acetato de vinila, é a espuma mais tradicional dos tênis de corrida. É leve, barata de produzir e fácil de moldar. Com o tempo, ganhou versões compactadas, chamadas de EVA compression-molded, e misturas com borrachas e outros polímeros. Sua limitação é perder resiliência com o uso e variar de rigidez conforme a temperatura." },
+    { t: "h", x: "TPU expandido: durabilidade e Boost" },
+    { t: "p", x: "O TPU, poliuretano termoplástico, ficou popular na corrida com o Boost, lançado pela Adidas em 2013 em parceria com uma empresa química. A espuma é feita de pequenas esferas de TPU expandido fundidas entre si. Ela oferece bom retorno de energia, sensação elástica e boa resistência à temperatura e ao desgaste. A desvantagem é o peso, maior que o de espumas mais recentes." },
+    { t: "h", x: "PEBA: a espuma dos supertênis" },
+    { t: "p", x: "O PEBA, poliéter bloco amida, é um polímero muito leve e de alto retorno de energia. Ficou famoso como base da espuma do Nike Vaporfly, em 2017, e hoje aparece em vários tênis de prova de diferentes marcas. É macio, saltitante e leve, mas tende a ser menos estável e menos durável do que espumas de treino. Por isso costuma aparecer em modelos de prova ou combinado com camadas mais firmes." },
+    { t: "h", x: "Espumas supercríticas" },
+    { t: "p", x: "Espuma supercrítica é o nome de um processo de fabricação que pode ser aplicado a vários materiais. Um gás, como nitrogênio ou dióxido de carbono, é levado a um estado especial de pressão e temperatura e injetado no polímero. O resultado são células mais pequenas e uniformes, que deixam a espuma mais leve e resiliente. O processo pode ser aplicado a EVA, TPU, PEBA e misturas, e várias marcas usam essa técnica em linhas de treino e de prova." },
+    { t: "spec", caption: "Comparativo qualitativo", rows: [
+      ["EVA", "leve, firme a macio, retorno moderado"],
+      ["TPU expandido", "durável, elástico, mais pesado"],
+      ["PEBA", "muito leve, alto retorno, menos estável"],
+      ["Supercrítica", "processo que deixa espumas mais leves e uniformes"]
+    ] },
+    { t: "h", x: "Como isso afeta a escolha" },
+    { t: "ul", items: [
+      "Para treino diário, espumas mais firmes e duráveis costumam ser a base.",
+      "Para ritmo e prova, espumas leves e de alto retorno fazem diferença.",
+      "Muitos tênis combinam duas espumas: uma macia perto do pé e uma firme embaixo.",
+      "Nome comercial de espuma não revela o material; procure a composição."
+    ] },
+    { t: "p", x: "A espuma mais avançada não é automaticamente a melhor para você. Espumas muito macias podem cansar o tornozelo em treinos longos, e as de alto retorno se desgastam mais rápido. O ideal é combinar o tipo de espuma ao uso do tênis." },
+    { t: "p", x: "Vale lembrar também que a mesma espuma pode se comportar de formas diferentes conforme a espessura, a densidade e a geometria do tênis. Uma camada fina de espuma de alto retorno em um tênis de treino terá sensação bem distinta da mesma espuma em 40 mm de altura num modelo de prova. Por isso, a ficha técnica ajuda, mas o teste em movimento continua sendo decisivo." },
+    { t: "tip", x: "Ao comparar modelos, aperte a entressola com o polegar dos dois lados. A diferença de firmeza dá uma pista de como cada um vai se comportar." },
+    { t: "quote", x: "A espuma é o motor do tênis. Cada uma tem seu jeito de devolver a passada." }
+  ]
+},
+{
+  id: "tenis-13",
+  area: "tenis",
+  cat: "tecnologia",
+  title: "Placas de carbono e geometria rocker: como funcionam",
+  dek: "O que a placa rígida e a sola curvada fazem na passada, por que funcionam juntas e para quem esse tipo de tênis faz sentido.",
+  level: "Avançado",
+  minutes: 3,
+  tags: ["placa", "carbono", "rocker"],
+  body: [
+    { t: "p", x: "Poucas tecnologias mudaram tanto a corrida quanto a combinação de placa de carbono, espuma de alto retorno e geometria rocker. Desde o fim da década de 2010, ela virou o padrão dos tênis de prova. Mas o funcionamento da placa costuma ser explicado de forma exagerada, como se fosse uma mola que lança o corredor para frente." },
+    { t: "p", x: "A realidade é mais sutil, e entendê-la ajuda a usar esse tipo de tênis com mais critério." },
+    { t: "h", x: "O que é a placa" },
+    { t: "p", x: "A placa é uma lâmina rígida embutida na entressola. Pode ser de fibra de carbono, fibra de vidro, nylon ou plásticos técnicos. Ela pode ser plana, curvada no formato de colher ou dividida em hastes que imitam os ossos do pé. A de carbono é a mais rígida e leve, por isso aparece nos modelos de competição." },
+    { t: "h", x: "O que a placa faz" },
+    { t: "p", x: "A principal função da placa é dar rigidez ao tênis no sentido do comprimento. Isso reduz o quanto as articulações dos dedos dobram durante a passada e estabiliza a espuma macia e alta que fica ao redor. Sem a placa, uma espuma tão espessa e saltitante seria instável. Com ela, a espuma consegue comprimir e devolver energia de forma mais controlada." },
+    { t: "p", x: "Por isso, o ganho dos supertênis vem do conjunto: espuma leve e de alto retorno, muita altura e placa rígida trabalhando juntas. A placa sozinha, em um tênis com espuma comum, oferece bem menos." },
+    { t: "p", x: "Os benefícios medidos em laboratório também variam bastante entre pessoas. Alguns corredores sentem uma diferença clara de economia e conforto no fim da prova; outros quase não percebem ganho. Fatores como peso, ritmo, mecânica de corrida e adaptação ao modelo influenciam a resposta. Por isso, o melhor teste continua sendo o seu próprio treino." },
+    { t: "h", x: "Geometria rocker" },
+    { t: "p", x: "Rocker é a curvatura da sola, como a base de uma cadeira de balanço. Em vez de dobrar, o tênis rola do calcanhar ou do meio do pé até a ponta. Em tênis rígidos com placa, o rocker é essencial: compensa a falta de flexibilidade e facilita a transição até a impulsão. Modelos de treino também usam rocker, com ou sem placa, para deixar a passada mais fluida." },
+    { t: "spec", caption: "Elementos de um tênis de prova com placa", rows: [
+      ["Altura no calcanhar", "35–40 mm"],
+      ["Drop", "6–10 mm"],
+      ["Peso (masculino, tamanho médio)", "180–230 g"],
+      ["Placa", "carbono, inteira ou em hastes"],
+      ["Rocker", "ponta bem curvada"]
+    ] },
+    { t: "h", x: "Para quem faz sentido" },
+    { t: "p", x: "Tênis com placa costumam funcionar melhor em ritmos mais fortes, quando a espuma é bem comprimida e a geometria acelera a transição. Em corridas muito lentas, a sensação pode ser estranha ou instável. Eles exigem mais de panturrilhas, pés e tornozelos, principalmente nas primeiras vezes." },
+    { t: "ul", items: [
+      "Use primeiro em treinos de ritmo curtos, não em longões.",
+      "Teste em provas menores antes de levar para a maratona.",
+      "Reserve o par para treinos-chave para preservar a espuma.",
+      "Placas de nylon ou fibra de vidro são uma porta de entrada mais flexível."
+    ] },
+    { t: "p", x: "Se surgir dor no pé, no tornozelo ou na panturrilha depois de começar a usar tênis com placa, reduza o uso e procure um profissional. A rigidez muda a forma como a carga chega a essas estruturas." },
+    { t: "tip", x: "Coloque o tênis com placa no chão e empurre o calcanhar. Se ele balança fácil para frente, o rocker está fazendo o trabalho que o seu pé faria." },
+    { t: "quote", x: "A placa organiza a espuma para que cada passada renda mais." }
+  ]
+},
+{
+  id: "tenis-14",
+  area: "tenis",
+  cat: "tecnologia",
+  title: "Cabedal e encaixe: mesh, knit e a arte de segurar o pé",
+  dek: "Como os materiais e a estrutura do cabedal influenciam conforto, ventilação e estabilidade e o que observar na hora de calçar.",
+  level: "Intermediário",
+  minutes: 3,
+  tags: ["cabedal", "knit", "encaixe"],
+  body: [
+    { t: "p", x: "O cabedal é toda a parte de cima do tênis: o tecido que envolve o pé, a língua, o contraforte do calcanhar e o sistema de cadarço. Ele recebe menos atenção do que a espuma, mas é o responsável por algo essencial: manter o pé bem posicionado sobre a entressola." },
+    { t: "p", x: "Um cabedal mal resolvido pode estragar um tênis com espuma excelente. O pé desliza, a passada perde estabilidade e surgem bolhas e pontos de pressão." },
+    { t: "h", x: "Mesh e engineered mesh" },
+    { t: "p", x: "Mesh é uma malha de tecido sintético, geralmente poliéster, com aberturas que deixam o ar circular. É o material mais comum em tênis de corrida. A versão engineered mesh é produzida com tramas diferentes em cada região: mais aberta onde é preciso ventilar, mais fechada onde é preciso sustentar. Isso reduz a necessidade de reforços costurados e deixa o cabedal mais leve." },
+    { t: "h", x: "Knit" },
+    { t: "p", x: "O knit é um cabedal tricotado em uma peça só, com fios que formam uma espécie de meia. Ganhou popularidade a partir de 2012, com tecnologias como o Flyknit da Nike e o Primeknit da Adidas. Ele envolve o pé de forma macia e se adapta bem a diferentes formatos. Em compensação, tende a ser mais elástico e pode segurar menos o pé em curvas e mudanças de direção, além de reter mais água em dias de chuva." },
+    { t: "h", x: "Estruturas que seguram o pé" },
+    { t: "ul", items: [
+      "Contraforte: a peça que reforça o calcanhar e mantém o pé centralizado.",
+      "Gola acolchoada: o colarinho em volta do tornozelo, que evita atrito.",
+      "Língua sanfonada: costurada nas laterais, impede que a língua escorregue.",
+      "Ilhós e cadarço: distribuem a pressão sobre o peito do pé.",
+      "Reforços laterais: faixas ou películas que estabilizam o meio do pé.",
+      "Biqueira: a ponta do cabedal, que deve dar espaço aos dedos."
+    ] },
+    { t: "h", x: "Cabedais por categoria" },
+    { t: "p", x: "Tênis de treino costumam ter cabedais mais acolchoados e estruturados, para conforto em muitos quilômetros. Tênis de prova usam tecidos finos e leves, às vezes quase translúcidos, com pouco acolchoamento. Tênis de trilha têm materiais mais resistentes, biqueira protegida e, às vezes, polainas integradas para impedir a entrada de terra e pedras." },
+    { t: "p", x: "Há ainda o volume interno, o espaço que o cabedal deixa entre o pé e o tecido. Pés de peito alto ou volumosos podem se sentir apertados em cabedais baixos, mesmo no número certo. Pés finos podem nadar dentro de cabedais muito volumosos. Esse ajuste não aparece na numeração e só se descobre calçando. Cabedais com língua mais grossa ou mais fina também mudam essa sensação." },
+    { t: "spec", caption: "Características típicas por categoria", rows: [
+      ["Treino diário", "mesh estruturado, gola acolchoada"],
+      ["Prova", "mesh fino ou monofilamento, pouco acolchoamento"],
+      ["Trilha", "tecido resistente, biqueira reforçada"],
+      ["Knit", "encaixe tipo meia, mais elástico"]
+    ] },
+    { t: "h", x: "Como avaliar o encaixe" },
+    { t: "p", x: "Calce o tênis, amarre com pressão confortável e faça alguns trotes, incluindo curvas. Observe se o calcanhar sobe, se o pé escorrega para os lados nas curvas e se alguma costura incomoda. Repare também na língua: se ela desliza para um lado durante a corrida, o tênis pode causar incômodo em treinos longos." },
+    { t: "p", x: "Se o calcanhar escapa, experimente o laço de travamento, usando o último ilhós para criar uma alça que segura o tornozelo. Se o peito do pé aperta, pule um ilhós na região de pressão. Dormência persistente ou dor localizada pedem avaliação profissional." },
+    { t: "tip", x: "Corra em uma curva fechada durante o teste. É ali que um cabedal frouxo ou elástico demais aparece primeiro." },
+    { t: "quote", x: "Espuma boa só funciona se o cabedal mantém o pé no lugar certo." }
+  ]
+},
+{
+  id: "tenis-15",
+  area: "tenis",
+  cat: "tecnologia",
+  title: "Solado e borracha: tração no asfalto e cravos na trilha",
+  dek: "Os tipos de borracha, o desenho do solado e os cravos de trilha, e como escolher a tração certa para cada terreno.",
+  level: "Intermediário",
+  minutes: 3,
+  tags: ["solado", "borracha", "trilha"],
+  body: [
+    { t: "p", x: "O solado é a camada de borracha que toca o chão. Ele protege a espuma da entressola contra o desgaste e define a tração do tênis. Em tênis de asfalto, costuma ser discreto. Em tênis de trilha, vira protagonista, com cravos profundos e compostos especiais para pedra molhada." },
+    { t: "p", x: "Escolher o solado certo significa equilibrar aderência, durabilidade e peso de acordo com o terreno onde você corre." },
+    { t: "h", x: "Tipos de borracha" },
+    { t: "p", x: "Os fabricantes usam diferentes compostos de borracha, cada um com seu compromisso. A borracha de carbono é mais dura e durável, comum nas áreas de maior desgaste, como o calcanhar. A borracha expandida, ou blown rubber, recebe ar durante a fabricação, fica mais leve e macia e oferece boa aderência, mas se desgasta mais rápido. Algumas marcas trabalham com fornecedores especializados em pneus e solados, como Continental e Vibram, conhecidos pela aderência em piso molhado." },
+    { t: "h", x: "Cobertura e desenho do solado" },
+    { t: "p", x: "Nem todo tênis tem borracha em toda a sola. Para reduzir peso, muitos modelos deixam a espuma exposta em regiões de pouco contato e colocam borracha só nas zonas de maior desgaste. Isso deixa o tênis mais leve, mas faz a espuma exposta desgastar mais rápido se o seu padrão de pisada atingir essas áreas." },
+    { t: "p", x: "O desenho também importa. Sulcos de flexão ajudam o tênis a dobrar no antepé. Ranhuras e padrões geométricos melhoram a aderência em piso molhado. Em tênis de prova, o solado costuma ser fino e parcial para economizar gramas." },
+    { t: "p", x: "A espessura da borracha também afeta a sensação. Uma camada mais grossa aumenta a durabilidade, mas deixa o tênis mais pesado e mais firme ao toque. Uma camada fina deixa a espuma trabalhar mais livre, com custo na vida útil. Para quem corre muito em asfalto áspero, uma borracha generosa costuma compensar o peso extra. Na esteira, o desgaste é bem menor e a cobertura importa menos." },
+    { t: "h", x: "Cravos de trilha" },
+    { t: "p", x: "Os lugs são os cravos de borracha do solado de trilha. Cravos curtos e próximos funcionam bem em terra batida e estradões, e não incomodam tanto no asfalto. Cravos longos e espaçados agarram melhor na lama e em terrenos soltos e deixam a sujeira sair com mais facilidade. Cravos em direções diferentes na frente e atrás ajudam na subida e na frenagem da descida." },
+    { t: "spec", caption: "Altura típica dos cravos por terreno", rows: [
+      ["Asfalto e pista", "sem cravos, 1–2 mm de relevo"],
+      ["Estradão e terra batida", "3–4 mm"],
+      ["Trilha técnica mista", "4–5 mm"],
+      ["Lama e terreno solto", "5–8 mm"]
+    ] },
+    { t: "h", x: "Proteção extra na trilha" },
+    { t: "ul", items: [
+      "Placa de rocha: lâmina flexível na entressola que protege contra pedras pontiagudas.",
+      "Biqueira de borracha: protege os dedos contra topadas.",
+      "Borracha aderente: mais macia, segura melhor em pedra lisa e molhada.",
+      "Solado mais largo: aumenta a estabilidade em terreno irregular."
+    ] },
+    { t: "h", x: "Como escolher" },
+    { t: "p", x: "Se você corre quase só no asfalto, priorize durabilidade e cobertura nas zonas de desgaste. Se divide treinos entre rua e terra leve, procure um tênis híbrido, com cravos baixos. Para trilhas técnicas, lama ou montanha, escolha cravos mais profundos e borracha aderente. Escorregões em trilha podem causar entorses; se isso acontecer e a dor ou o inchaço persistirem, procure avaliação profissional." },
+    { t: "tip", x: "Vire o seu tênis atual e observe onde a borracha mais gastou. Na próxima compra, confira se o novo modelo tem borracha justamente nessas regiões." },
+    { t: "quote", x: "A borracha é a única parte do tênis que conversa com o chão. Escolha a que fala a língua do seu terreno." }
+  ]
+}
+);
