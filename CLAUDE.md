@@ -12,6 +12,9 @@ Site guarda-chuva com três testes de equipamento: Racket Match (raquete de tên
 | `apps/racket/` | Racket Match, arquivo único `index.html` | Sessão do Racket |
 | `apps/board/` | Board Match, arquivo único `index.html` | Sessão do Board |
 | `apps/tenis/` | Tenis Match, arquivo único `index.html` | Sessão do Tenis |
+| `docs/` | Contexto: padrão do relatório PDF, teste de fogo e, em `docs/<app>/`, benchmark, catálogo e calibração de cada app | Cada sessão atualiza o seu |
+
+Leia `docs/padrao-relatorio-pdf.md` e a pasta `docs/<app>/` do seu app antes de mexer no motor ou no relatório. Registre ali as rodadas novas de calibração.
 
 ## Regras
 

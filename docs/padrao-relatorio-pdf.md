@@ -1,0 +1,18 @@
+# Padrão de relatório pago — Match Lab (default desde 23/out/2026)
+
+Vale para Racket Match e serve de modelo para Board Match e Tenis Match.
+
+**Formato:** PDF A4 baixado pelo próprio app (botão "Baixar relatório em PDF (A4)" no topo e no fim do relatório pago). Gerado em alta resolução (html2canvas + jsPDF), ~2 MB, sempre em tema claro e com a identidade do app.
+
+**Estrutura (5 páginas, visual primeiro, texto curto):**
+1. **Veredito** — produto + Match Score grande, confiança, distância para o 2º, atletas que usam, preço em R$ e disponibilidade no Brasil; setup completo em 6 quadros (o que é sugestão fica tracejado); "por que ele"; perfil do usuário; atual → nova em pontos.
+2. **Seu jogo × o equipamento** — hexágono (ideal, recomendado, atual) + tabela índice a índice com barras; specs numa régua do catálogo com zona ideal; o que muda saindo do atual.
+3. **Setup** — ajuste para o novo e para o atual ("se não trocar agora", dizendo o que o ajuste não corrige); origem de cada ajuste em gráfico; plano de adaptação de 4 semanas; sinais de alerta; checklist de compra.
+4. **Pódio + prova social** — top 3 com o que lidera e o que cede, barras das 3 prioridades; trechos de reviews (3 do 1º, 2 dos demais) com fonte, testador, nível, nota e geração.
+5. **Ranking e método** — top 10 com o atual, mapa do catálogo, por que o atual ficou para trás, números do método, glossário.
+
+**Regras:**
+- Diferenciar do Tennis Engineer, nunca copiar (layout, texto, gráficos).
+- Mínimo de 2 trechos de review por item do catálogo, resumidos e traduzidos (nunca citação literal longa), com fonte.
+- Coerência total: todo setup calculado para o item recomendado (erro visto no TE).
+- Honestidade: empate técnico, o que o ajuste não resolve, aviso de saúde quando houver dor.
