@@ -151,6 +151,18 @@ section{padding-block:72px}
 .mtabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
 .mtabs button{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:5px 14px 5px 5px;font-weight:700;font-size:.9rem;cursor:pointer}
 .mtabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.toolbox{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:18px;align-items:center;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:18px 22px;text-decoration:none;transition:border-color .15s,transform .15s}
+.toolbox:hover{border-color:#6CCFF6;transform:translateY(-2px)}
+.tb-ic{width:52px;height:52px;border-radius:14px;background:#0E4D64;display:grid;place-items:center}
+.tb-ic svg{width:26px;height:26px;fill:none;stroke:#6CCFF6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tb-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tb-tx small{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tb-tx b{font-family:var(--f-display);font-size:1.25rem}
+.tb-tx span{color:var(--muted);font-size:.93rem}
+.tb-go{background:#6CCFF6;color:#0B2530;font-weight:700;padding:11px 16px;border-radius:12px;white-space:nowrap}
+.toolbox.mini{grid-template-columns:44px minmax(0,1fr);padding:14px 16px;gap:12px}
+.toolbox.mini .tb-ic{width:44px;height:44px}.toolbox.mini .tb-go{display:none}.toolbox.mini .tb-tx b{font-size:1.02rem}
+@media (max-width:620px){.toolbox{grid-template-columns:44px minmax(0,1fr)}.toolbox .tb-go{grid-column:1/-1;text-align:center}.tb-ic{width:44px;height:44px}}
 /* Area cards */
 .areas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media (max-width:940px){.areas{grid-template-columns:1fr}}
@@ -430,7 +442,7 @@ const appLockup = (k,s=34) => `${ICON[k](s)}<span class="wm"><span class="wordma
 document.getElementById("brandHome").innerHTML = labLockup(34);
 document.getElementById("footBrand").innerHTML = labLockup(28);
 document.getElementById("nav").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${ICON[k](24)}${AREAS[k].name}</a>`).join("") + `<span class="sep" aria-hidden="true"></span><a href="#biblioteca" data-go="biblioteca">Biblioteca</a><a href="#conceito" data-go="conceito">Como funciona</a>`;
-document.getElementById("footLinks").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${AREAS[k].name}</a>`).join("") + `<a href="#biblioteca" data-go="biblioteca">Biblioteca</a>`;
+document.getElementById("footLinks").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${AREAS[k].name}</a>`).join("") + `<a href="#biblioteca" data-go="biblioteca">Biblioteca</a><a href="ferramentas/litragem/index.html">Calculadora de litragem</a>`;
 
 function reportFrame(k, h){
   const a = AREAS[k];
@@ -449,6 +461,7 @@ function acard(x){
 function vars(a){
   return `<div class="vars"><div><span class="vl">Você informa</span><p>${a.vin.join(" · ")}</p></div><div><span class="vl">A gente calcula</span><ul>${a.vout.map(c=>`<li>${c}</li>`).join("")}</ul></div></div>`;
 }
+const TOOLBOX=`<a class="toolbox" href="ferramentas/litragem/index.html"><span class="tb-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg></span><span class="tb-tx"><small>Ferramenta grátis</small><b>Calculadora de litragem de prancha</b><span>Peso, nível e tipo de prancha: veja quantos litros você precisa em segundos.</span></span><span class="tb-go">Calcular →</span></a>`;
 /* ---------- HOME ---------- */
 let heroK = "racket";
 const MODEL_TXT={
@@ -513,6 +526,7 @@ function home(){
     </article>`}).join("")}</div>
   </div></section>
 
+  <section style="padding-top:0"><div class="wrap a-board">${TOOLBOX}</div></section>
   <section id="modelo" style="padding-top:0"><div class="wrap" id="modelBox">${modelSec()}</div></section>
 
   <section><div class="wrap">
@@ -537,6 +551,7 @@ function hub(k){
     </div>
     ${true ? reportFrame(k, 440) : `<div class="calc ${a.cls}"><div class="eyebrow">Variáveis do teste</div>${vars(a)}<p class="soon">Relatório de exemplo em breve.</p></div>`}
   </div></section>
+  ${k==="board"?`<section style="padding-block:28px 0"><div class="wrap">${TOOLBOX}</div></section>`:""}
   <nav class="subnav" aria-label="Nesta página"><div class="wrap">
     <button type="button" data-scroll="relatorio">O relatório</button>
     <button type="button" data-scroll="guias">Guias (${byArea(k).length})</button>
@@ -633,6 +648,7 @@ function article(id){
         </div>
       </div>
       <aside class="side">
+        ${a.key==="board"?TOOLBOX.replace('class="toolbox"','class="toolbox mini"'):""}
         <div class="cta-box">
           ${true?`<button type="button" class="thumb" data-zoom="${a.key}" aria-label="Ampliar relatório de exemplo do ${a.name}"><img src="${SHOTS[a.key]||""}" alt=""></button>`:""}
           <div class="in">
