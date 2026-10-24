@@ -14,19 +14,22 @@ O app só mostra a ilustração dos tipos listados em `TIMG`; tipo sem imagem ca
 | Longboard performance | longp | ok |
 | Mini-malibu / funboard | minimal | ok (refazer mais larga, se der) |
 | Evolution / allround | evo | ok |
-| Fish | fish | falta |
-| Groveler | grov | falta |
-| Biquilha moderna | twin | falta |
-| Softboard performance | softp | falta |
+| Fish | fish | ok (refazer deitada, como as outras) |
+| Groveler | grov | refazer (saiu em pé e com fundo dividido) |
+| Biquilha moderna | twin | ok (refazer deitada, como as outras) |
+| Softboard performance | softp | ok |
 | Step-up | step | falta |
 | Gun | gun | falta |
+
+## Variantes de rabeta
+O motor muda a rabeta em alguns tipos; o app procura `img/tipos/<tipo>-<rabeta>.webp` (rabeta: square, squash, round, roundpin, pin, swallow) e, sem variante, usa a do tipo. Faltam: short-roundpin, short-round, evo-roundpin, evo-round, mid-round, longp-round.
 
 ## Conferir antes de aceitar
 Número e posição das quilhas, formato da rabeta, nenhum logo ou texto, mesmo fundo. Pedir revisão do Gustavo.
 
 ## Prompt base
 ```
-Studio catalog photo of ONE surfboard, shown twice side by side on the same image: left, top-down view of the deck; right, side profile showing thickness, rocker and fins underneath. Background: smooth seamless pale blue-grey (#EEF4F5) with a soft contact shadow, no props. Board: plain white glassed finish with a thin natural wood stringer (unless stated otherwise). No logos, no brand names, no text, no stickers, no people, no hands. Soft even lighting, realistic proportions, accurate surfboard shape, centered with generous empty margin around it. Wide 16:9 framing.
+Studio catalog photo of ONE surfboard lying flat, shown twice on the same image. Layout exactly like a technical sheet: on the left, top-down view of the deck, nose pointing up; on the right, side profile lying horizontally, nose pointing left, fins hanging below. Same uniform pale blue-grey (#EEF4F5) background across the whole image, no split, no floor line, soft contact shadow, no props. Board: plain white glassed finish with a thin natural wood stringer (unless stated otherwise). No logos, no brand names, no text, no stickers, no people, no hands. Soft even lighting, realistic proportions, accurate surfboard shape, centered with generous empty margin around it. Wide 16:9 framing.
 ```
 
 ## Linha de cada tipo

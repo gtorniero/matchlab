@@ -914,8 +914,10 @@ const PN=Object.fromEntries(KEYS.map(k=>[k,ARCH[k].n]));
 const PL={soft:'Prancha de espuma para aprender',long:'Prancha longa',longp:'Prancha longa esportiva',minimal:'Prancha média-grande',mid:'Prancha média e arredondada',evo:'Pranchinha com mais volume',fish:'Prancha curta e larga',grov:'Pranchinha larga para onda pequena',twin:'Prancha curta de duas quilhas',softp:'Prancha de espuma curta',short:'Pranchinha',step:'Pranchinha para onda grande',gun:'Prancha para onda gigante'};
 const PD={soft:'Macia, grande e larga. Não machuca, boia muito e é a forma mais rápida de ficar de pé.',long:'Acima de 9 pés (2,75 m). Boia muito, desliza em qualquer marola e permite andar sobre ela.',longp:'Longa como um longboard, mas aceita curvas fortes na parede da onda.',minimal:'Entre 7 e 8 pés, larga e grossa. A ponte entre a escolinha e as primeiras curvas.',mid:'Entre a prancha de escolinha e a pranchinha. Rema fácil, entra cedo na onda e desliza bem.',evo:'Formato de pranchinha com mais espuma para remar. Boa para aprender as primeiras manobras.',fish:'Curta, larga e com rabeta em V. Ganha velocidade sozinha em onda fraca.',grov:'Pranchinha encurtada e larga para dias pequenos.',twin:'Curta, solta e rápida, com duas quilhas. Faz curvas longas.',softp:'Curta e de espuma. Divertida, quase indestrutível, boa para viagem.',short:'A prancha curta e fina dos surfistas experientes. Responde rápido, mas exige remada e técnica.',step:'Um pouco maior que a pranchinha, para entrar cedo em onda grande.',gun:'Longa e fina, para ondas gigantes.'};
 /* ilustrações dos tipos (geradas por IA, sem marca) em img/tipos/<tipo>.webp; tipo sem imagem cai no desenho */
-const TIMG=new Set(['mid','short','soft','long','longp','minimal','evo']);
-const timg=(k,cls)=>TIMG.has(k)?`<figure class="timg ${cls||''}"><img src="img/tipos/${k}.webp" width="1400" height="781" loading="lazy" alt="Ilustração de ${esc(PN[k].toLowerCase())}, vista de cima e de lado"><figcaption>Ilustração do tipo, gerada por IA e sem marca. As medidas da sua estão no Passo 1.</figcaption></figure>`:'';
+const TIMG=new Set(['mid','short','soft','long','longp','minimal','evo','fish','twin','softp']);
+/* variante pela rabeta escolhida pelo motor (ex.: short-roundpin.webp); sem variante, usa a do tipo */
+const timgKey=(k,tail)=>{const v=tail?k+'-'+tailKey(tail):'';return TIMG.has(v)?v:k};
+const timg=(k,cls,tail)=>TIMG.has(k)?`<figure class="timg ${cls||''}"><img src="img/tipos/${timgKey(k,tail)}.webp" width="1400" height="781" loading="lazy" alt="Ilustração de ${esc(PN[k].toLowerCase())}, vista de cima e de lado"><figcaption>Ilustração do tipo, gerada por IA e sem marca. As medidas da sua estão no Passo 1.</figcaption></figure>`:'';
 const STY=['pegar onda e deslizar','fazer curvas na parede','manobras fortes','entrar no tubo','aéreos','o estilo clássico'];
 function radarG(labels,series){
   const cx=210,cy=150,R=98,n=labels.length;
@@ -1228,7 +1230,7 @@ function renderReport(){
     <div class="whead"><div style="display:flex;flex-direction:column;gap:8px;min-width:0"><h2>${PN[k]}</h2><span class="tech">Em palavras simples: <b>${PL[k]}</b></span><p class="muted" style="font-size:16px;max-width:56ch">${PD[k]}</p></div>
       <div class="fitbox"><div class="fitring" style="--p:${w.fit}"><b>${w.fit}%</b></div><span class="muted" style="font-size:13px">combina com você</span></div></div>
     <div class="alts"><span class="altl">Também combinam</span>${r.fins.slice(1,3).map((x,i)=>`<div class="alt"><span class="altr" style="--p:${x.fit}"><b>${x.fit}%</b></span><span><small>${i+2}º lugar</small><b>${PN[x.k]}</b></span></div>`).join('')}</div>
-    ${TIMG.has(k)?timg(k):`<div class="hboard">${boardSVG(k,d,dc,{h:true})}</div>`}
+    ${TIMG.has(k)?timg(k,'',dc.tail):`<div class="hboard">${boardSVG(k,d,dc,{h:true})}</div>`}
     ${heroTiles(r)}
     <div class="w-sec"><h3>Por que ela combina com você</h3><div class="why-cards">${whyV(r)}</div></div>
     <div class="w-sec"><h3>Fique atento</h3><div class="att-cards">${attB(r).map(x=>`<div class="att${/Nenhum ponto/.test(x)?' ok':''}">${ICO[/Nenhum ponto/.test(x)?'ok':'warn']}<p>${esc(x)}</p></div>`).join('')}</div></div>
