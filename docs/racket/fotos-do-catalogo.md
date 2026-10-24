@@ -85,12 +85,30 @@ Imagem vinda do feed de afiliado da loja, exibida com o link do produto. Serve t
 | **Tennis Warehouse** | Base mais completa | Novos afiliados pausados; exige exclusividade de varejo de tênis |
 | **Mercado Livre** | API com token | Fotos dos vendedores, qualidade irregular |
 
-### Passos
-1. Criar conta de publisher na Awin com o CNPJ da Beyond the Work.
-2. Pedir entrada nos programas Centauro e Netshoes, citando o Racket Match e o modelo "link só depois da recomendação, declarado".
-3. Aprovado, baixar o feed de produtos e casar cada raquete do catálogo pelo nome do modelo e geração. Conferir à mão: lojas misturam gerações e versões (L, Team, Lite).
-4. Guardar no catálogo só o endereço da imagem e do produto. Respeitar os termos da loja sobre baixar ou não a imagem.
-5. Raquete que nenhum feed cobre continua no caminho 1 ou na silhueta.
+### Passo a passo
+
+**Fase A: cadastro (Beyond the Work)**
+- [ ] 1. Cadastro de publisher na Awin Brasil (awin.com/br, "Seja um publisher"). Região principal: Brasil. Tipo de divulgação: conteúdo / comparador. Site: o endereço público do MATCH LAB.
+- [ ] 2. Pagar o depósito do cadastro, se o formulário pedir. Os termos da Awin Brasil falam em "pequeno depósito"; um blog cita R$ 5, devolvido na primeira comissão (não confirmado em fonte oficial).
+- [ ] 3. Dados de pagamento: CNPJ (Centauro não aceita pessoa física). A Awin leva cerca de 2 dias úteis para validar.
+- [ ] 4. Aprovação da conta: blogs citam 1 a 3 dias úteis.
+
+Texto para o campo "descrição do site" (adaptar):
+> O MATCH LAB tem testes gratuitos que indicam equipamento esportivo pelo perfil de cada pessoa. O Racket Match compara 58 raquetes de tênis de 9 marcas. O ranking é independente: nenhuma marca ou loja paga para aparecer, e o link de compra aparece só depois da recomendação, declarado como afiliado.
+
+**Fase B: programas**
+- [ ] 5. Pedir entrada na Centauro BR e na Netshoes, com o mesmo texto. Ler os termos de cada programa: cookie, taxa operacional e o que pode ou não ser feito com as imagens.
+- [ ] 6. Na aprovação, em Toolbox > My Product Feeds (Ferramentas > Feeds de produto), gerar o feed em CSV com as colunas `product_name`, `brand_name`, `merchant_category`, `merchant_image_url`, `aw_deep_link`, `search_price`, `merchant_name`, `in_stock`. A imagem gerada pela própria Awin (`aw_image_url`) só existe em Reino Unido, Irlanda, Canadá e EUA; no Brasil a foto vem de `merchant_image_url`.
+
+**Fase C: casar o feed (sessão do Racket)**
+- [ ] 7. Rodar `node apps/racket/tools/casar-feed.mjs feed.csv.gz` (aceita várias lojas de uma vez). Ele gera `feed-casado.md` e `feed-casado.json`.
+  - Descarta: infantil, corda, bolsa, acessórios, padel, outra versão (Team, Lite, L, Pro, Tour, 98 × 100), outra geração (ano ou v diferente) e outro peso.
+  - Marca "conferir foto" quando a geração bate no nome, e "conferir geração" quando a loja não informa.
+- [ ] 8. Conferir à mão cada foto marcada (a loja pode usar foto de outra geração).
+- [ ] 9. Levar ao `CATALOG` só as conferidas, com crédito da loja. O link de compra fica para depois do pagamento real, e só depois da recomendação.
+- [ ] 10. Raquete que nenhum feed cobre continua no caminho 1 ou na silhueta.
+
+Bônus: `search_price` dá preço real de loja em R$, que pode substituir a estimativa em dólar quando houver oferta.
 
 ## No app (quando houver foto)
 - Campo `img` no `CATALOG` com a URL e `imgSrc` com o crédito ("Imagem: Wilson" ou "Imagem: Centauro").
