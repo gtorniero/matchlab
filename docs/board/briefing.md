@@ -26,7 +26,7 @@
 - Ninguém entrega a ficha completa sem marca, em português, ligada a loja ou shaper no Brasil.
 
 ## Pendências
-0. Prova social no PDF (página 4): trechos de review por modelo, com fonte, testador, nível e nota (mínimo de 2 por item). Hoje a página mostra os modelos de referência de cada tipo e a base de calibração; os trechos dependem do catálogo de modelos (item 2) ou de uma coleta própria.
+0. Prova social no PDF (página 4): 28 trechos conferidos em `docs/board/reviews.md`; falta chegar a 3 por tipo e achar review independente de gun.
 1. Revisar as regras do motor com o Gustavo (litragem por nível, tipo de prancha por estilo e onda).
 2. Catálogo com fotos: feed de Google Shopping das lojas de surf (Board's Point, Sea Club, Ukelele, Silver Surf, FM Surf) e API do Mercado Livre; mostrar "à venda dentro das suas faixas".
 3. Ferramenta grátis de litragem para SEO.
