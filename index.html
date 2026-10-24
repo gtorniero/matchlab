@@ -441,8 +441,8 @@ const appLockup = (k,s=34) => `${ICON[k](s)}<span class="wm"><span class="wordma
 /* chrome */
 document.getElementById("brandHome").innerHTML = labLockup(34);
 document.getElementById("footBrand").innerHTML = labLockup(28);
-document.getElementById("nav").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${ICON[k](24)}${AREAS[k].name}</a>`).join("") + `<span class="sep" aria-hidden="true"></span><a href="#biblioteca" data-go="biblioteca">Biblioteca</a><a href="#conceito" data-go="conceito">Como funciona</a>`;
-document.getElementById("footLinks").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${AREAS[k].name}</a>`).join("") + `<a href="#biblioteca" data-go="biblioteca">Biblioteca</a><a href="ferramentas/litragem/index.html">Calculadora de litragem</a>`;
+document.getElementById("nav").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${ICON[k](24)}${AREAS[k].name}</a>`).join("") + `<span class="sep" aria-hidden="true"></span><a href="#blog" data-go="blog">Blog</a><a href="#conceito" data-go="conceito">Como funciona</a>`;
+document.getElementById("footLinks").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${AREAS[k].name}</a>`).join("") + `<a href="#blog" data-go="blog">Blog</a><a href="ferramentas/litragem/index.html">Calculadora de litragem</a>`;
 
 function reportFrame(k, h){
   const a = AREAS[k];
@@ -517,7 +517,7 @@ function home(){
   </div></section>
 
   <section id="areas"><div class="wrap">
-    <div class="shead"><div><div class="eyebrow">Três apps, um método</div><h2>Comece pelo seu esporte.</h2></div><p>Cada app tem o próprio teste, um relatório com a análise completa e uma biblioteca de guias.</p></div>
+    <div class="shead"><div><div class="eyebrow">Três apps, um método</div><h2>Comece pelo seu esporte.</h2></div><p>Cada app tem o próprio teste, um relatório com a análise completa e um blog com guias.</p></div>
     <div class="areas">${ORDER.map(k=>{const a=AREAS[k];return `<article class="area-card ${a.cls}">
       <a class="banner" href="#${k}" data-go="${k}">${MARK[k]()}<div><span class="wordmark">${a.w1} <em>Match</em></span><small>${a.sport} · by MATCH LAB</small></div></a>
       <div class="body"><p class="q">${a.q}</p>${vars(a)}
@@ -530,7 +530,7 @@ function home(){
   <section id="modelo" style="padding-top:0"><div class="wrap" id="modelBox">${modelSec()}</div></section>
 
   <section><div class="wrap">
-    <div class="shead"><div><div class="eyebrow">Biblioteca · ${A.length} guias</div><h2>Antes de comprar, entenda.</h2></div><a class="btn btn-ghost" href="#biblioteca" data-go="biblioteca">Ver todos os guias <span class="arr">→</span></a></div>
+    <div class="shead"><div><div class="eyebrow">Blog · ${A.length} guias</div><h2>Antes de comprar, entenda.</h2></div><a class="btn btn-ghost" href="#blog" data-go="blog">Ver todos os guias <span class="arr">→</span></a></div>
     <div class="grid-a">${feat.map(acard).join("")}</div>
   </div></section>
 `;
@@ -595,7 +595,7 @@ function library(){
     <p class="lede">${A.length} guias sobre como escolher, por que escolher certo importa, a evolução de cada esporte e as tecnologias por trás do equipamento.</p>
   </div></section>
   <section style="padding-top:36px"><div class="wrap">
-    <div class="filters" role="group" aria-label="Filtrar biblioteca">
+    <div class="filters" role="group" aria-label="Filtrar blog">
       <button type="button" data-lib="todas" aria-pressed="${libArea==="todas"}">Todos</button>
       ${ORDER.map(k=>`<button type="button" data-lib="${k}" aria-pressed="${k===libArea}">${ICON[k](20)}${AREAS[k].name}</button>`).join("")}
       <label class="search" for="q"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Buscar: drop, litragem, RA…" value="${esc(libQ)}"></label>
@@ -665,7 +665,7 @@ function article(id){
 }
 
 /* ---------- ROUTER ---------- */
-const LEGACY = {raquete:"racket", prancha:"board"};
+const LEGACY = {raquete:"racket", prancha:"board", biblioteca:"blog"};
 function setNav(view){
   const k = view.startsWith("a-") ? DATA2KEY[view.slice(2).split("-")[0]] : view;
   document.querySelectorAll(".nav a").forEach(a=>{ a.removeAttribute("aria-current"); if(a.dataset.go===k) a.setAttribute("aria-current","page"); });
@@ -675,7 +675,7 @@ function render(view){
   let html, after;
   if(view==="inicio"||view==="conceito"){ html = home(); }
   else if(AREAS[view]){ hubFilter="todos"; curHub=view; html = hub(view); after=()=>fillHub(view); }
-  else if(view==="biblioteca"){ html = library(); after=fillLib; }
+  else if(view==="blog"){ html = library(); after=fillLib; }
   else if(view.startsWith("a-")){ html = article(view.slice(2)); }
   if(!html){ view="inicio"; html=home(); }
   app.innerHTML = html; if(after) after();
