@@ -21,6 +21,16 @@ O app só mostra a ilustração dos tipos listados em `TIMG`; tipo sem imagem ca
 | Step-up | step | falta |
 | Gun | gun | falta |
 
+## Backup
+Os originais do Gemini (2000 px) estão em `docs/board/imagens-originais/`, inclusive o groveler rejeitado.
+
+## Próxima sessão (pendente)
+1. Gerar step-up e gun.
+2. Refazer groveler (saiu em pé e com fundo dividido) e, se quiser, fish e biquilha deitadas.
+3. Gerar as 6 variantes de rabeta: short-roundpin, short-round, evo-roundpin, evo-round, mid-round, longp-round.
+4. Opcional: refazer a mini-malibu mais larga (ficou parecida com a mid-length).
+5. Salvar em `apps/board/img/tipos/`, incluir a chave em `TIMG` e mandar para revisão do Gustavo.
+
 ## Variantes de rabeta
 O motor muda a rabeta em alguns tipos; o app procura `img/tipos/<tipo>-<rabeta>.webp` (rabeta: square, squash, round, roundpin, pin, swallow) e, sem variante, usa a do tipo. Faltam: short-roundpin, short-round, evo-roundpin, evo-round, mid-round, longp-round.
 
