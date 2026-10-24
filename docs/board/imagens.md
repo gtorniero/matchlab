@@ -12,8 +12,8 @@ O app só mostra a ilustração dos tipos listados em `TIMG`; tipo sem imagem ca
 | Softboard de aprendizado | soft | ok |
 | Longboard clássico | long | ok |
 | Longboard performance | longp | ok |
-| Mini-malibu / funboard | minimal | falta |
-| Evolution / allround | evo | falta |
+| Mini-malibu / funboard | minimal | ok (refazer mais larga, se der) |
+| Evolution / allround | evo | ok |
 | Fish | fish | falta |
 | Groveler | grov | falta |
 | Biquilha moderna | twin | falta |
