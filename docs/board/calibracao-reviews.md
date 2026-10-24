@@ -39,3 +39,12 @@ Pro 0,365 (pranchinha), 0,41 (step-up) · Avançado 0,375–0,41 · Intermediár
 - Longboard, gun e step-up têm poucos casos com tamanho de onda. Faltaram Joel Tudor, Kassia Meador e guns de onda grande (limite de buscas).
 - Litragem de soft para iniciante sai ~25% acima das tabelas de mínimo; mantido de propósito (softs reais de 8' têm 70–86 L). Validar com o Gustavo.
 - Base enviesada para Austrália (Boardcave, Seabreeze) e JS Industries nos atletas. Próxima rodada: lojas BR, Surfboard Empire, Degree 33, Reddit, e 30–50 alunos reais do Gustavo.
+
+## Rodada 2: coerência e teste de fogo (24/out/2026)
+Sem casos novos; correções de regra encontradas testando perfis-limite no motor publicado.
+- **Softboard +12** quando o tempo de surf é de até 6 meses e a pessoa marca até 2 habilidades (correção do `docs/teste-de-fogo.md`, que ainda não estava no motor). Antes, um iniciante de 3 meses que já pega espuma sozinho caía em mini-malibu.
+- **Prancha para dias grandes** (papel no quiver): pranchinha −8, step-up +4. Antes, um avançado que pedia prancha para dias grandes recebia pranchinha em 1º.
+- **Onda acima de 2,5 m**, só para intermediário avançado e avançado: gun +14, pranchinha −4. Antes, o gun ficava em 4º mesmo com onda grande, laje e prancha para dias grandes; agora fica em 2º, atrás do step-up.
+- **Groveler em onda de 1,5 m para cima**: −6. Antes, um intermediário que gosta de manobra recebia groveler em onda de 1,5 a 2,5 m; agora recebe evolution.
+- O perfil do "Ver um exemplo pronto" não mudou (Mid-length 96%, 37,6 L).
+- Não houve nova medição nos 422 casos (a base não está no repositório). Rodar de novo na próxima rodada, junto com os 30–50 alunos do Gustavo.
