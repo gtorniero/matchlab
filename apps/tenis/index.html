@@ -99,7 +99,7 @@ select,input[type=number]{font:inherit;background:var(--bg);color:var(--ink);bor
 .legend i{display:inline-block;width:14px;height:4px;border-radius:2px;vertical-align:middle;margin-right:6px}
 .arm{display:flex;gap:14px;align-items:center}
 .arm b{font-family:var(--f-mono);font-size:34px}
-.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.plans{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;max-width:520px;width:100%;margin:0 auto}
 .plan{border:1.5px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px}
 .plan.best{border-color:var(--pri)}
 .plan .price{font-family:var(--f-mono);font-size:30px;font-weight:700}
@@ -125,7 +125,6 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .share small{opacity:.85}
 .mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .mini .panel{gap:10px}
-.lock{border:1.5px dashed var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
 footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
 
 .erra{display:flex;flex-direction:column;gap:22px}
@@ -201,7 +200,7 @@ table.t10 tr.pref td{background:var(--soft)}
 .sharehex{--line:rgba(255,255,255,.25);--muted:rgba(255,255,255,.8);--hexa:rgba(255,255,255,.06);--hexb:rgba(255,255,255,.1);--ink:#fff;--surface:#0E4D64}
 .sharehex .legend{display:none}
 @media (max-width:760px){
-  .hero,.two,.plans,.mini{grid-template-columns:minmax(0,1fr)}
+  .hero,.two,.mini{grid-template-columns:minmax(0,1fr)}
   .diffs{grid-template-columns:minmax(0,1fr)}
   .specs{grid-template-columns:repeat(3,minmax(0,1fr))}
   .kpis{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
@@ -912,13 +911,13 @@ $('#next').addEventListener('click',()=>{
 function conv(){const o={};Q.forEach(q=>{const v=A[q.id];if(v===undefined||v==='')return;o[q.id]=Array.isArray(v)?v.map(Number).filter(x=>x>0):Number(v)});return o}
 
 /* ---------- análise ---------- */
-let RES=null,tier=0;
+let RES=null;
 function runAnalysis(){
   show('analysis');
   const steps=['Lendo seu peso e o formato do seu pé','Traduzindo ritmo e quilometragem em categoria','Cruzando com '+M.length+' tênis de '+BRANDS.length+' marcas','Ajustando espuma, drop e orçamento','Calculando durabilidade e custo por km'];
   const ul=$('#alist');ul.innerHTML=steps.map(s=>`<li>${s}</li>`).join('');
   const lis=[...ul.children];const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  RES=engine(conv(),true);tier=0;
+  RES=engine(conv(),true);
   let i=0;const tick=()=>{if(i<lis.length){lis[i].className='ok';i++;$('#abar').style.width=(i/lis.length*100)+'%';setTimeout(tick,reduce?0:380)}else{renderPreview();show('preview')}};
   $('#abar').style.width='0';tick();
 }
@@ -979,23 +978,17 @@ function renderPreview(){
   <div class="panel">
     <h2>Revele seus tênis</h2>
     <div class="plans">
-      <div class="plan">
-        <h3>Seu tênis ideal</h3><span class="price">R$ 7,99</span>
-        <ul><li>Modelo, preço médio e Fit Score</li><li>Ficha técnica e perfil lateral</li><li>Por que combina com você e pontos de atenção</li><li>Tamanho e data de troca</li></ul>
-        <button class="btn btn-pri" type="button" id="buy1">Pagar com Pix (simulação)</button>
-      </div>
       <div class="plan best">
-        <h3>Setup completo</h3><span class="price">R$ 12,90</span>
-        <ul><li>Tudo do plano anterior</li><li>2º e 3º lugares, com marca e modelo</li><li>Seu top 10 com match, marca e preço</li><li>Top 3 geral ou top 3 da sua marca, lado a lado</li><li>Ranking por marca: o melhor de cada uma para você</li><li>Segundo par para rodízio</li><li>Dicas para pagar menos</li></ul>
-        <button class="btn btn-go" type="button" id="buy2">Pagar com Pix (simulação)</button>
+        <h3>Relatório completo</h3><span class="price">R$ 9,99</span>
+        <ul><li>Seu tênis ideal com Fit Score, ficha técnica e perfil lateral</li><li>Por que combina com você e pontos de atenção</li><li>Tamanho e data de troca</li><li>2º e 3º lugares, com marca e modelo</li><li>Seu top 10 com match, marca e preço</li><li>Top 3 geral ou top 3 da sua marca, lado a lado</li><li>Ranking por marca: o melhor de cada uma para você</li><li>Segundo par para rodízio</li><li>Dicas para pagar menos</li></ul>
+        <button class="btn btn-go" type="button" id="buy">Pagar com Pix (simulação)</button>
       </div>
     </div>
     <p class="note">O cálculo já foi feito: o pagamento só revela o resultado. Se houver link de compra, ele aparece depois, e a recomendação não muda por isso.</p>
     <div class="row"><button class="btn btn-ghost" type="button" id="redo">Refazer respostas</button></div>
   </div>`;
   VZ.mount($('#tease3d'),r.fins[0].m,{silhouette:1});
-  $('#buy1').onclick=()=>{tier=1;renderReport();show('report')};
-  $('#buy2').onclick=()=>{tier=2;renderReport();show('report')};
+  $('#buy').onclick=()=>{renderReport();show('report')};
   $('#redo').onclick=()=>{step=0;show('quiz');renderQs()};
 }
 
@@ -1062,7 +1055,7 @@ function renderReport(){
       <div id="ibar">${VZ.bars(m)}</div>
     </div>
   </div>`;
-  if(tier>=2){
+  {
     h+=`<div class="mini">${r.fins.slice(1).map((x,i)=>`<div class="panel"><p class="eyebrow">${i+2}º lugar · ${esc(x.m.b)}</p><div class="whead"><h2>${esc(modelOf(x.m))}</h2><div class="fit" style="font-size:28px">${x.fit}%</div></div><p class="mono" style="font-size:14px">${priceTxt(x.m)} · ${x.m.g} g · drop ${dec1(x.m.dr)} mm · ${x.m.du} km</p><p style="font-size:15px">${esc(x.m.nt)}</p>${brandLink(x.m)}</div>`).join('')}</div>`;
     const t10=r.top10,mk=Math.max(...t10.map(x=>x.m.p/x.m.du));
     h+=`<div class="panel"><div class="vhead"><div><h3>Seus 10 que mais combinam</h3><p class="muted" style="font-size:14px">Fit Score, marca e preço lado a lado, entre os ${M.length} tênis do catálogo.</p></div>
@@ -1078,8 +1071,6 @@ function renderReport(){
       <p class="note">Marcas com menos modelos no catálogo têm menos chance de ter um tênis da categoria ideal; por isso o Fit Score delas pode ser mais baixo.</p></div>`;
     if(r.second)h+=`<div class="panel"><h3>Segundo par para rodízio</h3><p class="muted">Quem alterna dois tênis teve 39% menos risco de lesão num estudo com 264 corredores. Use este ${r.second.c==='sup'?'só em prova e treinos-chave':r.second.c==='rap'?'nos treinos de ritmo e tiro':'na rodagem leve'}.</p><div class="whead"><div><p class="eyebrow">${esc(r.second.b)}</p><h2>${esc(modelOf(r.second))}</h2><p class="muted mono" style="font-size:14px">${priceTxt(r.second)} · ${CAT[r.second.c].n}</p>${brandLink(r.second)}</div></div><p class="note">Os dois pares juntos: ${brl(m.p+r.second.p)}. Custo por km do rodízio: ${('R$ '+((m.p+r.second.p)/(m.du+r.second.du)).toFixed(2)).replace('.',',')}.</p><div style="max-width:460px;width:100%;margin:0 auto">${VZ.hex(SX,[{name:modelOf(m),v:idx(m),c:'var(--pri)',fill:'var(--pri)',fo:.14},{name:modelOf(r.second),v:idx(r.second),c:'var(--ball)',fill:'var(--ball)',fo:.14}])}</div><p class="muted" style="font-size:14px;text-align:center">Juntos, os dois cobrem mais área do hexágono do que qualquer um sozinho.</p></div>`;
     h+=`<div class="panel"><h3>Para pagar menos</h3><ul class="why"><li>A versão da coleção anterior costuma sair 30% a 50% mais barata, com quase o mesmo desempenho.</li><li>Lançamentos raramente entram em promoção nos primeiros meses.</li><li>Compare o preço por km, não só o preço: um tênis mais caro que dura mais pode sair mais barato.</li></ul></div>`;
-  }else{
-    h+=`<div class="lock"><h3>2º e 3º lugares, ranking por marca e segundo par</h3><p class="muted">Os outros finalistas com marca e modelo, o melhor tênis de cada marca para você, a comparação lado a lado com custo por km, o segundo par para rodízio e as dicas para pagar menos estão no setup completo.</p><button class="btn btn-go" type="button" id="up">Completar por R$ 4,91 (simulação)</button></div>`;
   }
   h+=`<div class="panel"><h3>Seu perfil de corredor</h3><p class="muted">Card pronto para story. Mostra o perfil, não o modelo.</p>
     <div class="share"><small class="mono">TENIS MATCH · PERFIL DE CORREDOR</small><div class="big">${PROF[r.level]}</div>
@@ -1089,7 +1080,7 @@ function renderReport(){
   <div class="row"><button class="btn btn-ghost" type="button" id="again">Refazer o teste</button></div>`;
   $('#report').innerHTML=h;
   VZ.mount($('#w3d'),m);
-  if(tier>=2){
+  {
     const cols=['var(--pri)','var(--clay)','var(--muted)'],avgKm=M.reduce((s,x)=>s+x.p/x.du,0)/M.length;
     const cmp=list=>{const maxKm=Math.max(...list.map(f=>f.m.p/f.m.du));
       $('#cmpBody').innerHTML=`<div class="cmp">${list.map((f,k)=>`<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><div class="stage"><div id="c3d${k}"></div></div><h4>${k+1}º · ${esc(f.m.n)}</h4><p class="mono muted" style="font-size:13px">${f.fit}% · ${priceTxt(f.m).replace(' (aprox.)','')}</p>${brandLink(f.m)}</div>`).join('')}</div>
@@ -1110,7 +1101,6 @@ function renderReport(){
   document.querySelectorAll('#report [data-v]').forEach(b=>b.onclick=()=>{const v=b.dataset.v;document.querySelectorAll('#report [data-v]').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#w3d').hidden=v!=='3d';$('#w3dh').hidden=v!=='3d';$('#wcut').hidden=v!=='cut'});
   const iv=v=>{document.querySelectorAll('#report [data-i]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.i===v));$('#ihex').hidden=v!=='hex';$('#ibar').hidden=v!=='bar'};
   document.querySelectorAll('#report [data-i]').forEach(b=>b.onclick=()=>iv(b.dataset.i));iv('hex');
-  const up=$('#up');if(up)up.onclick=()=>{tier=2;renderReport();window.scrollTo({top:0,behavior:'smooth'})};
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};
 }
 
