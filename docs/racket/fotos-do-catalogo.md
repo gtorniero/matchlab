@@ -79,7 +79,8 @@ Imagem vinda do feed de afiliado da loja, exibida com o link do produto. Serve t
 | Rede / loja | O que se sabe | Atenção |
 |---|---|---|
 | **Centauro (Awin)** | Vende raquetes Babolat e Yonex no Brasil | Termos da Awin: não aceita afiliado pessoa física (precisa CNPJ); cookie de 1 dia; sem remarketing nem popup em produto e carrinho |
-| **Netshoes (Awin)** | Programa na Awin, comissão progressiva | Cadastro exige conta Awin; conferir se o feed traz raquetes |
+| **Netshoes (Rakuten)** | Não aparece na Awin (conferido em out/2026). Programa "Parceiro Netshoes" gerido pela Rakuten desde 2023 (netshoes.com.br/sub/afiliados) | Outra rede, outro cadastro; conferir se tem feed com raquetes |
+| **Decathlon** | Tem loja de raquete (Head, Wilson, Babolat, Yonex, Tecnifibre). Em 2020 o programa era pela Lomadee; há perfil da Decathlon na Awin | Buscar "Decathlon" na Awin e ver se é o programa do Brasil |
 | **ArtWalk (Awin)** | Especialista em calçado de tênis | Útil para o Tenis Match, não para raquete |
 | **Amazon (Creators API)** | Substituiu a API antiga | Exige conta de afiliado com vendas; imagem exibida dos servidores da Amazon, sem baixar |
 | **Tennis Warehouse** | Base mais completa | Novos afiliados pausados; exige exclusividade de varejo de tênis |
@@ -97,7 +98,7 @@ Texto para o campo "descrição do site" (adaptar):
 > O MATCH LAB tem testes gratuitos que indicam equipamento esportivo pelo perfil de cada pessoa. O Racket Match compara 58 raquetes de tênis de 9 marcas. O ranking é independente: nenhuma marca ou loja paga para aparecer, e o link de compra aparece só depois da recomendação, declarado como afiliado.
 
 **Fase B: programas**
-- [ ] 5. Pedir entrada na Centauro BR e na Netshoes, com o mesmo texto. Ler os termos de cada programa: cookie, taxa operacional e o que pode ou não ser feito com as imagens.
+- [ ] 5. Pedir entrada na Centauro BR (e na Decathlon, se o programa do Brasil estiver na Awin), com o mesmo texto. Netshoes fica na Rakuten, em cadastro à parte. Ler os termos de cada programa: cookie, taxa operacional e o que pode ou não ser feito com as imagens.
 - [ ] 6. Na aprovação, em Toolbox > My Product Feeds (Ferramentas > Feeds de produto), gerar o feed em CSV com as colunas `product_name`, `brand_name`, `merchant_category`, `merchant_image_url`, `aw_deep_link`, `search_price`, `merchant_name`, `in_stock`. A imagem gerada pela própria Awin (`aw_image_url`) só existe em Reino Unido, Irlanda, Canadá e EUA; no Brasil a foto vem de `merchant_image_url`.
 
 **Fase C: casar o feed (sessão do Racket)**
