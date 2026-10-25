@@ -163,10 +163,6 @@ table.t10 tr.pref td{background:var(--soft)}
 .blink:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
 /* visuais */
 .stage{background:var(--stage);border:1px solid var(--line);border-radius:16px;padding:8px;position:relative;display:flex;flex-direction:column;gap:6px;min-width:0}
-.s3d canvas{display:block;cursor:grab;border-radius:12px;touch-action:pan-y}
-.s3d canvas:active{cursor:grabbing}
-.s3d canvas:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
-.hint{font-size:12px;color:var(--muted);text-align:center}
 .seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
 .seg button{font:inherit;font-size:13px;font-weight:700;border:0;background:transparent;color:var(--muted);border-radius:999px;padding:7px 14px;cursor:pointer;min-height:36px}
 .seg button[aria-pressed="true"]{background:var(--pri);color:var(--pri-ink)}
@@ -179,10 +175,7 @@ table.t10 tr.pref td{background:var(--soft)}
 .labbar i{position:absolute;inset:0 auto 0 0;border-radius:99px;background:linear-gradient(90deg,var(--pri),color-mix(in srgb,var(--pri) 70%,var(--ball)));transition:width .5s}
 .labbar em{position:absolute;top:-4px;bottom:-4px;width:3px;margin-left:-1.5px;background:var(--ink);border-radius:2px}
 .labrow small{font-size:12.5px}
-.teaser{position:relative}
-.teaser .q3{position:absolute;inset:auto 0 14px 0;text-align:center;font-family:var(--f-display);font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .cmp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.cmp .stage{padding:6px}
 .cmp h4{margin:0;font-family:var(--f-display);font-size:16px}
 .kmbar{display:flex;align-items:center;gap:8px}
 .kmbar i{display:block;height:8px;border-radius:99px;background:var(--ball)}
@@ -244,7 +237,7 @@ table.t10 tr.pref td{background:var(--soft)}
     <div class="diffs">
       <div class="diff"><h3>Preço médio no Brasil</h3><p>Cada finalista com preço de referência e custo por km. Você sabe quanto vai gastar antes de abrir a loja.</p></div>
       <div class="diff"><h3>Sem mito da pisada</h3><p>Neutro por padrão, como mostram os estudos. Estabilidade só entra se você sente desconforto com neutro.</p></div>
-      <div class="diff"><h3>Ficha de laboratório</h3><p>Tênis em 3D, corte da espuma em mm e seis índices contra a média do catálogo.</p></div>
+      <div class="diff"><h3>Ficha de laboratório</h3><p>Corte da espuma em mm e seis índices contra a média do catálogo.</p></div>
       <div class="diff"><h3>Quando trocar</h3><p>A data de troca pela sua quilometragem e um segundo par para rodízio, se fizer sentido.</p></div>
     </div>
     <div class="erra">
@@ -306,7 +299,6 @@ table.t10 tr.pref td{background:var(--soft)}
   </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -670,27 +662,11 @@ function factors(r){const a=r.a,m=r.fins[0].m,out=[];const iv=idx(m),id=idealVec
   if(r.peso>=85&&stackOf(m)>=36)out.push(['+','Espuma alta para '+r.peso+' kg']);
   return out.slice(0,6)}
 const CATCOL={ent:'#8E9AA6',dia:'#2E86DE',max:'#8E44AD',est:'#16A085',rap:'#E4572E',sup:'#D4A017',tri:'#6B8E23',con:'#C0587E'};
-function shoeSVG(m){
-  const W=460,H=200,base=168,sc=1.35,heel=stackOf(m),fore=foreOf(m),spring=m.c==='sup'||m.c==='max'?14:m.c==='rap'?10:7;
-  const hx=78,tx=410,hY=base-heel*sc,fY=base-fore*sc;
-  const sole='M'+hx+' '+base+' C'+(hx+120)+' '+(base+1)+' '+(tx-110)+' '+(base+1)+' '+(tx-50)+' '+(base-2)+' Q'+(tx-8)+' '+(base-spring*0.6)+' '+tx+' '+(fY+2)+' L'+(tx-36)+' '+fY+' C'+(tx-130)+' '+(fY+1)+' '+(hx+120)+' '+(hY+2)+' '+hx+' '+hY+' Z';
-  const upper='M'+hx+' '+hY+' C'+(hx-10)+' '+(hY-28)+' '+(hx-4)+' '+(hY-66)+' '+(hx+18)+' '+(hY-74)+' Q'+(hx+60)+' '+(hY-58)+' '+(hx+104)+' '+(hY-66)+' L'+(hx+128)+' '+(hY-76)+' C'+(hx+200)+' '+(hY-56)+' '+(tx-70)+' '+(fY-40)+' '+(tx-22)+' '+(fY-22)+' Q'+(tx+8)+' '+(fY-10)+' '+tx+' '+(fY+2)+' L'+(tx-36)+' '+fY+' C'+(tx-130)+' '+(fY+1)+' '+(hx+120)+' '+(hY+2)+' '+hx+' '+hY+' Z';
-  const col='#FF8A3D';
-  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Perfil lateral do '+esc(m.n)+'" style="width:100%;max-width:460px;height:auto;display:block;margin:0 auto">';
-  s+='<path d="'+upper+'" fill="'+col+'" fill-opacity=".9"/>';
-  for(let j=0;j<5;j++){const lx=hx+140+j*30,ly=hY-70+j*9+(fY-hY)*j/8;s+='<line x1="'+(lx-8)+'" y1="'+(ly-2)+'" x2="'+(lx+8)+'" y2="'+(ly+4)+'" stroke="#fff" stroke-opacity=".8" stroke-width="2.5" stroke-linecap="round"/>'}
-  s+='<path d="'+sole+'" fill="var(--cartao)" stroke="var(--tinta)" stroke-width="1.6"/>';
-  const pl=plateOf(m);if(pl)s+='<path d="M'+(hx+16)+' '+(base-heel*sc*0.5)+' C'+(hx+140)+' '+(base-heel*sc*0.3)+' '+(tx-110)+' '+(base-fore*sc*0.3)+' '+(tx-14)+' '+(base-fore*sc*0.7)+'" fill="none" stroke="'+(pl==='carbono'?'#222':'#888')+'" stroke-width="3"/>';
-  s+='<text x="'+(hx-8)+'" y="'+(base-heel*sc/2+4)+'" text-anchor="end" font-size="13" fill="var(--tinta-2)" font-family="DM Sans,sans-serif">'+heel+' mm</text>';
-  s+='<text x="'+(W/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" fill="var(--tinta-2)" font-family="DM Sans,sans-serif">antepé '+fore+' mm · drop '+String(m.dr).replace('.',',')+' mm'+(pl?' · placa de '+(pl==='carbono'?'carbono':'propulsão'):'')+'</text>';
-  return s+'</svg>';
-}
 const brandLink=(m,t)=>m.url?`<a class="blink" href="${esc(m.url)}" target="_blank" rel="noopener">${t||(m.ut==='produto'?'Ver no site da '+esc(m.b):'Site da '+esc(m.b))} ↗</a>`:'';
 const priceTxt=m=>(m.ap?'~':'')+'R$ '+m.p.toLocaleString('pt-BR',{minimumFractionDigits:m.p%1?2:0,maximumFractionDigits:2})+(!m.br?' (importado)':m.ap?' (aprox.)':'');
 const kmCost=m=>'R$ '+(m.p/m.du).toFixed(2).replace('.',',')+' por km';
-/* ---------- visuais: tênis 3D, hexágono, barras, mapa do catálogo ---------- */
+/* ---------- visuais: corte da espuma, hexágono, barras, mapa do catálogo ---------- */
 const VZ=(function(){
-const reduce=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 const lerp=(a,b,t)=>a+(b-a)*t;
 const sstep=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
 function pw(kp,u){for(let i=1;i<kp.length;i++){if(u<=kp[i][0]){const t=(u-kp[i-1][0])/(kp[i][0]-kp[i-1][0]);const s=t*t*(3-2*t);return lerp(kp[i-1][1],kp[i][1],s)}}return kp[kp.length-1][1]}
@@ -702,93 +678,10 @@ function shape(m){
   const W=[[0,30],[.04,62],[.1,74],[.3,66],[.45,68],[.68,98],[.82,96],[.94,72],[1,24]];
   const w=u=>pw(W,u)*wide*(m.c==='max'||m.c==='est'?1.06:1);
   const b=u=>(u<.07?Math.pow((.07-u)/.07,2)*9:0)+(u>.62?Math.pow((u-.62)/.38,2)*spring:0);
-  const st=u=>lerp(heel,fore,sstep(.18,.78,u))*(u<.02?.8:1);
+  const st=u=>lerp(heel,fore,sstep(.18,.78,u));
   const H=[[0,34],[.04,70],[.13,60],[.24,62],[.42,70],[.6,52],[.78,34],[.92,20],[1,8]];
   const h=u=>pw(H,u)*(m.c==='tri'?1.04:1);
-  return {L,heel,fore,w,b,t:u=>b(u)+st(u),h,spring};
-}
-function loft(THREE,n,ringN,fn){
-  const pos=[],idx=[];
-  for(let i=0;i<=n;i++){const u=.003+(i/n)*.994;const ring=fn(u);ring.forEach(p=>pos.push(p[0],p[1],p[2]))}
-  for(let i=0;i<n;i++)for(let j=0;j<ringN;j++){const a=i*ringN+j,b=i*ringN+(j+1)%ringN,c=(i+1)*ringN+j,d=(i+1)*ringN+(j+1)%ringN;idx.push(a,c,b,b,c,d)}
-  // tampas
-  [0,n].forEach((i,k)=>{let cx=0,cy=0,cz=0;for(let j=0;j<ringN;j++){cx+=pos[(i*ringN+j)*3];cy+=pos[(i*ringN+j)*3+1];cz+=pos[(i*ringN+j)*3+2]}
-    const ci=pos.length/3;pos.push(cx/ringN,cy/ringN,cz/ringN);
-    for(let j=0;j<ringN;j++){const a=i*ringN+j,b=i*ringN+(j+1)%ringN;k?idx.push(ci,a,b):idx.push(ci,b,a)}});
-  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);g.computeVertexNormals();return g;
-}
-const se=(c,p)=>Math.sign(c)*Math.pow(Math.abs(c),2/p);
-const env=u=>Math.pow(Math.min(1,u/.035,(1-u)/.05),.5);
-function build(THREE,m,opt){
-  const S=shape(m),grp=new THREE.Group(),R=28,N=90;
-  const CW=[[0xff8a3d,0xf4f1ea],[0x0e4d64,0xff8a3d],[0xe9eef0,0x0e4d64],[0x1d2327,0xff8a3d],[0xc6f04a,0xf4f1ea],[0x2e86de,0xf4f1ea],[0xe4572e,0xf4f1ea],[0x6b8e23,0x2b2b2b]];
-  let hsh=0;for(const ch of m.n)hsh=(hsh*31+ch.charCodeAt(0))%9973;const cw=m.c==='tri'?CW[7]:CW[hsh%7];
-  const col=new THREE.Color(cw[0]);const acc=new THREE.Color(cw[1]);
-  const mat=(c,r,me)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:me||0,flatShading:false});
-  const sil=opt.silhouette;
-  const M1=sil?mat(0x0b2530,.6):mat(acc,.55),M2=sil?mat(0x0b2530,.6):mat(0x1b1f22,.9),M3=sil?mat(0x123845,.6):mat(col,.62),M4=mat(0xffffff,.5);
-  // sola externa
-  grp.add(new THREE.Mesh(loft(THREE,N,R,u=>{const e=env(u),w=(S.w(u)/2+1.2)*e,y0=S.b(u)-3,y1=S.b(u)+2;const r=[];for(let j=0;j<R;j++){const a=j/R*Math.PI*2;r.push([u*S.L,(y0+y1)/2+(y1-y0)/2*e*se(Math.sin(a),6),w*se(Math.cos(a),6)])}return r}),M2));
-  // entressola
-  grp.add(new THREE.Mesh(loft(THREE,N,R,u=>{const e=env(u),w=S.w(u)/2*e,y0=S.b(u),y1=S.t(u);const r=[];for(let j=0;j<R;j++){const a=j/R*Math.PI*2;const bulge=1+.05*Math.max(0,-Math.sin(a));r.push([u*S.L,(y0+y1)/2+(y1-y0)/2*e*se(Math.sin(a),5),w*bulge*se(Math.cos(a),5)])}return r}),M1));
-  // placa
-  const pl=plateOf(m);
-  if(pl&&!sil){grp.add(new THREE.Mesh(loft(THREE,N,12,u=>{const w=S.w(u)/2+.9,yc=S.b(u)+(S.t(u)-S.b(u))*(u<.5?.48:.42+(u-.5)*.25);const r=[];for(let j=0;j<12;j++){const a=j/12*Math.PI*2;r.push([u*S.L,yc+1.1*Math.sin(a),w*se(Math.cos(a),8)])}return r}),mat(pl==='carbono'?0x111111:0x8a8a8a,.25,.6)))}
-  // cabedal
-  const UR=30;
-  grp.add(new THREE.Mesh(loft(THREE,N,UR,u=>{const w=S.w(u)/2*.97,y0=S.t(u)-1,hh=S.h(u);const r=[];const half=UR-6;
-    for(let j=0;j<=half;j++){const a=j/half*Math.PI;const c=Math.cos(a),s=Math.sin(a);r.push([u*S.L,y0+hh*Math.pow(s,.9),w*se(c,2.6)*(1-.3*s*s)])}
-    for(let j=1;j<UR-half;j++){r.push([u*S.L,y0,-w+2*w*j/(UR-half)])}return r}),M3));
-  if(!sil){
-    // abertura do calcanhar
-    const op=new THREE.Mesh(new THREE.CylinderGeometry(1,1,1,32),mat(0x10181c,.9));
-    const uo=.14;op.scale.set(34,3,S.w(uo)*.26);op.position.set(uo*S.L+4,S.t(uo)+S.h(uo)-4,0);op.rotation.z=-.05;
-    const tab=new THREE.Mesh(new THREE.BoxGeometry(2.5,12,12),M4);tab.position.set(2,S.t(.02)+S.h(.04)-8,0);tab.rotation.z=.2;grp.add(tab);grp.add(op);
-    // cadarços
-    for(let k=0;k<5;k++){const u=.27+k*.05;const y=S.t(u)+S.h(u);const lb=new THREE.Mesh(new THREE.BoxGeometry(3.5,2.5,S.w(u)*.3),M4);lb.position.set(u*S.L,y-1.2,0);const dy=S.t(u+.01)+S.h(u+.01)-y;lb.rotation.z=Math.atan2(dy,.01*S.L);grp.add(lb)}
-    // contraforte
-    grp.add(new THREE.Mesh(loft(THREE,30,UR,u=>{const uu=u*.13,w=S.w(uu)/2*.99+.6,y0=S.t(uu)-1,hh=S.h(uu)*.55;const r=[];const half=UR-6;
-      for(let j=0;j<=half;j++){const a=j/half*Math.PI;const c=Math.cos(a),s=Math.sin(a);r.push([uu*S.L-.6,y0+hh*Math.pow(s,.9),w*se(c,2.6)*(1-.3*s*s)])}
-      for(let j=1;j<UR-half;j++){r.push([uu*S.L-.6,y0,-w+2*w*j/(UR-half)])}return r}),mat(col.clone().multiplyScalar(.7),.5)));
-  }
-  grp.position.set(-S.L/2,-40,0);
-  const outer=new THREE.Group();outer.add(grp);return outer;
-}
-const live=new Set();
-function mount(el,m,opt){
-  opt=opt||{};
-  const THREE=window.THREE;
-  if(!THREE){el.innerHTML=shoeSVG(m);return}
-  let rnd;try{rnd=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(e){el.innerHTML=shoeSVG(m);return}
-  el.innerHTML='';el.classList.add('s3d');
-  const cv=rnd.domElement;cv.setAttribute('role','img');cv.setAttribute('aria-label',opt.silhouette?'Silhueta 3D do tênis, modelo oculto':'Modelo 3D do '+m.n+'. Arraste para girar.');cv.tabIndex=0;
-  el.appendChild(cv);
-  rnd.setPixelRatio(Math.min(2,devicePixelRatio||1));
-  const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(30,1.6,1,2000);
-  cam.position.set(0,140,450);cam.lookAt(0,4,0);
-  sc.add(new THREE.HemisphereLight(0xffffff,0x6b8590,.95));
-  const dl=new THREE.DirectionalLight(0xffffff,.85);dl.position.set(200,400,300);sc.add(dl);
-  const dl2=new THREE.DirectionalLight(0xffb27a,.35);dl2.position.set(-300,100,-200);sc.add(dl2);
-  const shoe=build(THREE,m,opt);sc.add(shoe);
-  // sombra de contato
-  const sh=new THREE.Mesh(new THREE.CircleGeometry(1,40),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.16}));
-  sh.scale.set(165,48,1);sh.rotation.x=-Math.PI/2;sh.position.y=-44.5;sc.add(sh);
-  let ry=opt.silhouette?-.5:-.55,rx=.08,drag=null,auto=!reduce(),idle=0,alive=true,tY=ry;
-  const size=()=>{const w=el.clientWidth||400,h=Math.round(w/(opt.ratio||1.7));rnd.setSize(w,h,false);cv.style.width='100%';cv.style.height='auto';cam.aspect=w/h;cam.updateProjectionMatrix()};
-  size();
-  const ro=window.ResizeObserver?new ResizeObserver(size):null;ro&&ro.observe(el);
-  cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,ry,rx};auto=false;cv.setPointerCapture(e.pointerId)});
-  cv.addEventListener('pointermove',e=>{if(!drag)return;ry=drag.ry+(e.clientX-drag.x)*.01;rx=Math.max(-.2,Math.min(.9,drag.rx+(e.clientY-drag.y)*.006))});
-  const up=()=>{drag=null;idle=performance.now()};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
-  cv.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){ry-=.2;auto=false}if(e.key==='ArrowRight'){ry+=.2;auto=false}});
-  const api={set view(v){auto=false;tY=v==='lado'?0:v==='cima'?0:v==='tras'?Math.PI/2:-.55;rx=v==='cima'?.9:.08;ry=tY}};
-  let last=performance.now();
-  const loop=t=>{if(!alive)return;if(!el.isConnected){alive=false;ro&&ro.disconnect();rnd.dispose();live.delete(api);return}
-    const dt=Math.min(50,t-last);last=t;
-    if(!drag&&!auto&&idle&&t-idle>4000&&!reduce())auto=true;
-    if(auto)ry+=dt*.00035;
-    shoe.rotation.y=ry;shoe.rotation.x=rx;rnd.render(sc,cam);requestAnimationFrame(loop)};
-  requestAnimationFrame(loop);live.add(api);return api;
+  return {L,heel,fore,w,b,t:u=>(u>.62?b(u):0)+st(u),h,spring};
 }
 /* hexágono */
 function hex(labels,series,o){
@@ -837,27 +730,24 @@ function map(fins,o){
 }
 /* corte lateral com medidas */
 function cut(m){
-  const S=shape(m),W=520,H=210,base=170,k=1.5,x0=40,sx=(W-80)/S.L;
+  const S=shape(m),W=520,H=150,base=118,k=1.8,x0=70,sx=(W-140)/S.L;
   const X=u=>x0+u*S.L*sx;let top='',bot='';
   for(let i=0;i<=60;i++){const u=i/60;top+=(i?'L':'M')+X(u).toFixed(1)+' '+(base-S.t(u)*k).toFixed(1)+' ';}
   for(let i=60;i>=0;i--){const u=i/60;bot+='L'+X(u).toFixed(1)+' '+(base-S.b(u)*k).toFixed(1)+' ';}
-  let up='';for(let i=0;i<=60;i++){const u=i/60;up+=(i?'L':'M')+X(u).toFixed(1)+' '+(base-(S.t(u)+S.h(u)*.9)*k).toFixed(1)+' ';}
-  for(let i=60;i>=0;i--){const u=i/60;up+='L'+X(u).toFixed(1)+' '+(base-S.t(u)*k).toFixed(1)+' ';}
   const pl=plateOf(m);let plate='';
   if(pl){for(let i=4;i<=58;i++){const u=i/60;const y=S.b(u)+(S.t(u)-S.b(u))*(u<.5?.48:.42+(u-.5)*.25);plate+=(i>4?'L':'M')+X(u).toFixed(1)+' '+(base-y*k).toFixed(1)+' '}}
   const hu=.08,fu=.8;
-  const dim=(u,lab)=>{const x=X(u),y1=base-S.b(u)*k,y2=base-S.t(u)*k;return `<line x1="${x}" x2="${x}" y1="${y1}" y2="${y2}" stroke="var(--ink)" stroke-width="1.4" marker-start="url(#ar)" marker-end="url(#ar)"/><text x="${x+(u<.5?-8:8)}" y="${(y1+y2)/2+4}" text-anchor="${u<.5?'end':'start'}" font-size="13" font-weight="700" fill="var(--ink)" font-family="JetBrains Mono,monospace">${lab}</text>`};
+  const dim=(u,lab)=>{const x=X(u),y1=base-S.b(u)*k,y2=base-S.t(u)*k;return `<line x1="${x}" x2="${x}" y1="${y1}" y2="${y2}" stroke="var(--ink)" stroke-width="1.4" marker-start="url(#ar)" marker-end="url(#ar)"/><text x="${u<.5?X(0)-8:X(1)+8}" y="${(y1+y2)/2+4}" text-anchor="${u<.5?'end':'start'}" font-size="13" font-weight="700" fill="var(--ink)" font-family="JetBrains Mono,monospace">${lab}</text>`};
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Corte lateral: salto ${S.heel} mm, antepé ${S.fore} mm, drop ${dec1(m.dr)} mm" style="width:100%;height:auto;display:block">
   <defs><marker id="ar" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L4 4 L0 7" fill="none" stroke="var(--ink)" stroke-width="1.4"/></marker>
   <pattern id="foam" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--soft)"/><circle cx="2" cy="2" r="1.1" fill="var(--line)"/><circle cx="6" cy="6" r="1.1" fill="var(--line)"/></pattern></defs>
   <line x1="20" x2="${W-20}" y1="${base+3}" y2="${base+3}" stroke="var(--line)" stroke-width="2"/>
-  <path d="${up}Z" fill="${CATCOL[m.c]}" fill-opacity=".22" stroke="${CATCOL[m.c]}" stroke-width="1.5"/>
   <path d="${top}${bot}Z" fill="url(#foam)" stroke="var(--ink)" stroke-width="1.6"/>
   ${plate?`<path d="${plate}" fill="none" stroke="${pl==='carbono'?'var(--ink)':'var(--muted)'}" stroke-width="3" stroke-linecap="round"/>`:''}
   ${dim(hu,S.heel+' mm')}${dim(fu,S.fore+' mm')}
   <text x="${W/2}" y="${H-6}" text-anchor="middle" font-size="13" fill="var(--muted)">drop ${dec1(m.dr)} mm · curvatura na ponta ${S.spring} mm${pl?' · placa de '+(pl==='carbono'?'carbono':'propulsão'):''}</text></svg>`;
 }
-return {mount,hex,bars,map,cut,shape};
+return {hex,bars,map,cut,shape};
 })();
 
 /* ---------- app Tenis Match (mesma estrutura do Racket Match) ---------- */
@@ -986,8 +876,8 @@ function renderPreview(){
   <div class="two">
     <div class="panel">
       <h3>Seu 1º lugar já está pronto</h3>
-      <div class="stage teaser"><div id="tease3d"></div><span class="q3">Modelo oculto</span></div>
-      <p class="muted" style="font-size:14px">A forma e a altura da espuma são do tênis escolhido para você. Marca, cores e nome aparecem no desbloqueio.</p>
+      <div class="stage" style="padding:8px">${VZ.cut(r.fins[0].m)}</div>
+      <p class="muted" style="font-size:14px">Este é o corte da espuma do tênis escolhido para você, com as medidas em mm. Marca e modelo aparecem no desbloqueio.</p>
     </div>
     <div class="panel">
       <h3>Onde seus finalistas ficam no catálogo</h3>
@@ -1006,7 +896,6 @@ function renderPreview(){
     <p class="note">O cálculo já foi feito: o pagamento só revela o resultado. Se houver link de compra, ele aparece depois, e a recomendação não muda por isso.</p>
     <div class="row"><button class="btn btn-ghost" type="button" id="redo">Refazer respostas</button></div>
   </div>`;
-  VZ.mount($('#tease3d'),r.fins[0].m,{silhouette:1});
   $('#buy').onclick=()=>{renderReport();show('report')};
   $('#redo').onclick=()=>{step=0;show('quiz');renderQs()};
 }
@@ -1061,8 +950,8 @@ function renderReport(){
         <div class="arm"><b>${mo}</b><div><strong>${mo===1?'Mês':'Meses'} até a troca</strong><p class="muted" style="font-size:14px">Com cerca de ${km} km por semana, ele dura uns ${mo} ${mo===1?'mês':'meses'} (${m.du} km).</p></div></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
-        <div class="vhead"><h3>Veja o tênis</h3><div class="seg" role="group" aria-label="Visualização do tênis"><button type="button" data-v="3d" aria-pressed="true">3D</button><button type="button" data-v="cut" aria-pressed="false">Corte</button></div></div>
-        <div class="stage"><div id="w3d"></div><div id="wcut" hidden style="padding:8px">${VZ.cut(m)}</div><p class="hint" id="w3dh">Arraste para girar · ${dec1(m.dr)} mm de drop</p></div>
+        <h3>Espuma em corte</h3>
+        <div class="stage" style="padding:8px">${VZ.cut(m)}</div>
       </div>
     </div>
   </div>
@@ -1098,15 +987,13 @@ function renderReport(){
     <small>Fit Score do meu tênis: ${w.fit}%. Descubra o seu.</small></div></div>
   <div class="row"><button class="btn btn-ghost" type="button" id="again">Refazer o teste</button></div>`;
   $('#report').innerHTML=h;
-  VZ.mount($('#w3d'),m);
   {
     const cols=['var(--pri)','var(--clay)','var(--muted)'],avgKm=M.reduce((s,x)=>s+x.p/x.du,0)/M.length;
     const cmp=list=>{const maxKm=Math.max(...list.map(f=>f.m.p/f.m.du));
-      $('#cmpBody').innerHTML=`<div class="cmp">${list.map((f,k)=>`<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><div class="stage"><div id="c3d${k}"></div></div><h4>${k+1}º · ${esc(f.m.n)}</h4><p class="mono muted" style="font-size:13px">${f.fit}% · ${priceTxt(f.m).replace(' (aprox.)','')}</p>${brandLink(f.m)}</div>`).join('')}</div>
+      $('#cmpBody').innerHTML=`<div class="cmp">${list.map((f,k)=>`<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><h4>${k+1}º · ${esc(f.m.n)}</h4><p class="mono muted" style="font-size:13px">${f.fit}% · ${priceTxt(f.m).replace(' (aprox.)','')}</p>${brandLink(f.m)}</div>`).join('')}</div>
       <div class="two"><div>${VZ.hex(SX,list.map((f,k)=>({name:modelOf(f.m),v:idx(f.m),c:cols[k],fill:k?'none':cols[0],fo:k?0:.14,dots:k===0})))}</div>
       <div style="min-width:0"><h3 style="margin-bottom:8px">Mapa do catálogo</h3>${VZ.map(list)}</div></div>
-      <div class="tbl"><table><thead><tr><th>Modelo</th><th>Preço</th><th>Peso</th><th>Salto / antepé</th><th>Dura</th><th>Custo por km <span style="text-transform:none;letter-spacing:0">(média ${('R$ '+avgKm.toFixed(2)).replace('.',',')})</span></th></tr></thead><tbody>${list.map(f=>`<tr><td>${esc(f.m.n)}</td><td class="n">${priceTxt(f.m).replace(' (aprox.)','')}</td><td class="n">${f.m.g} g</td><td class="n">${stackOf(f.m)} / ${foreOf(f.m)} mm</td><td class="n">${f.m.du} km</td><td class="n"><span class="kmbar"><i style="width:${Math.round(f.m.p/f.m.du/maxKm*70)}px"></i>${kmCost(f.m).replace(' por km','')}</span></td></tr>`).join('')}</tbody></table></div>`;
-      list.forEach((f,k)=>VZ.mount($('#c3d'+k),f.m,{ratio:1.5}))};
+      <div class="tbl"><table><thead><tr><th>Modelo</th><th>Preço</th><th>Peso</th><th>Salto / antepé</th><th>Dura</th><th>Custo por km <span style="text-transform:none;letter-spacing:0">(média ${('R$ '+avgKm.toFixed(2)).replace('.',',')})</span></th></tr></thead><tbody>${list.map(f=>`<tr><td>${esc(f.m.n)}</td><td class="n">${priceTxt(f.m).replace(' (aprox.)','')}</td><td class="n">${f.m.g} g</td><td class="n">${stackOf(f.m)} / ${foreOf(f.m)} mm</td><td class="n">${f.m.du} km</td><td class="n"><span class="kmbar"><i style="width:${Math.round(f.m.p/f.m.du/maxKm*70)}px"></i>${kmCost(f.m).replace(' por km','')}</span></td></tr>`).join('')}</tbody></table></div>`;};
     const setT=t=>{document.querySelectorAll('#cmpP [data-t]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.t===t));const sel=$('#cmpBrand');sel.hidden=t!=='b';
       if(t==='g'){$('#cmpSub').textContent='Os três que mais combinam com você, de qualquer marca.';cmp(r.fins)}
       else{const L=r.byBrand(sel.value);$('#cmpSub').textContent=L.length<3?`O catálogo tem ${L.length} ${L.length===1?'modelo':'modelos'} da ${sel.value}.`:`Os três ${sel.value} que mais combinam com você.`;cmp(L)}};
@@ -1117,7 +1004,6 @@ function renderReport(){
       $('#t10b').innerHTML=L.map(x=>`<tr class="${r.pref.includes(x.m.b)?'pref':''}"><td class="n">${x.i+1}º</td><td><b>${esc(modelOf(x.m))}</b>${x.m.url?`<br>${brandLink(x.m,'site da marca')}`:''}</td><td>${esc(x.m.b)}</td><td class="muted">${CAT[x.m.c].n}</td><td class="n">${priceTxt(x.m).replace(' (aprox.)','')}</td><td class="n">${kmCost(x.m).replace(' por km','')}</td><td><span class="mfit"><i style="width:${x.fit}%"></i></span><span class="mono" style="font-weight:700">${x.fit}%</span></td></tr>`).join('')};
     document.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>t10(b.dataset.o));t10('fit');
   }
-  document.querySelectorAll('#report [data-v]').forEach(b=>b.onclick=()=>{const v=b.dataset.v;document.querySelectorAll('#report [data-v]').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#w3d').hidden=v!=='3d';$('#w3dh').hidden=v!=='3d';$('#wcut').hidden=v!=='cut'});
   const iv=v=>{document.querySelectorAll('#report [data-i]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.i===v));$('#ihex').hidden=v!=='hex';$('#ibar').hidden=v!=='bar'};
   document.querySelectorAll('#report [data-i]').forEach(b=>b.onclick=()=>iv(b.dataset.i));iv('hex');
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};

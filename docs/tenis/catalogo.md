@@ -42,7 +42,7 @@ Kayano 33, GT-2000 15, Nimbus 28, Novablast 6, Superblast 3, Adios Pro 5, Ultrab
 - **Pódio:** a Fila não entra no top 3 nem como segundo par (decisão editorial de out/2026, ver rodada 3 em `calibracao-e-validacao.md`).
 - **Preço:** relatório único de R$ 9,99 com tudo abaixo (desde 24/out/2026; antes R$ 7,99 o tênis ideal e R$ 12,90 o setup completo).
 - **Top 10:** os 10 tênis que mais combinam, com Fit Score, marca, categoria, preço e custo por km. Ordena por match, preço ou custo/km.
-- **Top 3:** escolha entre top 3 geral e top 3 de uma marca, com 3D, hexágono, mapa do catálogo e tabela.
+- **Top 3:** escolha entre top 3 geral e top 3 de uma marca, com hexágono, mapa do catálogo e tabela.
 - **Ranking por marca:** o melhor tênis de cada uma das 14 marcas para a pessoa. Pergunta opcional de marca preferida (até 3).
 
 ## Pendências
