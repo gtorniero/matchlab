@@ -698,12 +698,12 @@ function render(view){
   setNav(view);
   document.getElementById("nav").classList.remove("open");
   document.getElementById("menuBtn").setAttribute("aria-expanded","false");
-  const t = view.startsWith("a-") ? (A.find(y=>y.id===view.slice(2))||{}).title : (AREAS[view]||{}).name;
+  const t = view.startsWith("a-") ? (A.find(y=>y.id===view.slice(2))||{}).title : view==="blog" ? "Blog" : (AREAS[view]||{}).name;
   document.title = t ? t + " · MATCH LAB" : "MATCH LAB";
   if(view==="conceito"){ requestAnimationFrame(()=>document.getElementById("conceito").scrollIntoView()); }
   else window.scrollTo(0,0);
   try{ history.replaceState(null,"","#"+view); }catch(e){}
-  if(!firstRender && view!=="conceito"){ const h=app.querySelector("h1"); if(h){ h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); } say("Página: "+document.title); }
+  if(!firstRender && view!=="conceito"){ const h=app.querySelector("h1"); if(h){ h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); } say("Página: "+(t||"Início")); }
   firstRender=false;
 }
 const lb = document.getElementById("lb");
