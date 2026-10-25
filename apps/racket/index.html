@@ -10,12 +10,12 @@
 </style></head><body>
 <title>Racket Match</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
 <style>
 /* Layout: uma coluna de leitura (max 980px); identidade Match Lab: azul-petróleo, branco e lima (bola de tênis) */
 :root{
   --bg:#EEF4F5; --surface:#FFFFFF; --ink:#0B2530; --muted:#4A6570; --line:#CFDEE2;
-  --pri:#0E4D64; --pri-ink:#FFFFFF; --ball:#DDF247; --ball-ink:#0B2530; --clay:#B4472F; --soft:#DCEBEF;
+  --pri:#0E4D64; --pri-ink:#FFFFFF; --ball:#DDF247; --ball-ink:#0B2530; --alt:#5C6B00; --warn:#8F5200; --soft:#DCEBEF;
   --deep:#0A3A4C; --cur:#E07A1F;
   --f-display:'DM Sans',system-ui,-apple-system,sans-serif;
   --f-body:'DM Sans',system-ui,-apple-system,sans-serif;
@@ -23,10 +23,10 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#08222C; --surface:#0E3442; --ink:#EAF4F6; --muted:#9BB8C1; --line:#1C4B5A;
-  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#DDF247; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --deep:#05161D; --cur:#FFAE5C; color-scheme:dark}}
+  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#DDF247; --ball-ink:#0B2530; --alt:#DDF247; --warn:#FFC266; --soft:#12404F; --deep:#05161D; --cur:#FFAE5C; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#08222C; --surface:#0E3442; --ink:#EAF4F6; --muted:#9BB8C1; --line:#1C4B5A;
-  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#DDF247; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --deep:#05161D; --cur:#FFAE5C; color-scheme:dark}
+  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#DDF247; --ball-ink:#0B2530; --alt:#DDF247; --warn:#FFC266; --soft:#12404F; --deep:#05161D; --cur:#FFAE5C; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
@@ -116,7 +116,7 @@ b,strong{font-weight:600}
 .chipbtn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:8px 14px;cursor:pointer}
 .chipbtn[aria-pressed="true"]{background:var(--pri);color:var(--pri-ink);border-color:var(--pri)}
 .brtag{font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;white-space:nowrap}
-.brtag.d{background:color-mix(in srgb,var(--clay) 14%,transparent);color:var(--clay)}
+.brtag.d{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn)}
 .brtag.p{background:color-mix(in srgb,var(--muted) 14%,transparent);color:var(--muted)}
 .skip{font:inherit;background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:14px}
 .single{max-width:560px;margin:0 auto;width:100%}
@@ -136,7 +136,7 @@ b,strong{font-weight:600}
 select,input[type=number],input[type=text],input[type=email]{font:inherit;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;min-height:48px;max-width:100%}
 .qs{display:flex;flex-direction:column;gap:26px}
 .nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.err{color:var(--clay);font-weight:700;font-size:14px}
+.err{color:var(--warn);font-weight:700;font-size:14px}
 /* analysis */
 .ana{display:flex;flex-direction:column;gap:10px}
 .ana li{list-style:none;color:var(--muted)}
@@ -200,7 +200,7 @@ select,input[type=number],input[type=text],input[type=email]{font:inherit;backgr
 .sb .zone{position:absolute;top:-1px;bottom:-1px;background:color-mix(in srgb,var(--ball) 55%,transparent);border:1px dashed color-mix(in srgb,var(--ink) 35%,transparent);border-radius:99px}
 .sb .dot{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;transform:translate(-9px,-50%);background:var(--pri);box-shadow:0 2px 6px rgba(0,0,0,.25),inset 0 -3px 0 rgba(0,0,0,.18)}
 .sb .dot.c{background:var(--surface);border:2.5px solid var(--cur);box-shadow:none;width:14px;height:14px;transform:translate(-7px,-50%)}
-.sb .dot.b{background:var(--clay)}
+.sb .dot.b{background:var(--alt)}
 .sb .ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-family:var(--f-mono)}
 .sb .say{font-size:13px;color:var(--muted)}
 .scatter{width:100%;height:auto;display:block}
@@ -218,7 +218,7 @@ select,input[type=number],input[type=text],input[type=email]{font:inherit;backgr
 .note{font-size:13px;color:var(--muted)}
 .winner{border:2px solid var(--pri)}
 .whead{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end}
-.fit{font-family:'Syne','Arial Black',sans-serif;font-size:46px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.fit{font-family:var(--f-body);font-variant-numeric:tabular-nums;font-size:46px;font-weight:700;line-height:1;letter-spacing:-.02em}
 .specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .spec{background:var(--bg);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:2px}
 .spec span{font-size:12px;color:var(--muted)}
@@ -261,7 +261,7 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .cmpsel{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
 .cmpsel select{width:100%}
 .cmpfit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
-.cmpfit .kpi b{font-family:'Syne','Arial Black',sans-serif;font-size:38px;font-weight:800!important;letter-spacing:-.02em}
+.cmpfit .kpi b{font-family:var(--f-body);font-variant-numeric:tabular-nums;font-size:38px;font-weight:700!important;letter-spacing:-.02em}
 .vs{font-family:var(--f-display);font-weight:800;color:var(--muted)}
 footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
 /* Pix modal */
@@ -297,15 +297,15 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .dsel{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
 .dsel select{width:100%}
 .dhead{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:end}
-.dhead .a{color:var(--pri)}.dhead .b{color:var(--clay);text-align:right}
+.dhead .a{color:var(--pri)}.dhead .b{color:var(--alt);text-align:right}
 .dhead h3{font-size:clamp(18px,3vw,24px)}
 .score{font-family:var(--f-mono);font-weight:700;font-size:clamp(28px,6vw,44px);text-align:center;line-height:1}
 .tally{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .tdots{display:flex;gap:6px}
 .tdots i{width:16px;height:16px;border-radius:50%;background:var(--line)}
-.tdots i.a{background:var(--pri)}.tdots i.b{background:var(--clay)}.tdots i.t{background:transparent;border:2px dashed var(--muted)}
+.tdots i.a{background:var(--pri)}.tdots i.b{background:var(--alt)}.tdots i.t{background:transparent;border:2px dashed var(--muted)}
 .tally small{font-size:13px;color:var(--muted);font-weight:600}
-.tally small b{font-family:'Syne','Arial Black',sans-serif;font-size:26px;font-weight:800;vertical-align:-3px}.tally .ta{color:var(--pri)}.tally .tb{color:var(--clay)}
+.tally small b{font-family:var(--f-body);font-variant-numeric:tabular-nums;font-size:26px;font-weight:700;vertical-align:-3px}.tally .ta{color:var(--pri)}.tally .tb{color:var(--alt)}
 .score small{display:block;font-family:var(--f-body);font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
 .drows{display:flex;flex-direction:column;gap:14px}
 .drow{display:grid;grid-template-columns:40px minmax(0,1fr) 120px minmax(0,1fr) 40px;align-items:center;gap:10px}
@@ -315,9 +315,9 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .drow .tl,.drow .tr2{height:6px;background:color-mix(in srgb,var(--line) 70%,transparent);border-radius:99px;position:relative}
 .drow .tl i,.drow .tr2 i{position:absolute;top:0;bottom:0;border-radius:99px;background:color-mix(in srgb,var(--muted) 45%,transparent)}
 .drow .tl i{right:0}.drow .tr2 i{left:0}
-.drow .tl.win i{background:var(--pri)}.drow .tr2.win i{background:var(--clay)}
+.drow .tl.win i{background:var(--pri)}.drow .tr2.win i{background:var(--alt)}
 .drow .tl.win i::before,.drow .tr2.win i::after{content:"";position:absolute;top:50%;width:10px;height:10px;border-radius:50%;transform:translateY(-50%)}
-.drow .tl.win i::before{left:-3px;background:var(--pri)}.drow .tr2.win i::after{right:-3px;background:var(--clay)}
+.drow .tl.win i::before{left:-3px;background:var(--pri)}.drow .tr2.win i::after{right:-3px;background:var(--alt)}
 .drow .mid{text-align:center;display:flex;flex-direction:column;line-height:1.25}
 .drow .mid b{font-size:14px;font-weight:600}.drow .mid small{font-size:11.5px;color:var(--muted)}
 .verdict{background:var(--bg);border-radius:12px;padding:14px;font-size:15px}
@@ -339,9 +339,9 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .dc small{font-size:12px;color:var(--muted);line-height:1.3}
 .dx{align-self:center;font-family:var(--f-mono);font-weight:700;color:var(--muted)}
 .mists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.mist{border-left:3px solid var(--clay);background:var(--surface);border-radius:0 12px 12px 0;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.mist{border-left:3px solid var(--warn);background:var(--surface);border-radius:0 12px 12px 0;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
 .mist h4{margin:0;font-family:var(--f-display);font-size:16px;display:flex;gap:8px;align-items:baseline}
-.mist h4::before{content:'✕';flex:none;width:20px;height:20px;border-radius:50%;background:color-mix(in srgb,var(--clay) 14%,transparent);color:var(--clay);font-size:11px;font-weight:700;display:inline-grid;place-items:center;transform:translateY(-1px)}
+.mist h4::before{content:'✕';flex:none;width:20px;height:20px;border-radius:50%;background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn);font-size:11px;font-weight:700;display:inline-grid;place-items:center;transform:translateY(-1px)}
 .mist p{font-size:14px;color:var(--muted)}
 .setup6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
 .s6{background:var(--bg);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:2px;position:relative}
@@ -358,17 +358,17 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .pdfroot .ph{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#4A6570;border-bottom:2px solid #0B2530;padding-bottom:9px;margin-bottom:20px;font-weight:700}
 .pdfroot .pbrand{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em;color:#0B2530}
 .pdfroot .pf{position:absolute;left:46px;right:46px;bottom:22px;display:flex;justify-content:space-between;gap:20px;font-size:9px;color:#4A6570;border-top:1px solid #CFDEE2;padding-top:7px}
-.pdfroot .st{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;margin:20px 0 10px!important;letter-spacing:-.01em}
+.pdfroot .st{font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;margin:20px 0 10px!important;letter-spacing:-.01em}
 .pdfroot .small{font-size:10.5px;color:#4A6570;margin:6px 0}
 .pdfroot .ey{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin:0 0 6px;opacity:.8}
 .pdfroot .hero{display:grid;grid-template-columns:1fr 200px;gap:10px;background:#0E4D64;color:#fff;border-radius:18px;padding:26px 28px;height:400px;position:relative;overflow:hidden}
 .pdfroot .hero:after{content:"";position:absolute;right:-60px;bottom:-80px;width:260px;height:260px;border-radius:50%;background:#DDF247;opacity:.14}
 .pdfroot .hl .hb{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:4px 0 2px;opacity:.75;font-weight:700}
-.pdfroot .hl h1{font-family:'Syne',sans-serif;font-weight:800;font-size:40px;letter-spacing:-.02em}
+.pdfroot .hl h1{font-family:'Archivo',sans-serif;font-weight:800;font-size:40px;letter-spacing:-.02em}
 .pdfroot .hp{font-size:12.5px;opacity:.85;margin:10px 0 0}
 .pdfroot .hs{display:flex;gap:26px;margin-top:26px;align-items:flex-end}
 .pdfroot .hs div{display:flex;flex-direction:column}
-.pdfroot .hs b{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#DDF247;line-height:1}
+.pdfroot .hs b{font-family:'Archivo',sans-serif;font-size:28px;font-weight:800;color:#DDF247;line-height:1}
 .pdfroot .hs b.big{font-size:84px}
 .pdfroot .hs b small{font-size:34px}
 .pdfroot .hs span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:6px;font-weight:700}
@@ -385,7 +385,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .pdfroot .cols.c2{grid-template-columns:1fr 1fr}
 .pdfroot ol.why,.pdfroot ul.why{margin:0;padding-left:18px}
 .pdfroot ol.why li,.pdfroot ul.why li{margin:0 0 6px}
-.pdfroot .arch{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;margin:0 0 10px}
+.pdfroot .arch{font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;margin:0 0 10px}
 .pdfroot .chips{display:flex;flex-wrap:wrap;gap:5px}
 .pdfroot .chips span{background:#DCEBEF;border-radius:20px;padding:3px 9px;font-size:10.5px;font-weight:600}
 .pdfroot .rad svg{width:100%;height:auto}
@@ -415,7 +415,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .pdfroot .ft td:first-child{width:18%}
 .pdfroot .ft td:nth-child(2){width:24%;white-space:nowrap}
 .pdfroot .sc{border:1.5px solid #0B2530;border-radius:14px;padding:14px 16px}
-.pdfroot .sc h3{font-family:'Syne',sans-serif;font-weight:800;font-size:18px}
+.pdfroot .sc h3{font-family:'Archivo',sans-serif;font-weight:800;font-size:18px}
 .pdfroot .scg{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;margin-top:8px}
 .pdfroot .scg span{display:block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#4A6570;font-weight:700}
 .pdfroot .scg b{display:block;font-size:12.5px}
@@ -435,17 +435,17 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .pdfroot .tl{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:3px solid #0E4D64}
 .pdfroot .tli{padding:10px 10px 0 0;position:relative}
 .pdfroot .tli:before{content:"";position:absolute;top:-8px;left:0;width:13px;height:13px;border-radius:50%;background:#DDF247;border:2.5px solid #0E4D64}
-.pdfroot .tli b{display:block;font-family:'Syne',sans-serif;font-size:13px;margin-top:4px}
+.pdfroot .tli b{display:block;font-family:'Archivo',sans-serif;font-size:13px;margin-top:4px}
 .pdfroot .tli span{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#4A6570;font-weight:700}
 .pdfroot .tli p{font-size:10.5px;margin:4px 0 0}
 .pdfroot .pod{display:grid;grid-template-columns:1.12fr 1fr 1fr;gap:10px;align-items:end}
 .pdfroot .pc3{border:1.5px solid #CFDEE2;border-radius:14px;padding:12px 14px;position:relative}
 .pdfroot .pc3.win{border:2px solid #0B2530;background:#F4F8E0}
-.pdfroot .pc3 .pos{position:absolute;right:12px;top:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#CFDEE2}
+.pdfroot .pc3 .pos{position:absolute;right:12px;top:10px;font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;color:#CFDEE2}
 .pdfroot .pc3.win .pos{color:#0E4D64}
 .pdfroot .pc3 .hb{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#4A6570;font-weight:700;margin:0}
-.pdfroot .pc3 h3{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;min-height:34px}
-.pdfroot .pfit{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:32px;color:#0E4D64;margin-top:4px}
+.pdfroot .pc3 h3{font-family:'Archivo',sans-serif;font-weight:800;font-size:15px;min-height:34px}
+.pdfroot .pfit{display:block;font-family:'Archivo',sans-serif;font-weight:800;font-size:32px;color:#0E4D64;margin-top:4px}
 .pdfroot .pcs{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}
 .pdfroot .pc{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:10px}
 .pdfroot .pc.up{background:#0E4D64;color:#fff}
@@ -476,7 +476,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .pdfroot .map svg{width:100%;height:auto}
 .pdfroot .meth{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .pdfroot .meth div{background:#0B2530;color:#fff;border-radius:12px;padding:10px 12px}
-.pdfroot .meth b{display:block;font-family:'Syne',sans-serif;font-size:24px;color:#DDF247}
+.pdfroot .meth b{display:block;font-family:'Archivo',sans-serif;font-size:24px;color:#DDF247}
 .pdfroot .meth span{font-size:10px}
 .pdfroot .gls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 16px;margin-top:12px;border-top:1px solid #CFDEE2;padding-top:10px}
 .pdfroot .gls b{display:block;font-size:11px}
@@ -489,7 +489,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .pdfroot .cols.c2.radc{grid-template-columns:330px minmax(0,1fr)}.pdfroot .cols>div{min-width:0}.pdfroot .rad{width:330px}.pdfroot .igr{display:grid;grid-template-columns:minmax(0,1fr) 40px 40px 40px;gap:8px;align-items:end;padding:6px 0;border-bottom:1px solid #CFDEE2;font-size:11.5px}.pdfroot .igr.n3{grid-template-columns:minmax(0,1fr) 40px 40px}.pdfroot .igr>span:not(:first-child),.pdfroot .igr>b{text-align:right}.pdfroot .igh{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#4A6570;font-weight:700}.pdfroot table.it{table-layout:fixed}.pdfroot .it td:first-child,.pdfroot .it th:first-child{width:auto}.pdfroot .it th:not(:first-child),.pdfroot .it td:not(:first-child){width:44px}
 .pdfroot .swap{margin-top:20px;display:grid;grid-template-columns:auto auto auto 1fr;gap:16px;align-items:center;background:#EEF4F5;border-radius:14px;padding:14px 18px}
 .pdfroot .swap span{display:block;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#4A6570;font-weight:700}
-.pdfroot .swap b{font-family:'Syne',sans-serif;font-weight:800;font-size:30px;color:#0E4D64}.pdfroot .swap b.o{color:#E07A1F}.pdfroot .swap i{font-style:normal;font-size:22px;color:#4A6570}
+.pdfroot .swap b{font-family:'Archivo',sans-serif;font-weight:800;font-size:30px;color:#0E4D64}.pdfroot .swap b.o{color:#E07A1F}.pdfroot .swap i{font-style:normal;font-size:22px;color:#4A6570}
 .pdfroot .swap p{margin:0;font-size:11px}.pdfroot .swap p b{font-family:inherit;font-size:11.5px;color:#0B2530}
 .pdfroot .chk{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px}.pdfroot .chk div{display:flex;gap:9px;align-items:flex-start;font-size:11.5px}.pdfroot .chk i{flex:none;width:14px;height:14px;border:2px solid #0E4D64;border-radius:4px;margin-top:1px}
 .pdfroot .pg{font-size:13px}.pdfroot .tli p{font-size:11px}.pdfroot .wf{padding:7px 0}
@@ -733,8 +733,6 @@ const Q=[
  {s:2,id:'serve',t:'Como é o seu saque hoje?',h:'Seja sincero: isso muda a recomendação.',o:[['weak','Ainda inseguro','Faço dupla falta com frequência'],['push','Só coloco em jogo','Saque lento, quase empurrado'],['safe','Seguro','Raramente erro, mas não ganho ponto com ele'],['flat','Chapado e forte','Busco o ponto direto'],['kick','Com efeito','Slice ou kick para abrir a quadra'],['mix','Vario tudo','Chapado, slice e kick conforme o ponto']]},
  {s:3,id:'style',multi:2,scale:['Mais básico','Mais avançado'],t:'Como você joga?',h:'Escolha até 2. Do jogo mais básico (esquerda) ao mais avançado (direita).',o:[['keep','Mantenho a bola em jogo','Ainda estou firmando os golpes'],['cnt','Devolvo tudo','Consistência e contra-ataque'],['agg','Ataco do fundo','Busco a bola vencedora da linha de base'],['all','Jogo completo','Fundo e rede conforme o ponto'],['netc','Subo quando a bola deixa','Fecho o ponto no voleio'],['net','Saque e voleio','Pressiono a rede o tempo todo']]},
  {s:3,id:'opp',t:'Como é a bola dos seus adversários?',o:[['soft','Mais lenta','Bola sem peso, você que gera'],['mix','Variada'],['heavy','Pesada e rápida','A raquete às vezes treme']]},
- {s:3,id:'surf',t:'Em que piso você joga mais?',o:[['clay','Saibro','Bola mais alta e lenta'],['hard','Rápida','Cimento, sintética ou grama sintética'],['mix','Os dois']]},
- {s:3,id:'fmt',t:'Joga mais simples ou duplas?',o:[['sgl','Simples'],['dbl','Duplas','Mais rede e reflexo'],['both','Os dois']]},
  {s:3,id:'miss',t:'Onde você mais erra?',o:[['short','Bola curta, sem peso'],['long','Bola longa, para fora'],['net','Na rede'],['frame','Pego fora do centro','A raquete torce na mão']]},
  {s:4,id:'cur',type:'select',t:'Qual a sua raquete atual?',h:'Se não estiver na lista, escolha "Outra". Com ela, fazemos o diagnóstico da sua raquete.'},
  {s:4,id:'curAge',if:()=>A.cur&&A.cur!=='none',t:'Há quanto tempo você usa essa raquete?',o:[['0','Menos de 1 ano'],['1','1 a 3 anos'],['3','Mais de 3 anos']]},
@@ -752,7 +750,7 @@ const Q=[
 const A={};
 let step=0;
 const vis=q=>!q.if||q.if();
-const EXAMPLE={imp:'yes',age:'38',height:'178',weight:'78',dom:'R',cond:'2',str:'mid',arm:'past',joint:['elbow'],pain:'2',lim:'1',hand:'11.1',lvl:'int',years:'3',freq:'2',style:['agg','all'],spin:'mid',swing:'mid',bh:'two',serve:'flat',opp:'mix',surf:'clay',fmt:'sgl',miss:'short',cur:'',curAge:'3',grip:'3',feel:'heavy',why:'pain',headp:'100',want:['comfort','power'],string:'poly',tens:'54',restr:'6m',budget:'2200'};
+const EXAMPLE={imp:'yes',age:'38',height:'178',weight:'78',dom:'R',cond:'2',str:'mid',arm:'past',joint:['elbow'],pain:'2',lim:'1',hand:'11.1',lvl:'int',years:'3',freq:'2',style:['agg','all'],spin:'mid',swing:'mid',bh:'two',serve:'flat',opp:'mix',miss:'short',cur:'',curAge:'3',grip:'3',feel:'heavy',why:'pain',headp:'100',want:['comfort','power'],string:'poly',tens:'54',restr:'6m',budget:'2200'};
 (function(){const sp=RK.find(r=>/speed pro/i.test(r.model));EXAMPLE.cur=sp?String(sp.id):'other'})();
 $('#nRk').textContent=RK.length;
 $('#nQ').textContent=Q.filter(q=>!q.if).length+' a '+Q.length;
@@ -872,16 +870,16 @@ function duelHTML(a,b,withFit){const TL=[];
     return `<div class="drow"><span class="v${ta?' w':''}">${dec(va)}</span><div class="tl${ta?' win':''}"><i style="width:${va*10}%"></i></div><div class="mid"><b>${gl(k,LBL[k])}</b><small>#${RANKS[k][a.id]} · #${RANKS[k][b.id]} de ${RK.length}</small></div><div class="tr2${tb?' win':''}"><i style="width:${vb*10}%"></i></div><span class="v r${tb?' w':''}">${dec(vb)}</span></div>`}).join('');
   const tie=6-wa-wb;
   const jn=l=>l.length>1?l.slice(0,-1).join(', ')+' e '+l[l.length-1]:l[0];
-  const verdict=(wa||wb)?`${wa?`<b style="color:var(--pri)">${esc(a.model)}</b> ganha em ${jn(A1)}`:''}${wa&&wb?'; ':''}${wb?`<b style="color:var(--clay)">${esc(b.model)}</b> ganha em ${jn(B1)}`:''}${tie?`. Empate técnico em ${tie} ${tie>1?'atributos':'atributo'}`:''}.`:'Empate técnico nos 6 atributos: a diferença está na sensação, não nos números.';
+  const verdict=(wa||wb)?`${wa?`<b style="color:var(--pri)">${esc(a.model)}</b> ganha em ${jn(A1)}`:''}${wa&&wb?'; ':''}${wb?`<b style="color:var(--alt)">${esc(b.model)}</b> ganha em ${jn(B1)}`:''}${tie?`. Empate técnico em ${tie} ${tie>1?'atributos':'atributo'}`:''}.`:'Empate técnico nos 6 atributos: a diferença está na sensação, não nos números.';
   const fa=withFit&&RES?RES.all.find(x=>x.r.id===a.id):null,fb=withFit&&RES?RES.all.find(x=>x.r.id===b.id):null;
   const sp=[['wt','wt',' g',0],['sw','sw','',0],['bal','bal',' mm',0],['ra','ra',' RA',0],['head','head',' pol²',0],['pat','pat','',1],['Preço estimado','price','',2]];
   return `<div class="dhead"><div class="a"><p class="eyebrow">${esc(a.brand)}</p><h3>${esc(a.model)}</h3></div><div class="tally"><div class="tdots">${TL.map((x,i)=>`<i class="${x}" title="${LBL[KEYS[i]]}: ${x==='a'?esc(a.model):x==='b'?esc(b.model):'empate'}"></i>`).join('')}</div><small><b class="ta">${wa}</b> × <b class="tb">${wb}</b>${6-wa-wb?` · ${6-wa-wb} empate${6-wa-wb>1?'s':''}`:''}</small><small>em 6 atributos</small></div><div class="b"><p class="eyebrow">${esc(b.brand)}</p><h3>${esc(b.model)}</h3></div></div>
-  ${fa?`<div class="cmpfit"><div class="kpi"><b style="color:var(--pri)">${fa.fit}%</b><span>Match Score para você</span></div><div class="kpi" style="text-align:right"><b style="color:var(--clay)">${fb.fit}%</b><span>Match Score para você</span></div></div>`:''}
+  ${fa?`<div class="cmpfit"><div class="kpi"><b style="color:var(--pri)">${fa.fit}%</b><span>Match Score para você</span></div><div class="kpi" style="text-align:right"><b style="color:var(--alt)">${fb.fit}%</b><span>Match Score para você</span></div></div>`:''}
   <div class="mini">${[a,b].map(r=>stage(r,{h:240})).join('')}</div>
   <div class="drows">${rows}</div>
   <p class="verdict">${verdict}</p>
-  <div class="two"><div>${radar([{name:a.model,v:a.ix,c:'var(--pri)',solid:true},{name:b.model,v:b.ix,c:'var(--clay)',dash:true}])}</div>
-  <div><div class="tbl"><table class="dspec" style="min-width:0"><thead><tr><th>Ficha</th><th style="color:var(--pri)">${esc(a.model)}</th><th style="color:var(--clay)">${esc(b.model)}</th></tr></thead><tbody>${sp.map(([l,k,u,t])=>{const x=a[k],y=b[k];const fx=t===1?x.replace('x','×'):t===2?'R$ '+fmt(x[0]):x+u,fy=t===1?y.replace('x','×'):t===2?'R$ '+fmt(y[0]):y+u;return `<tr><td>${GLOS[l]?gl(l):l}</td><td>${fx}</td><td>${fy}</td></tr>`}).join('')}<tr><td>${gl('pro','Profissionais na linha')}</td><td style="font-family:var(--f-body)">${PROS[a.id]?PROS[a.id].p.slice(0,3).map(p=>esc(p[1])).join(', '):'—'}</td><td style="font-family:var(--f-body)">${PROS[b.id]?PROS[b.id].p.slice(0,3).map(p=>esc(p[1])).join(', '):'—'}</td></tr><tr><td>No Brasil</td><td>${a.br==='d'?'Difícil':a.br==='p'?'Pouca oferta':'Fácil'}</td><td>${b.br==='d'?'Difícil':b.br==='p'?'Pouca oferta':'Fácil'}</td></tr><tr><td>${gl('rev','Avaliações na base')}</td><td>${a.nrev||'—'}</td><td>${b.nrev||'—'}</td></tr><tr><td>${gl('arm')}</td><td class="${a.ix.arm>b.ix.arm+.2?'w':''}">${dec(a.ix.arm)}</td><td class="${b.ix.arm>a.ix.arm+.2?'w':''}">${dec(b.ix.arm)}</td></tr></tbody></table></div>
+  <div class="two"><div>${radar([{name:a.model,v:a.ix,c:'var(--pri)',solid:true},{name:b.model,v:b.ix,c:'var(--alt)',dash:true}])}</div>
+  <div><div class="tbl"><table class="dspec" style="min-width:0"><thead><tr><th>Ficha</th><th style="color:var(--pri)">${esc(a.model)}</th><th style="color:var(--alt)">${esc(b.model)}</th></tr></thead><tbody>${sp.map(([l,k,u,t])=>{const x=a[k],y=b[k];const fx=t===1?x.replace('x','×'):t===2?'R$ '+fmt(x[0]):x+u,fy=t===1?y.replace('x','×'):t===2?'R$ '+fmt(y[0]):y+u;return `<tr><td>${GLOS[l]?gl(l):l}</td><td>${fx}</td><td>${fy}</td></tr>`}).join('')}<tr><td>${gl('pro','Profissionais na linha')}</td><td style="font-family:var(--f-body)">${PROS[a.id]?PROS[a.id].p.slice(0,3).map(p=>esc(p[1])).join(', '):'—'}</td><td style="font-family:var(--f-body)">${PROS[b.id]?PROS[b.id].p.slice(0,3).map(p=>esc(p[1])).join(', '):'—'}</td></tr><tr><td>No Brasil</td><td>${a.br==='d'?'Difícil':a.br==='p'?'Pouca oferta':'Fácil'}</td><td>${b.br==='d'?'Difícil':b.br==='p'?'Pouca oferta':'Fácil'}</td></tr><tr><td>${gl('rev','Avaliações na base')}</td><td>${a.nrev||'—'}</td><td>${b.nrev||'—'}</td></tr><tr><td>${gl('arm')}</td><td class="${a.ix.arm>b.ix.arm+.2?'w':''}">${dec(a.ix.arm)}</td><td class="${b.ix.arm>a.ix.arm+.2?'w':''}">${dec(b.ix.arm)}</td></tr></tbody></table></div>
   <p class="note" style="margin-top:8px">Índices de 0 a 10 calculados a partir das specs medidas. # é a posição no ranking do catálogo naquele atributo.</p></div></div>`;
 }
 function fillSel(sel,v){sel.innerHTML=optList(v)}
@@ -938,8 +936,6 @@ function target(){
   const AG=+A.age||35; if(AG>=45)T.comfort+=1.5; if(AG>=55)T.maneuver+=1.5; if(AG<16)T.maneuver+=1;
   {const w=stW();if(ST('keep')){T.power+=1*w;T.comfort+=.5*w;T.maneuver+=.5*w} if(ST('cnt'))T.control+=1*w; if(ST('agg')){T.power+=.5*w;T.spin+=.5*w} if(ST('all'))T.maneuver+=1.5*w; if(ST('netc')){T.maneuver+=1*w;T.stability+=.3*w} if(ST('net')){T.maneuver+=1.5*w;T.stability+=.5*w}}
   if(A.bh==='one'&&A.lvl!=='beg'){T.stability+=.8;T.control+=.4}
-  if(A.surf==='clay'){T.spin+=1;T.control+=.5} if(A.surf==='hard'){T.maneuver+=1;T.power+=.5}
-  if(A.fmt==='dbl'){T.maneuver+=1.5;T.stability+=.5} if(A.fmt==='both')T.maneuver+=.5;
   if(A.feel==='heavy')T.maneuver+=2.5; if(A.feel==='light')T.stability+=2;
   if(A.arm!=='no'&&A.pain==='3')T.comfort+=1.5; if(A.arm!=='no'&&A.lim==='3')T.comfort+=1;
   if(A.years==='0')T.power+=1; if(A.years==='10')T.control+=.5;
@@ -972,7 +968,7 @@ function zones(T,tw){
   const raMax=sev?60:A.arm==='now'?(J('elbow')?62:63):A.arm==='past'?66:72;
   const raMin=Math.max(54,raMax-9);
   const hd=A.headp==='98'?[95,98]:A.headp==='100'?[99,101]:A.headp==='104'?[102,107]:A.lvl==='beg'?[100,107]:A.lvl==='adv'?[97,100]:[98,102];
-  const balMax=J('wrist')?325:ST('net')||ST('netc')||A.fmt==='dbl'?325:335;
+  const balMax=J('wrist')?325:ST('net')||ST('netc')?325:335;
   return {wt:[tw-8,tw+8],sw:[sw-6,sw+6],ra:[raMin,raMax],head:hd,bal:[balMax-14,balMax]};
 }
 function penalties(r,c,tw){
@@ -1037,7 +1033,7 @@ function compute(){
 /* ---------- Análise ---------- */
 function runAnalysis(){
   show('analysis');
-  const steps=['Lendo seu perfil físico e o histórico do braço','Traduzindo swing, backhand, piso e estilo em especificações','Cruzando com '+RK.length+' raquetes, uma a uma','Ajustando conforto, peso, balanço e orçamento','Escolhendo corda e tensão'];
+  const steps=['Lendo seu perfil físico e o histórico do braço','Traduzindo swing, saque e estilo em especificações','Cruzando com '+RK.length+' raquetes, uma a uma','Ajustando conforto, peso, balanço e orçamento','Escolhendo corda e tensão'];
   const ul=$('#alist');ul.innerHTML=steps.map(s=>`<li>${s}</li>`).join('');
   const lis=[...ul.children];const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   RES=compute();tier=0;persist();
@@ -1144,10 +1140,10 @@ const SPEC=[
 function specBars(main,cur,Z,alt){
   return `<div class="sbars">${SPEC.map(s=>{const [a,b0]=RANGE(s.k);const b=b0===a?a+1:b0;const P=v=>cl((v-a)/(b-a)*100,0,100);
     const z=Z&&Z[s.k];
-    return `<div class="sb"><div class="lab"><span>${gl(s.k,s.l)}</span><b>${main[s.k]}${s.u}${alt?` <span style="color:var(--clay)">· ${alt[s.k]}${s.u}</span>`:''}${cur&&!alt?` <span class="muted">· sua ${cur[s.k]}${s.u}</span>`:''}</b></div>
+    return `<div class="sb"><div class="lab"><span>${gl(s.k,s.l)}</span><b>${main[s.k]}${s.u}${alt?` <span style="color:var(--alt)">· ${alt[s.k]}${s.u}</span>`:''}${cur&&!alt?` <span class="muted">· sua ${cur[s.k]}${s.u}</span>`:''}</b></div>
       <div class="tr">${z?`<i class="zone" style="left:${P(z[0])}%;width:${Math.max(2,P(z[1])-P(z[0]))}%"></i>`:''}${cur?`<i class="dot c" style="left:${P(cur[s.k])}%"></i>`:''}${alt?`<i class="dot b" style="left:${P(alt[s.k])}%"></i>`:''}<i class="dot" style="left:${P(main[s.k])}%"></i></div>
       <div class="ends"><span>${a} · ${s.lo}</span><span>${s.hi} · ${b0}</span></div></div>`}).join('')}</div>
-    <div class="legend"><span><i style="background:var(--pri);height:10px;width:10px;border-radius:50%"></i>${alt?esc(main.model):'Recomendada'}</span>${alt?`<span><i style="background:var(--clay);height:10px;width:10px;border-radius:50%"></i>${esc(alt.model)}</span>`:''}${cur&&!alt?'<span><i class="ring"></i>Sua atual</span>':''}${Z?'<span><i style="background:var(--ball);height:10px;width:16px"></i>Sua faixa ideal</span>':''}</div>`;
+    <div class="legend"><span><i style="background:var(--pri);height:10px;width:10px;border-radius:50%"></i>${alt?esc(main.model):'Recomendada'}</span>${alt?`<span><i style="background:var(--alt);height:10px;width:10px;border-radius:50%"></i>${esc(alt.model)}</span>`:''}${cur&&!alt?'<span><i class="ring"></i>Sua atual</span>':''}${Z?'<span><i style="background:var(--ball);height:10px;width:16px"></i>Sua faixa ideal</span>':''}</div>`;
 }
 /* mapa peso × swingweight */
 function scatter(hi,cur,Z,top3){
@@ -1171,14 +1167,14 @@ function scatter(hi,cur,Z,top3){
 }
 function gauge(v){
   const a=Math.PI*(1-v/10),x=42+34*Math.cos(a),y=44-34*Math.sin(a);
-  return `<svg class="gauge" viewBox="0 0 84 50" aria-hidden="true"><path d="M8 44 A34 34 0 0 1 76 44" fill="none" stroke="var(--line)" stroke-width="8" stroke-linecap="round"/><path d="M8 44 A34 34 0 0 1 ${x.toFixed(1)} ${y.toFixed(1)}" fill="none" stroke="${v>=6?'var(--pri)':v>=4.5?'var(--ball)':'var(--clay)'}" stroke-width="8" stroke-linecap="round"/></svg>`;
+  return `<svg class="gauge" viewBox="0 0 84 50" aria-hidden="true"><path d="M8 44 A34 34 0 0 1 76 44" fill="none" stroke="var(--line)" stroke-width="8" stroke-linecap="round"/><path d="M8 44 A34 34 0 0 1 ${x.toFixed(1)} ${y.toFixed(1)}" fill="none" stroke="${v>=6?'var(--pri)':v>=4.5?'var(--ball)':'var(--warn)'}" stroke-width="8" stroke-linecap="round"/></svg>`;
 }
 
 /* ---------- Prévia ---------- */
 const armTxt=v=>v>=7.5?'Muito amigável ao braço':v>=6?'Amigável ao braço':v>=4.5?'Neutra':'Exige cuidado';
 function painNote(){
   if(A.arm==='no'||!(A.pain==='3'||A.lim==='3'))return '';
-  return `<div class="panel" style="border-color:var(--clay)"><p><strong>Dor forte ou em tratamento.</strong> A raquete certa reduz a carga no braço, mas não trata a lesão. Antes de voltar a jogar forte, fale com o seu médico ou fisioterapeuta. Por isso o motor limitou a rigidez a 60 RA e a corda a multifilamento.</p></div>`;
+  return `<div class="panel" style="border-color:var(--warn)"><p><strong>Dor forte ou em tratamento.</strong> A raquete certa reduz a carga no braço, mas não trata a lesão. Antes de voltar a jogar forte, fale com o seu médico ou fisioterapeuta. Por isso o motor limitou a rigidez a 60 RA e a corda a multifilamento.</p></div>`;
 }
 function diagnosis(){
   const {c,curFit,T,ranked}=RES;if(!c)return '';
@@ -1310,7 +1306,6 @@ function why(r,c,T){
   if(Math.abs(r.wt-RES.tw)<=8)out.push(`${r.wt} g sem corda, perto dos ${RES.tw} g calculados para sua força e seu nível.`);
   if(c&&r.sw<c.sw-3)out.push(`Swingweight ${r.sw} contra ${c.sw} da sua atual: mais fácil de acelerar e de chegar a tempo na bola.`);
   if(A.bh==='one'&&r.sw>=315)out.push(`Swingweight ${r.sw}: massa suficiente para o backhand de uma mão atravessar a bola.`);
-  if(A.surf==='clay'&&OPEN[r.pat]>=1)out.push(`Padrão ${r.pat.replace('x','×')} aberto: spin para empurrar o adversário para trás no saibro.`);
   else if(A.spin==='high'&&OPEN[r.pat]>=1)out.push(`Padrão ${r.pat.replace('x','×')} aberto: a corda morde mais a bola para o topspin.`);
   if(J('wrist')&&r.bal<=325)out.push(`Balanço de ${r.bal} mm, leve na cabeça: menos alavanca sobre o punho.`);
   return out.slice(0,5);
@@ -1348,7 +1343,7 @@ function stringSetup(r){
   else if(A.spin==='high'&&(A.lvl==='adv'||A.lvl==='adv_int')){s='Poliéster facetado 1,25 mm';base=51}
   else {s='Poliéster redondo 1,25 mm';base=51}
   const want=A.want||[];const steps=[['Base para a corda indicada e o seu perfil',base]];const adj=(c,v,t)=>{if(c){base+=v;steps.push([t,v])}};
-  adj(want.includes('power'),-2,'Você quer mais potência');adj(want.includes('control'),2,'Você quer mais controle');adj(r.pat==='18x20',1,'Padrão fechado 18×20');adj(r.ra>=68&&A.arm!=='no',-1,'Quadro rígido com histórico de dor');adj(A.surf==='clay',-1,'Saibro: bola mais lenta e alta');adj(A.opp==='heavy',1,'Bola pesada dos adversários');adj(A.swing==='short'&&!want.includes('power'),-1,'Swing curto: corda solta ajuda a bola sair');
+  adj(want.includes('power'),-2,'Você quer mais potência');adj(want.includes('control'),2,'Você quer mais controle');adj(r.pat==='18x20',1,'Padrão fechado 18×20');adj(r.ra>=68&&A.arm!=='no',-1,'Quadro rígido com histórico de dor');adj(A.opp==='heavy',1,'Bola pesada dos adversários');adj(A.swing==='short'&&!want.includes('power'),-1,'Swing curto: corda solta ajuda a bola sair');
   if(false)base-=2;
   const kg=lb=>dec(lb*0.4536);
   const swap={'1':'a cada 3 meses','2':'a cada 6 a 8 semanas','4':'a cada 3 a 4 semanas'}[A.freq];
@@ -1465,9 +1460,9 @@ function optList(sel){const by={};RK.forEach(r=>{(by[r.brand]=by[r.brand]||[]).p
 function renderCmp(){
   const a=RK[+$('#cmpA').value],b=RK[+$('#cmpB').value];$('#cmpOut').innerHTML=duelHTML(a,b,true);wireStages($('#cmpOut'));return;const fa=RES.all.find(x=>x.r.id===a.id),fb=RES.all.find(x=>x.r.id===b.id);
   const rows=feel(b,a);
-  $('#cmpOut').innerHTML=`<div class="cmpfit" style="margin-top:6px"><div class="kpi"><b style="color:var(--pri)">${fa.fit}%</b><span>${esc(a.name)}</span></div><div class="kpi"><b style="color:var(--clay)">${fb.fit}%</b><span>${esc(b.name)}</span></div></div>
+  $('#cmpOut').innerHTML=`<div class="cmpfit" style="margin-top:6px"><div class="kpi"><b style="color:var(--pri)">${fa.fit}%</b><span>${esc(a.name)}</span></div><div class="kpi"><b style="color:var(--alt)">${fb.fit}%</b><span>${esc(b.name)}</span></div></div>
   <div class="mini" style="margin-top:14px">${[a,b].map(r=>stage(r,{h:220})).join('')}</div>
-  <div class="two" style="margin-top:6px"><div>${radar([{name:a.model,v:a.ix,c:'var(--pri)',solid:true},{name:b.model,v:b.ix,c:'var(--clay)',dash:true}])}</div><div>${specBars(a,null,null,b)}</div></div>
+  <div class="two" style="margin-top:6px"><div>${radar([{name:a.model,v:a.ix,c:'var(--pri)',solid:true},{name:b.model,v:b.ix,c:'var(--alt)',dash:true}])}</div><div>${specBars(a,null,null,b)}</div></div>
   <div class="tbl" style="margin-top:10px"><table><thead><tr><th>Item</th><th>${esc(a.model)}</th><th>${esc(b.model)}</th><th>Saindo da primeira para a segunda</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x[0]}</td><td class="n">${x[1]}</td><td class="n">${x[2]}</td><td>${x[3]}</td></tr>`).join('')}</tbody></table></div>`;
   wireStages($('#cmpOut'));
 }
@@ -1483,7 +1478,7 @@ function saveBox(){
 }
 
 /* ---------- Relatório PDF A4 ---------- */
-const HEX={'--bg':'#FFFFFF','--surface':'#FFFFFF','--ink':'#0B2530','--muted':'#4A6570','--line':'#CFDEE2','--pri':'#0E4D64','--pri-ink':'#FFFFFF','--ball':'#DDF247','--ball-ink':'#0B2530','--clay':'#B4472F','--soft':'#DCEBEF','--deep':'#0A3A4C','--cur':'#E07A1F'};
+const HEX={'--bg':'#FFFFFF','--surface':'#FFFFFF','--ink':'#0B2530','--muted':'#4A6570','--line':'#CFDEE2','--pri':'#0E4D64','--pri-ink':'#FFFFFF','--ball':'#DDF247','--ball-ink':'#0B2530','--alt':'#5C6B00','--warn':'#8F5200','--soft':'#DCEBEF','--deep':'#0A3A4C','--cur':'#E07A1F'};
 const hexify=s=>s.replace(/var\((--[a-z-]+)\)/g,(m,k)=>HEX[k]||m);
 const STR_EX=s=>/Multifilamento/.test(s)?'Ex.: Wilson NXT, Babolat Xcel, Tecnifibre X-One Biphase':/Sintético/.test(s)?'Ex.: Prince Synthetic Gut, Wilson Synthetic Gut Power':/Híbrido/.test(s)?'Ex.: Luxilon Element ou Solinco Hyper-G Soft + Wilson NXT':/facetado/.test(s)?'Ex.: Babolat RPM Blast, Solinco Hyper-G':'Ex.: Luxilon ALU Power, Yonex Poly Tour Pro';
 function loadLib(src,test){return new Promise((ok,no)=>{if(test())return ok();const s=document.createElement('script');s.src=src;s.onload=()=>test()?ok():no(new Error('lib'));s.onerror=()=>no(new Error('lib'));document.head.appendChild(s)})}
