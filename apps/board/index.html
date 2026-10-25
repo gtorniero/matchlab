@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.w-sec{display:flex;flex-direction:column;gap:12px}
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%;text-size-adjust:100%}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.w-sec{display:flex;flex-direction:column;gap:12px}
 .why-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .wcard{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px}
 .wi{width:40px;height:40px;padding:8px;border-radius:12px;background:var(--surface);fill:none;stroke:var(--pri);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -314,7 +314,7 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
 /* ---------- relatório em PDF (A4, sempre claro) ---------- */
 .pdfbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .timg{margin:4px auto 0;max-width:620px;width:100%;display:flex;flex-direction:column;gap:6px}.timg.sm{max-width:none}.timg img{width:100%;height:auto;display:block;border-radius:14px}.timg figcaption{font-size:12px;color:var(--muted);text-align:center}.timg.sm img{border-radius:10px}
-.pdfdoc{position:fixed;left:-10000px;top:0;width:794px;
+.pdfdoc{position:fixed;left:-10000px;top:0;width:794px;-webkit-text-size-adjust:100%;text-size-adjust:100%;
   --bg:#EEF4F5;--surface:#FFFFFF;--ink:#0B2530;--muted:#4A6570;--line:#CFDEE2;--pri:#0E4D64;--pri-ink:#FFFFFF;--ball:#6CCFF6;--ball-ink:#0B2530;--clay:#B4472F;--soft:#DCEBEF;
   color-scheme:light;color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;font-size:11.5px;line-height:1.4}
 .pg{width:794px;height:1123px;background:#fff;padding:30px 40px 40px;display:flex;flex-direction:column;gap:11px;overflow:hidden;position:relative}
@@ -386,6 +386,7 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
 .pnums div{background:var(--bg);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column}.pnums b{font-size:18px;letter-spacing:-.02em}.pnums span{font-size:9.5px;color:var(--muted);line-height:1.25}
 .pgl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px 16px;font-size:10px}.pgl b{font-weight:700}
 .pnote{font-size:9.5px;color:var(--muted)}
+.pg.tight{gap:7px}.pg.tight .pbox{padding:8px 11px;gap:5px}.pg.tight .prev p,.pg.tight .plist,.pg.tight .pdl{font-size:9.5px}
 .prevs{display:flex;flex-direction:column;gap:9px}.prevh{font-size:11px;font-weight:700;color:var(--pri);margin-bottom:3px!important}
 .prev{border-left:3px solid var(--ball);background:var(--bg);border-radius:0 8px 8px 0;padding:5px 9px;margin-bottom:4px}.prev p{font-size:10.5px}.prev span{font-size:9px;color:var(--muted)}.prev b{color:var(--ink)}
 </style>
@@ -505,8 +506,8 @@ const ARCH={
  gun:{n:'Gun',st:[3,2,1,4,0,0],lv:[0,0,0,2,4],tm:[0,0,1,3,5],fo:[1,3,5],ob:[0,0,0,4,0],vc:2,ref:[42,90,19.75,3],L:[86,104],nf:.04,tail:'pin',tailN:'Pin',nose:'Muito puxado',rail:'Fina, 80/20',foil:'80/20',rk:[6.25,2.75],bottom:'Vee',setup:'tri',constr:'puRef',d:'Para onda grande de verdade: remada para entrar cedo e controle em alta velocidade.'}
 };
 const KEYS=Object.keys(ARCH);
-const MODF={soft:1,long:1,longp:1,minimal:1.8,mid:1.25,evo:1.1,fish:1.06,grov:1.06,twin:1.0,softp:1.2,short:1,step:1.11,gun:1.3};
-const LV=[{n:'Primeiras Ondas',gf:[1.0,0.8],min:0,max:20,rng:1},{n:'Já Fica de Pé',gf:[0.58,0.47],min:20,max:40,rng:2},{n:'Intermediário',gf:[0.45,0.41],min:40,max:60,rng:2},{n:'Intermediário Avançado',gf:[0.41,0.385],min:60,max:80,rng:1.5},{n:'Avançado',gf:[0.385,0.36],min:80,max:101,rng:1}];
+const MODF={soft:1,long:1,longp:1,minimal:1.8,mid:1.25,evo:1.1,fish:1.06,grov:1.10,twin:1.0,softp:1.2,short:1,step:1.11,gun:1.3};
+const LV=[{n:'Primeiras Ondas',gf:[1.0,0.8],min:0,max:20,rng:1},{n:'Já Fica de Pé',gf:[0.58,0.47],min:20,max:40,rng:2},{n:'Intermediário',gf:[0.45,0.41],min:40,max:60,rng:2},{n:'Intermediário Avançado',gf:[0.41,0.385],min:60,max:80,rng:1.5},{n:'Avançado',gf:[0.40,0.37],min:80,max:101,rng:1}];
 const FINSET={single:'Monoquilha',tri:'Triquilha (thruster)',quad:'Quadriquilha','2+1':'2+1 (central e laterais)',twin:'Biquilha',twint:'Biquilha com trailer'};
 const CONSTR={soft:['Soft (EVA) com núcleo EPS','Deck macio, fundo liso, longarina dupla.'],softLong:['Soft com longarina','Deck macio e fundo rígido. Resiste a batidas.'],pu:['PU com poliéster','Sensação conectada na onda.'],puLeve:['PU leve','Mais viva e sensível a pressão.'],puPesada:['PU','Peso ajuda a deslizar e a fazer noseride.'],puRef:['PU reforçada','Longarina mais grossa para onda grande.'],epoxi:['Epóxi (EPS)','Leve, flutua mais, rema melhor.'],puEpoxi:['PU','Sensação clássica; epóxi também funciona.']};
 /* ---------- motor ---------- */
@@ -541,6 +542,7 @@ function engine(a,long,over){
     if(quiver===2){if(k==='short')s-=8;if(k==='step')s+=4}
     if(tam===4&&lvl>=3){if(k==='gun')s+=14;if(k==='short')s-=4}
     if(ritmo===0&&['mid','minimal','long','longp','fish'].includes(k))s+=1.5;if(ritmo===2&&['short','step','twin','grov'].includes(k))s+=1.5;
+    {const dr=g('dor',[]);if(dr.includes(1)||dr.includes(3))s+=(A.vc-2.5)*0.8;else if(dr.includes(0)||dr.includes(2))s+=(A.vc-2.5)*0.5}
     if(g('sens',1)===0)s+=(A.vc-2.5)*0.8;if(g('sens',1)===2)s+=(2.5-A.vc)*0.8;
     if(k==='gun'&&tam<4)s-=40;if(k==='step'&&tam<3)s-=12;
     if(k==='short'&&g('remada',1)===0)s-=8;
@@ -570,9 +572,10 @@ function engine(a,long,over){
   // 4. litragem
   a._lvl=lvl;
   const L0=LV[lvl],pos=clamp((H-L0.min)/(L0.max-L0.min),0,1),GF=L0.gf[0]-(L0.gf[0]-L0.gf[1])*pos;
-  const body=(g('motivo',1)===4?1.03:1)*[1,1,1.01,1.03,1.05][g('idade',1)]*[1.03,1.01,1,1][g('freq',1)]*[1,1,1.01][g('roupa',0)];
+  const body=(g('motivo',1)===4?1.03:1)*[1,1,1.01,1.03,1.05][g('idade',1)]*[1.03,1.01,1,1][g('freq',1)];
   const flutM=[1.08,1,0.95][flut];
-  let add=[1.5,0,0,0][g('fis',1)]+(g('remada',1)===0?1:0)+(g('incomoda',6)===0?1.5:g('incomoda',6)===2?-1.5:0);
+  const dor=g('dor',[]);
+  let add=(dor.includes(0)?2.5:0)+(dor.includes(1)?1.5:0)+(dor.includes(2)?1:0)+(dor.includes(3)?1.5:0)+[1.5,0,0,0][g('fis',1)]+(g('remada',1)===0?1:0)+(g('incomoda',6)===0?1.5:g('incomoda',6)===2?-1.5:0);
   const mw=[0.15,0.5,1,1,1][lvl];
   const volOf=k=>{const A=ARCH[k];let v=peso*GF*(1+(MODF[k]-1)*mw)*flutM*body+add;
     v+= (k==='step'||k==='gun')?[0,0,0,1,2][tam]:[0.5,0,0,0,0][tam];
@@ -774,6 +777,7 @@ const Q=[
  {s:0,id:'altura',type:'number',t:'Qual a sua altura?',h:'Em cm. Ajusta o comprimento.',min:140,max:210,step:1,ph:'ex.: 175'},
  {s:0,id:'idade',t:'Qual a sua idade?',o:O(['Até 25','26 a 35','36 a 45','46 a 55','56 ou mais'])},
  {s:0,id:'fis',t:'Como está o seu condicionamento para remar?',h:'Remada é 80% do tempo na água. Quem cansa rápido precisa de mais flutuação.',o:O([['Canso rápido','Pouca atividade física'],['Razoável','Ativo, sem rotina de treino'],['Bom','Treino 2 a 3 vezes por semana'],['Muito bom','Nado, remo ou treino forte com frequência']])},
+ {s:0,id:'dor',multi:4,opt:true,t:'Você tem alguma dor ou lesão que atrapalha no surf?',h:'Se não tiver, deixe em branco. Dor muda a flutuação e a estabilidade que a prancha precisa ter.',o:O([['Ombro','Remar cansa ou dói'],['Joelho ou quadril','Ficar de pé é difícil ou dói'],['Lombar ou costas','Dói na remada ou na base'],['Mobilidade reduzida','Falta flexibilidade para levantar rápido']])},
  {s:1,id:'tempo',t:'Há quanto tempo você surfa?',o:O(['Ainda não surfo','Menos de 6 meses','6 meses a 1 ano','1 a 3 anos','3 a 6 anos','Mais de 6 anos'])},
  {s:1,id:'freq',t:'Com que frequência?',o:O(['1 a 2 vezes por mês','3 a 6 vezes por mês','2 a 3 vezes por semana','4 ou mais por semana'])},
  {s:1,id:'auto',t:'Como você pega onda hoje?',o:O([['Com empurrão do professor','Ainda preciso de ajuda'],['Sozinho, na espuma','Já remo e entro na onda quebrada'],['Sozinho, na onda verde','Entro na parede antes de quebrar']])},
@@ -782,14 +786,11 @@ const Q=[
  {s:2,id:'objv',t:'Qual é o seu principal objetivo no surf agora?',o:O([['Aprender a ficar de pé','Começar do jeito certo'],['Ganhar autonomia','Pegar ondas sozinho, ler o mar, surfar sem professor'],['Evoluir e aprender manobras','Cavada, batida, rasgada'],['Curtir mais, sem pressão','Pegar mais ondas e deslizar'],['Ondas maiores e mais fortes','Encarar dias mais pesados com segurança'],['Surf clássico','Andar sobre a prancha, noseride']])},
  {s:2,id:'estilo',t:'Que tipo de surf você mais curte?',h:'Se está começando, escolha a primeira.',o:[['0','Pegar onda e deslizar','Ficar de pé e curtir a onda'],['1','Fazer curvas na parede','Descer e subir a onda'],['2','Manobras fortes','Batidas e rasgadas'],['5','Estilo clássico','Andar sobre a prancha, como no longboard']]},
  {s:2,id:'imp',type:'rate',t:'O que é mais importante numa prancha para você?',h:'Dê uma nota de 1 (pouco importante) a 10 (essencial) para cada característica. Nenhuma prancha é 10 em tudo: o equilíbrio entre elas decide o tipo.'},
- {s:3,id:'onde',t:'Onde você vai usar essa prancha?',h:'Piscina de onda tem onda limpa, sem vento e com a mesma forma em toda série. Isso muda o tipo de prancha e o material.',o:O([['No mar'],['Mais em piscina de onda','Wavegarden, Surf Lakes, Kelly Slater e similares'],['Nos dois','Mar e piscina']])},
- {s:3,id:'tam',t:'Qual o tamanho de onda mais comum onde você surfa?',h:'Se for piscina, pense no tamanho da sessão que você reserva.',o:O(['Até meio metro','Meio metro a 1 m','1 a 1,5 m','1,5 a 2,5 m','Acima de 2,5 m'])},
+ {s:3,id:'tam',t:'Qual o tamanho de onda mais comum onde você surfa?',h:'Se for usar em piscina, pense no tamanho da sessão que você reserva.',o:O(['Até meio metro','Meio metro a 1 m','1 a 1,5 m','1,5 a 2,5 m','Acima de 2,5 m'])},
  {s:3,id:'forca',t:'Como são essas ondas?',o:O([['Cheias e fracas','Demoram a quebrar, pouca força'],['Mistas','Depende do dia'],['Cavadas e rápidas','Quebram de uma vez, com força']])},
- {s:3,id:'pico',t:'Que tipo de fundo tem o seu pico?',o:O([['Areia (beach break)','Ondas mudam com os bancos de areia'],['Ponta ou costão (point break)','Ondas longas que abrem para um lado'],['Pedra ou laje','Fundo raso e ondas mais fortes']])},
- {s:3,id:'roupa',t:'Com que roupa você costuma surfar?',h:'Roupa grossa pesa e tira um pouco da flutuação.',o:O(['Bermuda ou lycra','Long john ou roupa fina (até 2 mm)','Roupa de 3/2 mm ou mais grossa'])},
  {s:4,id:'foam',cond:()=>['0','1'].includes(A.auto)||['0','1'].includes(A.tempo),t:'Você quer começar numa prancha de espuma (soft)?',h:'Soft é macia, quase não machuca e aguenta batida. É a mais segura para quem está começando.',o:O([['Não, quero prancha de fibra'],['Sim, quero soft']])},
  {s:4,id:'motivo',t:'Por que você quer uma nova prancha?',o:O(['É a minha primeira','Substituir a atual','Adicionar ao quiver','Evoluir para algo mais performance','Voltar a surfar depois de um tempo'])},
- {s:4,id:'quiver',t:'Qual o papel dela?',o:O(['Prancha única, para todo dia','Para dias pequenos','Para dias grandes','Para viagem'])},
+ {s:4,id:'uso',t:'Para que vai usar essa prancha?',h:'Piscina de onda tem onda limpa, sem vento e igual em toda série: muda o tipo de prancha e o material.',o:O(['Prancha única, para todo dia','Para dias pequenos','Para dias grandes','Para viagem','Piscina de ondas','Mar e piscina'])},
  {s:4,id:'atual_mod',t:'Qual é a sua prancha atual?',h:'Escolha pelo formato, não pela marca. Se ficar em dúvida entre dois, marque o mais parecido.',o:O([['Não tenho'],['Softboard de escolinha','Espuma macia, 7\' a 9\''],['Softboard curta','Espuma, abaixo de 7\''],['Longboard clássico','Acima de 9\', para andar na prancha'],['Longboard performance','Acima de 9\', mais manobrável'],['Funboard ou mini-malibu','7\' a 8\', larga e grossa'],['Mid-length','6\'8" a 7\'8", bico arredondado'],['Evolution','6\'2" a 7\', pranchinha com volume'],['Fish','Curta, larga, rabeta em V'],['Biquilha moderna','Curta, duas quilhas, de performance'],['Groveler','Pranchinha larga para onda pequena'],['Pranchinha','Abaixo de 6\'4", fina'],['Step-up','Pranchinha maior, para onda grande'],['Gun','Longa e fina, para onda gigante']])},
  {s:4,id:'atual_dim',type:'board',opt:true,cond:()=>!!A.atual_mod&&A.atual_mod!=='0',t:'Quais as medidas da sua prancha atual?',h:'Ficam escritas no fundo, perto da rabeta ou da longarina. Comprimento e litros já bastam para comparar.'},
  {s:4,id:'muda',cond:()=>!!A.atual_mod&&A.atual_mod!=='0',t:'Você quer mudar o estilo de prancha?',h:'Às vezes a ideia é a mesma prancha, só que melhor para você. Às vezes é trocar de vez: uma fish retrô, um long, uma fun.',o:O([['Não, quero o mesmo estilo','Só com as medidas certas para mim'],['Sim, quero outro estilo','Você escolhe qual na próxima pergunta'],['Tanto faz, me indique','O cálculo decide sozinho']])},
@@ -804,7 +805,7 @@ const CT=CB.reduce((p,x)=>p*x[1],1);
 const big=n=>n>=1e12?Math.round(n/1e12)+' tri':n>=1e9?Math.round(n/1e9)+' bi':Math.round(n/1e6)+' mi';
 document.getElementById('nCombS').textContent=big(CT);document.getElementById('nCombS').title=CT.toLocaleString('pt-BR')+' combinações de 17 variáveis';
 })();
-const EXAMPLE={onde:'0',foam:'0',peso:'70',altura:'170',idade:'2',fis:'1',tempo:'3',freq:'1',auto:'2',pass:'2',skills:['1','2','3','4','5'],objv:'2',imp:{rem:8,est:6,vel:7,man:6,ctl:3,tol:6},pico:'0',roupa:'0',estilo:'0',tam:'1',forca:'0',motivo:'1',quiver:'0',atual_mod:'10',atual_dim:{ft:'6',in:'2',l:'35'},muda:'2',incomoda:'0'};
+const EXAMPLE={foam:'0',peso:'70',altura:'170',idade:'2',fis:'1',tempo:'3',freq:'1',auto:'2',pass:'2',skills:['1','2','3','4','5'],objv:'2',imp:{rem:8,est:6,vel:7,man:6,ctl:3,tol:6},estilo:'0',tam:'1',forca:'0',motivo:'1',uso:'0',atual_mod:'10',atual_dim:{ft:'6',in:'2',l:'35'},muda:'2',incomoda:'0'};
 
 function renderSteps(){$('#steps').innerHTML=STEPS.map((s,i)=>`<li class="${i===step?'on':i<step?'done':''}">${i+1}. ${s}</li>`).join('')}
 function renderQs(){
@@ -867,6 +868,7 @@ $('#next').addEventListener('click',()=>{
 function conv(){const o={};Q.forEach(q=>{if(q.cond&&!q.cond())return;if(q.type==='board'){const v=A[q.id]||{};const L=(+v.ft||0)*12+(+v.in||0);if(L>=48)o.atual_L=L;if(+v.l>=15)o.atual_V=+v.l;return}const v=A[q.id];if(v===undefined||v==='')return;o[q.id]=q.type==='rate'?Object.assign({},IMPDEF,v):q.multi?v.map(Number):Number(v)});
   if(o.pass>=2){o.skills=o.skills||[];if(!o.skills.includes(0))o.skills.push(0)}
   if(o.objv!==undefined)o.obj=[0,1,1,2,3,4][o.objv];
+  if(o.uso!==undefined){o.quiver=[0,1,2,3,0,0][o.uso];o.onde=[0,0,0,0,1,2][o.uso]}
   const im=o.imp||IMPDEF;o.flut=im.rem-im.man>=3||im.tol-im.man>=4?0:im.man-im.rem>=3?2:1;const M={4:0,7:1,6:2,8:4,9:5};const man=(o.skills||[]).filter(x=>x in M).map(x=>M[x]);if(man.length)o.manobras=man;return o}
 
 /* ---------- análise ---------- */
@@ -1000,6 +1002,7 @@ function attB(r){
   if(a.tam!==undefined&&a.tam>=3&&!['step','gun','short','mid'].includes(k))out.push('Em dias acima de 1,5 m ela perde controle; vale ter uma prancha maior e mais fina para esses dias.');
   if(/Epóxi/.test(r.dc.constr[0])&&a.onde!==1)out.push('Epóxi é leve e flutua mais, mas trepida com vento e mar mexido.');
   if(a.onde===1||a.onde===2)out.push('Confira as regras da piscina antes: muitas exigem prancha de espuma nas sessões de iniciante e algumas limitam o tamanho da prancha.');
+  {const dr=a.dor||[],P=['ombro','joelho ou quadril','lombar','mobilidade'];if(dr.length)out.push(`Por causa da dor (${dr.map(x=>P[x]).join(', ')}), a prancha ficou com mais flutuação${dr.some(x=>x===1||x===3)?' e estabilidade':''}. Ela ajuda, mas não trata: converse com um fisioterapeuta antes de aumentar o volume de surf.`)}
   if(!out.length)out.push('Nenhum ponto crítico para o seu perfil. Se puder, teste uma parecida antes de comprar.');
   return out;
 }
@@ -1119,10 +1122,10 @@ function briefing(r,c){
   const fin=r.fins.map((x,i)=>{const dd=dims(x.k,x.vol,r.peso,r.alt);return `${i+1}º ${PN[x.k]}, ${x.fit}% · ${ftin(dd.L)} x ${frac(dd.W)} x ${frac(dd.T)} · ${dec1(dd.V)} L`});
   const S=[
    ['Contato',[['Nome',c.nome],['E-mail',c.email],['WhatsApp',c.tel]]],
-   ['Surfista',[['Peso',qLab('peso')],['Altura',qLab('altura')],['Idade',qLab('idade')],['Condicionamento',qLab('fis')],['Nível calculado',LV[r.lvl].n+' ('+(r.lvl+1)+' de 5)'],['Tempo de surf',qLab('tempo')],['Frequência',qLab('freq')],['Como pega onda',qLab('auto')],['Arrebentação',qLab('pass')],['Já faz na onda',qLab('skills')]]],
+   ['Surfista',[['Peso',qLab('peso')],['Altura',qLab('altura')],['Idade',qLab('idade')],['Condicionamento',qLab('fis')],['Dor ou lesão',qLab('dor')],['Nível calculado',LV[r.lvl].n+' ('+(r.lvl+1)+' de 5)'],['Tempo de surf',qLab('tempo')],['Frequência',qLab('freq')],['Como pega onda',qLab('auto')],['Arrebentação',qLab('pass')],['Já faz na onda',qLab('skills')]]],
    ['Objetivos',[['Objetivo principal',qLab('objv')],['Tipo de surf',qLab('estilo')],['Prioridades (1 a 10)',`remada ${im.rem}, estabilidade ${im.est}, velocidade ${im.vel}, manobra ${im.man}, onda forte ${im.ctl}, perdoar erros ${im.tol}`]]],
-   ['Mar',[['Onde vai usar',qLab('onde')],['Tamanho de onda',qLab('tam')],['Força das ondas',qLab('forca')],['Fundo do pico',qLab('pico')],['Roupa',qLab('roupa')]]],
-   ['Prancha',[['Prancha atual',qLab('atual_mod')+(r.atual?`${r.a.atual_L?' · '+ftin(r.a.atual_L):''}${r.a.atual_V?' · '+dec1(r.a.atual_V)+' L':''}`:'')],['Quer mudar de estilo',qLab('muda')+(A.muda==='1'?' · '+qLab('estilo_novo'):'')],['O que incomoda',qLab('incomoda')],['Por que quer uma nova',qLab('motivo')],['Papel da nova',qLab('quiver')],['Espuma (soft)',qLab('foam')]]],
+   ['Mar',[['Para que vai usar',qLab('uso')],['Tamanho de onda',qLab('tam')],['Força das ondas',qLab('forca')]]],
+   ['Prancha',[['Prancha atual',qLab('atual_mod')+(r.atual?`${r.a.atual_L?' · '+ftin(r.a.atual_L):''}${r.a.atual_V?' · '+dec1(r.a.atual_V)+' L':''}`:'')],['Quer mudar de estilo',qLab('muda')+(A.muda==='1'?' · '+qLab('estilo_novo'):'')],['O que incomoda',qLab('incomoda')],['Por que quer uma nova',qLab('motivo')],['Espuma (soft)',qLab('foam')]]],
    ['Recomendação Board Match',[['Prancha ideal',`${PN[r.k]} · ${r.fins[0].fit}%`],['Medidas',`${ftin(d.L)} x ${frac(d.W)} x ${frac(d.T)}`],['Litros',`${dec1(d.V)} L (faixa ${lo} a ${hi} L)`],['Rabeta',dc.tail],['Bico',dc.nose],['Borda',dc.rail],['Curva (rocker)','bico '+frac(dc.rocker[0])+' · rabeta '+frac(dc.rocker[1])],['Fundo',dc.bottom],['Quilhas',FINSET[dc.setup]+' · '+dc.finSize+' · '+dc.boxes],['Material',dc.constr[0]],['Laminação',dc.lam],['Acabamento',dc.finish],['Finalistas',fin.join(' | ')]]]
   ];
   const txt=['SEU MATCH · BOARD MATCH','Olá, '+COACH.nome.split(' ')[0]+'! Quero fazer minha prancha. Segue meu briefing do Board Match.',''].concat(...S.map(([t,rows])=>[t.toUpperCase(),...rows.map(([k,v])=>`${k}: ${v}`),''])).join('\n');
@@ -1369,7 +1372,7 @@ function pdfHTML(r){
   const p4=`<div><p class="pey">Página 4</p><h2>O pódio</h2><p class="muted" style="margin-top:3px">${gap<=3?`Empate técnico: o 1º e o 2º lugar estão a ${gap} ponto${gap===1?'':'s'}. As duas servem; a escolha fica pelo que cada uma lidera.`:`A ${PN[k].toLowerCase()} ficou ${gap} pontos à frente do 2º lugar.`} Barras: azul-claro é o que você pediu, escuro é o que a prancha entrega nas suas 3 prioridades.</p></div>
   <div class="ppod">${pod}</div>
   <div class="pbox"><h3>O que dizem de cada tipo</h3><p class="pnote">Trechos de reviews publicados, resumidos e traduzidos, de modelos de referência de cada tipo. Lojas tendem a elogiar o que vendem; por isso cada trecho mostra a fonte.</p>
-  <div class="prevs">${fins.map((x,i)=>{const R=REVIEWS.filter(y=>y[0]===x.k).slice(0,i?2:3);return `<div class="prevg"><p class="prevh">${i+1}º · ${PN[x.k]}</p>${R.length?R.map(y=>`<div class="prev"><p>“${esc(y[2])}”</p><span><b>${esc(y[1])}</b> · ${esc(y[3])} (${esc(new URL(y[4]).hostname.replace(/^www\./,''))}) · ${esc(y[5])}${y[6]!=='—'?' · '+esc(y[6]):''}${y[7]!=='sem nota'?' · nota '+esc(y[7]):''}${y[8]!=='—'?' · '+esc(y[8]):''}</span></div>`).join(''):`<p class="pnote">Não achamos review independente deste tipo; o que existe é texto das próprias marcas. Fale com o coach antes de comprar.</p>`}</div>`}).join('')}</div>
+  <div class="prevs">${fins.map((x,i)=>{const R=REVIEWS.filter(y=>y[0]===x.k).slice(0,i?2:3);return `<div class="prevg"><p class="prevh">${i+1}º · ${PN[x.k]}</p>${R.length?R.map((y,j)=>`<div class="prev"${j?` data-cut="${10+i*3+j}"`:''}><p>“${esc(y[2])}”</p><span><b>${esc(y[1])}</b> · ${esc(y[3])} (${esc(new URL(y[4]).hostname.replace(/^www\./,''))}) · ${esc(y[5])}${y[6]!=='—'?' · '+esc(y[6]):''}${y[7]!=='sem nota'?' · nota '+esc(y[7]):''}${y[8]!=='—'?' · '+esc(y[8]):''}</span></div>`).join(''):`<p class="pnote">Não achamos review independente deste tipo; o que existe é texto das próprias marcas. Fale com o coach antes de comprar.</p>`}</div>`}).join('')}</div>
   <p class="pnote">Base do motor: 422 casos reais de lojas, revistas, marcas, atletas e fóruns.</p></div>
 `;
   /* página 5: ranking e método */
@@ -1389,6 +1392,13 @@ function pdfHTML(r){
 }
 const LIBS=['https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js','https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'];
 const loadJS=u=>new Promise((ok,no)=>{if(document.querySelector(`script[src="${u}"]`))return ok();const s=document.createElement('script');s.src=u;s.onload=ok;s.onerror=()=>no(new Error(u));document.head.appendChild(s)});
+/* garante que nada passe do rodapé: tira primeiro os itens extras (reviews além do primeiro, cards e alertas a mais) */
+function fitPages(box){box.querySelectorAll('.pg').forEach(pg=>{
+  const lim=pg.getBoundingClientRect().top+1123-46;
+  const over=()=>Math.max(...[...pg.children].filter(c=>!c.classList.contains('pgf')).map(c=>c.getBoundingClientRect().bottom))>lim;
+  const cand=[...pg.querySelectorAll('[data-cut]')].sort((a,b)=>b.dataset.cut-a.dataset.cut).concat([...pg.querySelectorAll('.why-cards .wcard:nth-child(n+4),.plist li:nth-child(n+6),.palert p:nth-child(n+3)')].reverse());
+  while(over()&&cand.length)cand.shift().remove();
+  if(over())pg.classList.add('tight')})}
 /* html2canvas desenha SVG como imagem e perde o CSS da página: grava as cores e fontes calculadas em cada elemento */
 function inlineSVG(root){
   const PROPS=['fill','fill-opacity','stroke','stroke-width','stroke-opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','opacity','font-size','font-weight','font-family','paint-order'];
@@ -1402,7 +1412,7 @@ async function makePDF(r){
     await Promise.all(LIBS.map(loadJS));
     box=document.createElement('div');box.innerHTML=pdfHTML(r);box=box.firstElementChild;document.body.appendChild(box);
     if(document.fonts&&document.fonts.ready)await document.fonts.ready;
-    inlineSVG(box);
+    fitPages(box);inlineSVG(box);
     const pdf=new window.jspdf.jsPDF({unit:'mm',format:'a4',compress:true}),pages=[...box.querySelectorAll('.pg')];
     for(let i=0;i<pages.length;i++){say(`Gerando o PDF… página ${i+1} de ${pages.length}`);
       const c=await html2canvas(pages[i],{scale:2.4,backgroundColor:'#FFFFFF',logging:false,windowWidth:900});
