@@ -4,23 +4,26 @@
 - Teste com 40 perfis realistas (6 a 8 por objetivo, orçamentos de até R$ 400 a acima de R$ 1.500) e 5.000 perfis sorteados com todas as respostas.
 - **Vieses encontrados:** (1) etiqueta "não indicado" tirava 4 pontos por etiqueta, e marcas com mais reviews (Nike, ASICS) acumulam mais etiquetas; "não indicado para ritmo" punia até tênis de amortecimento; (2) pouca review era vantagem (Fila, Olympikus); (3) qualquer preço dentro do orçamento ganhava o mesmo bônus; (4) categoria com poucos modelos virava monopólio (Ultraboost 5 em "dia a dia"); (5) "prioridade conforto" somava maciez mesmo para quem prefere firme (prejudicava a On); (6) o motor pedia resposta de supertênis para quem prefere firme.
 - **Mudanças no motor:** encaixe por specs técnicas (amortecimento, resposta, leveza e estabilidade do hexágono contra o que o perfil pede; falta pesa 0,45 por ponto, sobra 0,12; leveza só pesa para quem pediu leveza ou faz ritmo; resposta limitada a 6 fora das categorias de velocidade); etiqueta negativa de 3 a 4 pontos conforme o nº de reviews, teto 7; "não indicado para ritmo" vale 35% quando o tênis não é de velocidade; nota das reviews puxada para a média com pouca evidência (peso n/(n+4)); −0,45 por review profissional a menos que 4; preço estimado −0,6; abaixo da faixa de orçamento perde até 2 pontos (exceto prioridade preço); até 8% acima perde 0,5; categoria com menos de 10 modelos dá 8 pontos à 2ª categoria.
+- **Origem das specs:** 27 tênis têm todas as medidas redondas (maciez, resposta, estabilidade, salto, antepé e drop), sinal de specs da ficha da marca sem medição de laboratório: Olympikus 10, Fila 5, 361° 4, adidas 3, Mizuno 2, New Balance 2 e On 1. Eles perdem 1,2 ponto (`FICHA`) e o relatório mostra a origem ("specs de laboratório" ou "specs da ficha da marca").
 - **Decisão editorial:** a Fila não entra no pódio nem como segundo par (`PODIO_FORA`). Continua no top 10 e no ranking por marca.
 
 | 1º lugar nos 40 perfis | Antes | Depois |
 |---|---|---|
 | adidas | 12 | 10 |
-| Olympikus | 5 | 9 |
-| ASICS | 6 | 6 |
-| Nike | 4 | 5 |
+| ASICS | 6 | 8 |
+| Nike | 4 | 7 |
 | New Balance | 2 | 4 |
+| Olympikus | 5 | 4 |
 | Hoka | 2 | 3 |
 | Mizuno | 2 | 2 |
-| Brooks | 0 | 1 |
+| Brooks | 0 | 2 |
 | Fila | 7 | 0 |
 
-- **Sem piora:** nenhum pódio fora da categoria (0/120 e 0/15.000); pódios com 2+ contraindicações reais 91 → 93 em 15.000 vagas; pódios com preço estimado 1.080 → 202. Maratona competitiva: Vaporfly 4, Hyperwarp Elite, Metaspeed Sky Tokyo. Desconforto com neutro: GT-2000 15, Wave Inspire 22, ForeverRun Nitro 2.
-- **On:** com orçamento acima de R$ 1.000 e preferência por firme, aparece em 89 vagas de pódio (era 143 no motor antigo e 69 na primeira versão desta rodada). Nenhum On custa menos de R$ 999, a nota média das reviews é a menor entre as marcas grandes (3,74) e a resposta medida é baixa em vários modelos (Cloudflow 5: 1,6 de 5).
-- **Pendências:** Olympikus passou a ocupar parte do espaço da Fila (1º lugar em 19% dos sorteios, 6% do catálogo), com specs que parecem de ficha (números redondos); registrar a origem das specs (laboratório ou ficha) e pesar menos as de ficha. Conferir "vendido no Brasil" de New Balance (52% marcados como importados) e Salomon (75%), e a resposta da On.
+Nos 5.000 sorteados, 1º lugar: adidas 23,8% · ASICS 14,8% · Olympikus 14,0% · Mizuno 11,6% · Hoka 10,9% · Brooks 8,1% · Nike 5,6% · New Balance 5,1%. Com orçamento até R$ 700 a Nike quase não aparece porque os modelos de entrada dela têm maciez de 1,5 a 2,3 e várias etiquetas negativas; de R$ 1.000 a 1.500 ela fica em 1º em 12%.
+
+- **Sem piora:** nenhum pódio fora da categoria (0/120 e 0/15.000); pódios com 2+ contraindicações reais 91 → 93 em 15.000 vagas; pódios com preço estimado 1.080 → 133. Maratona competitiva: Vaporfly 4, Hyperwarp Elite, Metaspeed Sky Tokyo. Desconforto com neutro: GT-2000 15, Wave Inspire 22, ForeverRun Nitro 2.
+- **On:** com orçamento acima de R$ 1.000 e preferência por firme, aparece em 93 vagas de pódio (era 143 no motor antigo e 69 na primeira versão desta rodada). Nenhum On custa menos de R$ 999, a nota média das reviews é a menor entre as marcas grandes (3,74) e a resposta medida é baixa em vários modelos (Cloudflow 5: 1,6 de 5).
+- **Pendências:** medir em laboratório (ou achar medição) dos 27 tênis só com ficha; a Olympikus ainda lidera até R$ 400 (36%) por falta de alternativa medida nessa faixa. Conferir "vendido no Brasil" de New Balance (52% marcados como importados) e Salomon (75%), e a resposta da On.
 
 ## Rodada 2: validação com reviews profissionais
 - 8 agentes percorreram os 231 tênis. Só reviews profissionais com teste real ou de laboratório (RTINGS, RunRepeat, Doctors of Running, Road Trail Run, Believe in the Run, Running Shoes Guru, The Run Testers, Solereview, Running Warehouse, iRunFar, OutdoorGearLab, Tom's Guide e blogs BR com teste real para a Olympikus).

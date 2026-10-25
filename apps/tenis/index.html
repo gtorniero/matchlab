@@ -538,9 +538,11 @@ const M=[
  ["adidas Terrex Agravic Speed Ultra 2", "adidas", "tri", 940.49, 268, 8.0, 3.6, 750, 0, 0, "Trilha muito rápida e propulsiva para prova em terreno corrível até ~80 km; justo e instável devagar.", 38.0, 30.0, 4.5, 2.0, 4.1, 8, "", "lon rit tri", "hee ini lar len pro", "cal fore rap", 1, "", "https://www.adidas.com/us/terrex-agravic-speed-ultra-2-trail-running-shoes/JS3534.html", "produto", 5, 3, ""],
  ["adidas Terrex Tracefinder 2", "adidas", "tri", 499.9, 340, 10.0, 2.0, 600, 0, 1, "Trilha de entrada barato e pesado, mais para caminhada, estradão e trote curto; tração básica.", 29.0, 19.0, 1.5, 4.0, 3.0, 1, "", "tri dia", "rap lon lama fore", "ini hee dia", 1, "", "https://www.adidas.com.br/tenis-corrida-trilha-tracefinder/JI4285.html", "produto", 1, 0, ""],
  ["adidas Ultraboost 5", "adidas", "con", 699.99, 274, 11.8, 3.4, 800, 0, 0, "Ótimo para o dia a dia e corrida leve: durável, aderente e espaçoso. Pesado e firme para longão ou ritmo.", 39.5, 27.7, 3.1, 3.0, 3.4, 11, "", "aca dia lon mei rod", "lon rap", "dia hee ini lar", 1, "maciez, estabilidade", "https://www.adidas.com.br/tenis-ultraboost-5/KI8561.html", "produto", 11, 0, ""]
-].map(x=>({n:x[0],b:x[1],c:x[2],p:x[3],g:x[4],dr:x[5],mz:x[6],du:x[7],lg:x[8],ap:x[9],nt:x[10],hs:x[11],fs:x[12],rs:x[13],es:x[14],sc:x[15],nr:x[16],pl:x[17],u:x[18].split(' ').filter(Boolean),nn:x[19].split(' ').filter(Boolean),o:x[20].split(' ').filter(Boolean),br:x[21],dv:x[22]||'',url:x[23],ut:x[24],np:x[25],nc:x[26],tam:x[27]}));
+].map(x=>({n:x[0],b:x[1],c:x[2],p:x[3],g:x[4],dr:x[5],mz:x[6],du:x[7],lg:x[8],ap:x[9],nt:x[10],hs:x[11],fs:x[12],rs:x[13],es:x[14],sc:x[15],nr:x[16],pl:x[17],u:x[18].split(' ').filter(Boolean),nn:x[19].split(' ').filter(Boolean),o:x[20].split(' ').filter(Boolean),br:x[21],dv:x[22]||'',url:x[23],ut:x[24],np:x[25],nc:x[26],tam:x[27],fi:[x[5],x[6],x[11],x[12],x[13],x[14]].every(v=>v%1===0)}));
+// fi: todas as medidas redondas = specs da ficha da marca, sem medição de laboratório
 // decisão editorial (out/2026): a Fila tem specs só de ficha e poucas reviews independentes
 const PODIO_FORA=['Fila'];
+const FICHA=1.2;
 const BUD=[[0,400],[400,700],[700,1000],[1000,1500],[1500,99999]];
 const PROF=['Primeiros Quilômetros','Corredor em Construção','Corredor Constante','Corredor de Prova','Corredor de Alta Quilometragem'];
 /* traços do corredor e usos pedidos, no mesmo vocabulário das reviews */
@@ -611,6 +613,8 @@ function engine(a,long){
     // nota das reviews puxada para a média quando há pouca evidência
     const ne=m.np+m.nc*.35;s+=(m.sc-3.8)*1.8*ne/(ne+4);
     if(m.ap)s-=0.6;
+    // specs só de ficha são menos confiáveis que as medidas em laboratório
+    if(m.fi)s-=FICHA;
     if(!m.br)s-=3;
     s-=0.45*(4-Math.min(4,m.np));
     return s;
@@ -1039,7 +1043,7 @@ function renderReport(){
   let h=`
   <div class="panel winner">
     <p class="eyebrow">Seu tênis ideal</p>
-    <div class="whead"><div><p class="eyebrow">${esc(m.b)}</p><h2>${esc(modelOf(m))}</h2><p class="muted mono" style="font-size:14px">Preço médio: ${priceTxt(m)}</p>${brandLink(m)}<p class="src">${m.ap?'Preço estimado':'Preço consultado em out/2026'} · specs de laboratório ou ficha oficial · ${m.nr?m.nr+(m.nr===1?' review lida':' reviews lidas')+(m.nc?` (${m.np} ${m.np===1?'profissional':'profissionais'}, ${m.nc} de ${m.nc===1?'cliente':'clientes'})`:''):'sem review independente ainda'}</p></div>
+    <div class="whead"><div><p class="eyebrow">${esc(m.b)}</p><h2>${esc(modelOf(m))}</h2><p class="muted mono" style="font-size:14px">Preço médio: ${priceTxt(m)}</p>${brandLink(m)}<p class="src">${m.ap?'Preço estimado':'Preço consultado em out/2026'} · ${m.fi?'specs da ficha da marca (sem medição de laboratório)':'specs de laboratório'} · ${m.nr?m.nr+(m.nr===1?' review lida':' reviews lidas')+(m.nc?` (${m.np} ${m.np===1?'profissional':'profissionais'}, ${m.nc} de ${m.nc===1?'cliente':'clientes'})`:''):'sem review independente ainda'}</p></div>
       <div style="text-align:right"><div class="fit">${w.fit}%</div><span class="muted" style="font-size:13px">Fit Score</span></div></div>
     <div class="chips">${factors(r).map(f=>`<span class="fx ${f[0]==='+'?'up':'dn'}">${f[0]} ${esc(f[1])}</span>`).join('')}</div>
     <div class="specs">
