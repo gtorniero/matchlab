@@ -414,7 +414,7 @@ const AREAS = {
     facts:[["216","tênis de 14 marcas"],["18","perguntas"],["R$ 9,99","relatório"]],
     vin:["Peso e largura do pé","Dor ao correr","Km por semana e ritmo","Terreno","Objetivo e prova","Treino de tiro","Sensação preferida","Orçamento"],
     vout:["Categoria","Altura de espuma","Drop","Peso","Durabilidade","Custo por km","Quando trocar","Segundo par"],
-    inside:[["Tênis ideal com Fit Score","Modelo, preço médio no Brasil e ficha técnica."],["Perfil lateral desenhado","Altura de espuma, drop e placa à vista."],["Quando trocar","A data de troca pela sua quilometragem semanal."],["Segundo par e custo por km","Rodízio e os finalistas lado a lado."]],
+    inside:[["Tênis ideal com Fit Score","Modelo, preço médio no Brasil e ficha técnica."],["Ficha de laboratório","Peso, espuma e drop medidos, e seis índices contra a média do catálogo."],["Quando trocar","A data de troca pela sua quilometragem semanal."],["Segundo par e custo por km","Rodízio e os finalistas lado a lado."]],
     price:[["R$ 9,99","Relatório completo"]],
     gloss:[["Drop","Diferença de altura entre calcanhar e antepé, em mm."],["Stack","Altura total de espuma sob o pé."],["PEBA","Espuma leve e muito responsiva, comum em tênis de prova."],["Placa de carbono","Lâmina rígida na entressola que muda a mecânica da passada."],["Rocker","Curvatura da sola que ajuda a rolar do apoio à impulsão."],["Cabedal","A parte de cima do tênis, que segura o pé."]]}
 };
@@ -454,7 +454,7 @@ let heroK = "racket";
 const MODEL_TXT={
   racket:"a raquete ideal com Match Score, o setup em seis decisões, a raquete em 3D, o perfil de jogo no hexágono e a comparação com a sua raquete atual.",
   board:"o tipo de prancha com o percentual de combinação, o desenho da prancha, as medidas e a litragem, os motivos em cards e a comparação com a sua prancha atual.",
-  tenis:"o tênis ideal com Fit Score e preço médio, a ficha técnica, o corte da espuma em mm, os prós e contras das reviews e a data de troca pela sua quilometragem."};
+  tenis:"o tênis ideal com Fit Score e preço médio, a ficha técnica, os prós e contras das reviews e a data de troca pela sua quilometragem."};
 function modelSec(){
   const a=AREAS[heroK];
   return `<div class="model ${a.cls}">

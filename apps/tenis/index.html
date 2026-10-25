@@ -6,7 +6,7 @@
 /* Layout: igual ao Racket Match (coluna de 960px); identidade Match Lab com o laranja do Tenis Match */
 :root{
   --bg:#EEF4F5; --surface:#FFFFFF; --ink:#0B2530; --muted:#4A6570; --line:#CFDEE2;
-  --pri:#0E4D64; --pri-ink:#FFFFFF; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#B4472F; --soft:#DCEBEF; --hexa:#F4F8F9; --hexb:#E7F0F2; --stage:radial-gradient(120% 90% at 50% 20%,#FFFFFF 0%,#E3EEF1 70%);
+  --pri:#0E4D64; --pri-ink:#FFFFFF; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#B4472F; --soft:#DCEBEF; --hexa:#F4F8F9; --hexb:#E7F0F2;
   --f-display:'Archivo', 'Helvetica Neue', system-ui, sans-serif;
   --f-body:'DM Sans', system-ui, -apple-system, sans-serif;
   --f-mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
@@ -14,10 +14,10 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#08222C; --surface:#0E3442; --ink:#EAF4F6; --muted:#9BB8C1; --line:#1C4B5A;
-  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --hexa:#0F3846; --hexb:#12404F; --stage:radial-gradient(120% 90% at 50% 20%,#1A5568 0%,#0B2A36 75%); color-scheme:dark}}
+  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --hexa:#0F3846; --hexb:#12404F; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#08222C; --surface:#0E3442; --ink:#EAF4F6; --muted:#9BB8C1; --line:#1C4B5A;
-  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --hexa:#0F3846; --hexb:#12404F; --stage:radial-gradient(120% 90% at 50% 20%,#1A5568 0%,#0B2A36 75%); color-scheme:dark}
+  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --hexa:#0F3846; --hexb:#12404F; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
@@ -162,7 +162,6 @@ table.t10 tr.pref td{background:var(--soft)}
 .blink:hover{border-bottom-color:var(--pri)}
 .blink:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
 /* visuais */
-.stage{background:var(--stage);border:1px solid var(--line);border-radius:16px;padding:8px;position:relative;display:flex;flex-direction:column;gap:6px;min-width:0}
 .seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
 .seg button{font:inherit;font-size:13px;font-weight:700;border:0;background:transparent;color:var(--muted);border-radius:999px;padding:7px 14px;cursor:pointer;min-height:36px}
 .seg button[aria-pressed="true"]{background:var(--pri);color:var(--pri-ink)}
@@ -237,7 +236,7 @@ table.t10 tr.pref td{background:var(--soft)}
     <div class="diffs">
       <div class="diff"><h3>Preço médio no Brasil</h3><p>Cada finalista com preço de referência e custo por km. Você sabe quanto vai gastar antes de abrir a loja.</p></div>
       <div class="diff"><h3>Sem mito da pisada</h3><p>Neutro por padrão, como mostram os estudos. Estabilidade só entra se você sente desconforto com neutro.</p></div>
-      <div class="diff"><h3>Ficha de laboratório</h3><p>Corte da espuma em mm e seis índices contra a média do catálogo.</p></div>
+      <div class="diff"><h3>Ficha de laboratório</h3><p>Peso, espuma e drop medidos e seis índices contra a média do catálogo.</p></div>
       <div class="diff"><h3>Quando trocar</h3><p>A data de troca pela sua quilometragem e um segundo par para rodízio, se fizer sentido.</p></div>
     </div>
     <div class="erra">
@@ -640,7 +639,6 @@ function lifeText(m,a){const w=KMW[a.km===undefined?1:a.km];const weeks=Math.rou
 function sizeText(a){const n=a.numero;const base=n?('Seu número é '+n+'. '):'';return base+'Deixe um dedo (cerca de 1 cm) entre o dedão e a ponta. Em tênis de corrida muita gente sobe meio número ou um número'+(a.largura===2?'; prefira versão larga (2E/wide) quando houver.':'.')}
 const stackOf=m=>m.hs;
 const foreOf=m=>m.fs;
-const plateOf=m=>m.pl==='carbono'?'carbono':m.pl?'placa':'';
 const STK_M={};
 const cl10=x=>Math.max(1,Math.min(10,Math.round(x*10)/10));
 function idx(m){return [cl10(m.mz*2*.65+(m.hs-28)/(46-28)*10*.35),cl10(m.rs*2+(m.pl==='carbono'?.4:0)),cl10((320-m.g)/14),cl10(m.es*2),cl10(m.du/80),cl10(10-(m.p/m.du-0.5)*4)]}
@@ -665,24 +663,8 @@ const CATCOL={ent:'#8E9AA6',dia:'#2E86DE',max:'#8E44AD',est:'#16A085',rap:'#E457
 const brandLink=(m,t)=>m.url?`<a class="blink" href="${esc(m.url)}" target="_blank" rel="noopener">${t||(m.ut==='produto'?'Ver no site da '+esc(m.b):'Site da '+esc(m.b))} ↗</a>`:'';
 const priceTxt=m=>(m.ap?'~':'')+'R$ '+m.p.toLocaleString('pt-BR',{minimumFractionDigits:m.p%1?2:0,maximumFractionDigits:2})+(!m.br?' (importado)':m.ap?' (aprox.)':'');
 const kmCost=m=>'R$ '+(m.p/m.du).toFixed(2).replace('.',',')+' por km';
-/* ---------- visuais: corte da espuma, hexágono, barras, mapa do catálogo ---------- */
+/* ---------- visuais: hexágono, barras, mapa do catálogo ---------- */
 const VZ=(function(){
-const lerp=(a,b,t)=>a+(b-a)*t;
-const sstep=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
-function pw(kp,u){for(let i=1;i<kp.length;i++){if(u<=kp[i][0]){const t=(u-kp[i-1][0])/(kp[i][0]-kp[i-1][0]);const s=t*t*(3-2*t);return lerp(kp[i-1][1],kp[i][1],s)}}return kp[kp.length-1][1]}
-/* geometria paramétrica do tênis (mm) */
-function shape(m){
-  const heel=stackOf(m),fore=foreOf(m),L=285;
-  const spring=m.c==='sup'||m.c==='max'?16:m.c==='rap'?12:m.c==='tri'?7:9;
-  const wide=m.lg?1.07:1;
-  const W=[[0,30],[.04,62],[.1,74],[.3,66],[.45,68],[.68,98],[.82,96],[.94,72],[1,24]];
-  const w=u=>pw(W,u)*wide*(m.c==='max'||m.c==='est'?1.06:1);
-  const b=u=>(u<.07?Math.pow((.07-u)/.07,2)*9:0)+(u>.62?Math.pow((u-.62)/.38,2)*spring:0);
-  const st=u=>lerp(heel,fore,sstep(.18,.78,u));
-  const H=[[0,34],[.04,70],[.13,60],[.24,62],[.42,70],[.6,52],[.78,34],[.92,20],[1,8]];
-  const h=u=>pw(H,u)*(m.c==='tri'?1.04:1);
-  return {L,heel,fore,w,b,t:u=>(u>.62?b(u):0)+st(u),h,spring};
-}
 /* hexágono */
 function hex(labels,series,o){
   o=o||{};const cx=170,cy=158,R=104,n=labels.length;
@@ -728,26 +710,7 @@ function map(fins,o){
   return `<div class="tbl"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mapa do catálogo: ${M.length} tênis por peso e espuma, com os finalistas destacados" style="width:100%;min-width:420px;height:auto;display:block">${s}</svg></div>
   <div class="legend">${used.map(c=>`<span><i style="background:${CATCOL[c]};width:10px;height:10px;border-radius:50%"></i>${CAT[c].n}</span>`).join('')}</div>`;
 }
-/* corte lateral com medidas */
-function cut(m){
-  const S=shape(m),W=520,H=150,base=118,k=1.8,x0=70,sx=(W-140)/S.L;
-  const X=u=>x0+u*S.L*sx;let top='',bot='';
-  for(let i=0;i<=60;i++){const u=i/60;top+=(i?'L':'M')+X(u).toFixed(1)+' '+(base-S.t(u)*k).toFixed(1)+' ';}
-  for(let i=60;i>=0;i--){const u=i/60;bot+='L'+X(u).toFixed(1)+' '+(base-S.b(u)*k).toFixed(1)+' ';}
-  const pl=plateOf(m);let plate='';
-  if(pl){for(let i=4;i<=58;i++){const u=i/60;const y=S.b(u)+(S.t(u)-S.b(u))*(u<.5?.48:.42+(u-.5)*.25);plate+=(i>4?'L':'M')+X(u).toFixed(1)+' '+(base-y*k).toFixed(1)+' '}}
-  const hu=.08,fu=.8;
-  const dim=(u,lab)=>{const x=X(u),y1=base-S.b(u)*k,y2=base-S.t(u)*k;return `<line x1="${x}" x2="${x}" y1="${y1}" y2="${y2}" stroke="var(--ink)" stroke-width="1.4" marker-start="url(#ar)" marker-end="url(#ar)"/><text x="${u<.5?X(0)-8:X(1)+8}" y="${(y1+y2)/2+4}" text-anchor="${u<.5?'end':'start'}" font-size="13" font-weight="700" fill="var(--ink)" font-family="JetBrains Mono,monospace">${lab}</text>`};
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Corte lateral: salto ${S.heel} mm, antepé ${S.fore} mm, drop ${dec1(m.dr)} mm" style="width:100%;height:auto;display:block">
-  <defs><marker id="ar" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L4 4 L0 7" fill="none" stroke="var(--ink)" stroke-width="1.4"/></marker>
-  <pattern id="foam" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--soft)"/><circle cx="2" cy="2" r="1.1" fill="var(--line)"/><circle cx="6" cy="6" r="1.1" fill="var(--line)"/></pattern></defs>
-  <line x1="20" x2="${W-20}" y1="${base+3}" y2="${base+3}" stroke="var(--line)" stroke-width="2"/>
-  <path d="${top}${bot}Z" fill="url(#foam)" stroke="var(--ink)" stroke-width="1.6"/>
-  ${plate?`<path d="${plate}" fill="none" stroke="${pl==='carbono'?'var(--ink)':'var(--muted)'}" stroke-width="3" stroke-linecap="round"/>`:''}
-  ${dim(hu,S.heel+' mm')}${dim(fu,S.fore+' mm')}
-  <text x="${W/2}" y="${H-6}" text-anchor="middle" font-size="13" fill="var(--muted)">drop ${dec1(m.dr)} mm · curvatura na ponta ${S.spring} mm${pl?' · placa de '+(pl==='carbono'?'carbono':'propulsão'):''}</text></svg>`;
-}
-return {hex,bars,map,cut,shape};
+return {hex,bars,map};
 })();
 
 /* ---------- app Tenis Match (mesma estrutura do Racket Match) ---------- */
@@ -873,23 +836,16 @@ function renderPreview(){
       ${VZ.hex(RX,[{name:'Você',v:runnerVec(r.a).map(x=>x*10),c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}
     </div>
   </div>
-  <div class="two">
-    <div class="panel">
-      <h3>Seu 1º lugar já está pronto</h3>
-      <div class="stage" style="padding:8px">${VZ.cut(r.fins[0].m)}</div>
-      <p class="muted" style="font-size:14px">Este é o corte da espuma do tênis escolhido para você, com as medidas em mm. Marca e modelo aparecem no desbloqueio.</p>
-    </div>
-    <div class="panel">
-      <h3>Onde seus finalistas ficam no catálogo</h3>
-      ${VZ.map(r.fins,{hide:1})}
-    </div>
+  <div class="panel">
+    <h3>Onde seus finalistas ficam no catálogo</h3>
+    ${VZ.map(r.fins,{hide:1})}
   </div>
   <div class="panel">
     <h2>Revele seus tênis</h2>
     <div class="plans">
       <div class="plan best">
         <h3>Relatório completo</h3><span class="price">R$ 9,99</span>
-        <ul><li>Seu tênis ideal com Fit Score, ficha técnica e perfil lateral</li><li>Por que combina com você e pontos de atenção</li><li>Tamanho e data de troca</li><li>2º e 3º lugares, com marca e modelo</li><li>Seu top 10 com match, marca e preço</li><li>Top 3 geral ou top 3 da sua marca, lado a lado</li><li>Ranking por marca: o melhor de cada uma para você</li><li>Segundo par para rodízio</li><li>Dicas para pagar menos</li></ul>
+        <ul><li>Seu tênis ideal com Fit Score e ficha técnica</li><li>Por que combina com você e pontos de atenção</li><li>Tamanho e data de troca</li><li>2º e 3º lugares, com marca e modelo</li><li>Seu top 10 com match, marca e preço</li><li>Top 3 geral ou top 3 da sua marca, lado a lado</li><li>Ranking por marca: o melhor de cada uma para você</li><li>Segundo par para rodízio</li><li>Dicas para pagar menos</li></ul>
         <button class="btn btn-go" type="button" id="buy">Pagar com Pix (simulação)</button>
       </div>
     </div>
@@ -944,14 +900,10 @@ function renderReport(){
       <div class="spec"><span>Custo por km</span><b>${kmCost(m).replace(' por km','')}</b></div>
     </div>
     <div class="two">
+      <div><h3 style="margin-bottom:8px">Por que ele combina com você</h3><ul class="why">${whyT(r).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
       <div style="display:flex;flex-direction:column;gap:16px">
-        <div><h3 style="margin-bottom:8px">Por que ele combina com você</h3><ul class="why">${whyT(r).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
         <div><h3 style="margin-bottom:8px">Pontos de atenção</h3><ul class="why">${attT(r).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
         <div class="arm"><b>${mo}</b><div><strong>${mo===1?'Mês':'Meses'} até a troca</strong><p class="muted" style="font-size:14px">Com cerca de ${km} km por semana, ele dura uns ${mo} ${mo===1?'mês':'meses'} (${m.du} km).</p></div></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
-        <h3>Espuma em corte</h3>
-        <div class="stage" style="padding:8px">${VZ.cut(m)}</div>
       </div>
     </div>
   </div>
