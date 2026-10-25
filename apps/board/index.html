@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.w-sec{display:flex;flex-direction:column;gap:12px}
+<!doctype html><html lang="pt-BR"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.w-sec{display:flex;flex-direction:column;gap:12px}
 .why-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .wcard{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px}
 .wi{width:40px;height:40px;padding:8px;border-radius:12px;background:var(--surface);fill:none;stroke:var(--pri);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -20,6 +20,13 @@
 .att.ok{border-left-color:var(--pri)}.att.ok .wi{stroke:var(--pri)}
 .att-cards,.why-cards{min-width:0}
 @media (max-width:760px){.why-cards{grid-template-columns:minmax(0,1fr)}}
+
+/* acessibilidade: texto só para leitor de tela e link de pular (aparece só no foco do teclado) */
+.a11y-sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.a11y-skip{position:absolute;left:max(12px,env(safe-area-inset-left,0px));top:-80px;z-index:1000;background:#0A0A0A;color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
+.a11y-skip:focus{top:calc(env(safe-area-inset-top,0px) + 10px)}
+.a11y-main{display:contents}
+.tbl:focus-visible,[data-stage]:focus-visible,canvas:focus-visible{outline:3px solid var(--pri);outline-offset:3px}
 </style></head><body>
 <title>Board Match</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -389,6 +396,7 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
 .prev{border-left:3px solid var(--ball);background:var(--bg);border-radius:0 8px 8px 0;padding:5px 9px;margin-bottom:4px}.prev p{font-size:10.5px}.prev span{font-size:9px;color:var(--muted)}.prev b{color:var(--ink)}
 </style>
 
+<a class="a11y-skip" href="#conteudo">Pular para o conteúdo</a>
 <div class="wrap">
   <header class="top">
     <div class="brand">
@@ -399,6 +407,8 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
   </header>
 
   <!-- LANDING -->
+  <main id="conteudo" class="a11y-main" role="main">
+  <h1 class="a11y-sr" id="a11y-h1" hidden></h1>
   <section id="landing" style="display:flex;flex-direction:column;gap:28px">
     <div class="hero">
       <div style="display:flex;flex-direction:column;gap:18px">
@@ -473,6 +483,7 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
   <!-- REPORT -->
   <section id="report" hidden style="display:flex;flex-direction:column;gap:20px"></section>
 
+  </main>
   <footer>
     Board Match é um teste da família Match Lab. Protótipo. Recomendamos tudo, menos marca e shaper: com a ficha técnica você pede a prancha a qualquer shaper ou avalia uma usada. O motor foi calibrado com 422 casos reais: reviews de lojas e revistas, pranchas de atletas, tabelas de marcas e relatos de surfistas. A revisão por professor está em andamento. O consultor é opcional e pode receber comissão se você comprar com ele; a recomendação técnica é a mesma com ou sem compra.
   </footer>
@@ -1427,4 +1438,71 @@ const k2slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(
 })();
 </script>
 
+<script>
+/* Acessibilidade (WCAG 2.2 AA): pular para o conteúdo, título da etapa, avisos ao leitor de tela,
+   finalistas ocultos, tabelas roláveis com foco e valores dos hexágonos no nome do gráfico. Não muda o layout. */
+(function(){
+  var d=document;
+  var main=d.getElementById('conteudo');
+  var live=d.createElement('div');live.className='a11y-sr';live.setAttribute('role','status');live.setAttribute('aria-live','polite');d.body.appendChild(live);
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},80)}
+  var srh=d.getElementById('a11y-h1');
+  var NAMES={landing:'Início',duelSec:'Comparar duas raquetes',quiz:'Questionário',analysis:'Análise',preview:'Prévia do resultado',report:'Relatório'};
+  var secs=Object.keys(NAMES).map(function(id){return d.getElementById(id)}).filter(Boolean);
+  function visible(){for(var i=0;i<secs.length;i++)if(!secs[i].hidden)return secs[i];return null}
+  function firstHeading(s){if(!s)return null;var hs=s.querySelectorAll('h1,h2,legend');for(var i=0;i<hs.length;i++){var r=hs[i].getBoundingClientRect();if(r.width>0&&r.height>0)return hs[i]}return null}
+  function focusEl(el){if(!el)return;if(!el.hasAttribute('tabindex'))el.setAttribute('tabindex','-1');try{el.focus({preventScroll:true})}catch(e){el.focus()}}
+  /* pular para o conteúdo */
+  var skip=d.querySelector('.a11y-skip');
+  if(skip)skip.addEventListener('click',function(e){e.preventDefault();var h=firstHeading(visible());focusEl(h||main)});
+  /* título principal e foco ao trocar de etapa */
+  function syncH1(){var v=visible();if(srh){srh.hidden=!v||v.id==='landing';srh.textContent=d.title.split('·')[0].trim()+' · '+(v?NAMES[v.id]:'')}}
+  var started=false;
+  secs.forEach(function(s){new MutationObserver(function(){
+    if(s.hidden)return;syncH1();
+    if(!started&&s.id==='landing')return;started=true;
+    if(s.id==='analysis'){say('Analisando suas respostas.');return}
+    setTimeout(function(){var h=firstHeading(s);focusEl(h);if(h&&s.id!=='quiz')say(h.textContent.trim())},120);
+  }).observe(s,{attributes:true,attributeFilter:['hidden']})});
+  syncH1();
+  /* etapas do questionário */
+  var steps=d.getElementById('steps');
+  if(steps)new MutationObserver(function(){var on=steps.querySelector('.on');if(!on)return;var all=steps.children.length,idx=[].indexOf.call(steps.children,on)+1;
+    steps.setAttribute('aria-label','Etapa '+idx+' de '+all);
+    say('Etapa '+idx+' de '+all+': '+on.textContent.replace(/^\s*\d+\.\s*/,'').trim());
+    setTimeout(function(){var q=d.querySelector('#qs fieldset, #qs .q');if(q&&started){focusEl(q)}},100);
+  }).observe(steps,{childList:true});
+  /* erro do questionário */
+  var err=d.getElementById('err');if(err){err.setAttribute('role','alert')}
+  /* conteúdo gerado: finalistas ocultos, tabelas, gráficos */
+  function hexName(svg){
+    try{
+      var polys=[].slice.call(svg.querySelectorAll('polygon'));if(polys.length<2)return;
+      var pts=function(p){return p.getAttribute('points').trim().split(/\s+/).map(function(x){var a=x.split(',');return [+a[0],+a[1]]})};
+      var rings=polys.filter(function(p){return p.getAttribute('fill')==='none'&&/line/.test(p.getAttribute('stroke')||'')});
+      if(!rings.length)return;var outer=pts(rings[0]),n=outer.length;
+      var cx=0,cy=0;outer.forEach(function(q){cx+=q[0];cy+=q[1]});cx/=n;cy/=n;
+      var R=Math.hypot(outer[0][0]-cx,outer[0][1]-cy);
+      var labels=[].slice.call(svg.querySelectorAll('text')).filter(function(t){return t.childNodes[0]&&t.childNodes[0].nodeType===3}).map(function(t){return t.textContent.trim()}).filter(function(t){return t&&!/^[\d,.\s·%]+$/.test(t)});
+      if(labels.length<n)return;labels=labels.slice(0,n);
+      var series=polys.filter(function(p){return rings.indexOf(p)<0}).map(pts).filter(function(p){return p.length===n});
+      var leg=svg.nextElementSibling&&svg.nextElementSibling.classList.contains('legend')?[].slice.call(svg.nextElementSibling.querySelectorAll('span')).map(function(s){return s.textContent.trim()}):[];
+      if(!series.length)return;
+      var txt=series.map(function(p,i){return (leg[i]||('Série '+(i+1)))+': '+p.map(function(q,j){return labels[j]+' '+(Math.hypot(q[0]-cx,q[1]-cy)/R*10).toFixed(1).replace('.',',')}).join(', ')}).join('. ');
+      svg.setAttribute('aria-label','Gráfico de índices de 0 a 10. '+txt+'.');
+    }catch(e){}
+  }
+  var tblN=0;
+  function levels(){var hs=[].slice.call((main||d).querySelectorAll('h1,h2,h3,h4,h5,h6')).filter(function(h){return !h.closest('[hidden]')&&!h.hidden});var prev=0;hs.forEach(function(h){var lv=+(h.getAttribute('aria-level')||h.tagName[1]);if(prev&&lv>prev+1){h.setAttribute('role','heading');h.setAttribute('aria-level',prev+1);lv=prev+1}prev=lv})}
+  var lvT;function levelsSoon(){clearTimeout(lvT);lvT=setTimeout(levels,150)}
+  function process(root){
+    [].forEach.call(root.querySelectorAll('.blur:not([data-a11y])'),function(b){b.setAttribute('data-a11y','1');b.setAttribute('aria-hidden','true');b.removeAttribute('aria-label');var s=d.createElement('span');s.className='a11y-sr';s.textContent='Modelo oculto até o desbloqueio';b.parentNode.insertBefore(s,b)});
+    [].forEach.call(root.querySelectorAll('.tbl:not([data-a11y])'),function(t){t.setAttribute('data-a11y','1');t.setAttribute('tabindex','0');t.setAttribute('role','region');tblN++;var h=t.closest('.panel');h=h&&h.querySelector('h2,h3');t.setAttribute('aria-label','Tabela '+tblN+(h?': '+h.textContent.trim():'')+'. Role para os lados para ver tudo.')});
+    [].forEach.call(root.querySelectorAll('div[aria-label]:not([role]),span[aria-label]:not([role])'),function(e){e.setAttribute('role',e.tagName==='DIV'?'group':'img')});
+    [].forEach.call(root.querySelectorAll('svg[role="img"]:not([data-a11y])'),function(s){s.setAttribute('data-a11y','1');if(s.querySelectorAll('polygon').length>2)hexName(s)});
+  }
+  process(d);levels();
+  new MutationObserver(function(ms){var any=false;ms.forEach(function(m){if(m.type==='attributes'){any=true;return}[].forEach.call(m.addedNodes,function(n){if(n.nodeType===1){any=true;process(n.parentNode||n)}})});if(any)levelsSoon()}).observe(d.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden']});
+})();
+</script>
 </body></html>
