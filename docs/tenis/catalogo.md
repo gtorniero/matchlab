@@ -1,7 +1,8 @@
 # Tenis Match — catálogo ampliado (out/2026)
 
 ## Tamanho
-- 216 tênis de 14 marcas. A Saucony (15 modelos) saiu do catálogo em 24/out/2026; antes eram 231 tênis de 15 marcas e 795 reviews.
+- 212 tênis de 13 marcas. A Saucony (15 modelos) saiu em 24/out/2026 e a 361° (4) em 25/out/2026; antes eram 231 tênis de 15 marcas e 795 reviews.
+- **Links:** só lojas no Brasil (site brasileiro da marca; Centauro para a Salomon). Os 29 importados ficam sem link. Pegasus Plus 2, Quest 6 e Terrex Agravic Speed Ultra 2 apontam para a página da linha no site brasileiro, porque a geração exata não aparece lá.
 - 191 vendidos no Brasil. 40 importados, com preço convertido de US$ × 5,40 × 1,6. Os importados aparecem como "importado" e perdem 3 pontos no Fit Score.
 
 | Marca | Modelos |
@@ -18,10 +19,9 @@
 | Puma | 8 |
 | Salomon | 8 |
 | Fila | 6 |
-| 361° | 4 |
 | Under Armour | 3 |
 
-**Por categoria:** Trilha 43 · Treino diário 39 · Entrada 35 · Supertênis 28 · Treino rápido 26 · Máximo amortecimento 22 · Estabilidade 18 · Conforto e uso misto 5.
+**Por categoria:** Trilha 43 · Treino diário 37 · Entrada 35 · Supertênis 27 · Treino rápido 26 · Máximo amortecimento 22 · Estabilidade 17 · Conforto e uso misto 5.
 
 **Cobertura de reviews por modelo:** 5 ou mais: 77 · 4: 30 · 3: 41 · 2: 46 · 1: 22 · 0: 15. Modelos com menos de 2 reviews perdem até 0,8 ponto no Fit Score.
 
@@ -43,7 +43,9 @@ Kayano 33, GT-2000 15, Nimbus 28, Novablast 6, Superblast 3, Adios Pro 5, Ultrab
 - **Preço:** relatório único de R$ 9,99 com tudo abaixo (desde 24/out/2026; antes R$ 7,99 o tênis ideal e R$ 12,90 o setup completo).
 - **Top 10:** os 10 tênis que mais combinam, com Fit Score, marca, categoria, preço e custo por km. Ordena por match, preço ou custo/km.
 - **Top 3:** escolha entre top 3 geral e top 3 de uma marca, com hexágono, mapa do catálogo e tabela.
-- **Ranking por marca:** o melhor tênis de cada uma das 14 marcas para a pessoa. Pergunta opcional de marca preferida (até 3).
+- **O melhor de cada marca:** o tênis que mais combina de cada uma das principais marcas (adidas, ASICS, Hoka, Mizuno, New Balance, Nike, Olympikus, On e Puma), em ordem alfabética e sem posição; as marcas preferidas da pessoa vêm primeiro. Pergunta opcional de marca preferida (até 3).
+- **Por marca, só vendidos no Brasil:** o quadro de cada marca e o top 3 por marca ignoram os importados.
+- **Tênis atual:** pergunta opcional (lista do catálogo). O relatório compara o atual com o recomendado: Fit Score, hexágono sobreposto, specs lado a lado e o que muda (preço, fôrma, contraindicações das reviews, peso, espuma, estabilidade, drop com aviso de transição e categoria).
 
 ## Pendências
 - **Baixa confiança (37 modelos com 0–1 review):** entrada da Olympikus (Inverse, Veloz, Pride, Volta, Corre Pace, Corre Trilha), Mizuno de entrada (Frontier, Titan, Way, Victory, Prorunner), ASICS Sonoma/Nagoya/Hypersonic/Pulse, adidas Drive RC/Duramo SL/Supernova Stride, Puma Electrify e NB 680/520/Garoé/Nitrel. Caminho: notas de clientes das lojas BR (exigem navegador).
