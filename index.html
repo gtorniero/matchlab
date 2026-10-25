@@ -163,6 +163,14 @@ section{padding-block:72px}
 .toolbox.mini{grid-template-columns:44px minmax(0,1fr);padding:14px 16px;gap:12px}
 .toolbox.mini .tb-ic{width:44px;height:44px}.toolbox.mini .tb-go{display:none}.toolbox.mini .tb-tx b{font-size:1.02rem}
 @media (max-width:620px){.toolbox{grid-template-columns:44px minmax(0,1fr)}.toolbox .tb-go{grid-column:1/-1;text-align:center}.tb-ic{width:44px;height:44px}}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.skip{position:absolute;left:max(12px,env(safe-area-inset-left,0px));top:-80px;z-index:1000;background:#0A0A0A;color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + 10px)}
+main:focus{outline:none}
+[tabindex="-1"]:focus{outline:none}
+.crumbs a{padding-block:2px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip.area{background:color-mix(in srgb,var(--area) 30%,var(--surface))}}
+:root[data-theme="dark"] .chip.area{background:color-mix(in srgb,var(--area) 30%,var(--surface))}
 /* Area cards */
 .areas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media (max-width:940px){.areas{grid-template-columns:1fr}}
@@ -336,6 +344,7 @@ footer .f-base{display:flex;justify-content:space-between;align-items:center;gap
 </style>
 </head>
 <body>
+<a class="skip" href="#app">Pular para o conteúdo</a>
 <header class="top">
   <div class="wrap">
     <a class="lockup" href="#inicio" data-go="inicio" aria-label="MATCH LAB, início" id="brandHome"></a>
@@ -344,7 +353,8 @@ footer .f-base{display:flex;justify-content:space-between;align-items:center;gap
   </div>
 </header>
 
-<main id="app"></main>
+<main id="app" tabindex="-1"></main>
+<div id="a11yLive" class="sr-only" role="status" aria-live="polite"></div>
 
 <footer>
   <div class="wrap">
@@ -363,7 +373,7 @@ footer .f-base{display:flex;justify-content:space-between;align-items:center;gap
   </div>
 </footer>
 
-<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Relatório de exemplo">
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbCap">
   <span class="lbcap" id="lbCap"></span>
   <button class="close" id="lbClose" type="button">Fechar</button>
   <img id="lbImg" alt="">
@@ -444,11 +454,15 @@ document.getElementById("footBrand").innerHTML = labLockup(28);
 document.getElementById("nav").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${ICON[k](24)}${AREAS[k].name}</a>`).join("") + `<span class="sep" aria-hidden="true"></span><a href="#blog" data-go="blog">Blog</a><a href="#conceito" data-go="conceito">Como funciona</a>`;
 document.getElementById("footLinks").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${AREAS[k].name}</a>`).join("") + `<a href="#blog" data-go="blog">Blog</a><a href="ferramentas/litragem/index.html">Calculadora de litragem</a>`;
 
+const REPORT_DESC={
+  racket:"Exemplo de relatório do Racket Match: raquete recomendada Wilson Clash 100 v3, Match Score de 86%. Setup em seis decisões: cabeça de 100 polegadas quadradas com padrão 16x19, grip L3, corda híbrida de 1,25 mm e tensão de 46 a 48 libras. Especificações: 295 g sem corda, balanço de 310 mm, swingweight 311 e rigidez de 54 RA. Inclui a raquete em 3D, o motivo de cada escolha e a comparação com a raquete atual.",
+  board:"Exemplo de relatório do Board Match: prancha recomendada mid-length, 96% de combinação, com groveler (91%) e fish (85%) como alternativas. Medidas: 6 pés e 9 polegadas de comprimento, 19 e 3/4 de largura, 2 e 5/8 de espessura, 37,6 litros, rabeta round, quilhas 2+1 e construção em epóxi. Inclui o desenho da prancha e os motivos em cards: estilo, prioridades, litragem, arrebentação, força das ondas e comparação com a prancha atual.",
+  tenis:"Exemplo de relatório do Tenis Match: tênis recomendado Fila Float Maxxi 2, Fit Score de 96%, preço médio de cerca de R$ 550. Categoria máximo amortecimento, 285 g, 36 mm de espuma, drop de 8 mm, durabilidade de 500 km e custo de R$ 1,10 por km. Inclui o tênis em 3D, os motivos da escolha, os pontos de atenção e o mês de troca."};
 function reportFrame(k, h){
   const a = AREAS[k];
   return `<div class="report ${a.cls}"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">matchlab.com.br/${k}/relatorio</span><span class="pill">${a.name}</span></div>
-  <button type="button" class="shot" data-zoom="${k}" style="--h:${h||460}px" aria-label="Ampliar relatório de exemplo do ${a.name}"><img src="${SHOTS[k]||""}" alt="Relatório de exemplo do ${a.name} com a recomendação, especificações e gráfico de índices"></button>
-  <span class="zoom">Ampliar ↗</span></div>`;
+  <button type="button" class="shot" data-zoom="${k}" style="--h:${h||460}px" aria-label="Ampliar relatório de exemplo do ${a.name}" aria-describedby="rd-${k}-${h||460}"><img src="${SHOTS[k]||""}" alt=""></button>
+  <span class="zoom" aria-hidden="true">Ampliar ↗</span><p class="sr-only" id="rd-${k}-${h||460}">${REPORT_DESC[k]}</p></div>`;
 }
 function acard(x){
   const a = ar(x);
@@ -571,7 +585,7 @@ function hub(k){
     <div class="shead"><div><div class="eyebrow">${byArea(k).length} guias</div><h2>Guias ${a.name}</h2></div></div>
     <div class="filters" role="group" aria-label="Filtrar por categoria">
       ${["todos",...Object.keys(CATS)].map(c=>`<button type="button" data-filter="${c}" aria-pressed="${c===hubFilter}">${c==="todos"?"Todos":CATS[c]}</button>`).join("")}
-      <span class="count" id="hubCount"></span>
+      <span class="count" id="hubCount" aria-live="polite"></span>
     </div>
     <div class="grid-a" id="hubGrid"></div>
   </div></section>
@@ -598,8 +612,8 @@ function library(){
     <div class="filters" role="group" aria-label="Filtrar blog">
       <button type="button" data-lib="todas" aria-pressed="${libArea==="todas"}">Todos</button>
       ${ORDER.map(k=>`<button type="button" data-lib="${k}" aria-pressed="${k===libArea}">${ICON[k](20)}${AREAS[k].name}</button>`).join("")}
-      <label class="search" for="q"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Buscar: drop, litragem, RA…" value="${esc(libQ)}"></label>
-      <span class="count" id="libCount"></span>
+      <label class="search" for="q"><span aria-hidden="true">⌕</span><input id="q" type="search" aria-label="Buscar no blog" placeholder="Buscar: drop, litragem, RA…" value="${esc(libQ)}"></label>
+      <span class="count" id="libCount" aria-live="polite"></span>
     </div>
     <div id="libBody"></div>
   </div></section>`;
@@ -647,7 +661,7 @@ function article(id){
           ${next?`<a class="next" href="#a-${next.id}" data-go="a-${next.id}"><small>Próximo →</small><b>${esc(next.title)}</b></a>`:""}
         </div>
       </div>
-      <aside class="side">
+      <div class="side">
         ${a.key==="board"?TOOLBOX.replace('class="toolbox"','class="toolbox mini"'):""}
         <div class="cta-box">
           ${true?`<button type="button" class="thumb" data-zoom="${a.key}" aria-label="Ampliar relatório de exemplo do ${a.name}"><img src="${SHOTS[a.key]||""}" alt=""></button>`:""}
@@ -658,7 +672,7 @@ function article(id){
           </div>
         </div>
         ${heads.length?`<div class="toc"><div class="eyebrow">Neste guia</div><ol>${heads.map((h,j)=>`<li><button type="button" data-anchor="${x.id}-s${j+1}">${esc(h)}</button></li>`).join("")}</ol></div>`:""}
-      </aside>
+      </div>
     </div>
     <div style="margin-top:64px"><h2 style="font-size:1.5rem;margin-bottom:16px">Continue lendo</h2><div class="grid-a">${related.map(acard).join("")}</div></div>
   </div></article></div>`;
@@ -670,6 +684,8 @@ function setNav(view){
   const k = view.startsWith("a-") ? DATA2KEY[view.slice(2).split("-")[0]] : view;
   document.querySelectorAll(".nav a").forEach(a=>{ a.removeAttribute("aria-current"); if(a.dataset.go===k) a.setAttribute("aria-current","page"); });
 }
+let firstRender=true;
+function say(t){const l=document.getElementById("a11yLive");l.textContent="";setTimeout(()=>{l.textContent=t},80)}
 function render(view){
   view = LEGACY[view] || view || "inicio";
   let html, after;
@@ -687,21 +703,25 @@ function render(view){
   if(view==="conceito"){ requestAnimationFrame(()=>document.getElementById("conceito").scrollIntoView()); }
   else window.scrollTo(0,0);
   try{ history.replaceState(null,"","#"+view); }catch(e){}
+  if(!firstRender && view!=="conceito"){ const h=app.querySelector("h1"); if(h){ h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); } say("Página: "+document.title); }
+  firstRender=false;
 }
 const lb = document.getElementById("lb");
-function openLB(k){ const im=document.getElementById("lbImg"); im.src = SHOTS[k]||""; im.alt = "Relatório de exemplo do "+AREAS[k].name; document.getElementById("lbCap").textContent = AREAS[k].name+" · relatório de exemplo"; lb.hidden=false; lb.scrollTop=0; document.getElementById("lbClose").focus(); }
-function closeLB(){ lb.hidden=true; }
+let lbOpener=null;
+function openLB(k){ lbOpener=document.activeElement; const im=document.getElementById("lbImg"); im.src = SHOTS[k]||""; im.alt = REPORT_DESC[k]; document.getElementById("lbCap").textContent = AREAS[k].name+" · relatório de exemplo"; lb.hidden=false; lb.scrollTop=0; document.getElementById("lbClose").focus(); }
+function closeLB(){ lb.hidden=true; if(lbOpener&&lbOpener.isConnected) lbOpener.focus(); }
 document.addEventListener("click", e=>{
   if(!lb.hidden){ if(e.target.id==="lbClose"||e.target===lb) closeLB(); return; }
+  if(e.target.closest(".skip")){ e.preventDefault(); const h=app.querySelector("h1")||app; h.setAttribute("tabindex","-1"); h.focus(); return; }
   const z = e.target.closest("[data-zoom]"); if(z){ openLB(z.dataset.zoom); return; }
   const go = e.target.closest("[data-go]"); if(go){ e.preventDefault(); render(go.dataset.go); return; }
-  const sc = e.target.closest("[data-scroll]"); if(sc){ e.preventDefault(); const el=document.getElementById(sc.dataset.scroll); if(el) el.scrollIntoView(); return; }
-  const an = e.target.closest("[data-anchor]"); if(an){ const el=document.getElementById(an.dataset.anchor); if(el) el.scrollIntoView(); return; }
-  const hr = e.target.closest("[data-hero]"); if(hr){ heroK=hr.dataset.hero; document.getElementById("modelBox").innerHTML=modelSec(); return; }
+  const sc = e.target.closest("[data-scroll]"); if(sc){ e.preventDefault(); const el=document.getElementById(sc.dataset.scroll); if(el){ el.scrollIntoView(); const h=el.querySelector("h2,h1")||el; h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); } return; }
+  const an = e.target.closest("[data-anchor]"); if(an){ const el=document.getElementById(an.dataset.anchor); if(el){ el.scrollIntoView(); el.setAttribute("tabindex","-1"); el.focus({preventScroll:true}); } return; }
+  const hr = e.target.closest("[data-hero]"); if(hr){ heroK=hr.dataset.hero; document.getElementById("modelBox").innerHTML=modelSec(); const nb=document.querySelector(`[data-hero="${heroK}"]`); if(nb) nb.focus(); say("Relatório de exemplo do "+AREAS[heroK].name); return; }
   const f = e.target.closest("[data-filter]"); if(f){ hubFilter=f.dataset.filter; document.querySelectorAll("[data-filter]").forEach(b=>b.setAttribute("aria-pressed", b===f)); fillHub(curHub); return; }
   const l = e.target.closest("[data-lib]"); if(l){ libArea=l.dataset.lib; document.querySelectorAll("[data-lib]").forEach(b=>b.setAttribute("aria-pressed", b===l)); fillLib(); return; }
 });
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !lb.hidden) closeLB(); });
+document.addEventListener("keydown", e=>{ if(lb.hidden) return; if(e.key==="Escape") closeLB(); if(e.key==="Tab"){ e.preventDefault(); document.getElementById("lbClose").focus(); } });
 document.addEventListener("input", e=>{ if(e.target.id==="q"){ libQ=e.target.value; fillLib(); } });
 document.getElementById("menuBtn").addEventListener("click", function(){
   const n=document.getElementById("nav"); const o=n.classList.toggle("open"); this.setAttribute("aria-expanded", o);

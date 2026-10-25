@@ -33,6 +33,12 @@ a{color:inherit}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:6px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 86px)}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.skip{position:absolute;left:max(12px,env(safe-area-inset-left,0px));top:-80px;z-index:1000;background:#0A0A0A;color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + 10px)}
+main:focus{outline:none}
+.bars button:focus-visible{outline:3px solid var(--ink)!important;outline-offset:3px!important;border-radius:10px!important}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--f-display);line-height:1.08;text-wrap:balance;margin:0;letter-spacing:-.015em}
 .eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
@@ -163,6 +169,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 </head>
 <body>
 
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
 <header class="top"><div class="wrap">
   <a class="lockup" href="../../index.html" aria-label="MATCH LAB, início">
     <svg width="34" height="34" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="10" fill="#0A0A0A" stroke="#3A3A38" stroke-width="1"/><ellipse cx="22" cy="22" rx="4.5" ry="16" fill="#FFFFFF" transform="rotate(-32 22 22)"/><ellipse cx="22" cy="22" rx="4.5" ry="16" fill="#9E9E9A" transform="rotate(32 22 22)"/></svg>
@@ -175,7 +182,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   </nav>
 </div></header>
 
-<main>
+<main id="conteudo" tabindex="-1">
   <section class="hero"><div class="wrap">
     <span class="tag"><i></i>Ferramenta grátis · Surf</span>
     <h1>Calculadora de <span class="hl">litragem</span> de prancha</h1>
@@ -228,7 +235,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
       </details>
     </form>
 
-    <aside class="read" aria-live="polite">
+    <aside class="read" aria-label="Resultado">
+      <p class="sr-only" id="liveSum" role="status" aria-live="polite"></p>
       <div class="card">
         <div class="eyebrow">Sua litragem ideal</div>
         <div class="big"><b id="vol">0</b><span>litros</span></div>
@@ -247,7 +255,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
       <div class="actions">
         <a class="btn btn-board" href="../../apps/board/index.html">Ver a ficha completa no Board Match <span class="mono">→</span></a>
         <button class="btn btn-ghost" type="button" id="copy">Copiar resultado</button>
-        <span class="toast" id="toast"></span>
+        <span class="toast" id="toast" role="status" aria-live="polite"></span>
       </div>
       <p class="note">A litragem é 1 das 17 variáveis da prancha. O Board Match também calcula tipo, medidas, rabeta, fundo, quilhas e construção.</p>
     </aside>
@@ -255,12 +263,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 
   <section class="block"><div class="wrap">
     <div class="shead"><div><div class="eyebrow">Para o seu peso</div><h2>Como a litragem muda com o nível</h2></div><p>Mesmo peso, mesmo tipo de prancha. Quanto mais técnica, menos espuma você precisa para remar e entrar na onda.</p></div>
-    <div class="bars" id="byLevel"></div>
+    <div class="bars" id="byLevel" role="group" aria-label="Litragem por nível para o seu peso"></div>
   </div></section>
 
   <section class="block"><div class="wrap">
     <div class="shead"><div><div class="eyebrow">Para o seu peso e nível</div><h2>Litragem por tipo de prancha</h2></div><p>Uma fish e uma pranchinha para o mesmo surfista podem ter vários litros de diferença. Toque num tipo para usar no cálculo.</p></div>
-    <div class="bars" id="byType"></div>
+    <div class="bars" id="byType" role="group" aria-label="Litragem por tipo de prancha. Toque num tipo para usar no cálculo."></div>
   </div></section>
 
   <section class="block"><div class="wrap">
@@ -295,7 +303,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 
 <footer><div class="wrap">
   <span style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:.75rem">© 2026 MATCH LAB. Conteúdo educativo; a litragem final depende também do shape.</span>
-  <span class="btw" aria-label="Um projeto Beyond the Work">
+  <span class="btw">
     <svg viewBox="0 0 120 120" aria-hidden="true"><line x1="46" y1="34" x2="110" y2="34" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><line x1="28" y1="60" x2="110" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><line x1="10" y1="86" x2="110" y2="86" stroke="currentColor" stroke-width="8" stroke-linecap="round"/></svg>
     <span><small>Um projeto</small><b>Beyond the Work</b></span>
   </span>
@@ -357,7 +365,8 @@ const SCALE=[15,110];
 const pct=v=>Math.max(0,Math.min(100,(v-SCALE[0])/(SCALE[1]-SCALE[0])*100));
 function update(){
   const r=calc(S);
-  $('pesoOut').textContent=S.peso+' kg';
+  $('pesoOut').textContent=S.peso+' kg';$('peso').setAttribute('aria-valuetext',S.peso+' quilos');
+  clearTimeout(window._sumT);window._sumT=setTimeout(()=>{$('liveSum').textContent='Litragem ideal: '+dec(r.v)+' litros, faixa de '+dec(r.lo)+' a '+dec(r.hi)+'. '+LV[S.lv].n+', '+r.t.n+'.'},700);
   $('vol').textContent=dec(r.v);
   $('rng').textContent=dec(r.lo)+' a '+dec(r.hi)+' L';
   $('lkg').textContent=(r.v/S.peso).toFixed(2).replace('.',',');
@@ -380,7 +389,7 @@ function update(){
   const bar=(lab,sub,r,on,attr)=>`<div class="br${on?' on':''}"${attr||''}><span class="lab">${lab}${sub?`<small>${sub}</small>`:''}</span><span class="bt"><i style="left:${r.lo/mx*100}%;width:${(r.hi-r.lo)/mx*100}%"></i></span><span class="v">${Math.round(r.lo)}–${Math.round(r.hi)} L</span></div>`;
   const axis=`<div class="axis"><span></span><div><span>0</span><span>${Math.round(mx/2)}</span><span>${Math.round(mx)} L</span></div><span></span></div>`;
   $('byLevel').innerHTML=all.map((r,i)=>bar(LV[i].n,r.t.n,r,i===S.lv)).join('')+axis;
-  $('byType').innerHTML=tps.map(x=>`<button type="button" data-k="tipo" data-v="${x.t.k}" style="all:unset;cursor:pointer;display:block">${bar(x.t.n,'',x.r,x.t.k===r.t.k)}</button>`).join('')+axis;
+  $('byType').innerHTML=tps.map(x=>`<button type="button" data-k="tipo" data-v="${x.t.k}" aria-pressed="${x.t.k===r.t.k}" aria-label="Usar ${x.t.n} no cálculo: ${Math.round(x.r.lo)} a ${Math.round(x.r.hi)} litros" style="all:unset;cursor:pointer;display:block">${bar(x.t.n,'',x.r,x.t.k===r.t.k)}</button>`).join('')+axis;
   $('formula').textContent=`${S.peso} kg × ${dec(r.GF).replace(',',',')} (fator ${LV[S.lv].n.toLowerCase()}) × ${dec(1+(r.t.m-1)*mwOf(S.lv))} (${r.t.n.toLowerCase()}) × ${FLUT[S.flut][1].toFixed(2).replace('.',',')} (remada) ${FIS[S.fis][1]?'+ 1,5 L (condicionamento) ':''}${MAT[S.mat][1]?'− 1 L (EPS) ':''}≈ ${dec(r.v)} L`;
   try{history.replaceState(null,'','#'+[S.peso,S.lv,S.pos,S.tipo,S.flut].join('-'))}catch(e){}
 }
