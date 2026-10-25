@@ -109,7 +109,7 @@ Texto para o campo "descrição do site" (adaptar):
 - [ ] 9. Levar ao `CATALOG` só as conferidas, com crédito da loja. O link de compra fica para depois do pagamento real, e só depois da recomendação.
 - [ ] 10. Raquete que nenhum feed cobre continua no caminho 1 ou na silhueta.
 
-Bônus: `search_price` dá preço real de loja em R$, que pode substituir a estimativa em dólar quando houver oferta.
+Bônus: `search_price` dá o preço de loja em R$ para atualizar o `PRECO` do app (ver `precos-brasil.md`).
 
 ## No app (quando houver foto)
 - Campo `img` no `CATALOG` com a URL e `imgSrc` com o crédito ("Imagem: Wilson" ou "Imagem: Centauro").
