@@ -168,7 +168,7 @@ section{padding-block:72px}
 .skip:focus{top:calc(env(safe-area-inset-top,0px) + 10px)}
 main:focus{outline:none}
 [tabindex="-1"]:focus{outline:none}
-.crumbs a{padding-block:2px}
+.crumbs a{position:relative}.crumbs a::after{content:"";position:absolute;left:0;right:0;top:50%;height:24px;transform:translateY(-50%)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip.area{background:color-mix(in srgb,var(--area) 30%,var(--surface))}}
 :root[data-theme="dark"] .chip.area{background:color-mix(in srgb,var(--area) 30%,var(--surface))}
 /* Area cards */
