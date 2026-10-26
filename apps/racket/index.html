@@ -282,6 +282,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .cardimg{width:100%;max-width:230px;border-radius:16px;display:block;box-shadow:0 14px 34px rgba(0,0,0,.22);transform:rotate(-2deg)}
 .dnagrid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}
 .cardwrap{width:230px;min-height:200px;display:grid;place-items:center}
+.herocard{width:100%;min-height:420px}.herocard .cardimg{max-width:300px}
 @media (max-width:620px){.dnagrid{grid-template-columns:minmax(0,1fr)}.cardwrap{margin:0 auto}}
 @media (max-width:760px){
   .hero,.two,.plans,.mini,.hero-r{grid-template-columns:minmax(0,1fr)}
@@ -538,13 +539,12 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
       </div>
       <div class="court">
         <p class="eyebrow" style="color:#DDF247">O motor</p>
-        <div class="stage" id="heroStage" aria-hidden="true"></div>
         <div class="stats">
           <div class="stat"><b id="nRk">0</b><span>raquetes no catálogo</span></div>
           <div class="stat"><b>7</b><span>índices por raquete</span></div>
           <div class="stat"><b>9</b><span>especificações cruzadas</span></div>
         </div>
-        <p class="mono" style="font-size:13px">Specs medidas, não de catálogo. Specs medidas em laboratório + avaliações de testadores.</p>
+        <p class="mono" style="font-size:13px">Specs medidas em laboratório + avaliações de testadores.</p>
       </div>
     </div>
     <div class="diffs">
@@ -878,7 +878,6 @@ function duelHTML(a,b,withFit){const TL=[];
   const sp=[['wt','wt',' g',0],['sw','sw','',0],['bal','bal',' mm',0],['ra','ra',' RA',0],['head','head',' pol²',0],['pat','pat','',1],['Preço no Brasil','price','',2]];
   return `<div class="dhead"><div class="a"><p class="eyebrow">${esc(a.brand)}</p><h3>${esc(a.model)}</h3></div><div class="tally"><div class="tdots">${TL.map((x,i)=>`<i class="${x}" title="${LBL[KEYS[i]]}: ${x==='a'?esc(a.model):x==='b'?esc(b.model):'empate'}"></i>`).join('')}</div><small><b class="ta">${wa}</b> × <b class="tb">${wb}</b>${6-wa-wb?` · ${6-wa-wb} empate${6-wa-wb>1?'s':''}`:''}</small><small>em 6 atributos</small></div><div class="b"><p class="eyebrow">${esc(b.brand)}</p><h3>${esc(b.model)}</h3></div></div>
   ${fa?`<div class="cmpfit"><div class="kpi"><b style="color:var(--pri)">${fa.fit}%</b><span>Match Score para você</span></div><div class="kpi" style="text-align:right"><b style="color:var(--alt)">${fb.fit}%</b><span>Match Score para você</span></div></div>`:''}
-  <div class="mini">${[a,b].map(r=>stage(r,{h:240})).join('')}</div>
   <div class="drows">${rows}</div>
   <p class="verdict">${verdict}</p>
   <div class="two"><div>${radar([{name:a.model,v:a.ix,c:'var(--pri)',solid:true},{name:b.model,v:b.ix,c:'var(--alt)',dash:true}])}</div>
@@ -893,7 +892,7 @@ function duelBadge(){$('#duelBadge').textContent=duelOpen()?'Comparador liberado
 function duelLock(){
   $('#duelOut').innerHTML=`<div class="single" style="padding:8px 0"><p class="eyebrow">Você já usou a comparação grátis</p><h3 style="margin:6px 0 10px">Compare quantas raquetes quiser</h3>
   <div class="plans" style="margin-top:6px">
-    <div class="plan"><h3>Comparador</h3><span class="price">R$ 4,99</span><ul><li>Comparações ilimitadas entre as ${RK.length} raquetes</li><li>6 atributos, ranking no catálogo e ficha lado a lado</li><li>As duas em 3D</li></ul><button class="btn btn-pri" type="button" data-cmp>Liberar comparador</button></div>
+    <div class="plan"><h3>Comparador</h3><span class="price">R$ 4,99</span><ul><li>Comparações ilimitadas entre as ${RK.length} raquetes</li><li>6 atributos, ranking no catálogo e ficha lado a lado</li></ul><button class="btn btn-pri" type="button" data-cmp>Liberar comparador</button></div>
     <div class="plan best"><span class="ribbon">Melhor custo</span><h3>Relatório completo</h3><span class="price">R$ 19,99</span><ul><li>Comparador ilimitado incluído</li><li>As raquetes que mais encaixam no seu jogo, com diagnóstico da sua atual</li><li>Sugestão de corda e tensão</li></ul><button class="btn btn-go" type="button" data-rep>Fazer o teste</button></div>
   </div></div>`;
   $('#duelOut [data-cmp]').onclick=()=>pix('cmp');
@@ -1227,8 +1226,8 @@ function renderPreview(){
   </div>
   <div class="panel">
     <div class="two" style="align-items:center">
-      ${stage(top[0].r,{teaser:true,h:280})}
-      <div style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow">Sua raquete já está escolhida</p><h3>A silhueta está aí. Marca, modelo e ficha técnica aparecem no desbloqueio.</h3><p class="muted">Cabeça, padrão de cordas e ponto de balanço desenhados a partir das especificações reais do 1º lugar.</p></div>
+      <div id="cardPrev" class="cardwrap herocard" aria-label="Seu DNA de jogo em card"></div>
+      <div style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow">Seu DNA de jogo</p><h3>${esc(archetype())}</h3><p class="muted">O card com o seu perfil já está pronto. A raquete, a marca e a ficha técnica aparecem no desbloqueio.</p></div>
     </div>
   </div>
   <div class="panel">
@@ -1237,7 +1236,7 @@ function renderPreview(){
       <h2 style="margin:6px 0 4px">Relatório Racket Match</h2>
       <div class="row" style="gap:10px;align-items:baseline;margin-bottom:12px"><span class="price mono" style="font-size:40px;font-weight:600;letter-spacing:-.03em">R$ 19,99</span><span class="muted">pagamento único, via Pix</span></div>
       <ul>
-        <li>As 3 raquetes que mais encaixam, reveladas e em 3D, com o ranking dos 10</li>
+        <li>As 3 raquetes que mais encaixam, reveladas, com o ranking dos 10</li>
         <li>Régua de specs, mapa peso × swingweight e Braço Seguro antes e depois</li>
         <li>Diagnóstico completo da sua raquete atual</li>
         <li>Sugestão de corda, espessura e tensão, com a conta à vista</li>
@@ -1249,7 +1248,7 @@ function renderPreview(){
     <p class="note">O cálculo já foi feito: o pagamento só revela o resultado. Se houver link de compra, ele aparece depois, e a recomendação não muda por isso. Não gostou? Devolvemos em até 7 dias.</p>
     <div class="row"><button class="btn btn-ghost" type="button" id="redo">Refazer respostas</button><button class="btn btn-ghost" type="button" data-save>Salvar resultado</button></div>
   </div>`;
-  wireSeg($('#preview'));
+  wireSeg($('#preview'));previewCard('#cardPrev');
   $('#preview').querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>pix(+b.dataset.buy));
   $('#redo').onclick=()=>{step=0;show('quiz');renderQs()};
   $('#preview').querySelector('[data-save]').onclick=saveBox;
@@ -1388,7 +1387,7 @@ function renderReport(){
     ${racketHead(w)}
     ${setup6(r,gs,st)}
     <div class="hero-r">
-      ${stage(r,{hint:true,h:470})}
+      <div id="cardOut" class="cardwrap herocard" aria-label="Seu DNA de jogo em card"></div>
       <div style="display:flex;flex-direction:column;gap:16px">
         ${specGrid(r)}
         ${c?`<div class="row" style="gap:6px">${[['Peso','wt',' g'],['SW','sw',''],['Balanço','bal',' mm'],['Rigidez','ra',' RA'],['Cabeça','head','']].map(([l,k,u])=>{const d=r[k]-c[k];return `<span class="tag" style="color:var(--ink)">${l} ${d===0?'=':(d>0?'+':'−')+Math.abs(d)+u}</span>`}).join('')}<span class="note">vs a sua</span></div>`:''}
@@ -1414,7 +1413,7 @@ function renderReport(){
      :`<div class="panel"><h3>Comparação com a sua raquete</h3><p class="muted">Você não informou um modelo do catálogo. Diga qual é a sua e refaça para ver a diferença lado a lado.</p></div>`}
   </div>`;
   if(tier>=2){
-    h+=`<div class="mini">${ranked.slice(1,3).map((x,i)=>`<div class="panel"><p class="eyebrow">${i+2}º lugar</p>${racketHead(x)}${stage(x.r,{h:220})}<p class="mono" style="font-size:14px">${x.r.wt} g · ${x.r.bal} mm · SW ${x.r.sw} · ${x.r.ra} RA · ${x.r.head} pol² · ${x.r.pat.replace('x','×')}</p><p style="font-size:15px">${why(x.r,c,T)[0]||''}</p></div>`).join('')}</div>
+    h+=`<div class="mini">${ranked.slice(1,3).map((x,i)=>`<div class="panel"><p class="eyebrow">${i+2}º lugar</p>${racketHead(x)}<p class="mono" style="font-size:14px">${x.r.wt} g · ${x.r.bal} mm · SW ${x.r.sw} · ${x.r.ra} RA · ${x.r.head} pol² · ${x.r.pat.replace('x','×')}</p><p style="font-size:15px">${why(x.r,c,T)[0]||''}</p></div>`).join('')}</div>
     <div class="panel"><div class="phead"><h3>Mapa do catálogo</h3><span class="note">Peso × swingweight · passe o dedo nos pontos</span></div>${scatter(r,c,Z,ranked.slice(0,3))}
       <p class="note">Cada ponto é uma raquete. A zona lima é onde peso e swingweight batem com o seu perfil; os pontos mais fortes são o seu top 3.</p></div>
     <div class="two">
@@ -1438,13 +1437,12 @@ function renderReport(){
       <ul class="why"><li>Confira peso e balanço numa balança de loja: a mesma raquete varia até 7 g.</li><li>Compre em loja que aceite troca do grip ou ofereça o tamanho certo; grip errado não tem conserto barato.</li><li>Encordoe na tensão indicada: a corda de fábrica costuma vir genérica.</li><li>Teste antes: várias lojas emprestam raquete de demonstração por alguns dias.</li></ul>
     </div>`;
   }else{
-    h+=`<div class="lock"><h3>2º e 3º lugares, mapa, ranking, comparador e corda</h3><p class="muted">As alternativas em 3D, o mapa peso × swingweight do catálogo, o ranking dos 10, o comparador livre e a corda e tensão para a nova e para a sua fazem parte do relatório completo, que também sai em PDF A4.</p><button class="btn btn-go" type="button" id="up">Liberar por R$ 19,99</button></div>`;
+    h+=`<div class="lock"><h3>2º e 3º lugares, mapa, ranking, comparador e corda</h3><p class="muted">As alternativas, o mapa peso × swingweight do catálogo, o ranking dos 10, o comparador livre e a corda e tensão para a nova e para a sua fazem parte do relatório completo, que também sai em PDF A4.</p><button class="btn btn-go" type="button" id="up">Liberar por R$ 19,99</button></div>`;
   }
-  h+=`<div class="panel dna"><div class="dnagrid">
-      <div id="cardOut" class="cardwrap" aria-label="Prévia do card"></div>
+  h+=`<div class="panel dna"><div>
       <div style="display:flex;flex-direction:column;gap:12px">
         <p class="eyebrow">Seu DNA de jogo</p><h2>${archetype()}</h2>
-        <p class="muted">Seu estilo em um card pronto para o story do Instagram ou o status do WhatsApp. Mostra o seu perfil, não a raquete.</p>
+        <p class="muted">O card lá em cima está pronto para o story do Instagram ou o status do WhatsApp. Mostra o seu perfil, não a raquete.</p>
         <p style="font-weight:600">E o seu parceiro de quadra, joga como você?</p>
         <div class="row"><button class="btn btn-go" type="button" id="shareCard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlCard">Salvar imagem</button></div>
       </div></div></div>
@@ -1464,7 +1462,6 @@ function renderCmp(){
   const a=RK[+$('#cmpA').value],b=RK[+$('#cmpB').value];$('#cmpOut').innerHTML=duelHTML(a,b,true);wireStages($('#cmpOut'));return;const fa=RES.all.find(x=>x.r.id===a.id),fb=RES.all.find(x=>x.r.id===b.id);
   const rows=feel(b,a);
   $('#cmpOut').innerHTML=`<div class="cmpfit" style="margin-top:6px"><div class="kpi"><b style="color:var(--pri)">${fa.fit}%</b><span>${esc(a.name)}</span></div><div class="kpi"><b style="color:var(--alt)">${fb.fit}%</b><span>${esc(b.name)}</span></div></div>
-  <div class="mini" style="margin-top:14px">${[a,b].map(r=>stage(r,{h:220})).join('')}</div>
   <div class="two" style="margin-top:6px"><div>${radar([{name:a.model,v:a.ix,c:'var(--pri)',solid:true},{name:b.model,v:b.ix,c:'var(--alt)',dash:true}])}</div><div>${specBars(a,null,null,b)}</div></div>
   <div class="tbl" style="margin-top:10px"><table><thead><tr><th>Item</th><th>${esc(a.model)}</th><th>${esc(b.model)}</th><th>Saindo da primeira para a segunda</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x[0]}</td><td class="n">${x[1]}</td><td class="n">${x[2]}</td><td>${x[3]}</td></tr>`).join('')}</tbody></table></div>`;
   wireStages($('#cmpOut'));
@@ -1623,7 +1620,7 @@ async function drawCard(){
   KEYS.forEach((k,i)=>{const p=pt(i,12.6);x.fillStyle='rgba(255,255,255,.85)';x.fillText(LBL[k],p[0],p[1]+12);const q=pt(i,T[k]);x.fillStyle='#DDF247';x.beginPath();x.arc(q[0],q[1],11,0,7);x.fill()});
   x.textAlign='left';let cxp=90;const cyp=cy+R+170;x.font='700 40px "DM Sans", sans-serif';
   topKeys().forEach(k=>{const t=`${LBL[k]} ${dec(T[k])}`;const w=x.measureText(t).width+60;x.fillStyle='#DDF247';x.beginPath();x.roundRect(cxp,cyp-52,w,76,38);x.fill();x.fillStyle='#0B2530';x.fillText(t,cxp+30,cyp);cxp+=w+20});
-  x.fillStyle='#FFFFFF';x.font='800 64px Syne, sans-serif';x.fillText(`Match ${RES.ranked[0].fit}%`,90,H-230);
+  x.fillStyle='#FFFFFF';x.font='800 64px Archivo, sans-serif';x.fillText(`Match ${RES.ranked[0].fit}%`,90,H-230);
   x.fillStyle='rgba(255,255,255,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E o seu? Faça o teste no Racket Match',90,H-150);
   return cv;
 }
@@ -1636,7 +1633,7 @@ async function downloadCard(){
     else showCard(cv);
   }finally{btn.disabled=false}
 }
-async function previewCard(){try{const cv=await drawCard();const o=$('#cardOut');if(o)o.innerHTML=`<img class="cardimg" alt="Card: ${esc(archetype())}" src="${cv.toDataURL('image/png')}">`}catch(e){}}
+async function previewCard(sel='#cardOut'){try{const cv=await drawCard();const o=$(sel);if(o)o.innerHTML=`<img class="cardimg" alt="Card: ${esc(archetype())}" src="${cv.toDataURL('image/png')}">`}catch(e){}}
 async function shareCard(){
   const txt=`Meu DNA de jogo no Racket Match: ${archetype()}. E o seu?`;
   try{const cv=await drawCard();const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const file=new File([blob],'racket-match-dna.png',{type:'image/png'});
@@ -1648,7 +1645,6 @@ async function shareCard(){
 function showCard(cv){$('#cardOut').innerHTML=`<img class="cardimg" alt="Card do DNA de jogo" src="${cv.toDataURL('image/png')}"><p class="note">Toque e segure (ou clique com o botão direito) para salvar a imagem.</p>`}
 
 /* ---------- Hero ---------- */
-(function(){const pick=RK.find(r=>/pure aero$/i.test(r.model))||RK[0];if(pick){$('#heroStage').outerHTML=stage(pick,{h:260});wireStages($('#landing'))}})();
 })();
 </script>
 
