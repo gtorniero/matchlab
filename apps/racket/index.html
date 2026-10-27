@@ -282,7 +282,8 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .cardimg{width:100%;max-width:230px;border-radius:16px;display:block;box-shadow:0 14px 34px rgba(0,0,0,.22);transform:rotate(-2deg)}
 .dnagrid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}
 .cardwrap{width:230px;min-height:200px;display:grid;place-items:center}
-.herocard{width:100%;min-height:420px}.herocard .cardimg{max-width:300px}
+.herocard{width:100%;min-height:420px}
+.herocol{display:flex;flex-direction:column;gap:18px;min-width:0}.homecard{min-height:0}.herocard .cardimg{max-width:300px}
 @media (max-width:620px){.dnagrid{grid-template-columns:minmax(0,1fr)}.cardwrap{margin:0 auto}}
 @media (max-width:760px){
   .hero,.two,.plans,.mini,.hero-r{grid-template-columns:minmax(0,1fr)}
@@ -537,6 +538,8 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
           <p class="err" id="codeErr" hidden>Código inválido.</p>
         </details>
       </div>
+      <div class="herocol">
+      <div id="cardHome" class="cardwrap herocard homecard" aria-label="Exemplo do card do DNA de jogo"></div>
       <div class="court">
         <p class="eyebrow" style="color:#DDF247">O motor</p>
         <div class="stats">
@@ -545,6 +548,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
           <div class="stat"><b>9</b><span>especificações cruzadas</span></div>
         </div>
         <p class="mono" style="font-size:13px">Specs medidas em laboratório + avaliações de testadores.</p>
+      </div>
       </div>
     </div>
     <div class="diffs">
@@ -1601,15 +1605,16 @@ window.__pdfPages=()=>pdfPages();
 
 /* ---------- Card PNG ---------- */
 function wrapText(ctx,t,maxW){const w=t.split(' ');const L=[];let l='';w.forEach(x=>{const tt=l?l+' '+x:x;if(ctx.measureText(tt).width>maxW&&l){L.push(l);l=x}else l=tt});if(l)L.push(l);return L}
-async function drawCard(){
+const cardData=()=>({arch:archetype(),T:RES.T,top:topKeys(),fit:RES.ranked[0].fit});
+async function drawCard(d=cardData()){
   try{await document.fonts.ready}catch(e){}
   const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
   const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0E4D64');g.addColorStop(1,'#06222C');x.fillStyle=g;x.fillRect(0,0,W,H);
   x.fillStyle='#DDF247';x.beginPath();x.arc(W-120,180,70,0,Math.PI*2);x.fill();
   x.fillStyle='rgba(255,255,255,.85)';x.font='800 40px Syne, sans-serif';x.fillText('RACKET MATCH',90,190);x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.65)';x.fillText('DNA DE JOGO',90,236);
   x.fillStyle='#FFFFFF';x.font='700 100px "DM Sans", sans-serif';
-  const lines=wrapText(x,archetype(),W-180);lines.forEach((l,i)=>x.fillText(l,90,360+i*112));
-  const T=RES.T;const cx=W/2,cy=360+lines.length*112+380,R=300;
+  const lines=wrapText(x,d.arch,W-180);lines.forEach((l,i)=>x.fillText(l,90,360+i*112));
+  const T=d.T;const cx=W/2,cy=360+lines.length*112+380,R=300;
   const pt=(i,v)=>{const a=-Math.PI/2+i*Math.PI/3;return [cx+Math.cos(a)*R*v/10,cy+Math.sin(a)*R*v/10]};
   const path=(f,dy=0)=>{x.beginPath();KEYS.forEach((k,i)=>{const p=pt(i,f(k));i?x.lineTo(p[0],p[1]+dy):x.moveTo(p[0],p[1]+dy)});x.closePath()};
   [10,7.5,5,2.5].forEach((v,i)=>{path(()=>v);x.fillStyle=i%2?'rgba(255,255,255,.04)':'rgba(255,255,255,.08)';x.fill();x.strokeStyle='rgba(255,255,255,.18)';x.lineWidth=2;x.stroke()});
@@ -1619,8 +1624,8 @@ async function drawCard(){
   x.font='700 34px "DM Sans", sans-serif';x.textAlign='center';
   KEYS.forEach((k,i)=>{const p=pt(i,12.6);x.fillStyle='rgba(255,255,255,.85)';x.fillText(LBL[k],p[0],p[1]+12);const q=pt(i,T[k]);x.fillStyle='#DDF247';x.beginPath();x.arc(q[0],q[1],11,0,7);x.fill()});
   x.textAlign='left';let cxp=90;const cyp=cy+R+170;x.font='700 40px "DM Sans", sans-serif';
-  topKeys().forEach(k=>{const t=`${LBL[k]} ${dec(T[k])}`;const w=x.measureText(t).width+60;x.fillStyle='#DDF247';x.beginPath();x.roundRect(cxp,cyp-52,w,76,38);x.fill();x.fillStyle='#0B2530';x.fillText(t,cxp+30,cyp);cxp+=w+20});
-  x.fillStyle='#FFFFFF';x.font='800 64px Archivo, sans-serif';x.fillText(`Match ${RES.ranked[0].fit}%`,90,H-230);
+  d.top.forEach(k=>{const t=`${LBL[k]} ${dec(T[k])}`;const w=x.measureText(t).width+60;x.fillStyle='#DDF247';x.beginPath();x.roundRect(cxp,cyp-52,w,76,38);x.fill();x.fillStyle='#0B2530';x.fillText(t,cxp+30,cyp);cxp+=w+20});
+  x.fillStyle='#FFFFFF';x.font='800 64px Archivo, sans-serif';x.fillText(`Match ${d.fit}%`,90,H-230);
   x.fillStyle='rgba(255,255,255,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E o seu? Faça o teste no Racket Match',90,H-150);
   return cv;
 }
@@ -1643,6 +1648,13 @@ async function shareCard(){
   try{await navigator.clipboard.writeText(txt);toast('Texto copiado. Use "Salvar imagem" para o card.')}catch(e){downloadCard()}
 }
 function showCard(cv){$('#cardOut').innerHTML=`<img class="cardimg" alt="Card do DNA de jogo" src="${cv.toDataURL('image/png')}"><p class="note">Toque e segure (ou clique com o botão direito) para salvar a imagem.</p>`}
+
+/* ---------- Card de exemplo na home ---------- */
+(function(){try{const keep=JSON.parse(JSON.stringify(A)),keepR=RES,keepZ=ZZ;
+  Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,JSON.parse(JSON.stringify(EXAMPLE)));RES=compute();const d=cardData();
+  Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,keep);RES=keepR;ZZ=keepZ;
+  drawCard(d).then(cv=>{const o=$('#cardHome');if(o)o.innerHTML=`<img class="cardimg" alt="Exemplo de card: ${esc(d.arch)}" src="${cv.toDataURL('image/png')}">`});
+}catch(e){const o=$('#cardHome');if(o)o.remove()}})();
 
 /* ---------- Hero ---------- */
 })();
