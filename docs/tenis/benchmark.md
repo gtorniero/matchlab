@@ -13,5 +13,7 @@ Nenhum quiz brasileiro recomenda; ninguém mostra preço em BRL nem custo por km
 ## Aplicado no Tenis Match v6
 Tênis em 3D paramétrico (stack, drop e curvatura de cada modelo), silhueta 3D no teaser, corte lateral com medidas, hexágono com "o que você precisa" sobreposto, barras de laboratório vs. média da categoria + percentil e pontos do catálogo, mapa do catálogo (peso × espuma), chips de fatores do match, origem do dado, custo por km vs. média, hexágono do rodízio, hexágono no card de story.
 
+Em out/2026 saíram o tênis em 3D, a silhueta do teaser e o corte lateral (visual tosco). O tênis aparece só pelo nome; ficaram os quadros de specs, o hexágono, as barras e o mapa.
+
 ## Próximos candidatos
 Autoteste guiado no lugar da pergunta de pisada; slider "e se eu correr mais km"; card 9:16 exportável; pergunta sobre calor e umidade.

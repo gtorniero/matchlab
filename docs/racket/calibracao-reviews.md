@@ -1,5 +1,10 @@
 # Racket Match — calibração do índice contra reviews (out/2026)
 
+## Dados do relatório PDF (23/out)
+- Trechos de review: as 58 raquetes têm pelo menos 2, resumidos e traduzidos (testadores TW + Tennisnerd, Tennis Companion, The Tennis Tribe e outros). Versões leves usam reviews de outros sites ou média de clientes TW; gerações anteriores vêm indicadas.
+- Atletas: 45 de 58 raquetes com profissionais por linha. Incluídos nesta rodada: Dunlop CX (Mérida, Brooksby, Jamie Murray, Santamaria), Dunlop SX (Vallejo), Prince Tour (Pouille, customizada). Sem profissional confirmado: Clash, Shift, Instinct, Ti S6, Boost Drive, ProKennex, Phantom, Ripstick. Burn (Pavlyuchenkova) ficou de fora por fonte fraca (jan/2025).
+- Comparação com o Tennis Engineer no mesmo perfil (intermediário, cotovelo, Pure Strike 98): o top 3 deles (Shift 99, Extreme MP, Percept 100, todas 66–67 RA) fica entre 16º e 37º no nosso, por causa da dor no cotovelo; os dois motores concordam que vale trocar a Pure Strike.
+
 ## Rodada 3 — 30 perfis, destro/canhoto, backhand e Clash (23/out)
 
 ### Evidência: o que muda a recomendação
