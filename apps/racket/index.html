@@ -1590,34 +1590,42 @@ function showCard(cv){$('#cardOut').innerHTML=`<img class="cardimg" alt="Card do
 
 /* card da raquete: verde do Racket, raquete escolhida e o pódio que levou a ela */
 const racketCardData=()=>({r:RES.ranked[0].r,fit:RES.ranked[0].fit,top:RES.ranked.slice(0,3).map(x=>({m:x.r.model,b:x.r.brand,f:x.fit})),n:RK.length});
+/* logo do Racket Match (o mesmo do topo do app) desenhado no canvas */
+function drawLogo(x,X,Y,S){const k=S/44;x.save();x.translate(X,Y);x.scale(k,k);
+  x.fillStyle='#0E4D64';x.beginPath();x.roundRect(0,0,44,44,10);x.fill();
+  x.save();x.translate(18,26);x.rotate(-32*Math.PI/180);x.fillStyle='#FFFFFF';x.beginPath();x.ellipse(0,0,4,14,0,0,Math.PI*2);x.fill();x.restore();
+  x.fillStyle='#DDF247';x.beginPath();x.arc(29,15,7,0,Math.PI*2);x.fill();x.restore()}
 async function drawRacketCard(d=racketCardData()){
   try{await document.fonts.ready}catch(e){}
   const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');const INK='#0B2530',PET='#0E4D64';
   const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#E9F98A');g.addColorStop(.55,'#DDF247');g.addColorStop(1,'#BFD82A');x.fillStyle=g;x.fillRect(0,0,W,H);
   x.fillStyle='rgba(14,77,100,.08)';x.beginPath();x.arc(W-60,560,430,0,Math.PI*2);x.fill();
-  x.fillStyle=PET;x.beginPath();x.arc(W-120,180,70,0,Math.PI*2);x.fill();
-  x.fillStyle=INK;x.font='800 40px Syne, sans-serif';x.fillText('RACKET MATCH',90,190);
-  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(11,37,48,.65)';x.fillText('A RAQUETE DO MEU JOGO',90,236);
+  drawLogo(x,90,140,96);
+  x.fillStyle=INK;x.font='800 44px Syne, sans-serif';x.fillText('RACKET MATCH',210,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(11,37,48,.65)';x.fillText('A RAQUETE DO MEU JOGO',210,234);
   const r=d.r;
   x.fillStyle='rgba(11,37,48,.7)';x.font='700 36px "DM Sans", sans-serif';x.fillText(r.brand.toUpperCase()+(r.year?' · '+r.year:''),90,360);
   x.fillStyle=INK;x.font='700 104px "DM Sans", sans-serif';const lines=wrapText(x,r.model,640);lines.forEach((l,i)=>x.fillText(l,90,470+i*112));
-  x.textAlign='right';x.fillStyle='rgba(11,37,48,.7)';x.font='700 34px "DM Sans", sans-serif';x.fillText('MATCH',W-90,720);
-  x.fillStyle=INK;x.font='800 250px Archivo, sans-serif';x.fillText(d.fit+'%',W-80,940);x.textAlign='left';
   let y=470+lines.length*112+40;
-  [[r.wt+' g','peso'],[r.head+' pol²','cabeça'],[r.ra+' RA','rigidez'],[r.pat.replace('x','×'),'cordas']].forEach(([v,l])=>{
-    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';const wl=x.measureText(l).width;
-    x.fillStyle=INK;x.beginPath();x.roundRect(90,y,wv+wl+78,72,36);x.fill();
-    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#DDF247';x.fillText(v,118,y+48);
-    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(l,118+wv+22,y+48);y+=92});
+  const chips=[[r.wt+' g','peso'],[r.head+' pol²','cabeça'],[r.ra+' RA','rigidez'],[r.pat.replace('x','×'),'cordas']].map(([v,l])=>{
+    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';return {v,l,wv,w:wv+x.measureText(l).width+78}});
+  const col2=90+Math.max(chips[0].w,chips[2].w)+20;
+  chips.forEach((c,i)=>{const cx=i%2?col2:90,cy=y+Math.floor(i/2)*92;
+    x.fillStyle=INK;x.beginPath();x.roundRect(cx,cy,c.w,72,36);x.fill();
+    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#DDF247';x.fillText(c.v,cx+28,cy+48);
+    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(c.l,cx+28+c.wv+22,cy+48)});
+  y+=184;
   x.fillStyle=INK;x.font='600 34px "DM Sans", sans-serif';x.fillText(precoTxt(r).replace(' importada',' · importada').replace(/ \(US.*\)/,''),90,y+30);
-  const by=1250,bh=420;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
+  x.fillStyle='rgba(11,37,48,.7)';x.font='700 34px "DM Sans", sans-serif';x.fillText('MATCH',90,y+150);
+  x.fillStyle=INK;x.font='800 210px Syne, sans-serif';x.fillText(d.fit+'%',80,y+370);
+  const by=y+470,bh=440;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
   x.fillStyle='#DDF247';x.font='700 30px "DM Sans", sans-serif';x.fillText(`ESCOLHIDA ENTRE ${d.n} RAQUETES`,100,by+70);
   d.top.forEach((t,i)=>{const yy=by+150+i*100,win=i===0;x.globalAlpha=win?1:.6;
     x.fillStyle='#FFFFFF';x.font=(win?'700':'500')+' 38px "DM Sans", sans-serif';x.fillText(`${i+1}º  ${t.m}`,100,yy);
     x.fillStyle='rgba(255,255,255,.15)';x.beginPath();x.roundRect(100,yy+22,W-340,16,8);x.fill();
     x.fillStyle=win?'#DDF247':'rgba(255,255,255,.55)';x.beginPath();x.roundRect(100,yy+22,(W-340)*t.f/100,16,8);x.fill();
     x.textAlign='right';x.fillStyle=win?'#DDF247':'#FFFFFF';x.font='700 44px Archivo, sans-serif';x.fillText(t.f+'%',W-100,yy+40);x.textAlign='left';x.globalAlpha=1});
-  x.fillStyle='rgba(11,37,48,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E a sua? Faça o teste no Racket Match',90,H-120);
+  x.fillStyle='rgba(11,37,48,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E a sua? Faça o teste no Racket Match',90,Math.min(H-60,by+bh+100));
   return cv;
 }
 
