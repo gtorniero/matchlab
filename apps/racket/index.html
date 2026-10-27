@@ -1607,18 +1607,21 @@ async function drawRacketCard(d=racketCardData()){
   x.fillStyle='rgba(11,37,48,.7)';x.font='700 36px "DM Sans", sans-serif';x.fillText(r.brand.toUpperCase()+(r.year?' · '+r.year:''),90,360);
   x.fillStyle=INK;x.font='700 104px "DM Sans", sans-serif';const lines=wrapText(x,r.model,640);lines.forEach((l,i)=>x.fillText(l,90,470+i*112));
   let y=470+lines.length*112+40;
-  const chips=[[r.wt+' g','peso'],[r.head+' pol²','cabeça'],[r.ra+' RA','rigidez'],[r.pat.replace('x','×'),'cordas']].map(([v,l])=>{
-    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';return {v,l,wv,w:wv+x.measureText(l).width+78}});
-  const col2=90+Math.max(chips[0].w,chips[2].w)+20;
-  chips.forEach((c,i)=>{const cx=i%2?col2:90,cy=y+Math.floor(i/2)*92;
-    x.fillStyle=INK;x.beginPath();x.roundRect(cx,cy,c.w,72,36);x.fill();
-    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#DDF247';x.fillText(c.v,cx+28,cy+48);
-    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(c.l,cx+28+c.wv+22,cy+48)});
-  y+=184;
+  const y0=y;let chipR=0;
+  [[r.wt+' g','peso'],[r.head+' pol²','cabeça'],[r.ra+' RA','rigidez'],[r.pat.replace('x','×'),'cordas']].forEach(([v,l])=>{
+    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';const w=wv+x.measureText(l).width+78;chipR=Math.max(chipR,90+w);
+    x.fillStyle=INK;x.beginPath();x.roundRect(90,y,w,72,36);x.fill();
+    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#DDF247';x.fillText(v,118,y+48);
+    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(l,118+wv+22,y+48);y+=92});
+  /* Match grande à direita das specs, na fonte do Racket Match, no tamanho que couber */
+  const room=W-80-(chipR+50),num=String(d.fit),F=f=>`800 ${f}px Syne, sans-serif`;
+  let fs=280;x.font=F(fs);let wn=x.measureText(num).width;x.font=F(fs*.42);let wp=x.measureText('%').width;
+  if(wn+wp+8>room){fs=Math.floor(fs*room/(wn+wp+8));x.font=F(fs);wn=x.measureText(num).width;x.font=F(fs*.42);wp=x.measureText('%').width}
+  const base=y0+215+fs*.3,xr=W-80;x.fillStyle=INK;x.textAlign='right';
+  x.font=F(fs*.42);x.fillText('%',xr,base-fs*.33);x.font=F(fs);x.fillText(num,xr-wp-8,base);
+  x.fillStyle='rgba(11,37,48,.7)';x.font='700 34px "DM Sans", sans-serif';x.fillText('MATCH',xr-wp-12,base-fs*.78);x.textAlign='left';
   x.fillStyle=INK;x.font='600 34px "DM Sans", sans-serif';x.fillText(precoTxt(r).replace(' importada',' · importada').replace(/ \(US.*\)/,''),90,y+30);
-  x.fillStyle='rgba(11,37,48,.7)';x.font='700 34px "DM Sans", sans-serif';x.fillText('MATCH',90,y+150);
-  x.fillStyle=INK;x.font='800 210px Syne, sans-serif';x.fillText(d.fit+'%',80,y+370);
-  const by=y+470,bh=440;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
+  const by=Math.max(1250,y+150),bh=440;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
   x.fillStyle='#DDF247';x.font='700 30px "DM Sans", sans-serif';x.fillText(`ESCOLHIDA ENTRE ${d.n} RAQUETES`,100,by+70);
   d.top.forEach((t,i)=>{const yy=by+150+i*100,win=i===0;x.globalAlpha=win?1:.6;
     x.fillStyle='#FFFFFF';x.font=(win?'700':'500')+' 38px "DM Sans", sans-serif';x.fillText(`${i+1}º  ${t.m}`,100,yy);
