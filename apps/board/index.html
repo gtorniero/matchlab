@@ -313,6 +313,11 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
 @media (max-width:480px){.meas{grid-template-columns:minmax(0,1fr)}.lvn small:not(.on){visibility:hidden}.lvn small.on{white-space:nowrap}.det-fig{max-width:110px}.dimt{font-size:22px}}
 /* ---------- relatório em PDF (A4, sempre claro) ---------- */
 .pdfbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.herocol{display:flex;flex-direction:column;gap:18px;min-width:0}
+.cardimg{width:100%;max-width:230px;border-radius:16px;display:block;box-shadow:0 14px 34px rgba(0,0,0,.22);transform:rotate(-2deg)}
+.cardwrap{width:230px;min-height:200px;display:grid;place-items:center;margin:0 auto}.herocard{width:100%;min-height:420px}.homecard{min-height:0}
+.cardpair{display:flex;justify-content:center;align-items:flex-start;padding:6px 0 10px}.cardpair .cardimg{width:50%;max-width:220px}
+.cardpair .cardimg+.cardimg{transform:rotate(3deg) translateY(14px);margin-left:-14px}.herocard .cardimg{max-width:300px}
 .timg{margin:4px auto 0;max-width:620px;width:100%;display:flex;flex-direction:column;gap:6px}.timg.sm{max-width:none}.timg img{width:100%;height:auto;display:block;border-radius:14px}.timg figcaption{font-size:12px;color:var(--muted);text-align:center}.timg.sm img{border-radius:10px}
 .pdfdoc{position:fixed;left:-10000px;top:0;width:794px;-webkit-text-size-adjust:100%;text-size-adjust:100%;
   --bg:#EEF4F5;--surface:#FFFFFF;--ink:#0B2530;--muted:#4A6570;--line:#CFDEE2;--pri:#0E4D64;--pri-ink:#FFFFFF;--ball:#6CCFF6;--ball-ink:#0B2530;--clay:#B4472F;--soft:#DCEBEF;
@@ -413,6 +418,8 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
         </div>
         <p class="note">Grátis · 3 minutos · sem cadastro</p>
       </div>
+      <div class="herocol">
+      <div id="cardHome" class="cardwrap herocard homecard" aria-label="Exemplo dos cards: DNA de surf e a prancha"></div>
       <div class="court">
         <p class="eyebrow acc">O motor</p>
         <div class="stats s4">
@@ -422,6 +429,7 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
           <div class="stat"><b id="nCombS">200 tri</b><span>pranchas diferentes possíveis. A sua é uma.</span></div>
         </div>
         <p class="mono acc" style="font-size:13px">Recomendamos tudo, menos marca e shaper.</p>
+      </div>
       </div>
     </div>
     <div class="diffs">
@@ -976,6 +984,7 @@ function renderPreview(){
       <p class="muted" style="font-size:15px">Calculado pelo que você já faz na água: como pega onda, como passa a arrebentação e o que faz na parede, não só pelo tempo de surf. É ele que define quanto a prancha precisa boiar.</p>
     </div>
   </div>
+  <div class="panel"><div class="two" style="align-items:center"><div id="cardPrev" class="cardwrap herocard" aria-label="Seu DNA de surf em card"></div><div style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow">Seu DNA de surf</p><h3>${esc(archetype(r))}</h3><p class="muted">O card com o seu perfil já está pronto. A prancha, as medidas e o card dela aparecem no relatório.</p></div></div></div>
   <div class="panel">
     <div><p class="eyebrow">Grátis</p><h3>Quanto a sua prancha precisa boiar</h3></div>
     ${floatBar(r)}
@@ -990,6 +999,7 @@ function renderPreview(){
     <p class="note">O cálculo já foi feito: o pagamento só revela o resultado. Nenhuma marca ou shaper paga para aparecer.</p>
     <div class="row"><button class="btn btn-ghost" type="button" id="redo">Refazer respostas</button></div>
   </div>`;
+  drawDNA(cardData(r)).then(cv=>{const o=$('#cardPrev');if(o)o.innerHTML=cardImg(cv,'Card do DNA de surf: '+archetype(r))}).catch(()=>{});
   $('#buy2').onclick=()=>{tier=2;renderReport();show('report')};
   $('#redo').onclick=()=>{step=0;show('quiz');renderQs()};
 }
@@ -1223,6 +1233,7 @@ function renderReport(){
     <div class="w-sec"><h3>Por que ela combina com você</h3><div class="why-cards">${whyV(r)}</div></div>
     <div class="w-sec"><h3>Fique atento</h3><div class="att-cards">${attB(r).map(x=>`<div class="att${/Nenhum ponto/.test(x)?' ok':''}">${ICO[/Nenhum ponto/.test(x)?'ok':'warn']}<p>${esc(x)}</p></div>`).join('')}</div></div>
   </div>
+  ${cardsPanel()}
   ${varMap(r)}
   <div class="panel">
     <div><p class="eyebrow">Passo 1</p><h3>As 3 medidas da sua prancha</h3><p class="muted" style="margin-top:4px">Toda prancha é descrita por comprimento, largura e espessura. Juntas, elas dão os litros.</p></div>
@@ -1267,11 +1278,108 @@ function renderReport(){
   $('#report').innerHTML=h;
   wireMatch(r);
   wireCmp(r);
+  wireCards(r);
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};
   ['#pdfTop','#pdfBot'].forEach(id=>{$(id).onclick=()=>makePDF(r)});
   const copy=(btn,txt,out)=>{const b=$(btn);if(b)b.onclick=()=>{navigator.clipboard.writeText(txt()).then(()=>{$(out).textContent='Copiado'},()=>{$(out).textContent='Selecione o texto e copie'})}};
   copy('#scopy',()=>r._shop,'#scopied');copy('#fcopy',()=>r._ficha,'#fcopied');
 }
+
+/* ---------- cards para compartilhar: DNA de surf e a prancha (mesmo formato do Racket Match, 1080×1920) ---------- */
+const ARCHN=['Surfista de linha','Surfista de curvas','Surfista de manobras','Caçador de tubos','Surfista aéreo','Surfista clássico'];
+function archetype(r){const t=r.S.indexOf(Math.max(...r.S)),tam=r.a.tam===undefined?1:r.a.tam;return `${ARCHN[t]} de ${tam<=1?'onda pequena':tam===2?'onda média':'onda grande'}`}
+function wrapText(x,t,maxW){const w=String(t).split(' ');const L=[];let l='';w.forEach(s=>{const tt=l?l+' '+s:s;if(x.measureText(tt).width>maxW&&l){L.push(l);l=s}else l=tt});if(l)L.push(l);return L}
+function drawLogo(x,X,Y,S){const k=S/44;x.save();x.translate(X,Y);x.scale(k,k);
+  x.fillStyle='#0E4D64';x.beginPath();x.roundRect(0,0,44,44,10);x.fill();
+  [['#FFFFFF',-32],['#6CCFF6',32]].forEach(([c,a])=>{x.save();x.translate(22,22);x.rotate(a*Math.PI/180);x.fillStyle=c;x.beginPath();x.ellipse(0,0,4.5,16,0,0,Math.PI*2);x.fill();x.restore()});x.restore()}
+const cardData=r=>({arch:archetype(r),lvl:LV[r.lvl].n,im:Object.assign({},IMPDEF,r.a.imp||{}),fit:r.fins[0].fit});
+async function drawDNA(d){
+  try{await document.fonts.ready}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0E4D64');g.addColorStop(1,'#06222C');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='#6CCFF6';x.beginPath();x.arc(W-120,180,70,0,Math.PI*2);x.fill();
+  x.fillStyle='rgba(255,255,255,.85)';x.font='800 40px Syne, sans-serif';x.fillText('BOARD MATCH',90,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.65)';x.fillText('DNA DE SURF',90,236);
+  x.fillStyle='#FFFFFF';x.font='800 100px Archivo, sans-serif';const lines=wrapText(x,d.arch,W-180);lines.forEach((l,i)=>x.fillText(l,90,360+i*112));
+  x.fillStyle='rgba(255,255,255,.7)';x.font='600 38px "DM Sans", sans-serif';x.fillText('Nível: '+d.lvl,90,360+lines.length*112+10);
+  const K=['rem','est','vel','man','ctl','tol'],cx=W/2,cy=360+lines.length*112+490,R=290;
+  const pt=(i,v)=>{const a=-Math.PI/2+i*Math.PI/3;return [cx+Math.cos(a)*R*v/10,cy+Math.sin(a)*R*v/10]};
+  const path=(f,dy=0)=>{x.beginPath();K.forEach((k,i)=>{const p=pt(i,f(k));i?x.lineTo(p[0],p[1]+dy):x.moveTo(p[0],p[1]+dy)});x.closePath()};
+  [10,7.5,5,2.5].forEach((v,i)=>{path(()=>v);x.fillStyle=i%2?'rgba(255,255,255,.04)':'rgba(255,255,255,.08)';x.fill();x.strokeStyle='rgba(255,255,255,.18)';x.lineWidth=2;x.stroke()});
+  for(let s=10;s>=1;s--){path(k=>d.im[k],s*3);x.fillStyle=`rgba(0,0,0,${.06+.01*(10-s)})`;x.fill()}
+  const rg=x.createRadialGradient(cx,cy-60,20,cx,cy,R);rg.addColorStop(0,'rgba(108,207,246,.95)');rg.addColorStop(1,'rgba(14,77,100,.75)');
+  path(k=>d.im[k]);x.fillStyle=rg;x.fill();x.strokeStyle='#6CCFF6';x.lineWidth=6;x.stroke();
+  x.font='700 34px "DM Sans", sans-serif';x.textAlign='center';
+  K.forEach((k,i)=>{const p=pt(i,12.8);x.fillStyle='rgba(255,255,255,.85)';x.fillText(BXP[i],p[0],p[1]+12);const q=pt(i,d.im[k]);x.fillStyle='#6CCFF6';x.beginPath();x.arc(q[0],q[1],11,0,7);x.fill()});
+  x.textAlign='left';let cxp=90;const cyp=cy+R+205;x.font='700 40px "DM Sans", sans-serif';
+  K.map((k,i)=>[d.im[k],i]).sort((a,b)=>b[0]-a[0]).slice(0,2).forEach(([v,i])=>{const t=`${BXP[i]} ${v}`;const w=x.measureText(t).width+60;x.fillStyle='#6CCFF6';x.beginPath();x.roundRect(cxp,cyp-52,w,76,38);x.fill();x.fillStyle='#0B2530';x.fillText(t,cxp+30,cyp);cxp+=w+20});
+  x.fillStyle='#FFFFFF';x.font='800 64px Archivo, sans-serif';x.fillText(`Match ${d.fit}%`,90,H-230);
+  x.fillStyle='rgba(255,255,255,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E o seu? Faça o teste no Board Match',90,H-150);
+  return cv;
+}
+const boardCardData=r=>({k:r.k,d:r.d,dc:r.dc,fit:r.fins[0].fit,top:r.fins.map(f=>({n:PN[f.k],f:f.fit}))});
+async function drawBoardCard(d){
+  try{await document.fonts.ready}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');const INK='#0B2530',PET='#0E4D64';
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#BEEBFB');g.addColorStop(.55,'#8FDBF8');g.addColorStop(1,'#6CCFF6');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='rgba(14,77,100,.08)';x.beginPath();x.arc(W-60,560,430,0,Math.PI*2);x.fill();
+  drawLogo(x,90,140,96);
+  x.fillStyle=INK;x.font='800 44px Syne, sans-serif';x.fillText('BOARD MATCH',210,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(11,37,48,.65)';x.fillText('A PRANCHA DO MEU SURF',210,234);
+  x.fillStyle='rgba(11,37,48,.7)';x.font='700 36px "DM Sans", sans-serif';x.fillText(PL[d.k].toUpperCase(),90,360);
+  x.fillStyle=INK;x.font='800 100px Archivo, sans-serif';const lines=wrapText(x,PN[d.k],640);lines.forEach((l,i)=>x.fillText(l,90,470+i*110));
+  let y=470+lines.length*110+40;const y0=y;let chipR=0;
+  [[ftin(d.d.L)+' × '+frac(d.d.W),'medidas'],[dec1(d.d.V)+' L','litros'],[d.dc.tail.split(' (')[0],'rabeta'],[FINSET[d.dc.setup].split(' (')[0],'quilhas']].forEach(([v,l])=>{
+    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';const w=wv+x.measureText(l).width+78;chipR=Math.max(chipR,90+w);
+    x.fillStyle=INK;x.beginPath();x.roundRect(90,y,w,72,36);x.fill();
+    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#6CCFF6';x.fillText(v,118,y+48);
+    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(l,118+wv+22,y+48);y+=92});
+  const room=W-80-(chipR+50),num=String(d.fit),F=f=>`800 ${f}px Syne, sans-serif`;
+  let fs=280;x.font=F(fs);let wn=x.measureText(num).width;x.font=F(fs*.42);let wp=x.measureText('%').width;
+  if(wn+wp+8>room){fs=Math.floor(fs*room/(wn+wp+8));x.font=F(fs);wn=x.measureText(num).width;x.font=F(fs*.42);wp=x.measureText('%').width}
+  const base=y0+215+fs*.3,xr=W-80;x.fillStyle=INK;x.textAlign='right';
+  x.font=F(fs*.42);x.fillText('%',xr,base-fs*.33);x.font=F(fs);x.fillText(num,xr-wp-8,base);
+  x.fillStyle='rgba(11,37,48,.7)';x.font='700 34px "DM Sans", sans-serif';x.fillText('MATCH',xr-wp-12,base-fs*.78);x.textAlign='left';
+  x.fillStyle=INK;x.font='600 34px "DM Sans", sans-serif';x.fillText('Sem marca: leve a ficha a qualquer loja ou shaper',90,y+30);
+  const by=Math.max(1250,y+150),bh=440;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
+  x.fillStyle='#6CCFF6';x.font='700 30px "DM Sans", sans-serif';x.fillText(`ESCOLHIDA ENTRE ${KEYS.length} TIPOS DE PRANCHA`,100,by+70);
+  d.top.forEach((t,i)=>{const yy=by+150+i*100,win=i===0;x.globalAlpha=win?1:.6;
+    x.fillStyle='#FFFFFF';x.font=(win?'700':'500')+' 38px "DM Sans", sans-serif';x.fillText(`${i+1}º  ${t.n}`,100,yy);
+    x.fillStyle='rgba(255,255,255,.15)';x.beginPath();x.roundRect(100,yy+22,W-340,16,8);x.fill();
+    x.fillStyle=win?'#6CCFF6':'rgba(255,255,255,.55)';x.beginPath();x.roundRect(100,yy+22,(W-340)*t.f/100,16,8);x.fill();
+    x.textAlign='right';x.fillStyle=win?'#6CCFF6':'#FFFFFF';x.font='700 44px Archivo, sans-serif';x.fillText(t.f+'%',W-100,yy+40);x.textAlign='left';x.globalAlpha=1});
+  x.fillStyle='rgba(11,37,48,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E a sua? Faça o teste no Board Match',90,Math.min(H-60,by+bh+100));
+  return cv;
+}
+const cardImg=(cv,alt)=>`<img class="cardimg" alt="${esc(alt)}" src="${cv.toDataURL('image/png')}">`;
+async function saveCanvas(cv,name){const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+async function shareDNA(r){
+  const txt=`Meu DNA de surf no Board Match: ${archetype(r)}. E o seu?`;
+  try{const cv=await drawDNA(cardData(r));const blob=await new Promise(z=>cv.toBlob(z,'image/png'));const file=new File([blob],'board-match-dna.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text:txt});return}
+    if(navigator.share){await navigator.share({text:txt});return}
+  }catch(e){if(e&&e.name==='AbortError')return}
+  try{await navigator.clipboard.writeText(txt);$('#cardMsg').textContent='Texto copiado. Use "Salvar card do DNA" para a imagem.'}catch(e){saveCanvas(await drawDNA(cardData(r)),'board-match-dna.png')}
+}
+function cardsPanel(){return `<div class="panel"><div class="two" style="align-items:center">
+  <div id="cardOut" class="cardwrap herocard" aria-label="Seus cards: DNA de surf e a prancha"></div>
+  <div style="display:flex;flex-direction:column;gap:12px"><p class="eyebrow">Seu DNA de surf</p><h2 id="cardArch"></h2>
+    <p class="muted">Os dois cards estão prontos para o story do Instagram ou o status do WhatsApp: o seu perfil e a prancha que combina com ele.</p>
+    <p style="font-weight:600">E o seu parceiro de surf, pega onda como você?</p>
+    <div class="row"><button class="btn btn-go" type="button" id="shareCard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlCard">Salvar card do DNA</button><button class="btn btn-ghost" type="button" id="dlBoard">Salvar card da prancha</button></div><p class="note" id="cardMsg" aria-live="polite"></p>
+  </div></div></div>`}
+async function wireCards(r){
+  $('#cardArch').textContent=archetype(r);
+  $('#shareCard').onclick=()=>shareDNA(r);
+  $('#dlCard').onclick=async()=>saveCanvas(await drawDNA(cardData(r)),'board-match-dna.png');
+  $('#dlBoard').onclick=async()=>saveCanvas(await drawBoardCard(boardCardData(r)),'board-match-prancha.png');
+  try{const [a,b]=await Promise.all([drawDNA(cardData(r)),drawBoardCard(boardCardData(r))]);const o=$('#cardOut');if(o)o.innerHTML=`<div class="cardpair">${cardImg(a,'Card do DNA de surf: '+archetype(r))}${cardImg(b,'Card da prancha: '+PN[r.k]+', Match '+r.fins[0].fit+'%')}</div>`}catch(e){}
+}
+/* exemplo na abertura, com o mesmo perfil do "Ver um exemplo pronto" */
+(function(){try{
+  Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,JSON.parse(JSON.stringify(EXAMPLE)));const r=compute();Object.keys(A).forEach(k=>delete A[k]);
+  Promise.all([drawDNA(cardData(r)),drawBoardCard(boardCardData(r))]).then(([a,b])=>{const o=$('#cardHome');if(o)o.innerHTML=`<div class="cardpair">${cardImg(a,'Exemplo de card do DNA de surf: '+archetype(r))}${cardImg(b,'Exemplo de card da prancha: '+PN[r.k]+', Match '+r.fins[0].fit+'%')}</div>`});
+}catch(e){const o=$('#cardHome');if(o)o.remove()}})();
 
 /* ---------- relatório em PDF (A4, 5 páginas, padrão Match Lab) ---------- */
 /* trechos de review resumidos e traduzidos, conferidos na busca (out/2026); fontes em docs/board/reviews.md. [tipo, modelo, resumo, fonte, url, quem, nível, nota, geração] */
