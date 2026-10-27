@@ -119,10 +119,10 @@ table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
 th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-.share{background:#0E4D64;color:#FFFFFF;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px;max-width:360px}
-.share .big{font-family:var(--f-display);font-size:28px;font-weight:800;line-height:1.05}
-.share .chip{display:inline-block;background:var(--ball);color:#0B2530;font-weight:700;font-size:13px;border-radius:99px;padding:4px 10px}
-.share small{opacity:.85}
+.herocol{display:flex;flex-direction:column;gap:18px;min-width:0}
+.homecard{min-height:420px}.homecard:empty{display:none}
+.cardimg{width:100%;max-width:230px;border-radius:16px;display:block;box-shadow:0 14px 34px rgba(0,0,0,.22);transform:rotate(-2deg)}
+.cardpair{display:flex;justify-content:center;align-items:flex-start;padding:6px 0 18px}.cardpair .cardimg{width:50%;max-width:220px}.cardpair .cardimg+.cardimg{transform:rotate(3deg) translateY(14px);margin-left:-14px}
 .mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .mini .panel{gap:10px}
 footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
@@ -189,8 +189,6 @@ table.t10 tr.pref td{background:var(--soft)}
 .fx.up{background:var(--soft);color:var(--ink)}
 .fx.dn{background:transparent;color:var(--clay);border-color:currentColor}
 .src{font-size:12px;color:var(--muted);margin-top:4px}
-.sharehex{--line:rgba(255,255,255,.25);--muted:rgba(255,255,255,.8);--hexa:rgba(255,255,255,.06);--hexb:rgba(255,255,255,.1);--ink:#fff;--surface:#0E4D64}
-.sharehex .legend{display:none}
 @media (max-width:760px){
   .hero,.two,.mini{grid-template-columns:minmax(0,1fr)}
   .diffs{grid-template-columns:minmax(0,1fr)}
@@ -222,6 +220,8 @@ table.t10 tr.pref td{background:var(--soft)}
         </div>
         <p class="note">Grátis · 3 minutos · sem cadastro</p>
       </div>
+      <div class="herocol">
+      <div id="cardHome" class="homecard" aria-label="Exemplo dos cards: perfil de corredor e tênis com o Match"></div>
       <div class="court">
         <p class="eyebrow acc">O motor</p>
         <div class="stats">
@@ -231,6 +231,7 @@ table.t10 tr.pref td{background:var(--soft)}
         </div>
         <p style="font-size:14px;opacity:.9">Peso, espuma, drop, durabilidade, preço médio e custo por km, cruzados com seu peso, seu ritmo, seus km por semana e seu objetivo.</p>
         <p class="mono acc" style="font-size:13px">Nenhuma marca paga para aparecer.</p>
+      </div>
       </div>
     </div>
     <div class="diffs">
@@ -785,7 +786,7 @@ $('#next').addEventListener('click',()=>{
   if(m.length){$('#err').textContent='Falta responder: '+m.map(q=>q.t.replace('?','')).join(' · ');$('#err').hidden=false;return}
   if(step<STEPS.length-1){step++;renderQs();window.scrollTo({top:0,behavior:'smooth'})}else runAnalysis();
 });
-function conv(){const o={};Q.forEach(q=>{const v=A[q.id];if(v===undefined||v==='')return;o[q.id]=q.type==='select'?v:Array.isArray(v)?v.map(Number).filter(x=>x>0):Number(v)});return o}
+function conv(src=A){const o={};Q.forEach(q=>{const v=src[q.id];if(v===undefined||v==='')return;o[q.id]=q.type==='select'?v:Array.isArray(v)?v.map(Number).filter(x=>x>0):Number(v)});return o}
 
 /* ---------- análise ---------- */
 let RES=null;
@@ -838,7 +839,7 @@ function renderPreview(){
     </div>
     <div class="panel">
       <h3>Seu perfil: ${PROF[r.level]}</h3>
-      ${VZ.hex(RX,[{name:'Você',v:runnerVec(r.a).map(x=>x*10),c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}
+      <div id="cardPrev">${VZ.hex(RX,[{name:'Você',v:runnerVec(r.a).map(x=>x*10),c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}</div>
     </div>
   </div>
   <div class="panel">
@@ -859,6 +860,7 @@ function renderPreview(){
   </div>`;
   $('#buy').onclick=()=>{renderReport();show('report')};
   $('#redo').onclick=()=>{step=0;show('quiz');renderQs()};
+  drawRunnerCard(runnerData(r)).then(cv=>{const o=$('#cardPrev');if(o)o.innerHTML=`<img class="cardimg" style="margin:0 auto;max-width:260px" alt="Seu card de corredor: ${esc(PROF[r.level])}" src="${cv.toDataURL('image/png')}">`}).catch(()=>{});
 }
 
 /* ---------- relatório ---------- */
@@ -960,11 +962,9 @@ function renderReport(){
     if(r.second)h+=`<div class="panel"><h3>Segundo par para rodízio</h3><p class="muted">Quem alterna dois tênis teve 39% menos risco de lesão num estudo com 264 corredores. Use este ${r.second.c==='sup'?'só em prova e treinos-chave':r.second.c==='rap'?'nos treinos de ritmo e tiro':'na rodagem leve'}.</p><div class="whead"><div><p class="eyebrow">${esc(r.second.b)}</p><h2>${esc(modelOf(r.second))}</h2><p class="muted mono" style="font-size:14px">${priceTxt(r.second)} · ${CAT[r.second.c].n}</p>${brandLink(r.second)}</div></div><p class="note">Os dois pares juntos: ${brl(m.p+r.second.p)}. Custo por km do rodízio: ${('R$ '+((m.p+r.second.p)/(m.du+r.second.du)).toFixed(2)).replace('.',',')}.</p><div style="max-width:460px;width:100%;margin:0 auto">${VZ.hex(SX,[{name:modelOf(m),v:idx(m),c:'var(--pri)',fill:'var(--pri)',fo:.14},{name:modelOf(r.second),v:idx(r.second),c:'var(--ball)',fill:'var(--ball)',fo:.14}])}</div><p class="muted" style="font-size:14px;text-align:center">Juntos, os dois cobrem mais área do hexágono do que qualquer um sozinho.</p></div>`;
     h+=`<div class="panel"><h3>Para pagar menos</h3><ul class="why"><li>A versão da coleção anterior costuma sair 30% a 50% mais barata, com quase o mesmo desempenho.</li><li>Lançamentos raramente entram em promoção nos primeiros meses.</li><li>Compare o preço por km, não só o preço: um tênis mais caro que dura mais pode sair mais barato.</li></ul></div>`;
   }
-  h+=`<div class="panel"><h3>Seu perfil de corredor</h3><p class="muted">Card pronto para story. Mostra o perfil, não o modelo.</p>
-    <div class="share"><small class="mono">TENIS MATCH · PERFIL DE CORREDOR</small><div class="big">${PROF[r.level]}</div>
-    <div class="row"><span class="chip">${CAT[r.c1].n}</span><span class="chip">${esc(Q.find(q=>q.id==='km').o[a.km===undefined?1:a.km][1])} por semana</span></div>
-    <div class="sharehex">${VZ.hex(RX,[{name:'Perfil',v:runnerVec(a).map(x=>x*10),c:'#FF8A3D',fill:'#FF8A3D',fo:.25}])}</div>
-    <small>Fit Score do meu tênis: ${w.fit}%. Descubra o seu.</small></div></div>
+  h+=`<div class="panel"><h3>Seus cards</h3><p class="muted">Prontos para story: o seu perfil de corredor e o tênis que mais combina com você, com o Match.</p>
+    <div id="cardsOut" class="cardpair"></div>
+    <div class="row"><button class="btn btn-pri" type="button" id="shareCards">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlRunner">Salvar card do corredor</button><button class="btn btn-ghost" type="button" id="dlShoe">Salvar card do tênis</button></div></div>
   <div class="row"><button class="btn btn-ghost" type="button" id="again">Refazer o teste</button></div>`;
   $('#report').innerHTML=h;
   {
@@ -987,7 +987,95 @@ function renderReport(){
   const iv=v=>{document.querySelectorAll('#report [data-i]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.i===v));$('#ihex').hidden=v!=='hex';$('#ibar').hidden=v!=='bar'};
   document.querySelectorAll('#report [data-i]').forEach(b=>b.onclick=()=>iv(b.dataset.i));iv('hex');
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};
+  showCards(r);
 }
+
+
+/* ---------- cards para story: perfil de corredor e o tênis com o Match ---------- */
+function wrapText(x,t,maxW){const w=t.split(' ');const L=[];let l='';w.forEach(p=>{const tt=l?l+' '+p:p;if(x.measureText(tt).width>maxW&&l){L.push(l);l=p}else l=tt});if(l)L.push(l);return L}
+const runnerData=r=>({prof:PROF[r.level],sub:OBJ[r.a.obj===undefined?1:r.a.obj]+' · '+Q.find(q=>q.id==='km').o[r.a.km===undefined?1:r.a.km][1]+' por semana',v:runnerVec(r.a).map(x=>x*10),fit:r.fins[0].fit});
+const shoeData=r=>({m:r.fins[0].m,fit:r.fins[0].fit,top:r.fins.map(f=>({m:modelOf(f.m),f:f.fit})),n:M.length});
+/* logo do Tenis Match (o mesmo do topo) desenhado no canvas */
+function drawLogo(x,X,Y,S){const k=S/44;x.save();x.translate(X,Y);x.scale(k,k);
+  x.fillStyle='#0E4D64';x.beginPath();x.roundRect(0,0,44,44,10);x.fill();
+  x.save();x.translate(22,18);x.rotate(-32*Math.PI/180);x.fillStyle='#FFFFFF';x.beginPath();x.ellipse(0,0,4,13,0,0,Math.PI*2);x.fill();x.restore();
+  x.fillStyle='#FF8A3D';x.beginPath();x.ellipse(22,35,14,12,0,Math.PI,Math.PI*2);x.closePath();x.fill();x.restore()}
+async function drawRunnerCard(d){
+  try{await document.fonts.ready}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0E4D64');g.addColorStop(1,'#06222C');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='#FF8A3D';x.beginPath();x.arc(W-120,180,70,0,Math.PI*2);x.fill();
+  x.fillStyle='rgba(255,255,255,.85)';x.font='800 40px Syne, sans-serif';x.fillText('TENIS MATCH',90,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.65)';x.fillText('PERFIL DE CORREDOR',90,236);
+  x.fillStyle='#FFFFFF';x.font='700 100px "DM Sans", sans-serif';const lines=wrapText(x,d.prof,W-180);lines.forEach((l,i)=>x.fillText(l,90,360+i*112));
+  const ys=360+(lines.length-1)*112+76;x.fillStyle='rgba(255,255,255,.7)';x.font='500 36px "DM Sans", sans-serif';wrapText(x,d.sub,W-180).slice(0,2).forEach((l,i)=>x.fillText(l,90,ys+i*48));
+  const cx=W/2,cy=ys+470,R=290;
+  const pt=(i,v)=>{const a=-Math.PI/2+i*Math.PI/3;return [cx+Math.cos(a)*R*v/10,cy+Math.sin(a)*R*v/10]};
+  const path=f=>{x.beginPath();RX.forEach((k,i)=>{const p=pt(i,f(i));i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])});x.closePath()};
+  [10,7.5,5,2.5].forEach((v,i)=>{path(()=>v);x.fillStyle=i%2?'rgba(255,255,255,.04)':'rgba(255,255,255,.08)';x.fill();x.strokeStyle='rgba(255,255,255,.18)';x.lineWidth=2;x.stroke()});
+  const rg=x.createRadialGradient(cx,cy-60,20,cx,cy,R);rg.addColorStop(0,'rgba(255,138,61,.95)');rg.addColorStop(1,'rgba(127,208,230,.7)');
+  path(i=>cl(d.v[i],0,10));x.fillStyle=rg;x.fill();x.strokeStyle='#FF8A3D';x.lineWidth=6;x.stroke();
+  x.font='700 32px "DM Sans", sans-serif';x.textAlign='center';
+  RX.forEach((k,i)=>{const p=pt(i,12.8);x.fillStyle='rgba(255,255,255,.85)';x.fillText(k,p[0],p[1]+12);const q=pt(i,cl(d.v[i],0,10));x.fillStyle='#FF8A3D';x.beginPath();x.arc(q[0],q[1],11,0,7);x.fill()});
+  x.textAlign='left';let cxp=90;const cyp=cy+R+170;x.font='700 40px "DM Sans", sans-serif';
+  d.v.map((v,i)=>[v,i]).sort((p,q)=>q[0]-p[0]).slice(0,2).forEach(([v,i])=>{const t=`${RX[i]} ${dec1(v)}`;const w=x.measureText(t).width+60;x.fillStyle='#FF8A3D';x.beginPath();x.roundRect(cxp,cyp-52,w,76,38);x.fill();x.fillStyle='#0B2530';x.fillText(t,cxp+30,cyp);cxp+=w+20});
+  x.fillStyle='#FFFFFF';x.font='800 64px Archivo, sans-serif';x.fillText(`Match ${d.fit}%`,90,H-230);
+  x.fillStyle='rgba(255,255,255,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E o seu? Faça o teste no Tenis Match',90,H-150);
+  return cv;
+}
+async function drawShoeCard(d){
+  try{await document.fonts.ready}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');const INK='#0B2530',PET='#0E4D64',m=d.m;
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#FFB98A');g.addColorStop(.55,'#FF8A3D');g.addColorStop(1,'#E9701F');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='rgba(14,77,100,.08)';x.beginPath();x.arc(W-60,560,430,0,Math.PI*2);x.fill();
+  drawLogo(x,90,140,96);
+  x.fillStyle=INK;x.font='800 44px Syne, sans-serif';x.fillText('TENIS MATCH',210,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(11,37,48,.7)';x.fillText('O TÊNIS DA MINHA CORRIDA',210,234);
+  x.fillStyle='rgba(11,37,48,.75)';x.font='700 36px "DM Sans", sans-serif';x.fillText((m.b+' · '+CAT[m.c].n).toUpperCase(),90,360);
+  x.fillStyle=INK;x.font='700 104px "DM Sans", sans-serif';const lines=wrapText(x,modelOf(m),900).slice(0,3);lines.forEach((l,i)=>x.fillText(l,90,470+i*112));
+  let y=470+lines.length*112+40;const y0=y;let chipR=0;
+  [[m.g+' g','peso'],[stackOf(m)+' mm','espuma'],[dec1(m.dr)+' mm','drop'],[m.du+' km','dura']].forEach(([v,l])=>{
+    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';const w=wv+x.measureText(l).width+78;chipR=Math.max(chipR,90+w);
+    x.fillStyle=INK;x.beginPath();x.roundRect(90,y,w,72,36);x.fill();
+    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#FF8A3D';x.fillText(v,118,y+48);
+    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(l,118+wv+22,y+48);y+=92});
+  /* Match grande à direita das specs, no tamanho que couber */
+  const room=W-80-(chipR+50),num=String(d.fit),F=f=>`800 ${f}px Syne, sans-serif`;
+  let fs=280;x.font=F(fs);let wn=x.measureText(num).width;x.font=F(fs*.42);let wp=x.measureText('%').width;
+  if(wn+wp+8>room){fs=Math.floor(fs*room/(wn+wp+8));x.font=F(fs);wn=x.measureText(num).width;x.font=F(fs*.42);wp=x.measureText('%').width}
+  const base=y0+215+fs*.3,xr=W-80;x.fillStyle=INK;x.textAlign='right';
+  x.font=F(fs*.42);x.fillText('%',xr,base-fs*.33);x.font=F(fs);x.fillText(num,xr-wp-8,base);
+  x.fillStyle='rgba(11,37,48,.75)';x.font='700 34px "DM Sans", sans-serif';x.fillText('MATCH',xr-wp-12,base-fs*.78);x.textAlign='left';
+  x.fillStyle=INK;x.font='600 34px "DM Sans", sans-serif';x.fillText(priceTxt(m),90,y+30);
+  const by=Math.max(1250,y+150),bh=440;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
+  x.fillStyle='#FF8A3D';x.font='700 30px "DM Sans", sans-serif';x.fillText(`ESCOLHIDO ENTRE ${d.n} TÊNIS`,100,by+70);
+  d.top.forEach((t,i)=>{const yy=by+150+i*100,win=i===0;x.globalAlpha=win?1:.6;
+    x.fillStyle='#FFFFFF';x.font=(win?'700':'500')+' 38px "DM Sans", sans-serif';x.fillText(`${i+1}º  ${t.m}`,100,yy);
+    x.fillStyle='rgba(255,255,255,.15)';x.beginPath();x.roundRect(100,yy+22,W-340,16,8);x.fill();
+    x.fillStyle=win?'#FF8A3D':'rgba(255,255,255,.55)';x.beginPath();x.roundRect(100,yy+22,(W-340)*t.f/100,16,8);x.fill();
+    x.textAlign='right';x.fillStyle=win?'#FF8A3D':'#FFFFFF';x.font='700 44px Archivo, sans-serif';x.fillText(t.f+'%',W-100,yy+40);x.textAlign='left';x.globalAlpha=1});
+  x.fillStyle='rgba(11,37,48,.8)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E o seu? Faça o teste no Tenis Match',90,Math.min(H-60,by+bh+100));
+  return cv;
+}
+const pairHTML=(a,b,ra,rb)=>`<img class="cardimg" alt="Card de corredor: ${esc(ra.prof)}, Match ${ra.fit}%" src="${a.toDataURL('image/png')}"><img class="cardimg" alt="Card do tênis: ${esc(rb.m.n)}, Match ${rb.fit}%" src="${b.toDataURL('image/png')}">`;
+const toBlob=cv=>new Promise(res=>cv.toBlob(res,'image/png'));
+function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+function showCards(r){
+  const ra=runnerData(r),rb=shoeData(r);
+  Promise.all([drawRunnerCard(ra),drawShoeCard(rb)]).then(([a,b])=>{
+    const o=$('#cardsOut');if(!o)return;o.innerHTML=pairHTML(a,b,ra,rb);
+    $('#dlRunner').onclick=async()=>saveBlob(await toBlob(a),'tenis-match-corredor.png');
+    $('#dlShoe').onclick=async()=>saveBlob(await toBlob(b),'tenis-match-tenis.png');
+    $('#shareCards').onclick=async()=>{const txt=`Meu perfil no Tenis Match: ${ra.prof}. Meu tênis: ${rb.m.n}, Match ${rb.fit}%. E o seu?`;
+      try{const files=[new File([await toBlob(a)],'tenis-match-corredor.png',{type:'image/png'}),new File([await toBlob(b)],'tenis-match-tenis.png',{type:'image/png'})];
+        if(navigator.canShare&&navigator.canShare({files})){await navigator.share({files,text:txt});return}
+        if(navigator.share){await navigator.share({text:txt});return}}catch(e){if(e&&e.name==='AbortError')return}
+      try{await navigator.clipboard.writeText(txt);alert('Texto copiado. Use "Salvar card" para as imagens.')}catch(e){saveBlob(await toBlob(a),'tenis-match-corredor.png')}};
+  }).catch(()=>{const p=$('#cardsOut');if(p)p.closest('.panel').remove()});
+}
+/* cards de exemplo na home, com as respostas do exemplo pronto */
+(function(){const o=$('#cardHome');try{const r=engine(conv(EXAMPLE),true),ra=runnerData(r),rb=shoeData(r);
+  Promise.all([drawRunnerCard(ra),drawShoeCard(rb)]).then(([a,b])=>{o.innerHTML=`<div class="cardpair">${pairHTML(a,b,ra,rb)}</div>`}).catch(()=>o.remove())}catch(e){o&&o.remove()}})();
 
 })();
 </script>
