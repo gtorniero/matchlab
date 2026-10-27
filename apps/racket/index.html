@@ -283,7 +283,8 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .dnagrid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}
 .cardwrap{width:230px;min-height:200px;display:grid;place-items:center}
 .herocard{width:100%;min-height:420px}
-.herocol{display:flex;flex-direction:column;gap:18px;min-width:0}.homecard{min-height:0}.herocard .cardimg{max-width:300px}
+.herocol{display:flex;flex-direction:column;gap:18px;min-width:0}.homecard{min-height:0}
+.cardpair{display:flex;justify-content:center;align-items:flex-start;padding:6px 0 10px}.cardpair .cardimg{width:50%;max-width:220px}.cardpair .cardimg+.cardimg{transform:rotate(3deg) translateY(14px);margin-left:-14px}.herocard .cardimg{max-width:300px}
 @media (max-width:620px){.dnagrid{grid-template-columns:minmax(0,1fr)}.cardwrap{margin:0 auto}}
 @media (max-width:760px){
   .hero,.two,.plans,.mini,.hero-r{grid-template-columns:minmax(0,1fr)}
@@ -1448,7 +1449,7 @@ function renderReport(){
         <p class="eyebrow">Seu DNA de jogo</p><h2>${archetype()}</h2>
         <p class="muted">O card lá em cima está pronto para o story do Instagram ou o status do WhatsApp. Mostra o seu perfil, não a raquete.</p>
         <p style="font-weight:600">E o seu parceiro de quadra, joga como você?</p>
-        <div class="row"><button class="btn btn-go" type="button" id="shareCard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlCard">Salvar imagem</button></div>
+        <div class="row"><button class="btn btn-go" type="button" id="shareCard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlCard">Salvar card do DNA</button>${tier>=2?'<button class="btn btn-ghost" type="button" id="dlRacket">Salvar card da raquete</button>':''}</div>
       </div></div></div>
   <div class="row">${tier>=2?'<button class="btn btn-go" type="button" data-pdf>Baixar relatório em PDF (A4)</button>':''}<button class="btn btn-ghost" type="button" id="again">Refazer o teste</button><button class="btn btn-ghost" type="button" data-save>Salvar resultado</button></div>`;
   $('#report').innerHTML=h;
@@ -1457,7 +1458,7 @@ function renderReport(){
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};
   $('#report').querySelector('[data-save]').onclick=saveBox;
   $('#report').querySelectorAll('[data-pdf]').forEach(b=>b.onclick=()=>downloadPDF(b));
-  $('#dlCard').onclick=downloadCard;$('#shareCard').onclick=shareCard;previewCard();
+  $('#dlCard').onclick=downloadCard;if($('#dlRacket'))$('#dlRacket').onclick=downloadRacketCard;$('#shareCard').onclick=shareCard;previewCard();
   if(tier>=2){const f=()=>renderCmp();$('#cmpA').onchange=f;$('#cmpB').onchange=f;f()}
 }
 const topKeys=()=>KEYS.slice().sort((a,b)=>RES.T[b]-RES.T[a]).slice(0,2);
@@ -1638,6 +1639,15 @@ async function downloadCard(){
     else showCard(cv);
   }finally{btn.disabled=false}
 }
+async function downloadRacketCard(){
+  const btn=$('#dlRacket');btn.disabled=true;
+  try{
+    const cv=await drawRacketCard();const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+    let dl=null;try{dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null}catch(e){}
+    if(dl){try{await dl.save({filename:'racket-match-raquete.png',data:blob});toast('Card salvo')}catch(e){if(e&&e.code!=='declined')showCard(cv)}}
+    else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='racket-match-raquete.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+  }finally{btn.disabled=false}
+}
 async function previewCard(sel='#cardOut'){try{const cv=await drawCard();const o=$(sel);if(o)o.innerHTML=`<img class="cardimg" alt="Card: ${esc(archetype())}" src="${cv.toDataURL('image/png')}">`}catch(e){}}
 async function shareCard(){
   const txt=`Meu DNA de jogo no Racket Match: ${archetype()}. E o seu?`;
@@ -1649,11 +1659,47 @@ async function shareCard(){
 }
 function showCard(cv){$('#cardOut').innerHTML=`<img class="cardimg" alt="Card do DNA de jogo" src="${cv.toDataURL('image/png')}"><p class="note">Toque e segure (ou clique com o botão direito) para salvar a imagem.</p>`}
 
+
+/* card da raquete: verde do Racket, raquete escolhida e o pódio que levou a ela */
+const racketCardData=()=>({r:RES.ranked[0].r,fit:RES.ranked[0].fit,top:RES.ranked.slice(0,3).map(x=>({m:x.r.model,b:x.r.brand,f:x.fit})),n:RK.length});
+function svgImg(svg){return new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)})}
+async function drawRacketCard(d=racketCardData()){
+  try{await document.fonts.ready}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');const INK='#0B2530',PET='#0E4D64';
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#E9F98A');g.addColorStop(.55,'#DDF247');g.addColorStop(1,'#BFD82A');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='rgba(14,77,100,.08)';x.beginPath();x.arc(W-60,560,430,0,Math.PI*2);x.fill();
+  x.fillStyle=PET;x.beginPath();x.arc(W-120,180,70,0,Math.PI*2);x.fill();
+  x.fillStyle=INK;x.font='800 40px Syne, sans-serif';x.fillText('RACKET MATCH',90,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(11,37,48,.65)';x.fillText('A RAQUETE DO MEU JOGO',90,236);
+  const r=d.r;
+  x.fillStyle='rgba(11,37,48,.7)';x.font='700 36px "DM Sans", sans-serif';x.fillText(r.brand.toUpperCase()+(r.year?' · '+r.year:''),90,360);
+  x.fillStyle=INK;x.font='700 104px "DM Sans", sans-serif';const lines=wrapText(x,r.model,640);lines.forEach((l,i)=>x.fillText(l,90,470+i*112));
+  try{const img=await svgImg(hexify(racketSVG(r,'front')).replace('<svg','<svg xmlns="http://www.w3.org/2000/svg" width="240" height="560"'));
+    x.save();x.translate(840,880);x.rotate(.2);x.shadowColor='rgba(11,37,48,.28)';x.shadowBlur=40;x.shadowOffsetY=24;x.drawImage(img,-150,-350,300,700);x.restore()}catch(e){}
+  let y=470+lines.length*112+40;
+  [[r.wt+' g','peso'],[r.head+' pol²','cabeça'],[r.ra+' RA','rigidez'],[r.pat.replace('x','×'),'cordas']].forEach(([v,l])=>{
+    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';const wl=x.measureText(l).width;
+    x.fillStyle=INK;x.beginPath();x.roundRect(90,y,wv+wl+78,72,36);x.fill();
+    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#DDF247';x.fillText(v,118,y+48);
+    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(l,118+wv+22,y+48);y+=92});
+  x.fillStyle=INK;x.font='600 34px "DM Sans", sans-serif';x.fillText(precoTxt(r).replace(' importada',' · importada').replace(/ \(US.*\)/,''),90,y+30);
+  const by=1250,bh=420;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
+  x.fillStyle='#DDF247';x.font='700 30px "DM Sans", sans-serif';x.fillText(`ESCOLHIDA ENTRE ${d.n} RAQUETES`,100,by+70);
+  d.top.forEach((t,i)=>{const yy=by+150+i*100,win=i===0;x.globalAlpha=win?1:.6;
+    x.fillStyle='#FFFFFF';x.font=(win?'700':'500')+' 38px "DM Sans", sans-serif';x.fillText(`${i+1}º  ${t.m}`,100,yy);
+    x.fillStyle='rgba(255,255,255,.15)';x.beginPath();x.roundRect(100,yy+22,W-340,16,8);x.fill();
+    x.fillStyle=win?'#DDF247':'rgba(255,255,255,.55)';x.beginPath();x.roundRect(100,yy+22,(W-340)*t.f/100,16,8);x.fill();
+    x.textAlign='right';x.fillStyle=win?'#DDF247':'#FFFFFF';x.font='700 44px Archivo, sans-serif';x.fillText(t.f+'%',W-100,yy+40);x.textAlign='left';x.globalAlpha=1});
+  x.fillStyle=INK;x.font='800 64px Archivo, sans-serif';x.fillText(`Match ${d.fit}%`,90,H-150);
+  x.fillStyle='rgba(11,37,48,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E a sua? Faça o teste no Racket Match',90,H-80);
+  return cv;
+}
+
 /* ---------- Card de exemplo na home ---------- */
 (function(){try{const keep=JSON.parse(JSON.stringify(A)),keepR=RES,keepZ=ZZ;
-  Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,JSON.parse(JSON.stringify(EXAMPLE)));RES=compute();const d=cardData();
+  Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,JSON.parse(JSON.stringify(EXAMPLE)));RES=compute();const d=cardData(),dr=racketCardData();
   Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,keep);RES=keepR;ZZ=keepZ;
-  drawCard(d).then(cv=>{const o=$('#cardHome');if(o)o.innerHTML=`<img class="cardimg" alt="Exemplo de card: ${esc(d.arch)}" src="${cv.toDataURL('image/png')}">`});
+  Promise.all([drawCard(d),drawRacketCard(dr)]).then(([a,b])=>{const o=$('#cardHome');if(o)o.innerHTML=`<div class="cardpair"><img class="cardimg" alt="Exemplo de card do DNA de jogo: ${esc(d.arch)}" src="${a.toDataURL('image/png')}"><img class="cardimg" alt="Exemplo de card da raquete: ${esc(dr.r.name)}, Match ${dr.fit}%" src="${b.toDataURL('image/png')}"></div>`});
 }catch(e){const o=$('#cardHome');if(o)o.remove()}})();
 
 /* ---------- Hero ---------- */
