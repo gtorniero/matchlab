@@ -61,7 +61,6 @@ b,strong{font-weight:600}
 .hero p.lead{font-size:18px;color:var(--muted);max-width:52ch}
 .court{background:#0E4D64;color:#FFFFFF;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
 .court .mono{color:#DDF247}
-.court .stage{height:260px}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .stat b{display:block;font-family:var(--f-mono);font-size:26px}
 .stat span{font-size:13px;opacity:.85}
@@ -144,22 +143,6 @@ select,input[type=number],input[type=text],input[type=email]{font:inherit;backgr
 .ana li.ok::before{content:"✓ ";color:var(--pri);font-weight:700}
 .bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--pri);width:0;transition:width .3s}
-/* 3D racket */
-.stage{perspective:1100px;height:360px;display:grid;place-items:center;position:relative;touch-action:pan-y;cursor:grab;user-select:none}
-.stage:active{cursor:grabbing}
-.spin3d{position:relative;height:88%;aspect-ratio:240/560;transform-style:preserve-3d;animation:turn 9s ease-in-out infinite alternate;will-change:transform}
-.stage.drag .spin3d{animation:none}
-.layer{position:absolute;inset:0}
-.layer svg{width:100%;height:100%;display:block;overflow:visible}
-.layer.b2{transform:translateZ(-9px);filter:brightness(.42)}
-.layer.b1{transform:translateZ(-4.5px);filter:brightness(.62)}
-.layer.f{transform:translateZ(0)}
-.floor{position:absolute;bottom:2%;left:50%;width:46%;height:16px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(0,0,0,.35),transparent);filter:blur(2px);animation:shadow 9s ease-in-out infinite alternate}
-.stage.drag .floor{animation:none}
-@keyframes turn{from{transform:rotateX(10deg) rotateY(-40deg) rotateZ(-4deg)}to{transform:rotateX(10deg) rotateY(40deg) rotateZ(4deg)}}
-@keyframes shadow{from{width:34%}50%{width:48%}to{width:34%}}
-.stage .hint{position:absolute;bottom:0;right:0;font-size:12px;color:var(--muted)}
-.teaser .spin3d{filter:blur(6px) saturate(.6)}
 /* preview + report */
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .kpi{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:2px}
@@ -256,7 +239,6 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .share small{opacity:.85}
 .mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .mini .panel{gap:10px}
-.mini .stage{height:220px}
 .lock{border:1.5px dashed var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
 .cmpsel{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
 .cmpsel select{width:100%}
@@ -283,7 +265,8 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .dnagrid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}
 .cardwrap{width:230px;min-height:200px;display:grid;place-items:center}
 .herocard{width:100%;min-height:420px}
-.herocol{display:flex;flex-direction:column;gap:18px;min-width:0}.homecard{min-height:0}.herocard .cardimg{max-width:300px}
+.herocol{display:flex;flex-direction:column;gap:18px;min-width:0}.homecard{min-height:0}
+.cardpair{display:flex;justify-content:center;align-items:flex-start;padding:6px 0 10px}.cardpair .cardimg{width:50%;max-width:220px}.cardpair .cardimg+.cardimg{transform:rotate(3deg) translateY(14px);margin-left:-14px}.herocard .cardimg{max-width:300px}
 @media (max-width:620px){.dnagrid{grid-template-columns:minmax(0,1fr)}.cardwrap{margin:0 auto}}
 @media (max-width:760px){
   .hero,.two,.plans,.mini,.hero-r{grid-template-columns:minmax(0,1fr)}
@@ -291,7 +274,6 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
   .kpis{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .cmpsel{grid-template-columns:minmax(0,1fr)}
   .cmpsel .vs{text-align:center}
-  .stage{height:300px}
 }
 @media (max-width:420px){.diffs{grid-template-columns:minmax(0,1fr)}.specs{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 /* duelo */
@@ -326,7 +308,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .dspec td.w{font-weight:700;color:var(--ink)}
 .dspec td{font-family:var(--f-mono)}.dspec td:first-child{font-family:var(--f-body)}
 #duelOut .mini,#cmpOut .mini{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-@media (max-width:560px){#duelOut .stage,#cmpOut .stage{height:200px!important}.drow{grid-template-columns:34px minmax(0,1fr) 92px minmax(0,1fr) 34px;gap:5px}.drow .mid small{display:none}.dsel{grid-template-columns:minmax(0,1fr)}.dsel .vs{text-align:center}}
+@media (max-width:560px){.drow{grid-template-columns:34px minmax(0,1fr) 92px minmax(0,1fr) 34px;gap:5px}.drow .mid small{display:none}.dsel{grid-template-columns:minmax(0,1fr)}.dsel .vs{text-align:center}}
 /* por que é fácil errar */
 .erra{display:flex;flex-direction:column;gap:22px}
 .bignums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
@@ -352,7 +334,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .s6.lk b{filter:blur(5px);user-select:none}
 .s6 i{position:absolute;top:8px;right:8px;width:16px;height:16px;border-radius:50%;background:var(--pri);color:var(--pri-ink);font-style:normal;font-size:11px;display:grid;place-items:center}
 @media (max-width:760px){.bignums{grid-template-columns:minmax(0,1fr)}.mists{grid-template-columns:minmax(0,1fr)}.setup6{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.spin3d{transform:rotateX(10deg) rotateY(-24deg)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 .pdfroot{position:fixed;left:-10000px;top:0;width:794px;color:#0B2530;font-family:'DM Sans',system-ui,sans-serif}
 .pdfroot .pg{width:794px;height:1123px;box-sizing:border-box;padding:40px 46px 34px;background:#fff;position:relative;overflow:hidden;font-size:12.5px;line-height:1.45;color:#0B2530}
 .pdfroot .pg *{box-sizing:border-box}
@@ -363,7 +345,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .pdfroot .st{font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;margin:20px 0 10px!important;letter-spacing:-.01em}
 .pdfroot .small{font-size:10.5px;color:#4A6570;margin:6px 0}
 .pdfroot .ey{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin:0 0 6px;opacity:.8}
-.pdfroot .hero{display:grid;grid-template-columns:1fr 200px;gap:10px;background:#0E4D64;color:#fff;border-radius:18px;padding:26px 28px;height:400px;position:relative;overflow:hidden}
+.pdfroot .hero{display:grid;grid-template-columns:1fr;gap:10px;background:#0E4D64;color:#fff;border-radius:18px;padding:26px 28px;height:400px;position:relative;overflow:hidden}
 .pdfroot .hero:after{content:"";position:absolute;right:-60px;bottom:-80px;width:260px;height:260px;border-radius:50%;background:#DDF247;opacity:.14}
 .pdfroot .hl .hb{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:4px 0 2px;opacity:.75;font-weight:700}
 .pdfroot .hl h1{font-family:'Archivo',sans-serif;font-weight:800;font-size:40px;letter-spacing:-.02em}
@@ -375,8 +357,6 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .pdfroot .hs b small{font-size:34px}
 .pdfroot .hs span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:6px;font-weight:700}
 .pdfroot .hpro{font-size:11px;opacity:.85;margin-top:22px;border-top:1px solid rgba(255,255,255,.25);padding-top:10px}
-.pdfroot .hr{display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
-.pdfroot .hr svg{height:350px;width:auto}
 .pdfroot .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .pdfroot .tile{border:1.5px solid #0B2530;border-radius:12px;padding:10px 12px;min-height:78px;display:flex;flex-direction:column;gap:2px}
 .pdfroot .tile.sg{border-style:dashed;border-color:#4A6570}
@@ -907,7 +887,7 @@ function renderDuel(){
   const a=RK[+$('#dA').value],b=RK[+$('#dB').value];
   if(a.id===b.id){toast('Escolha duas raquetes diferentes');return}
   if(!duelOpen())LS.set('rm_duel_n',String(+(LS.get('rm_duel_n')||0)+1));
-  $('#duelOut').innerHTML=duelHTML(a,b,!!RES);wireStages($('#duelOut'));duelBadge();
+  $('#duelOut').innerHTML=duelHTML(a,b,!!RES);duelBadge();
   if(!duelOpen())$('#duelOut').insertAdjacentHTML('beforeend',`<div class="lock" style="margin-top:14px"><h3>Essa foi a sua comparação grátis</h3><p class="muted">Para comparar outras raquetes: comparador ilimitado por R$ 4,99, ou incluído no relatório completo (R$ 19,99).</p><button class="btn btn-pri" type="button" id="dUnlock">Liberar comparador · R$ 4,99</button></div>`),$('#dUnlock').onclick=()=>pix('cmp');
 }
 $('#duelGo').addEventListener('click',()=>{const pa=RK.find(r=>/^pure aero$/i.test(r.model))||RK[0],pb=RK.find(r=>/^speed mp$/i.test(r.model))||RK[1];fillSel($('#dA'),pa.id);fillSel($('#dB'),pb.id);$('#duelOut').innerHTML='';duelBadge();if(!duelOpen()&&!duelFree())duelLock();document.querySelectorAll('.nRk2').forEach(e=>e.textContent=RK.length);show('duelSec')});
@@ -1045,56 +1025,6 @@ function runAnalysis(){
   RES=compute();tier=0;persist();
   let i=0;const tick=()=>{if(i<lis.length){lis[i].className='ok';i++;$('#abar').style.width=(i/lis.length*100)+'%';setTimeout(tick,reduce?0:380)}else{renderPreview();show('preview')}};
   $('#abar').style.width='0';tick();
-}
-
-/* ---------- Raquete em SVG (geométrica, sem marca) ---------- */
-let uid=0;
-function racketSVG(r,mode){
-  const u='r'+(uid++);const sc=Math.sqrt((r.head||100)/100);
-  const cx=120,ry=104*sc,rx=80*sc,cy=14+ry,top=14,bottom=548,len=r.len||685,mm=(bottom-top)/len;
-  const throatY=cy+ry+ (100-12*(sc-1)*10);
-  const [m,c]=(r.pat||'16x19').split('x').map(Number);
-  const ix=rx-9,iy=ry-9;
-  let strings='';
-  if(mode==='front'){
-    for(let i=0;i<m;i++){const x=cx-ix+(i+.5)*(2*ix/m);strings+=`<line x1="${x.toFixed(1)}" y1="${cy-iy}" x2="${x.toFixed(1)}" y2="${cy+iy}"/>`}
-    for(let j=0;j<c;j++){const y=cy-iy+(j+.5)*(2*iy/c);strings+=`<line x1="${cx-ix}" y1="${y.toFixed(1)}" x2="${cx+ix}" y2="${y.toFixed(1)}"/>`}
-  }
-  const balY=bottom-r.bal*mm;
-  const fr=mode==='front'?`url(#g${u})`:'#0B2530';
-  return `<svg viewBox="0 0 240 560" aria-hidden="true">
-   <defs><linearGradient id="g${u}" x1="0" x2="1"><stop offset="0" stop-color="#0A3A4C"/><stop offset=".45" stop-color="#2A8DAE"/><stop offset=".55" stop-color="#5CC0DE"/><stop offset="1" stop-color="#0A3A4C"/></linearGradient>
-   <linearGradient id="h${u}" x1="0" x2="1"><stop offset="0" stop-color="#1b1b1b"/><stop offset=".5" stop-color="#3a3a3a"/><stop offset="1" stop-color="#151515"/></linearGradient>
-   <radialGradient id="s${u}" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#DDF247" stop-opacity=".55"/><stop offset=".55" stop-color="#DDF247" stop-opacity=".18"/><stop offset="1" stop-color="#DDF247" stop-opacity="0"/></radialGradient><clipPath id="c${u}"><ellipse cx="${cx}" cy="${cy}" rx="${ix}" ry="${iy}"/></clipPath></defs>
-   ${mode==='front'?`<ellipse cx="${cx}" cy="${cy+iy*.08}" rx="${ix*.62*sc}" ry="${iy*.55*sc}" fill="url(#s${u})"/>`:''}
-   ${mode==='front'?`<g clip-path="url(#c${u})" stroke="#F3F6E8" stroke-width="1.1" opacity=".92">${strings}</g>`:''}
-   <ellipse cx="${cx}" cy="${cy}" rx="${rx-4}" ry="${ry-4}" fill="none" stroke="${fr}" stroke-width="10"/>
-   ${mode==='front'?`<ellipse cx="${cx}" cy="${cy}" rx="${rx-4}" ry="${ry-4}" fill="none" stroke="#DDF247" stroke-width="2" stroke-dasharray="60 ${(2*Math.PI*rx)}" stroke-dashoffset="${-0.62*2*Math.PI*rx}"/>`:''}
-   <path d="M${cx-rx*.62} ${cy+ry*.78} Q${cx-14} ${throatY-40} ${cx-10} ${throatY} M${cx+rx*.62} ${cy+ry*.78} Q${cx+14} ${throatY-40} ${cx+10} ${throatY}" fill="none" stroke="${fr}" stroke-width="10" stroke-linecap="round"/>
-   <rect x="${cx-11}" y="${throatY-2}" width="22" height="${400-throatY+4}" rx="5" fill="${fr}"/>
-   <rect x="${cx-13}" y="400" width="26" height="${bottom-400}" rx="6" fill="${mode==='front'?`url(#h${u})`:'#0B2530'}"/>
-   ${mode==='front'?`<g stroke="#000" stroke-opacity=".45" stroke-width="1.2">${Array.from({length:12},(_,i)=>`<line x1="${cx-13}" y1="${408+i*11}" x2="${cx+13}" y2="${400+i*11}"/>`).join('')}</g>
-   <rect x="${cx-15}" y="${bottom-8}" width="30" height="10" rx="4" fill="#DDF247"/>
-   <g><line x1="${cx+20}" y1="${balY}" x2="${cx+44}" y2="${balY}" stroke="#DDF247" stroke-width="2"/><circle cx="${cx}" cy="${balY}" r="5" fill="#DDF247" stroke="#0B2530" stroke-width="2"/><text x="${cx+48}" y="${balY+4}" font-size="13" font-family="DM Sans, sans-serif" fill="currentColor">${r.bal} mm</text></g>`:''}
-  </svg>`;
-}
-function stage(r,opt={}){
-  return `<div class="stage${opt.teaser?' teaser':''}" data-stage style="${opt.h?`height:${opt.h}px`:''}">
-    <div class="spin3d">${['b2','b1','f'].map(l=>`<div class="layer ${l}">${racketSVG(r,l==='f'?'front':'back')}</div>`).join('')}</div>
-    <div class="floor"></div>${opt.hint?'<span class="hint">arraste para girar</span>':''}</div>`;
-}
-function wireStages(root){
-  (root||document).querySelectorAll('[data-stage]').forEach(st=>{
-    if(st.dataset.w||st.classList.contains('teaser'))return;st.dataset.w=1;
-    const sp=st.querySelector('.spin3d');let x0=null,ry=0;
-    st.addEventListener('pointerdown',e=>{x0=e.clientX;st.classList.add('drag');st.setPointerCapture(e.pointerId);sp.style.transform=`rotateX(10deg) rotateY(${ry}deg)`});
-    st.addEventListener('pointermove',e=>{if(x0===null)return;const d=(e.clientX-x0)*.6;sp.style.transform=`rotateX(10deg) rotateY(${cl(ry+d,-75,75)}deg)`});
-    const end=e=>{if(x0===null)return;ry=cl(ry+(e.clientX-x0)*.6,-75,75);x0=null};
-    st.addEventListener('pointerup',end);st.addEventListener('pointercancel',end);
-    st.addEventListener('dblclick',()=>{st.classList.remove('drag');sp.style.transform='';ry=0});
-    st.tabIndex=0;st.setAttribute('role','img');st.setAttribute('aria-label','Raquete em 3D. Use as setas esquerda e direita para girar e Home para voltar à frente.');
-    st.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){ry=cl(ry+(e.key==='ArrowLeft'?-15:15),-75,75);sp.style.transform=`rotateX(10deg) rotateY(${ry}deg)`;e.preventDefault()}if(e.key==='Home'){ry=0;sp.style.transform='';e.preventDefault()}});
-  });
 }
 
 /* ---------- Hexágono 3D ---------- */
@@ -1448,27 +1378,26 @@ function renderReport(){
         <p class="eyebrow">Seu DNA de jogo</p><h2>${archetype()}</h2>
         <p class="muted">O card lá em cima está pronto para o story do Instagram ou o status do WhatsApp. Mostra o seu perfil, não a raquete.</p>
         <p style="font-weight:600">E o seu parceiro de quadra, joga como você?</p>
-        <div class="row"><button class="btn btn-go" type="button" id="shareCard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlCard">Salvar imagem</button></div>
+        <div class="row"><button class="btn btn-go" type="button" id="shareCard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlCard">Salvar card do DNA</button>${tier>=2?'<button class="btn btn-ghost" type="button" id="dlRacket">Salvar card da raquete</button>':''}</div>
       </div></div></div>
   <div class="row">${tier>=2?'<button class="btn btn-go" type="button" data-pdf>Baixar relatório em PDF (A4)</button>':''}<button class="btn btn-ghost" type="button" id="again">Refazer o teste</button><button class="btn btn-ghost" type="button" data-save>Salvar resultado</button></div>`;
   $('#report').innerHTML=h;
-  wireSeg($('#report'));wireStages($('#report'));
+  wireSeg($('#report'));
   const up=$('#up');if(up)up.onclick=()=>pix(2);
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};
   $('#report').querySelector('[data-save]').onclick=saveBox;
   $('#report').querySelectorAll('[data-pdf]').forEach(b=>b.onclick=()=>downloadPDF(b));
-  $('#dlCard').onclick=downloadCard;$('#shareCard').onclick=shareCard;previewCard();
+  $('#dlCard').onclick=downloadCard;if($('#dlRacket'))$('#dlRacket').onclick=downloadRacketCard;$('#shareCard').onclick=shareCard;previewCard();
   if(tier>=2){const f=()=>renderCmp();$('#cmpA').onchange=f;$('#cmpB').onchange=f;f()}
 }
 const topKeys=()=>KEYS.slice().sort((a,b)=>RES.T[b]-RES.T[a]).slice(0,2);
 function optList(sel){const by={};RK.forEach(r=>{(by[r.brand]=by[r.brand]||[]).push(r)});return Object.keys(by).sort().map(b=>`<optgroup label="${esc(b)}">${by[b].map(r=>`<option value="${r.id}"${r.id===sel?' selected':''}>${esc(r.name)}</option>`).join('')}</optgroup>`).join('')}
 function renderCmp(){
-  const a=RK[+$('#cmpA').value],b=RK[+$('#cmpB').value];$('#cmpOut').innerHTML=duelHTML(a,b,true);wireStages($('#cmpOut'));return;const fa=RES.all.find(x=>x.r.id===a.id),fb=RES.all.find(x=>x.r.id===b.id);
+  const a=RK[+$('#cmpA').value],b=RK[+$('#cmpB').value];$('#cmpOut').innerHTML=duelHTML(a,b,true);return;const fa=RES.all.find(x=>x.r.id===a.id),fb=RES.all.find(x=>x.r.id===b.id);
   const rows=feel(b,a);
   $('#cmpOut').innerHTML=`<div class="cmpfit" style="margin-top:6px"><div class="kpi"><b style="color:var(--pri)">${fa.fit}%</b><span>${esc(a.name)}</span></div><div class="kpi"><b style="color:var(--alt)">${fb.fit}%</b><span>${esc(b.name)}</span></div></div>
   <div class="two" style="margin-top:6px"><div>${radar([{name:a.model,v:a.ix,c:'var(--pri)',solid:true},{name:b.model,v:b.ix,c:'var(--alt)',dash:true}])}</div><div>${specBars(a,null,null,b)}</div></div>
   <div class="tbl" style="margin-top:10px"><table><thead><tr><th>Item</th><th>${esc(a.model)}</th><th>${esc(b.model)}</th><th>Saindo da primeira para a segunda</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x[0]}</td><td class="n">${x[1]}</td><td class="n">${x[2]}</td><td>${x[3]}</td></tr>`).join('')}</tbody></table></div>`;
-  wireStages($('#cmpOut'));
 }
 function saveBox(){
   persist();const code=encode({a:A});
@@ -1520,7 +1449,7 @@ function pdfPages(){
      <p class="hp">${precoTxt(r)}${r.usd?'':' novo'}${r.br==='d'?' · difícil de achar no Brasil':r.br==='p'?' · pouca oferta no Brasil':' · fácil de achar no Brasil'}</p>
      <div class="hs"><div><b class="big">${w.fit}<small>%</small></b><span>Match Score</span></div><div><b>${conf}%</b><span>Confiança</span></div><div><b>${ranked[0].fit-ranked[1].fit}</b><span>pts à frente da 2ª</span></div></div>
      ${PROS[r.id]?`<p class="hpro"><span>Quem joga com a linha ${esc(PROS[r.id].l.replace(/^\S+ /,''))}</span>${PROS[r.id].p.slice(0,4).map(p=>`${p[0]?p[0]+' ':''}${esc(p[1])}${p[2]?'*':''}`).join(' · ')}</p>`:''}
-   </div><div class="hr">${racketSVG(r,'front')}</div></div>
+   </div></div>
    <h2 class="st">Seu setup completo</h2>
    <div class="tiles">${tiles.map(([l,v,s],i)=>`<div class="tile${i>1?' sg':''}"><span>${l}${i>1?' · sugestão':''}</span><b>${v}</b><em>${esc(s)}</em></div>`).join('')}</div>
    <div class="cols"><div><h2 class="st">Por que ela</h2><ol class="why">${why(r,c,T).slice(0,4).map(x=>`<li>${x}</li>`).join('')}</ol></div>
@@ -1638,6 +1567,15 @@ async function downloadCard(){
     else showCard(cv);
   }finally{btn.disabled=false}
 }
+async function downloadRacketCard(){
+  const btn=$('#dlRacket');btn.disabled=true;
+  try{
+    const cv=await drawRacketCard();const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+    let dl=null;try{dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null}catch(e){}
+    if(dl){try{await dl.save({filename:'racket-match-raquete.png',data:blob});toast('Card salvo')}catch(e){if(e&&e.code!=='declined')showCard(cv)}}
+    else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='racket-match-raquete.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+  }finally{btn.disabled=false}
+}
 async function previewCard(sel='#cardOut'){try{const cv=await drawCard();const o=$(sel);if(o)o.innerHTML=`<img class="cardimg" alt="Card: ${esc(archetype())}" src="${cv.toDataURL('image/png')}">`}catch(e){}}
 async function shareCard(){
   const txt=`Meu DNA de jogo no Racket Match: ${archetype()}. E o seu?`;
@@ -1649,11 +1587,56 @@ async function shareCard(){
 }
 function showCard(cv){$('#cardOut').innerHTML=`<img class="cardimg" alt="Card do DNA de jogo" src="${cv.toDataURL('image/png')}"><p class="note">Toque e segure (ou clique com o botão direito) para salvar a imagem.</p>`}
 
+
+/* card da raquete: verde do Racket, raquete escolhida e o pódio que levou a ela */
+const racketCardData=()=>({r:RES.ranked[0].r,fit:RES.ranked[0].fit,top:RES.ranked.slice(0,3).map(x=>({m:x.r.model,b:x.r.brand,f:x.fit})),n:RK.length});
+/* logo do Racket Match (o mesmo do topo do app) desenhado no canvas */
+function drawLogo(x,X,Y,S){const k=S/44;x.save();x.translate(X,Y);x.scale(k,k);
+  x.fillStyle='#0E4D64';x.beginPath();x.roundRect(0,0,44,44,10);x.fill();
+  x.save();x.translate(18,26);x.rotate(-32*Math.PI/180);x.fillStyle='#FFFFFF';x.beginPath();x.ellipse(0,0,4,14,0,0,Math.PI*2);x.fill();x.restore();
+  x.fillStyle='#DDF247';x.beginPath();x.arc(29,15,7,0,Math.PI*2);x.fill();x.restore()}
+async function drawRacketCard(d=racketCardData()){
+  try{await document.fonts.ready}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');const INK='#0B2530',PET='#0E4D64';
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#E9F98A');g.addColorStop(.55,'#DDF247');g.addColorStop(1,'#BFD82A');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='rgba(14,77,100,.08)';x.beginPath();x.arc(W-60,560,430,0,Math.PI*2);x.fill();
+  drawLogo(x,90,140,96);
+  x.fillStyle=INK;x.font='800 44px Syne, sans-serif';x.fillText('RACKET MATCH',210,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(11,37,48,.65)';x.fillText('A RAQUETE DO MEU JOGO',210,234);
+  const r=d.r;
+  x.fillStyle='rgba(11,37,48,.7)';x.font='700 36px "DM Sans", sans-serif';x.fillText(r.brand.toUpperCase()+(r.year?' · '+r.year:''),90,360);
+  x.fillStyle=INK;x.font='700 104px "DM Sans", sans-serif';const lines=wrapText(x,r.model,640);lines.forEach((l,i)=>x.fillText(l,90,470+i*112));
+  let y=470+lines.length*112+40;
+  const y0=y;let chipR=0;
+  [[r.wt+' g','peso'],[r.head+' pol²','cabeça'],[r.ra+' RA','rigidez'],[r.pat.replace('x','×'),'cordas']].forEach(([v,l])=>{
+    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';const w=wv+x.measureText(l).width+78;chipR=Math.max(chipR,90+w);
+    x.fillStyle=INK;x.beginPath();x.roundRect(90,y,w,72,36);x.fill();
+    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#DDF247';x.fillText(v,118,y+48);
+    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(l,118+wv+22,y+48);y+=92});
+  /* Match grande à direita das specs, na fonte do Racket Match, no tamanho que couber */
+  const room=W-80-(chipR+50),num=String(d.fit),F=f=>`800 ${f}px Syne, sans-serif`;
+  let fs=280;x.font=F(fs);let wn=x.measureText(num).width;x.font=F(fs*.42);let wp=x.measureText('%').width;
+  if(wn+wp+8>room){fs=Math.floor(fs*room/(wn+wp+8));x.font=F(fs);wn=x.measureText(num).width;x.font=F(fs*.42);wp=x.measureText('%').width}
+  const base=y0+215+fs*.3,xr=W-80;x.fillStyle=INK;x.textAlign='right';
+  x.font=F(fs*.42);x.fillText('%',xr,base-fs*.33);x.font=F(fs);x.fillText(num,xr-wp-8,base);
+  x.fillStyle='rgba(11,37,48,.7)';x.font='700 34px "DM Sans", sans-serif';x.fillText('MATCH',xr-wp-12,base-fs*.78);x.textAlign='left';
+  x.fillStyle=INK;x.font='600 34px "DM Sans", sans-serif';x.fillText(precoTxt(r).replace(' importada',' · importada').replace(/ \(US.*\)/,''),90,y+30);
+  const by=Math.max(1250,y+150),bh=440;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
+  x.fillStyle='#DDF247';x.font='700 30px "DM Sans", sans-serif';x.fillText(`ESCOLHIDA ENTRE ${d.n} RAQUETES`,100,by+70);
+  d.top.forEach((t,i)=>{const yy=by+150+i*100,win=i===0;x.globalAlpha=win?1:.6;
+    x.fillStyle='#FFFFFF';x.font=(win?'700':'500')+' 38px "DM Sans", sans-serif';x.fillText(`${i+1}º  ${t.m}`,100,yy);
+    x.fillStyle='rgba(255,255,255,.15)';x.beginPath();x.roundRect(100,yy+22,W-340,16,8);x.fill();
+    x.fillStyle=win?'#DDF247':'rgba(255,255,255,.55)';x.beginPath();x.roundRect(100,yy+22,(W-340)*t.f/100,16,8);x.fill();
+    x.textAlign='right';x.fillStyle=win?'#DDF247':'#FFFFFF';x.font='700 44px Archivo, sans-serif';x.fillText(t.f+'%',W-100,yy+40);x.textAlign='left';x.globalAlpha=1});
+  x.fillStyle='rgba(11,37,48,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E a sua? Faça o teste no Racket Match',90,Math.min(H-60,by+bh+100));
+  return cv;
+}
+
 /* ---------- Card de exemplo na home ---------- */
 (function(){try{const keep=JSON.parse(JSON.stringify(A)),keepR=RES,keepZ=ZZ;
-  Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,JSON.parse(JSON.stringify(EXAMPLE)));RES=compute();const d=cardData();
+  Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,JSON.parse(JSON.stringify(EXAMPLE)));RES=compute();const d=cardData(),dr=racketCardData();
   Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,keep);RES=keepR;ZZ=keepZ;
-  drawCard(d).then(cv=>{const o=$('#cardHome');if(o)o.innerHTML=`<img class="cardimg" alt="Exemplo de card: ${esc(d.arch)}" src="${cv.toDataURL('image/png')}">`});
+  Promise.all([drawCard(d),drawRacketCard(dr)]).then(([a,b])=>{const o=$('#cardHome');if(o)o.innerHTML=`<div class="cardpair"><img class="cardimg" alt="Exemplo de card do DNA de jogo: ${esc(d.arch)}" src="${a.toDataURL('image/png')}"><img class="cardimg" alt="Exemplo de card da raquete: ${esc(dr.r.name)}, Match ${dr.fit}%" src="${b.toDataURL('image/png')}"></div>`});
 }catch(e){const o=$('#cardHome');if(o)o.remove()}})();
 
 /* ---------- Hero ---------- */
