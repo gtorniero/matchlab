@@ -896,7 +896,7 @@ function atualT(r){
   const row=(l,f)=>`<tr><td>${l}</td><td class="n">${f(c)}</td><td class="n">${f(m)}</td></tr>`;
   return `<div class="panel"><div><h3>Seu tênis atual × o recomendado</h3><p class="muted" style="font-size:14px">O que muda saindo do ${esc(modelOf(c))} para o ${esc(modelOf(m))}.</p></div>
   <div class="two"><div>${VZ.hex(SX,[{name:modelOf(c)+' (atual)',v:ic,c:'var(--clay)',dash:1},{name:modelOf(m),v:im,c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}</div>
-  <div style="display:flex;flex-direction:column;gap:14px;min-width:0"><div class="tbl"><table style="min-width:0"><thead><tr><th></th><th>Atual</th><th>Recomendado</th></tr></thead><tbody>
+  <div style="display:flex;flex-direction:column;gap:14px;min-width:0"><div class="tbl"><table style="min-width:0"><thead><tr><th><span class="a11y-sr">Característica</span></th><th>Atual</th><th>Recomendado</th></tr></thead><tbody>
   ${row('Fit Score',x=>(x===c?cur.fit:w.fit)+'%')}${row('Preço',x=>priceTxt(x).replace(' (aprox.)',''))}${row('Peso',x=>x.g+' g')}${row('Espuma',x=>stackOf(x)+' / '+foreOf(x)+' mm')}${row('Drop',x=>dec1(x.dr)+' mm')}${row('Durabilidade',x=>x.du+' km')}${row('Custo por km',x=>kmCost(x).replace(' por km',''))}</tbody></table></div>
   ${out.length?`<ul class="why">${out.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</div></div></div>`;
 }
