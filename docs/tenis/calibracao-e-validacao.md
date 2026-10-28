@@ -1,5 +1,33 @@
 # Tenis Match — calibração e validação com reviews (out/2026)
 
+## Rodada 4: gráficos e ranking coerentes (28/out/2026)
+Mesma checagem feita no Racket Match (PR #20): o relatório mostra uma meta e o 1º lugar a contradiz?
+
+**Onde o Tenis podia se contradizer:**
+1. **Categoria ideal.** A prévia diz "Categoria ideal: X" e o relatório diz "apontam para a categoria X", mas o motor deixava a 2ª categoria a 2 ou 4 pontos da 1ª. No exemplo pronto, o texto falava em máximo amortecimento e o 1º era um treino diário (Corre 5).
+2. **Hexágono "O que você precisa".** A linha laranja mostrava a resposta pedida sem o teto que o motor usa (resposta até 6 fora das categorias de velocidade, Rodada 3). O relatório marcava "Resposta um pouco abaixo do ideal" num tênis que o motor escolheu de propósito por não precisar de mais resposta.
+
+Simulação com 500 perfis aleatórios (todas as respostas sorteadas, mesma semente). "Zona" = categoria ideal com preço até 8% acima do teto do orçamento.
+
+| Versão | 1º na categoria ideal | 1º dentro da zona | Fora da zona havendo tênis dentro | Acima do orçamento (+8%) | Tênis diferentes em 1º | Ultraboost 5 em 1º |
+|---|---|---|---|---|---|---|
+| Antes | 78% | 71% | 54 (11%) | 40 | 75 | 17 |
+| ±4 no Match só pela categoria, sem olhar preço | 93% | — | — | 68 | 73 | 42 |
+| ±4 no Match pela zona (categoria + orçamento) | 87% | 80% | 10 (2%) | 39 | 73 | 40 |
+| **Publicado: ±4 pela zona, ±2 em categoria com menos de 10 modelos** | **85%** | **78%** | **20 (4%)** | **39** | **75** | **31** |
+
+- Só a categoria (2ª linha) empurrava o 1º para fora do orçamento (40 → 68 perfis). Por isso a zona inclui o preço.
+- A versão com ±4 em tudo trazia de volta o monopólio do Ultraboost 5 em conforto e uso misto (5 modelos), o problema que a Rodada 3 tinha resolvido. Em categoria pequena o bônus cai para ±2.
+- Hexágono desenhado com a meta do motor: 1º com algum índice "um pouco abaixo do ideal" caiu de 311 para 205 perfis (62% → 41%). O que sobra é quase todo amortecimento (115 perfis), uma troca real que o chip vermelho já mostra.
+- Marcas em 1º (antes → depois): adidas 122 → 134, ASICS 66 → 67, Mizuno 62 → 62, Olympikus 61 → 57, Hoka 62 → 55, New Balance 42 → 43, Brooks 37 → 34, Nike 23 → 24, Puma 15 → 15, On 8 → 7.
+- Exemplo pronto: o 1º passa de Olympikus Corre 5 (treino diário) para Olympikus Corre Max 2 (máximo amortecimento), coerente com o texto. Custo: fôrma padrão para quem tem pé largo e specs só da ficha; os dois aparecem no relatório.
+
+**Regra no motor:**
+- `ZONA = 2` no placar (±4 no Match): tênis na categoria ideal e com preço até 8% acima do orçamento soma; o resto perde. Em categoria com menos de 10 modelos, metade (`ZONA_PEQ`).
+- O hexágono e os chips usam a meta que o motor usa (`r.ID`), não a meta crua das respostas.
+- Quando o 1º ainda fica fora da zona (112 de 500 perfis, 92 deles sem nenhum tênis na zona, por exemplo estabilidade com orçamento até R$ 700), o relatório diz em "Pontos de atenção": "Fica fora da sua categoria ideal (X, até R$ Y): é da categoria Z. O melhor dentro dela, W, ficou N pontos atrás (motivo)." O motivo é o fator em que o tênis da zona mais perdeu para o 1º; sem tênis na zona, diz que nenhum cabe no orçamento.
+- Nenhum texto com "NaN" ou "undefined" nos 500 perfis.
+
 ## Rodada 3: viés de marca (25/out/2026)
 - Teste com 40 perfis realistas (6 a 8 por objetivo, orçamentos de até R$ 400 a acima de R$ 1.500) e 5.000 perfis sorteados com todas as respostas.
 - **Vieses encontrados:** (1) etiqueta "não indicado" tirava 4 pontos por etiqueta, e marcas com mais reviews (Nike, ASICS) acumulam mais etiquetas; "não indicado para ritmo" punia até tênis de amortecimento; (2) pouca review era vantagem (Fila, Olympikus); (3) qualquer preço dentro do orçamento ganhava o mesmo bônus; (4) categoria com poucos modelos virava monopólio (Ultraboost 5 em "dia a dia"); (5) "prioridade conforto" somava maciez mesmo para quem prefere firme (prejudicava a On); (6) o motor pedia resposta de supertênis para quem prefere firme.

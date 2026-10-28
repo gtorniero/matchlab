@@ -105,6 +105,13 @@ select,input[type=number]{font:inherit;background:var(--bg);color:var(--ink);bor
 .plan .price{font-family:var(--f-mono);font-size:30px;font-weight:700}
 .plan ul{margin:0;padding-left:18px;color:var(--muted);font-size:15px;display:flex;flex-direction:column;gap:4px}
 .plan .btn{margin-top:auto}
+/* prévia: top 3 borrado + relatório borrado no topo, com o botão de desbloqueio */
+.hook{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:28px;align-items:center}
+.rpeek{margin:0;position:relative;height:380px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.rpeek img{width:100%;display:block;filter:blur(3.5px) saturate(.9);transform:scale(1.04);transform-origin:top center}
+.rpeek::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,var(--bg) 100%)}
+.rpeek figcaption{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:1;background:#0E4D64;color:#FFFFFF;font-weight:700;font-size:14px;padding:8px 14px;border-radius:99px;white-space:nowrap}
+@media (max-width:760px){.hook{grid-template-columns:minmax(0,1fr)}.rpeek{height:260px}}
 .note{font-size:13px;color:var(--muted)}
 .winner{border:2px solid var(--pri)}
 .whead{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end}
@@ -533,6 +540,8 @@ const PODIO_FORA=['Fila'];
 // marcas do quadro "o melhor de cada marca" (as preferidas da pessoa entram também)
 const MARCAS=['adidas','ASICS','Hoka','Mizuno','New Balance','Nike','Olympikus','On','Puma'];
 const FICHA=1.2;
+// categoria que as respostas apontam: dentro dela o tênis soma ZONA no motor (+4 no Match); na 2ª categoria, ZONA a menos (−4)
+const ZONA=2,ZONA_PEQ=0.5;
 const BUD=[[0,400],[400,700],[700,1000],[1000,1500],[1500,99999]];
 const PROF=['Primeiros Quilômetros','Corredor em Construção','Corredor Constante','Corredor de Prova','Corredor de Alta Quilometragem'];
 /* traços do corredor e usos pedidos, no mesmo vocabulário das reviews */
@@ -582,31 +591,36 @@ function engine(a,long){
   if(!fast)ID[1]=Math.min(ID[1],6);
   const [bmin,bmax]=BUD[orc];
   const pi=g('pisada',3);
-  const sm=(m,relax)=>{
-    let s=m.c===c1?10:m.c===c2?w2:relax?2:-99;
-    if(m.p>bmax*1.08)s-=6+(m.p-bmax)/150;else if(m.p>bmax)s-=0.5;else s+=1.5-(prior===3?0:Math.min(2,Math.max(0,bmin-m.p)/200));
-    s-=Math.abs(m.mz-[4.5,3.5,2.3][sens])*0.7;
+  // zona: a categoria ideal dentro do orçamento; em categoria com poucos modelos o bônus cai pela metade (não vira monopólio)
+  const inZ=m=>m.c===c1&&m.p<=bmax*1.08,zc=w2===8?ZONA*ZONA_PEQ:ZONA;
+  // C (opcional) guarda quanto cada fator somou ou tirou, para o relatório explicar diferenças
+  const sm=(m,relax,C)=>{
+    let s=0;const ad=(k,v)=>{s+=v;if(C)C[k]=(C[k]||0)+v};
+    // categoria: dentro da zona (categoria que suas respostas apontam e preço até 8% acima do orçamento) soma ZONA; fora, tira ZONA
+    ad('cat',(m.c===c1?10:m.c===c2?w2:relax?2:-99)+(inZ(m)?zc:-zc));
+    if(m.p>bmax*1.08)ad('orc',-(6+(m.p-bmax)/150));else if(m.p>bmax)ad('orc',-0.5);else ad('orc',1.5-(prior===3?0:Math.min(2,Math.max(0,bmin-m.p)/200)));
+    ad('sens',-Math.abs(m.mz-[4.5,3.5,2.3][sens])*0.7);
     // specs técnicas: falta do que você precisa pesa mais que sobra
-    const iv=idx(m);for(let i=0;i<4;i++){const d=iv[i]-ID[i];s-=d<0?-d*(i===2?lw:0.45):d*0.12}
-    if(heavy&&m.mz>=4)s+=1.2;if(heavy&&m.g<215)s-=1;
-    if(g('largura',1)===2&&m.lg)s+=2;if(g('largura',1)===2&&!m.lg)s-=0.6;
-    if(prior===1)s+=(m.du-550)/120;if(prior===2)s+=(260-m.g)/25;if(prior===3)s+=(700-m.p)/350;if(prior===0&&sens!==2)s+=(m.mz-3)*0.6;
-    if(dor===4&&m.mz>=5)s-=1.5;
-    if(pi===0&&m.dr<7)s-=1.2;if(pi===2&&m.dr>=10)s-=0.8;
-    if(dor===6&&m.dr<7)s-=1.5;
-    if(g('neutro',0)===1)s+=(m.es-3)*0.8;
+    const iv=idx(m);for(let i=0;i<4;i++){const d=iv[i]-ID[i];ad('s'+i,d<0?d*(i===2?lw:0.45):-d*0.12)}
+    if(heavy&&m.mz>=4)ad('peso',1.2);if(heavy&&m.g<215)ad('peso',-1);
+    if(g('largura',1)===2&&m.lg)ad('larg',2);if(g('largura',1)===2&&!m.lg)ad('larg',-0.6);
+    if(prior===1)ad('prior',(m.du-550)/120);if(prior===2)ad('prior',(260-m.g)/25);if(prior===3)ad('prior',(700-m.p)/350);if(prior===0&&sens!==2)ad('prior',(m.mz-3)*0.6);
+    if(dor===4&&m.mz>=5)ad('dor',-1.5);
+    if(pi===0&&m.dr<7)ad('drop',-1.2);if(pi===2&&m.dr>=10)ad('drop',-0.8);
+    if(dor===6&&m.dr<7)ad('dor',-1.5);
+    if(g('neutro',0)===1)ad('est',(m.es-3)*0.8);
     // consenso das reviews
-    const uh=W.filter(w=>m.u.includes(w)).length;s+=Math.min(2.4,uh*1.2)-(uh?0:1);
+    const uh=W.filter(w=>m.u.includes(w)).length;ad('uso',Math.min(2.4,uh*1.2)-(uh?0:1));
     // "não indicado" vem de 2+ reviews: com muitas reviews, 2 citações pesam um pouco menos
-    const nr=m.np+m.nc,bad=m.nn.filter(t=>T.has(t)).reduce((q,t)=>q+(t==='rap'&&!fast?0.35:1),0);s-=Math.min(7,bad*(3+Math.min(1,3/Math.max(1,nr))));
-    s+=Math.min(1.6,m.o.filter(t=>T.has(t)).length*0.8);
+    const nr=m.np+m.nc,bad=m.nn.filter(t=>T.has(t)).reduce((q,t)=>q+(t==='rap'&&!fast?0.35:1),0);ad('nao',-Math.min(7,bad*(3+Math.min(1,3/Math.max(1,nr)))));
+    ad('perfil',Math.min(1.6,m.o.filter(t=>T.has(t)).length*0.8));
     // nota das reviews puxada para a média quando há pouca evidência
-    const ne=m.np+m.nc*.35;s+=(m.sc-3.8)*1.8*ne/(ne+4);
-    if(m.ap)s-=0.6;
+    const ne=m.np+m.nc*.35;ad('nota',(m.sc-3.8)*1.8*ne/(ne+4));
+    if(m.ap)ad('ap',-0.6);
     // specs só de ficha são menos confiáveis que as medidas em laboratório
-    if(m.fi)s-=FICHA;
-    if(!m.br)s-=3;
-    s-=0.45*(4-Math.min(4,m.np));
+    if(m.fi)ad('fi',-FICHA);
+    if(!m.br)ad('br',-3);
+    ad('np',-0.45*(4-Math.min(4,m.np)));
     return s;
   };
   let ranked=M.map(m=>({m,s:sm(m)})).filter(x=>x.s>-50).sort((p,q)=>q.s-p.s);
@@ -631,7 +645,8 @@ function engine(a,long){
   let last=99;const top10=ranked.slice(0,10).map((x,i)=>{const f=i<3?fins[i].fit:Math.min(last,Math.round(Math.max(50,96-i*2-(t0-x.s)*2)));last=f;return i<3?fins[i]:{m:x.m,s:x.s,fit:f}});
   const byBrand=b=>M.filter(m=>m.b===b&&m.br).map(m=>({m,s:sm(m,1)})).sort((p,q)=>q.s-p.s).slice(0,3).map(x=>({m:x.m,s:x.s,fit:fitOf(x.s)}));
   const cm=a.atual&&M.find(m=>m.n===a.atual);const atual=cm?{m:cm,fit:fins.some(f=>f.m===cm)?fins.find(f=>f.m===cm).fit:Math.round(Math.max(20,Math.min(97,96-(t0-sm(cm,1))*2)))}:null;
-  return {top10,byBrand,pref,brands,level,c1,c2,fins,second,atual,conf:Math.round(conf),long,a,peso,tkPerfil,T,W};
+  const parts=m=>{const C={};sm(m,1,C);return C};
+  return {top10,byBrand,pref,brands,level,c1,c2,fins,second,atual,conf:Math.round(conf),long,a,peso,tkPerfil,T,W,ID,ranked,parts,fitOf,inZ,bmax};
 }
 
 const BRANDS=[...new Set(M.map(m=>m.b))].sort((a,b)=>M.filter(m=>m.b===b).length-M.filter(m=>m.b===a).length||a.localeCompare(b));
@@ -654,7 +669,7 @@ function idealVec(a){const g=(k,d)=>a[k]===undefined?d:a[k];const pz=+(g('peso',
   const dur=cl10(4+g('km',1)*1.2+(g('prior',0)===1?2:0));
   const cus=cl10(4+(4-g('orc',1))*1.1+(g('prior',0)===3?2:0));
   return [amort,resp,leve,est,dur,cus]}
-function factors(r){const a=r.a,m=r.fins[0].m,out=[];const iv=idx(m),id=idealVec(a);
+function factors(r){const a=r.a,m=r.fins[0].m,out=[];const iv=idx(m),id=r.ID;
   SX.forEach((k,i)=>{const d=iv[i]-id[i];if(id[i]>=6.5&&d>=-0.5)out.push(['+',k+' alto, como você precisa']);else if(id[i]>=6.5&&d<-1.5)out.push(['−',k+' um pouco abaixo do ideal'])});
   const B=BUD[a.orc===undefined?1:a.orc];out.push(m.p<=B[1]?['+','Dentro do orçamento']:['−','Acima do orçamento']);
   if(a.largura===2)out.push(m.lg?['+','Fôrma larga']:['−','Fôrma padrão; prove antes']);
@@ -817,10 +832,27 @@ const brl=n=>'R$ '+Math.round(n).toLocaleString('pt-BR');
 /* ---------- prévia ---------- */
 function renderPreview(){
   const r=RES,C=CAT[r.c1];
+  // seções do relatório pago (as mesmas que renderReport monta)
+  const nSec=8+(r.atual?1:0)+(r.second?1:0);
   $('#preview').innerHTML=`
   <div class="panel">
-    <p class="eyebrow">Análise concluída</p>
-    <h2>Encontramos 3 tênis que combinam com a sua corrida.</h2>
+    <div class="hook">
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <p class="eyebrow">Análise concluída</p>
+        <h2>Encontramos os 3 tênis que mais combinam com a sua corrida.</h2>
+        <div class="fin">${r.fins.map((x,i)=>`
+        <div class="finrow"><span class="pos">${i+1}º</span>
+          <div><span class="blur" aria-label="Modelo oculto até o desbloqueio">${x.m.n.replace(/[^ ]/g,'X')}</span><div class="meter"><i style="width:${x.fit}%"></i></div></div>
+          <span class="pct">${x.fit}%</span></div>`).join('')}
+        </div>
+        <button class="btn btn-go" type="button" data-buy style="width:100%">Revelar meus tênis · R$ 9,99</button>
+        <p class="note" style="margin:0">Pagamento único via Pix (simulação). O relatório abre na hora, na tela.</p>
+      </div>
+      <figure class="rpeek"><img src="../../assets/reports/tenis.webp" alt="Prévia borrada de um relatório completo do Tenis Match" loading="lazy"><figcaption>Relatório completo · ${nSec} seções</figcaption></figure>
+    </div>
+  </div>
+  <div class="panel">
+    <p class="eyebrow">O que está por trás</p>
     <div class="kpis">
       <div class="kpi"><b>${M.length}</b><span>modelos avaliados</span></div>
       <div class="kpi"><b>${r.conf}%</b><span>confiança do resultado</span></div>
@@ -829,12 +861,7 @@ function renderPreview(){
   </div>
   <div class="two">
     <div class="panel">
-      <h3>Seus 3 finalistas</h3>
-      <div class="fin">${r.fins.map((x,i)=>`
-        <div class="finrow"><span class="pos">${i+1}º</span>
-          <div><span class="blur" aria-label="Modelo oculto até o desbloqueio">${x.m.n.replace(/[^ ]/g,'X')}</span><div class="meter"><i style="width:${x.fit}%"></i></div></div>
-          <span class="pct">${x.fit}%</span></div>`).join('')}
-      </div>
+      <h3>Sua categoria</h3>
       <div class="arm"><b>${brl(C.tk)}</b><div><strong>Categoria ideal: ${C.n}</strong><p class="muted" style="font-size:14px">${C.d} Faixa de ${C.f}.</p></div></div>
     </div>
     <div class="panel">
@@ -852,13 +879,13 @@ function renderPreview(){
       <div class="plan best">
         <h3>Relatório completo</h3><span class="price">R$ 9,99</span>
         <ul><li>Seu tênis ideal com Fit Score e ficha técnica</li><li>Por que combina com você e pontos de atenção</li><li>Tamanho e data de troca</li><li>Comparação com o seu tênis atual</li><li>2º e 3º lugares, com marca e modelo</li><li>Seu top 10 com match, marca e preço</li><li>Top 3 geral ou top 3 da sua marca, lado a lado</li><li>O melhor tênis de cada marca para você</li><li>Segundo par para rodízio</li><li>Dicas para pagar menos</li></ul>
-        <button class="btn btn-go" type="button" id="buy">Pagar com Pix (simulação)</button>
+        <button class="btn btn-go" type="button" id="buy" data-buy>Pagar com Pix (simulação)</button>
       </div>
     </div>
     <p class="note">O cálculo já foi feito: o pagamento só revela o resultado. Se houver link de compra, ele aparece depois, e a recomendação não muda por isso.</p>
     <div class="row"><button class="btn btn-ghost" type="button" id="redo">Refazer respostas</button></div>
   </div>`;
-  $('#buy').onclick=()=>{renderReport();show('report')};
+  document.querySelectorAll('#preview [data-buy]').forEach(b=>b.onclick=()=>{renderReport();show('report')});
   $('#redo').onclick=()=>{step=0;show('quiz');renderQs()};
   drawRunnerCard(runnerData(r)).then(cv=>{const o=$('#cardPrev');if(o)o.innerHTML=`<img class="cardimg" style="margin:0 auto;max-width:260px" alt="Seu card de corredor: ${esc(PROF[r.level])}" src="${cv.toDataURL('image/png')}">`}).catch(()=>{});
 }
@@ -897,8 +924,32 @@ function whyT(r){
   out.push(`${priceTxt(f)}, ${f.p<=BUD[a.orc===undefined?1:a.orc][1]?'dentro':'um pouco acima'} do seu orçamento.`);
   return out;
 }
+// quando o 1º fica fora da zona (categoria ideal dentro do orçamento), diz por quê e qual o melhor dentro dela
+function zoneT(r){
+  const w=r.fins[0],f=w.m,c=CAT[r.c1].n.toLowerCase(),cap=r.bmax<99999;
+  if(r.inZ(f))return '';
+  const zona=`${c}${cap?', até '+brl(r.bmax):''}`;
+  const fora=[f.c!==r.c1?`é da categoria ${CAT[f.c].n.toLowerCase()}`:'',f.p>r.bmax*1.08?`custa ${priceTxt(f).replace(' (aprox.)','')}, acima do seu orçamento`:''].filter(Boolean).join(' e ');
+  const b=r.ranked.find(x=>r.inZ(x.m)&&x.m!==f&&!PODIO_FORA.includes(x.m.b));
+  if(!b)return `Fica fora da sua categoria ideal (${zona}): ${fora}. Nenhum tênis de ${c} do catálogo ${cap?'cabe no seu orçamento':'combina com o seu perfil'}, por isso o 1º vem da categoria mais próxima.`;
+  const t=r.top10.find(x=>x.m===b.m),bf=t?t.fit:Math.min(r.fitOf(b.s),r.top10[r.top10.length-1].fit),gap=Math.max(1,w.fit-bf);
+  const pw=r.parts(f),pb=r.parts(b.m),bi=idx(b.m);
+  const dv=k=>(pw[k]||0)-(pb[k]||0),k=[...new Set([...Object.keys(pw),...Object.keys(pb)])].filter(k=>k!=='cat').sort((x,y)=>dv(y)-dv(x))[0];
+  const SL=['amortecimento','resposta','leveza','estabilidade'];
+  const L={orc:b.m.p>r.bmax?`custa ${priceTxt(b.m).replace(' (aprox.)','')}, perto do teto do seu orçamento`:b.m.p<BUD[r.a.orc===undefined?1:r.a.orc][0]?'fica abaixo da faixa de preço que você escolheu':'o preço encaixa pior no seu orçamento',
+    sens:'a maciez fica longe da sensação que você prefere',peso:'espuma ou peso menos indicados para o seu peso',larg:'fôrma justa para o seu pé largo',
+    prior:['é menos macio, e conforto é a sua prioridade','dura menos, e durabilidade é a sua prioridade','é mais pesado, e leveza é a sua prioridade','é mais caro, e preço é a sua prioridade'][r.a.prior===undefined?0:r.a.prior],
+    dor:'é menos indicado para a dor que você relatou',drop:'o drop combina menos com a sua pisada',est:'é menos estável, e você relatou desconforto com tênis neutro',
+    uso:'as reviews não citam o uso que você quer',nao:'as reviews não o indicam para o seu perfil',perfil:'as reviews o indicam menos para o seu perfil',
+    nota:'tem nota mais baixa nas reviews',ap:'o preço é só estimado',fi:'as specs são só da ficha da marca, sem laboratório',br:'não é vendido no Brasil',np:'tem poucas reviews profissionais'};
+  const i=k&&k[0]==='s'?+k[1]:-1;
+  const why=i>=0?(bi[i]<r.ID[i]?(i===2?'é mais pesado do que você precisa':`tem menos ${SL[i]} do que você precisa`):`tem ${SL[i]} além do que você precisa`):L[k];
+  const lost=k&&dv(k)>0.3;
+  return `Fica fora da sua categoria ideal (${zona}): ${fora}. O melhor dentro dela, ${b.m.n}, ficou ${gap} ${gap===1?'ponto':'pontos'} atrás${lost&&why?` (${why})`:' (soma de pequenas diferenças)'}.`;
+}
 function attT(r){
   const a=r.a,f=r.fins[0].m,out=[];
+  const z=zoneT(r);if(z)out.push(z);
   if(a.dor>0)out.push('Você relatou dor. Tênis ajuda no conforto, mas dor persistente pede avaliação de um profissional.');
   if(f.c==='sup')out.push('Supertênis dura menos (350 a 450 km) e não serve como único par: use em prova e treinos-chave.');
   if(f.dr<7)out.push(`Drop baixo (${dec1(f.dr)} mm): se o seu atual é mais alto, faça a transição aos poucos.`);
@@ -940,7 +991,7 @@ function renderReport(){
     <div class="vhead"><div><h3>Ficha de laboratório</h3><p class="muted" style="font-size:14px">Seis índices de 0 a 10. No hexágono, a linha laranja é o que suas respostas pedem; nas barras, o tênis contra a média da categoria e os ${M.length} modelos do catálogo.</p></div>
       <div class="seg" role="group" aria-label="Formato dos índices"><button type="button" data-i="hex" aria-pressed="true">Hexágono</button><button type="button" data-i="bar" aria-pressed="false">Barras</button></div></div>
     <div style="max-width:560px;width:100%;margin:0 auto">
-      <div id="ihex">${VZ.hex(SX,[{name:'O que você precisa',v:idealVec(a),c:'var(--ball)',dash:1},{name:modelOf(m),v:idx(m),c:'var(--pri)',fill:'var(--pri)',fo:.18,dots:1}])}</div>
+      <div id="ihex">${VZ.hex(SX,[{name:'O que você precisa',v:r.ID,c:'var(--ball)',dash:1},{name:modelOf(m),v:idx(m),c:'var(--pri)',fill:'var(--pri)',fo:.18,dots:1}])}</div>
       <div id="ibar">${VZ.bars(m)}</div>
     </div>
   </div>`;
