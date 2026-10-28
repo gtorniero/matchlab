@@ -25,6 +25,7 @@ Leia `docs/padrao-relatorio-pdf.md` e a pasta `docs/<app>/` do seu app antes de 
 - Quando mudar número de perguntas, tamanho de catálogo ou preço de um app, atualize os `facts` desse app em `index.html` no mesmo pull request.
 - Identidade: marca-mãe MATCH LAB em preto e sóbria; cor só nos apps (Racket #DDF247, Board #6CCFF6, Tenis #FF8A3D, base azul-petróleo #0E4D64). Títulos em Archivo, texto em DM Sans, logos em Syne. Footer com assinatura "Um projeto Beyond the Work".
 - Textos em português do Brasil, diretos, sem jargão. Nenhuma marca paga para aparecer no resultado; afiliado só depois da recomendação e declarado.
+- Acessibilidade WCAG 2.2 AA é requisito: siga `docs/acessibilidade.md` e rode o axe antes de abrir o pull request (meta: zero violações).
 - Pagamento ainda é simulado. Especificações de catálogo são aproximadas até a revisão por professores.
 
 ## Testar
