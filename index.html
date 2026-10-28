@@ -411,7 +411,7 @@ const AREAS = {
     h1:`A raquete certa para o seu jogo e para o seu <span class="hl">braço</span>.`,
     lede:"Peso, balanço, swingweight, rigidez, cabeça e padrão de cordas. O teste cruza suas respostas com a ficha técnica de cada raquete e mostra a análise inteira antes de você pagar.",
     quiz:"apps/racket/index.html",
-    facts:[["58","raquetes no catálogo"],["30 a 35","perguntas"],["R$ 19,90","relatório"]],
+    facts:[["58","raquetes no catálogo"],["28 a 33","perguntas"],["R$ 19,99","relatório"]],
     vin:["Idade e força","Dor no braço","Medida da mão","Nível e frequência","Estilo, topspin e swing","Onde você erra","Raquete atual e sensação","Orçamento e corda"],
     vout:["Peso","Balanço","Swingweight","Rigidez (RA)","Cabeça","Padrão","Corda e tensão","Grip"],
     inside:[["Raquete ideal com Fit Score","Marca, modelo e as seis especificações que importam."],["Índice Braço Seguro","Rigidez e peso avaliados contra o cotovelo de tenista."],["Comparação com a sua raquete","A diferença traduzida em sensação: mais solta, mais macia."],["Corda, tensão e grip","Para a nova raquete e para a que você já tem."]],
@@ -422,7 +422,7 @@ const AREAS = {
     h1:`A prancha certa para o seu surf e para o seu <span class="hl">mar</span>.`,
     lede:"Tipo, medidas, litragem, rabeta, fundo, rocker e quilhas, calculados pelo seu peso, pelo que você já faz na onda e pelo seu pico. Recomendamos tudo, menos marca e shaper.",
     quiz:"apps/board/index.html",
-    facts:[["13","tipos de prancha"],["20 a 25","perguntas"],["R$ 19,99","relatório"]],
+    facts:[["13","tipos de prancha"],["18 a 23","perguntas"],["R$ 19,99","relatório"]],
     vin:["Peso, altura e idade","Tempo e frequência de surf","O que já faz na onda","Estilo","Flutuação preferida","Tamanho e força da onda","Papel no quiver","Prancha atual"],
     vout:["Tipo de shape","Comprimento","Largura e espessura","Litragem","Rabeta e bordas","Fundo e rocker","Quilhas","Construção"],
     inside:[["Tipo de prancha com Fit Score","O shape que combina com seu estilo e seu nível."],["Medidas e litragem","Comprimento, largura, espessura e litros calculados para você."],["Deck e fundo desenhados","Rabeta, quilhas, fundo e construção no desenho da prancha."],["Guia para a loja ou o shaper","Faixas aceitáveis para comprar nova, usada ou sob medida."]],
@@ -433,10 +433,10 @@ const AREAS = {
     h1:`O tênis de corrida certo para o seu corpo e o seu <span class="hl">treino</span>.`,
     lede:"Espuma, drop, altura, forma, durabilidade e custo por km, cruzados com seu peso, seu ritmo e seus km por semana. Sem mito da pisada: neutro por padrão.",
     quiz:"apps/tenis/index.html",
-    facts:[["216","tênis de 14 marcas"],["18","perguntas"],["R$ 9,99","relatório"]],
+    facts:[["212","tênis de 13 marcas"],["19","perguntas"],["R$ 9,99","relatório"]],
     vin:["Peso e largura do pé","Dor ao correr","Km por semana e ritmo","Terreno","Objetivo e prova","Treino de tiro","Sensação preferida","Orçamento"],
     vout:["Categoria","Altura de espuma","Drop","Peso","Durabilidade","Custo por km","Quando trocar","Segundo par"],
-    inside:[["Tênis ideal com Fit Score","Modelo, preço médio no Brasil e ficha técnica."],["Perfil lateral desenhado","Altura de espuma, drop e placa à vista."],["Quando trocar","A data de troca pela sua quilometragem semanal."],["Segundo par e custo por km","Rodízio e os finalistas lado a lado."]],
+    inside:[["Tênis ideal com Fit Score","Modelo, preço médio no Brasil e ficha técnica."],["Ficha de laboratório","Peso, espuma e drop medidos, e seis índices contra a média do catálogo."],["Quando trocar","A data de troca pela sua quilometragem semanal."],["Segundo par e custo por km","Rodízio e os finalistas lado a lado."]],
     price:[["R$ 9,99","Relatório completo"]],
     gloss:[["Drop","Diferença de altura entre calcanhar e antepé, em mm."],["Stack","Altura total de espuma sob o pé."],["PEBA","Espuma leve e muito responsiva, comum em tênis de prova."],["Placa de carbono","Lâmina rígida na entressola que muda a mecânica da passada."],["Rocker","Curvatura da sola que ajuda a rolar do apoio à impulsão."],["Cabedal","A parte de cima do tênis, que segura o pé."]]}
 };
@@ -452,7 +452,7 @@ const appLockup = (k,s=34) => `${ICON[k](s)}<span class="wm"><span class="wordma
 document.getElementById("brandHome").innerHTML = labLockup(34);
 document.getElementById("footBrand").innerHTML = labLockup(28);
 document.getElementById("nav").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${ICON[k](24)}${AREAS[k].name}</a>`).join("") + `<span class="sep" aria-hidden="true"></span><a href="#blog" data-go="blog">Blog</a><a href="#conceito" data-go="conceito">Como funciona</a>`;
-document.getElementById("footLinks").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${AREAS[k].name}</a>`).join("") + `<a href="#blog" data-go="blog">Blog</a><a href="ferramentas/litragem/index.html">Calculadora de litragem</a>`;
+document.getElementById("footLinks").innerHTML = ORDER.map(k=>`<a href="#${k}" data-go="${k}">${AREAS[k].name}</a>`).join("") + `<a href="#blog" data-go="blog">Blog</a><a href="ferramentas/litragem/index.html">Calculadora de litragem</a><a href="#privacidade" data-go="privacidade">Privacidade e afiliados</a>`;
 
 const REPORT_DESC={
   racket:"Exemplo de relatório do Racket Match: raquete recomendada Wilson Clash 100 v3, Match Score de 86%. Setup em seis decisões: cabeça de 100 polegadas quadradas com padrão 16x19, grip L3, corda híbrida de 1,25 mm e tensão de 46 a 48 libras. Especificações: 295 g sem corda, balanço de 310 mm, swingweight 311 e rigidez de 54 RA. Inclui a raquete em 3D, o motivo de cada escolha e a comparação com a raquete atual.",
@@ -481,7 +481,7 @@ let heroK = "racket";
 const MODEL_TXT={
   racket:"a raquete ideal com Match Score, o setup em seis decisões, a raquete em 3D, o perfil de jogo no hexágono e a comparação com a sua raquete atual.",
   board:"o tipo de prancha com o percentual de combinação, o desenho da prancha, as medidas e a litragem, os motivos em cards e a comparação com a sua prancha atual.",
-  tenis:"o tênis ideal com Fit Score e preço médio, a ficha técnica, o tênis em 3D, os prós e contras das reviews e a data de troca pela sua quilometragem."};
+  tenis:"o tênis ideal com Fit Score e preço médio, a ficha técnica, os prós e contras das reviews e a data de troca pela sua quilometragem."};
 function modelSec(){
   const a=AREAS[heroK];
   return `<div class="model ${a.cls}">
@@ -679,6 +679,42 @@ function article(id){
 }
 
 /* ---------- ROUTER ---------- */
+function privacy(){
+  return `<article class="article"><div class="wrap">
+    <nav class="crumbs" aria-label="Você está em"><a href="#inicio" data-go="inicio">Início</a><span>/</span><span>Privacidade e afiliados</span></nav>
+    <header class="art-head"><h1>Privacidade e afiliados</h1><p class="dek">O que o MATCH LAB guarda, o que não guarda e como funcionam os links de loja.</p><div class="by"><span>Atualizado em outubro de 2026</span></div></header>
+    <div class="prose">
+      <h2>Quem somos</h2>
+      <p>O MATCH LAB é um projeto da Beyond the Work com três testes de equipamento: Racket Match (raquete de tênis), Board Match (prancha de surf) e Tenis Match (tênis de corrida).</p>
+      <h2>Suas respostas</h2>
+      <ul>
+        <li>As respostas dos testes são processadas no seu próprio navegador. Não temos conta de usuário nem banco de dados com elas.</li>
+        <li>O Racket Match guarda no seu navegador o último resultado e o que você liberou, para você voltar depois. Para apagar, limpe os dados do site no navegador.</li>
+        <li>Não usamos ferramentas de análise de tráfego nem anúncios.</li>
+      </ul>
+      <h2>Contato e e-mail</h2>
+      <ul>
+        <li>Os campos de e-mail do Racket Match não enviam nem guardam nada nesta versão.</li>
+        <li>No Board Match, o resumo para o coach só sai se você mesmo mandar, pelo WhatsApp ou pelo Instagram, depois de autorizar.</li>
+      </ul>
+      <h2>Pagamento</h2>
+      <p>O pagamento ainda é uma simulação: nenhum valor é cobrado. Quando o pagamento real entrar, esta página vai dizer quem processa os dados.</p>
+      <h2>Serviços de terceiros</h2>
+      <p>Para carregar fontes e algumas bibliotecas, o navegador acessa o Google Fonts e o cdnjs (Cloudflare). Esses serviços podem registrar o endereço IP de quem acessa, como qualquer site.</p>
+      <h2>Links de afiliado</h2>
+      <ul>
+        <li>Nenhuma marca ou loja paga para aparecer no resultado. O ranking é calculado antes e sem olhar para comissão.</li>
+        <li>Alguns links de compra podem ser de afiliado, por exemplo pela rede Awin. Se você comprar por eles, a loja pode nos pagar uma comissão, sem custo extra para você.</li>
+        <li>Links de afiliado aparecem só depois da recomendação e são marcados como tal.</li>
+        <li>Fotos de produto, quando houver, têm crédito da marca ou da loja.</li>
+      </ul>
+      <h2>Saúde</h2>
+      <p>O conteúdo é educativo. Em caso de dor ou lesão, procure um profissional de saúde.</p>
+      <h2>Fale com a gente</h2>
+      <p>Dúvidas ou pedidos sobre seus dados: <a href="https://github.com/gtorniero/matchlab/issues" target="_blank" rel="noopener">abra uma mensagem aqui</a>.</p>
+    </div>
+  </div></article>`;
+}
 const LEGACY = {raquete:"racket", prancha:"board", biblioteca:"blog"};
 function setNav(view){
   const k = view.startsWith("a-") ? DATA2KEY[view.slice(2).split("-")[0]] : view;
@@ -693,12 +729,13 @@ function render(view){
   else if(AREAS[view]){ hubFilter="todos"; curHub=view; html = hub(view); after=()=>fillHub(view); }
   else if(view==="blog"){ html = library(); after=fillLib; }
   else if(view.startsWith("a-")){ html = article(view.slice(2)); }
+  else if(view==="privacidade"){ html = privacy(); }
   if(!html){ view="inicio"; html=home(); }
   app.innerHTML = html; if(after) after();
   setNav(view);
   document.getElementById("nav").classList.remove("open");
   document.getElementById("menuBtn").setAttribute("aria-expanded","false");
-  const t = view.startsWith("a-") ? (A.find(y=>y.id===view.slice(2))||{}).title : view==="blog" ? "Blog" : (AREAS[view]||{}).name;
+  const t = view==="privacidade" ? "Privacidade e afiliados" : view.startsWith("a-") ? (A.find(y=>y.id===view.slice(2))||{}).title : view==="blog" ? "Blog" : (AREAS[view]||{}).name;
   document.title = t ? t + " · MATCH LAB" : "MATCH LAB";
   if(view==="conceito"){ requestAnimationFrame(()=>document.getElementById("conceito").scrollIntoView()); }
   else window.scrollTo(0,0);
