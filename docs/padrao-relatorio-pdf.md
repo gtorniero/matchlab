@@ -1,6 +1,6 @@
 # Padrão de relatório pago — Match Lab (default desde 23/out/2026)
 
-Vale para Racket Match e serve de modelo para Board Match e Tenis Match.
+Vale para Racket Match, Board Match e Tenis Match (PDF de 5 páginas no Tenis desde 28/out/2026; sem atletas nem trechos de review com fonte, que o catálogo ainda não tem).
 
 **Formato:** PDF A4 baixado pelo próprio app (botão "Baixar relatório em PDF (A4)" no topo e no fim do relatório pago). Gerado em alta resolução (html2canvas + jsPDF), ~2 MB, sempre em tema claro e com a identidade do app.
 
