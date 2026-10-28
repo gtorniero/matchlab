@@ -265,6 +265,12 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .dnagrid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}
 .cardwrap{width:230px;min-height:200px;display:grid;place-items:center}
 .herocard{width:100%;min-height:420px}
+.hook{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:28px;align-items:center}
+.rpeek{margin:0;position:relative;height:380px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.rpeek img{width:100%;display:block;filter:blur(3.5px) saturate(.9);transform:scale(1.04);transform-origin:top center}
+.rpeek::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,var(--bg) 100%)}
+.rpeek figcaption{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:1;background:#0E4D64;color:#FFFFFF;font-weight:700;font-size:14px;padding:8px 14px;border-radius:99px;white-space:nowrap}
+@media (max-width:760px){.hook{grid-template-columns:minmax(0,1fr)}.rpeek{height:260px}}
 .herocol{display:flex;flex-direction:column;gap:18px;min-width:0}.homecard{min-height:0}
 .cardpair{display:flex;justify-content:center;align-items:flex-start;padding:6px 0 10px}.cardpair .cardimg{width:50%;max-width:220px}.cardpair .cardimg+.cardimg{transform:rotate(3deg) translateY(14px);margin-left:-14px}.herocard .cardimg{max-width:300px}
 @media (max-width:620px){.dnagrid{grid-template-columns:minmax(0,1fr)}.cardwrap{margin:0 auto}}
@@ -706,7 +712,6 @@ const Q=[
  {s:0,id:'dom',t:'Mão dominante',o:[['L','Canhoto'],['R','Destro']]},
  {s:0,id:'str',t:'E a sua força, comparada a quem joga com você?',o:[['low','Abaixo da média','Em bola pesada, o golpe sai atrasado e sem peso'],['mid','Na média','Aguenta a troca de bola, mas nem sempre consegue acelerar'],['high','Acima da média','Gera velocidade sem esforço, até em posição difícil'],['vhigh','Muito acima','Faz academia com frequência ou tem força de sobra']]},
  {s:0,id:'cond',t:'Como está o seu fôlego em quadra?',o:[['0','Perco rendimento cedo','No meio do jogo os golpes já perdem força'],['1','Termino, mas no limite','O fim da partida é bem pior que o começo'],['2','Jogo a partida toda bem','Canso no fim, como todo mundo, sem mudar o jogo'],['3','Sobra gás','Jogaria outra partida em seguida no mesmo nível']]},
- {s:0,id:'hand',type:'number',t:'Medida da mão (opcional)',h:'Em cm, da linha do meio da palma até a ponta do dedo anelar. Usamos para indicar o '+'<button type="button" class="gl" data-g="grip">grip</button>.',min:9,max:13,step:.1,opt:true},
  {s:1,id:'arm',t:'Você sente dor no braço quando joga?',h:'Cotovelo, ombro ou punho.',o:[['no','Nunca tive'],['past','Já tive, hoje não'],['now','Tenho hoje']]},
  {s:1,id:'joint',multi:3,if:()=>A.arm&&A.arm!=='no',t:'Onde dói ou doía?',h:'Marque todas que se aplicam. Cada articulação pede um ajuste diferente.',o:[['elbow','Cotovelo','Vibração e rigidez pesam mais'],['shoulder','Ombro','Peso e swingweight pesam mais'],['wrist','Punho','Balanço e torção pesam mais']]},
  {s:1,id:'pain',if:()=>A.arm&&A.arm!=='no',t:'Qual a intensidade da dor?',o:[['1','Leve','Incômodo depois de jogar'],['2','Moderada','Dói durante o jogo'],['3','Forte','Dói em golpes específicos ou no dia a dia']]},
@@ -723,7 +728,8 @@ const Q=[
  {s:3,id:'miss',t:'Onde você mais erra?',o:[['short','Bola curta, sem peso'],['long','Bola longa, para fora'],['net','Na rede'],['frame','Pego fora do centro','A raquete torce na mão']]},
  {s:4,id:'cur',type:'select',t:'Qual a sua raquete atual?',h:'Se não estiver na lista, escolha "Outra". Com ela, fazemos o diagnóstico da sua raquete.'},
  {s:4,id:'curAge',if:()=>A.cur&&A.cur!=='none',t:'Há quanto tempo você usa essa raquete?',o:[['0','Menos de 1 ano'],['1','1 a 3 anos'],['3','Mais de 3 anos']]},
- {s:4,id:'grip',t:'Qual o grip (cabo) da sua raquete?',h:'Vem escrito na base do cabo: L1 a L5 ou 4 1/8 a 4 5/8.',o:[['1','L1','4 1/8'],['2','L2','4 1/4'],['3','L3','4 3/8'],['4','L4','4 1/2'],['5','L5','4 5/8']],opt:true},
+ {s:4,id:'hand',type:'number',t:'Medida da mão (opcional)',h:'Se souber: em cm, da linha do meio da palma até a ponta do dedo anelar. Usamos para indicar o '+'<button type="button" class="gl" data-g="grip">grip</button>. Se não souber, pule.',min:9,max:13,step:.1,opt:true},
+ {s:4,id:'grip',t:'Qual o grip (cabo) da sua raquete?',h:'Vem escrito na base do cabo: L1 a L5 ou 4 1/8 a 4 5/8.',o:[['1','L1','4 1/8'],['2','L2','4 1/4'],['3','L3','4 3/8'],['4','L4','4 1/2'],['5','L5','4 5/8'],['0','Não sei']],opt:true},
  {s:4,id:'feel',if:()=>A.cur!=='none',t:'Como você sente sua raquete hoje?',o:[['light','Leve demais','Treme contra bola pesada'],['ok','No ponto'],['heavy','Pesada demais','Cansa ou chega atrasado']]},
  {s:4,id:'why',t:'Por que você quer trocar?',o:[['broken','Quebrou ou está velha','Quero algo parecido, só que melhor'],['pain','Dor no braço','Prioridade é proteger o braço'],['level','Subi de nível','A atual ficou limitada'],['feel','Quero outra sensação','Mais potência, controle ou spin'],['first','É a minha primeira raquete boa']]},
  {s:4,id:'want',multi:2,t:'O que você quer ganhar com a troca?',h:'Escolha até 2.',o:[['power','Mais potência'],['control','Mais controle'],['comfort','Mais conforto'],['spin','Mais spin'],['maneuver','Mais leveza na mão'],['stability','Mais estabilidade']]},
@@ -737,7 +743,7 @@ const Q=[
 const A={};
 let step=0;
 const vis=q=>!q.if||q.if();
-const EXAMPLE={imp:'yes',age:'38',height:'178',weight:'78',dom:'R',cond:'2',str:'mid',arm:'past',joint:['elbow'],pain:'2',lim:'1',hand:'11.1',lvl:'int',years:'3',freq:'2',style:['agg','all'],spin:'mid',swing:'mid',bh:'two',serve:'flat',opp:'mix',miss:'short',cur:'',curAge:'3',grip:'3',feel:'heavy',why:'pain',headp:'100',want:['comfort','power'],string:'poly',tens:'54',restr:'6m',budget:'2200'};
+const EXAMPLE={imp:'no',age:'38',height:'178',weight:'78',dom:'R',cond:'2',str:'mid',arm:'past',joint:['elbow'],pain:'2',lim:'1',hand:'11.1',lvl:'int',years:'3',freq:'2',style:['agg','all'],spin:'mid',swing:'mid',bh:'two',serve:'flat',opp:'mix',miss:'short',cur:'',curAge:'3',grip:'3',feel:'heavy',why:'pain',headp:'100',want:['comfort','power'],string:'poly',tens:'54',restr:'6m',budget:'2200'};
 (function(){const sp=RK.find(r=>/speed pro/i.test(r.model));EXAMPLE.cur=sp?String(sp.id):'other'})();
 $('#nRk').textContent=RK.length;
 $('#nQ').textContent=Q.filter(q=>!q.if).length+' a '+Q.length;
@@ -961,9 +967,9 @@ function penalties(r,c,tw){
   const want=A.want||[];const out=[];let p=0;const add=(v,why)=>{if(v>0){p+=v;out.push([v,why])}};
   const armOk=A.arm!=='no'&&r.ix.arm>=8&&r.wt>tw;
   const dd=Math.abs(r.wt-tw),hv=r.wt>tw;
-  if(dd>8)add(hv&&dd>15?(dd-8)*.7:(dd-8)/(armOk&&dd<=15?6:3),dd>15?`Peso de ${r.wt} g, longe do ideal para você (${tw} g): ${dd} g ${hv?'acima':'abaixo'}`:`${hv?'Mais pesada':'Mais leve'} que o ideal: ${r.wt} g para ${tw} g`);
-  if(ZZ&&r.sw>ZZ.sw[1]+2)add((r.sw-ZZ.sw[1]-2)*(J('wrist')||J('shoulder')?.9:.6),`Swingweight ${r.sw}: mais massa no golpe do que o seu braço acelera bem (até ${ZZ.sw[1]})`);
-  if(ZZ&&r.sw<ZZ.sw[0]-6)add((ZZ.sw[0]-6-r.sw)*.4,`Swingweight ${r.sw}: leve demais para a estabilidade que você precisa`);
+  if(dd>8)add(Math.max(hv&&dd>15?(dd-8)*.7:(dd-8)/(armOk&&dd<=15?6:3),(dd-8)*1.2),dd>15?`Peso de ${r.wt} g, longe do ideal para você (${tw} g): ${dd} g ${hv?'acima':'abaixo'}`:`${hv?'Mais pesada':'Mais leve'} que o ideal: ${r.wt} g para ${tw} g`);
+  if(ZZ&&r.sw>ZZ.sw[1])add((r.sw-ZZ.sw[1])*1.2,`Swingweight ${r.sw}: mais massa no golpe do que o seu braço acelera bem (até ${ZZ.sw[1]})`);
+  if(ZZ&&r.sw<ZZ.sw[0])add((ZZ.sw[0]-r.sw)*1.2,`Swingweight ${r.sw}: leve demais para a estabilidade que você precisa`);
   {const el=J('elbow')||!(A.joint||[]).length,lim=el?62:65;if(A.arm==='now'&&r.ra>lim)add((r.ra-lim)*(J('elbow')?2.2:el?1.8:1.2),`Rigidez ${r.ra} RA alta para quem tem dor hoje`)}
   if(A.arm==='past'&&r.ra>66)add((r.ra-66)*1.6,`Rigidez ${r.ra} RA acima do limite para quem já teve dor`);
   if(A.arm!=='no'&&(A.pain==='3'||A.lim==='3')&&r.ra>60)add((r.ra-60)*1.5,`Rigidez ${r.ra} RA alta para dor forte`);
@@ -1000,13 +1006,15 @@ function score(r,T,tw,c){
   return {pen:pen.out,dist:d,p:pen.p,qb:q,qa};
 }
 let RES=null,tier=0,ZZ=null;
+const inZone=r=>!!ZZ&&r.wt>=ZZ.wt[0]&&r.wt<=ZZ.wt[1]&&r.sw>=ZZ.sw[0]&&r.sw<=ZZ.sw[1];
 function compute(){
   const T=target(),tw=targetWeight(),c=curRacket();ZZ=zones(T,tw);
   const all=RK.map(r=>({r,...score(r,T,tw,c)}));
   /* escala relativa: a mais próxima do seu perfil fica perto de 95; cada décimo de distância a mais custa ~1 ponto */
   const dbest=Math.min(...all.filter(x=>!c||x.r.id!==c.id).map(x=>x.dist));
   /* aprovação dos testadores desempata entre as que já encaixam no seu perfil; não puxa raquete distante para o topo */
-  all.forEach(x=>{const g=cl(1-(x.dist-dbest)/1.2,0,1);x.fit=cl(Math.round(93-11*(x.dist-dbest)-3*Math.max(0,dbest-1.3)-x.p*.8+x.qb+x.qa*g),30,98)});
+  /* peso e swingweight dentro da zona do mapa contam a favor; fora dela, contra (o mapa e o ranking dizem a mesma coisa) */
+  all.forEach(x=>{const g=cl(1-(x.dist-dbest)/1.2,0,1);x.inZ=inZone(x.r);x.fit=cl(Math.round(93-11*(x.dist-dbest)-3*Math.max(0,dbest-1.3)-x.p*.8+x.qb+x.qa*g+(x.inZ?4:-4)),30,98)});
   const ranked=all.filter(x=>!c||x.r.id!==c.id).sort((a,b)=>b.fit-a.fit);
   const curFit=c?all.find(x=>x.r.id===c.id):null;
   if(curFit){const seen=new Set();curFit.pen=curFit.pen.filter(p=>{if(/sua atual|à sua atual|no Brasil/.test(p[1])||p[0]<1)return false;const k=p[1].split(' ')[0];if(seen.has(k))return false;seen.add(k);return true})}
@@ -1133,10 +1141,25 @@ function diagnosis(){
 function renderPreview(){
   const {ranked,conf,T,curFit,c}=RES;const top=ranked.slice(0,3);
   const BB=`<div class="backbar"><button class="btn btn-ghost btn-sm" type="button" data-back="quiz">← Voltar às respostas</button><button class="btn btn-ghost btn-sm" type="button" data-back="landing">Início</button></div>`;
-  $('#preview').innerHTML=BB+painNote()+diagnosis()+`
+  $('#preview').innerHTML=BB+painNote()+`
   <div class="panel">
-    <p class="eyebrow">Análise concluída</p>
-    <h2>Encontramos 3 raquetes que combinam com o seu jogo.</h2>
+    <div class="hook">
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <p class="eyebrow">Análise concluída</p>
+        <h2>Encontramos as 3 raquetes que mais combinam com o seu jogo.</h2>
+        <div class="fin">${top.map((x,i)=>`
+        <div class="finrow"><span class="pos">${i+1}º</span>
+          <div><span class="blur" aria-label="Modelo oculto até o desbloqueio">${x.r.brand.replace(/./g,'X')} ${x.r.model.replace(/[^ ]/g,'X')}</span><div class="meter"><i style="width:${x.fit}%"></i></div></div>
+          <span class="pct">${x.fit}%</span></div>`).join('')}
+      </div>
+        <button class="btn btn-go" type="button" data-buy="2" style="width:100%">Revelar minhas raquetes · R$ 19,99</button>
+        <p class="note" style="margin:0">Pagamento único via Pix. O relatório sai na hora, também em PDF.</p>
+      </div>
+      <figure class="rpeek"><img src="../../assets/reports/racket.webp" alt="Prévia borrada de um relatório completo do Racket Match" loading="lazy"><figcaption>Relatório completo · 5 páginas em PDF</figcaption></figure>
+    </div>
+  </div>
+  <div class="panel">
+    <p class="eyebrow">O que está por trás</p>
     <div class="kpis">
       <div class="kpi"><b>${fmt(NVAR*RK.length)}</b><span>cruzamentos: ${NVAR} variáveis × ${RK.length} raquetes</span></div>
       <div class="kpi"><b>${top[0].r.nrev||'—'}</b><span>avaliações de testadores por trás da 1ª</span></div>
@@ -1146,12 +1169,7 @@ function renderPreview(){
   </div>
   <div class="two">
     <div class="panel">
-      <h3>Suas 3 finalistas</h3>
-      <div class="fin">${top.map((x,i)=>`
-        <div class="finrow"><span class="pos">${i+1}º</span>
-          <div><span class="blur" aria-label="Modelo oculto até o desbloqueio">${x.r.brand.replace(/./g,'X')} ${x.r.model.replace(/[^ ]/g,'X')}</span><div class="meter"><i style="width:${x.fit}%"></i></div></div>
-          <span class="pct">${x.fit}%</span></div>`).join('')}
-      </div>
+      <h3>A 1ª colocada e o seu braço</h3>
       <div class="arm">${gauge(top[0].r.ix.arm)}<div><strong>Braço Seguro do 1º lugar: ${dec(top[0].r.ix.arm)}</strong><p class="muted" style="font-size:14px">${armTxt(top[0].r.ix.arm)}, numa escala de 0 a 10.</p></div></div>
     </div>
     <div class="panel">
@@ -1164,6 +1182,7 @@ function renderPreview(){
       <div style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow">Seu DNA de jogo</p><h3>${esc(archetype())}</h3><p class="muted">O card com o seu perfil já está pronto. A raquete, a marca e a ficha técnica aparecem no desbloqueio.</p></div>
     </div>
   </div>
+  ${diagnosis()}
   <div class="panel">
     <div class="single">
       <p class="eyebrow">Um relatório, tudo incluído</p>
@@ -1222,8 +1241,15 @@ function pix(t){
   $('#pxCp').onclick=async()=>{try{await navigator.clipboard.writeText(code);toast('Código Pix copiado')}catch(e){$('#pxC').select();toast('Selecione e copie o código')}};
   $('#pxOk').onclick=()=>{
     $('#pxBody').innerHTML=`<div class="status" style="justify-content:center;padding:28px 0"><span class="pulse"></span><span>Confirmando com o banco…</span></div>`;
-    setTimeout(()=>{$('#pxBody').innerHTML=`<div class="okbig">✓</div><h3 style="text-align:center">Pagamento confirmado</h3><p class="muted" style="text-align:center">${isCmp?'Comparador liberado.':'Seu relatório está liberado.'}</p>`;
-      setTimeout(()=>{closeModal();if(isCmp){cmpPaid=true;LS.set('rm_cmp','1');renderDuel();return}tier=Math.max(tier,t);persist();renderReport();show('report')},900)},1100);
+    setTimeout(()=>{
+      if(isCmp){$('#pxBody').innerHTML=`<div class="okbig">✓</div><h3 style="text-align:center">Pagamento confirmado</h3><p class="muted" style="text-align:center">Comparador liberado.</p>`;
+        setTimeout(()=>{closeModal();cmpPaid=true;LS.set('rm_cmp','1');renderDuel()},900);return}
+      tier=Math.max(tier,t);persist();renderReport();show('report');
+      $('#pxBody').innerHTML=`<div class="okbig">✓</div><h3 style="text-align:center">Pagamento confirmado</h3><p class="muted" style="text-align:center">Seu relatório está liberado.</p>
+        <button class="btn btn-go" type="button" id="pxPdf" style="width:100%;margin-top:14px">Baixar relatório em PDF (A4)</button>
+        <button class="btn btn-ghost" type="button" id="pxSee" style="width:100%;margin-top:8px">Ver relatório na tela</button>`;
+      $('#pxPdf').onclick=async()=>{await downloadPDF($('#pxPdf'));closeModal()};$('#pxSee').onclick=closeModal;$('#pxPdf').focus();
+    },1100);
   };
   $('#pxOk').focus();
 }
@@ -1232,14 +1258,15 @@ function pix(t){
 function gripSize(){
   const h=parseFloat(String(A.hand||'').replace(',','.'));
   if(h>=9&&h<=13){const g=h<10.65?1:h<10.95?2:h<11.25?3:h<11.55?4:5;return {g,src:`pela medida da mão (${dec(h)} cm)`}}
-  if(A.grip)return {g:+A.grip,src:'mantendo o grip da sua raquete atual'};
+  if(A.grip&&A.grip!=='0')return {g:+A.grip,src:'mantendo o grip da sua raquete atual'};
   return null;
 }
 function why(r,c,T){
   const out=[];const ranked=KEYS.map(k=>({k,d:Math.abs(r.ix[k]-T[k]),t:T[k]})).filter(x=>x.t>=6).sort((a,b)=>a.d-b.d);
   ranked.slice(0,2).forEach(x=>out.push(`${LBL[x.k]} ${dec(r.ix[x.k])} para um alvo de ${dec(x.t)}: o índice que o seu jogo mais pede.`));
   if(A.arm!=='no')out.push(`Rigidez de ${r.ra} RA${r.ra<=63?': quadro flexível, menos vibração chegando ao '+(J('elbow')?'cotovelo':'braço'):': dentro do limite para quem já teve dor'}.${r.tech?` Tem tecnologia de conforto (${r.tech}).`:''}`);
-  if(Math.abs(r.wt-RES.tw)<=8)out.push(`${r.wt} g sem corda, perto dos ${RES.tw} g calculados para sua força e seu nível.`);
+  if(inZone(r))out.push(`${r.wt} g e swingweight ${r.sw}: dentro da sua zona no mapa do catálogo.`);
+  else if(Math.abs(r.wt-RES.tw)<=8)out.push(`${r.wt} g sem corda, perto dos ${RES.tw} g calculados para sua força e seu nível.`);
   if(c&&r.sw<c.sw-3)out.push(`Swingweight ${r.sw} contra ${c.sw} da sua atual: mais fácil de acelerar e de chegar a tempo na bola.`);
   if(A.bh==='one'&&r.sw>=315)out.push(`Swingweight ${r.sw}: massa suficiente para o backhand de uma mão atravessar a bola.`);
   else if(A.spin==='high'&&OPEN[r.pat]>=1)out.push(`Padrão ${r.pat.replace('x','×')} aberto: a corda morde mais a bola para o topspin.`);
@@ -1248,6 +1275,9 @@ function why(r,c,T){
 }
 function attention(r){
   const out=[];
+  if(!inZone(r)){const z=ZZ,fora=[r.wt<z.wt[0]||r.wt>z.wt[1]?`peso ${r.wt} g (zona ${z.wt[0]}–${z.wt[1]})`:'',r.sw<z.sw[0]||r.sw>z.sw[1]?`swingweight ${r.sw} (zona ${z.sw[0]}–${z.sw[1]})`:''].filter(Boolean).join(' e ');
+    const b=RES.ranked.find(x=>inZone(x.r)&&x.r.id!==r.id);
+    out.push(`Fica fora da sua zona no mapa: ${fora}. ${b?`A melhor dentro da zona, ${b.r.name}, ficou ${RES.ranked[0].fit-b.fit} pontos atrás${b.pen&&b.pen[0]?` (${b.pen[0][1].charAt(0).toLowerCase()+b.pen[0][1].slice(1)})`:''}.`:'Nenhuma raquete do catálogo cai dentro dela para o seu perfil.'}`)}
   {const d=r.wt-RES.tw;if(Math.abs(d)>=6&&Math.abs(d)<=8)out.push(`Um pouco ${d>0?'mais pesada':'mais leve'} que o ideal (${Math.abs(d)} g). Nada que atrapalhe; ${d>0?'um overgrip a mais equilibra a sensação':'3 a 5 g de chumbo às 3h e às 9h resolvem, se quiser'}.`)}
   if(r.br==='d')out.push('Difícil de achar no Brasil: em geral, só importando ou em loja especializada. Confira antes de se apegar.');
   if(r.br==='p')out.push('Pouca oferta no Brasil: vale ligar para a loja antes de ir.');
