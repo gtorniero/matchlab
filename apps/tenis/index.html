@@ -79,7 +79,8 @@ p{margin:0}
 .opt{font:inherit;text-align:left;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-height:48px;display:flex;flex-direction:column;gap:2px}
 .opt small{color:var(--muted);font-size:13px;line-height:1.35}
 .opt[aria-pressed="true"]{border-color:var(--pri);background:var(--soft);box-shadow:inset 0 0 0 1px var(--pri)}
-select,input[type=number]{font:inherit;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;min-height:48px;max-width:100%}
+select,input.num{font:inherit;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;min-height:48px;max-width:100%}
+.numf{display:flex;align-items:center;gap:10px}.numf input{width:120px;font-size:20px;font-family:var(--f-mono)}.numf span{font-weight:700;color:var(--muted)}
 .qs{display:flex;flex-direction:column;gap:26px}
 .nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .err{color:var(--clay);font-weight:700;font-size:14px}
@@ -752,7 +753,7 @@ const O=arr=>arr.map((x,i)=>Array.isArray(x)?[String(i),x[0],x[1]]:[String(i),x]
 const OBJ=['Começar ou emagrecer','Provas de 5 a 10 km','Meia maratona','Maratona','Trilha','Correr e usar no dia a dia'];
 const STEPS=['Seu corpo','Sua corrida','Seu objetivo','Preferências'];
 const Q=[
- {s:0,id:'peso',type:'number',t:'Quanto você pesa?',h:'Em kg. Muda a espuma e a base que você precisa.',min:35,max:150,step:1,ph:'ex.: 75'},
+ {s:0,id:'peso',type:'number',t:'Quanto você pesa?',h:'Muda a espuma e a base que você precisa.',min:35,max:150,ph:'ex.: 75',u:'kg'},
  {s:0,id:'largura',t:'Como é a largura do seu pé?',h:'Se tênis comum costuma apertar dos lados, seu pé é largo.',o:O(['Estreito','Normal','Largo','Não sei'])},
  {s:0,id:'dor',t:'Sente alguma dor ao correr?',o:O(['Nenhuma','Joelho','Canela','Sola do pé ou calcanhar','Torço o tornozelo com facilidade','Quadril ou lombar','Tendão de Aquiles'])},
  {s:0,id:'pisada',t:'Que parte do pé toca o chão primeiro?',h:'Repare na sola do tênis que você usa: onde gasta mais. Muda o drop indicado.',o:O(['Calcanhar','Meio do pé','Ponta do pé','Não sei'])},
@@ -783,8 +784,9 @@ function renderQs(){
   Q.filter(q=>q.s===step).forEach(q=>{
     const fs=document.createElement('fieldset');fs.className='q';
     if(q.type==='number'){
-      fs.innerHTML=`<label class="ql" for="q_${q.id}">${q.t}</label>${q.h?`<p class="help">${q.h}</p>`:''}<input type="number" id="q_${q.id}" inputmode="numeric" min="${q.min}" max="${q.max}" step="${q.step}" placeholder="${q.ph}" style="width:180px">`;
-      const inp=fs.querySelector('input');inp.value=A[q.id]||'';inp.addEventListener('input',()=>{A[q.id]=inp.value});
+      fs.innerHTML=`<label class="ql" for="q_${q.id}">${q.t}</label>${q.h?`<p class="help">${q.h}</p>`:''}<div class="numf"><input type="text" class="num" id="q_${q.id}" inputmode="numeric" autocomplete="off" maxlength="3" placeholder="${q.ph}">${q.u?`<span>${q.u}</span>`:''}</div>`;
+      // campo simples de digitar: só números, sem setas nem rolagem mudando o valor
+      const inp=fs.querySelector('input');inp.value=A[q.id]||'';inp.addEventListener('beforeinput',e=>{if(e.data&&/\D/.test(e.data))e.preventDefault()});inp.addEventListener('input',()=>{inp.value=inp.value.replace(/\D/g,'');A[q.id]=inp.value});
     }else if(q.type==='select'){
       fs.innerHTML=`<label class="ql" for="q_${q.id}">${q.t}</label>${q.h?`<p class="help">${q.h}</p>`:''}<select id="q_${q.id}" style="width:100%;max-width:420px"><option value="">Não sei ou não está na lista</option>${BRANDS.slice().sort((x,y)=>x.localeCompare(y,'pt',{sensitivity:'base'})).map(b=>`<optgroup label="${esc(b)}">${M.filter(m=>m.b===b).map(m=>`<option${A[q.id]===m.n?' selected':''}>${esc(m.n)}</option>`).join('')}</optgroup>`).join('')}</select>`;
       const sel=fs.querySelector('select');sel.addEventListener('change',()=>{A[q.id]=sel.value});
@@ -812,7 +814,7 @@ $('#example').addEventListener('click',()=>{Object.keys(A).forEach(k=>delete A[k
 $('#back').addEventListener('click',()=>{if(step===0){show('landing');return}step--;renderQs()});
 $('#next').addEventListener('click',()=>{
   const m=missing();
-  if(m.length){$('#err').textContent='Falta responder: '+m.map(q=>q.t.replace('?','')).join(' · ');$('#err').hidden=false;return}
+  if(m.length){$('#err').textContent='Falta responder: '+m.map(q=>q.t.replace('?','')+(q.type==='number'&&A[q.id]?` (entre ${q.min} e ${q.max}${q.u?' '+q.u:''})`:'')).join(' · ');$('#err').hidden=false;return}
   if(step<STEPS.length-1){step++;renderQs();window.scrollTo({top:0,behavior:'smooth'})}else runAnalysis();
 });
 function conv(src=A){const o={};Q.forEach(q=>{const v=src[q.id];if(v===undefined||v==='')return;o[q.id]=q.type==='select'?v:Array.isArray(v)?v.map(Number).filter(x=>x>0):Number(v)});return o}
