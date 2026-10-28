@@ -29,6 +29,13 @@ Simulação com 500 perfis aleatórios (todas as respostas sorteadas, mesma seme
 - Quando o 1º ainda fica fora da zona (112 de 500 perfis, 92 deles sem nenhum tênis na zona, por exemplo estabilidade com orçamento até R$ 700), o relatório diz em "Pontos de atenção": "Fica fora da sua categoria ideal (X, até R$ Y): é da categoria Z. O melhor dentro dela, W, ficou N pontos atrás (motivo)." O motivo é o fator em que o tênis da zona mais perdeu para o 1º; sem tênis na zona, diz que nenhum cabe no orçamento.
 - Nenhum texto com "NaN" ou "undefined" nos 500 perfis.
 
+## Rodada 4: Nike em perfis comuns (28/out/2026)
+- Queixa: corredor com bom ritmo e 10 a 20 km por semana não via Nike. Em 3.000 variações desse perfil, a adidas era 1º lugar em 39% e a Nike em 2% (top 3: 4%).
+- O melhor Nike costuma ser o Winflo 12, que perde por pouca review profissional (2, mas 8 de clientes), peso (299 g) e falta de etiquetas de uso. O Pegasus 42 perde por maciez medida baixa (2,4) e cinco etiquetas "não indicado".
+- **Mudanças:** etiquetas de preferência (calor, longão, ritmo leve, iniciante, uso diário, asfalto) pesam 40% (`LEVE`); reviews de clientes contam como evidência (×0,35) na penalidade de poucas reviews; tênis sem etiqueta de uso perde 0,5 (era 1).
+- **Resultado:** no perfil da queixa, Nike no top 3 de 4% para 6%; nos 5.000 sorteados, de 8% para 10%. Pódios com etiqueta séria (pé largo, peso, pronação, Aquiles, trilha técnica, pisada) caíram de 1.751 para 1.552. Casos de referência iguais (maratona competitiva, desconforto com neutro).
+- O resto da diferença vem dos dados da Nike, não do motor: subir mais seria favorecer marca.
+
 ## Rodada 3: viés de marca (25/out/2026)
 - Teste com 40 perfis realistas (6 a 8 por objetivo, orçamentos de até R$ 400 a acima de R$ 1.500) e 5.000 perfis sorteados com todas as respostas.
 - **Vieses encontrados:** (1) etiqueta "não indicado" tirava 4 pontos por etiqueta, e marcas com mais reviews (Nike, ASICS) acumulam mais etiquetas; "não indicado para ritmo" punia até tênis de amortecimento; (2) pouca review era vantagem (Fila, Olympikus); (3) qualquer preço dentro do orçamento ganhava o mesmo bônus; (4) categoria com poucos modelos virava monopólio (Ultraboost 5 em "dia a dia"); (5) "prioridade conforto" somava maciez mesmo para quem prefere firme (prejudicava a On); (6) o motor pedia resposta de supertênis para quem prefere firme.
