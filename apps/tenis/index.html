@@ -141,6 +141,7 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .homecard{min-height:420px}.homecard:empty{display:none}
 .cardimg{width:100%;max-width:230px;border-radius:16px;display:block;box-shadow:0 14px 34px rgba(0,0,0,.22);transform:rotate(-2deg)}
 .cardpair{display:flex;justify-content:center;align-items:flex-start;padding:6px 0 18px}.cardpair .cardimg{width:50%;max-width:220px}.cardpair .cardimg+.cardimg{transform:rotate(3deg) translateY(14px);margin-left:-14px}
+.duelt td.n{white-space:normal;overflow-wrap:anywhere}@media (max-width:760px){.duelt{font-size:13px}.duelt th,.duelt td{padding:8px 5px}}
 .mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .mini .panel{gap:10px}
 footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
@@ -238,6 +239,7 @@ table.t10 tr.pref td{background:var(--soft)}
         <div class="row">
           <button class="btn btn-go" id="start" type="button">Descobrir meu tênis</button>
           <button class="btn btn-ghost" id="example" type="button">Ver um exemplo pronto</button>
+          <button class="btn btn-ghost" id="duelGo" type="button">Comparar dois tênis</button>
         </div>
         <p class="note">Grátis · 3 minutos · sem cadastro</p>
       </div>
@@ -287,6 +289,16 @@ table.t10 tr.pref td{background:var(--soft)}
     </div>
   </section>
 
+  <!-- COMPARADOR -->
+  <section id="duelSec" hidden>
+    <div class="panel">
+      <div class="vhead"><div><p class="eyebrow">Comparador</p><h2>Um tênis contra o outro</h2></div><button class="btn btn-ghost" id="duelBack" type="button">Voltar</button></div>
+      <div class="two"><div class="q"><label class="ql" for="dA">Tênis A</label><select id="dA" style="width:100%"></select></div><div class="q"><label class="ql" for="dB">Tênis B</label><select id="dB" style="width:100%"></select></div></div>
+      <div id="duelOut"></div>
+      <div style="border:1.5px dashed var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:flex-start" id="duelCta"><h3>Nenhum dos dois é necessariamente o seu.</h3><p class="muted">O comparador mostra como cada tênis é. O teste mostra qual combina com o seu corpo e o seu treino.</p><button class="btn btn-go" id="duelQuiz" type="button">Fazer o teste</button></div>
+    </div>
+  </section>
+
   <!-- QUIZ -->
   <section id="quiz" hidden>
     <div class="panel">
@@ -317,7 +329,7 @@ table.t10 tr.pref td{background:var(--soft)}
 
   </main>
   <footer>
-    Tenis Match é um teste da família Match Lab. Protótipo. Preços são de referência e mudam com promoção; os marcados como "aprox." são estimativas. Os links levam a lojas no Brasil (site brasileiro da marca ou Centauro); tênis importados ficam sem link. Nenhuma marca paga para aparecer. Isto não substitui avaliação de médico ou fisioterapeuta em caso de dor ou lesão.
+    Tenis Match é um teste da família Match Lab. Protótipo. Preços são de referência e mudam com promoção; os marcados como "aprox." são estimativas. Por enquanto o relatório não tem links para lojas. Nenhuma marca paga para aparecer. Isto não substitui avaliação de médico ou fisioterapeuta em caso de dor ou lesão.
   </footer>
 </div>
 
@@ -555,6 +567,7 @@ const PODIO_FORA=['Fila'];
 // marcas do quadro "o melhor de cada marca" (as preferidas da pessoa entram também)
 const MARCAS=['adidas','ASICS','Hoka','Mizuno','New Balance','Nike','Olympikus','On','Puma'];
 const FICHA=1.2;
+const LEVE={cal:.4,lon:.4,len:.4,ini:.4,dia:.4,asf:.4};
 // categoria que as respostas apontam: dentro dela o tênis soma ZONA no motor (+4 no Match); na 2ª categoria, ZONA a menos (−4)
 const ZONA=2,ZONA_PEQ=0.5;
 const BUD=[[0,400],[400,700],[700,1000],[1000,1500],[1500,99999]];
@@ -625,9 +638,10 @@ function engine(a,long){
     if(dor===6&&m.dr<7)ad('dor',-1.5);
     if(g('neutro',0)===1)ad('est',(m.es-3)*0.8);
     // consenso das reviews
-    const uh=W.filter(w=>m.u.includes(w)).length;ad('uso',Math.min(2.4,uh*1.2)-(uh?0:1));
-    // "não indicado" vem de 2+ reviews: com muitas reviews, 2 citações pesam um pouco menos
-    const nr=m.np+m.nc,bad=m.nn.filter(t=>T.has(t)).reduce((q,t)=>q+(t==='rap'&&!fast?0.35:1),0);ad('nao',-Math.min(7,bad*(3+Math.min(1,3/Math.max(1,nr)))));
+    const uh=W.filter(w=>m.u.includes(w)).length;ad('uso',Math.min(2.4,uh*1.2)-(uh?0:0.5));
+    // "não indicado" vem de 2+ reviews: com muitas reviews, 2 citações pesam um pouco menos.
+    // Etiquetas de preferência (calor, longão, ritmo fora de tênis rápido, uso diário, iniciante) pesam menos que as de encaixe e saúde
+    const nr=m.np+m.nc,bad=m.nn.filter(t=>T.has(t)).reduce((q,t)=>q+(t==='rap'?(fast?1:0.35):LEVE[t]||1),0);ad('nao',-Math.min(7,bad*(3+Math.min(1,3/Math.max(1,nr)))));
     ad('perfil',Math.min(1.6,m.o.filter(t=>T.has(t)).length*0.8));
     // nota das reviews puxada para a média quando há pouca evidência
     const ne=m.np+m.nc*.35;ad('nota',(m.sc-3.8)*1.8*ne/(ne+4));
@@ -635,7 +649,8 @@ function engine(a,long){
     // specs só de ficha são menos confiáveis que as medidas em laboratório
     if(m.fi)ad('fi',-FICHA);
     if(!m.br)ad('br',-3);
-    ad('np',-0.45*(4-Math.min(4,m.np)));
+    // pouca evidência: reviews de clientes também contam, com peso menor
+    ad('np',-0.45*(4-Math.min(4,m.np+m.nc*.35)));
     return s;
   };
   let ranked=M.map(m=>({m,s:sm(m)})).filter(x=>x.s>-50).sort((p,q)=>q.s-p.s);
@@ -691,8 +706,8 @@ function factors(r){const a=r.a,m=r.fins[0].m,out=[];const iv=idx(m),id=r.ID;
   if(r.peso>=85&&stackOf(m)>=36)out.push(['+','Espuma alta para '+r.peso+' kg']);
   return out.slice(0,6)}
 const CATCOL={ent:'#8E9AA6',dia:'#2E86DE',max:'#8E44AD',est:'#16A085',rap:'#E4572E',sup:'#D4A017',tri:'#6B8E23',con:'#C0587E'};
-// links só de lojas no Brasil: site brasileiro da marca ou, quando a marca não tem, a Centauro; importados ficam sem link
-const brandLink=(m,t)=>m.url?`<a class="blink" href="${esc(m.url)}" target="_blank" rel="noopener">${t||(m.url.includes('centauro.com.br')?'Ver na Centauro':m.ut==='produto'?'Ver no site da '+esc(m.b):'Site da '+esc(m.b))} ↗</a>`:'';
+// sem links para lojas por enquanto: só voltam quando cada um for verificado
+const brandLink=()=>'';
 const priceTxt=m=>(m.ap?'~':'')+'R$ '+m.p.toLocaleString('pt-BR',{minimumFractionDigits:m.p%1?2:0,maximumFractionDigits:2})+(!m.br?' (importado)':m.ap?' (aprox.)':'');
 const kmCost=m=>'R$ '+(m.p/m.du).toFixed(2).replace('.',',')+' por km';
 /* ---------- visuais: hexágono, barras, mapa do catálogo ---------- */
@@ -808,7 +823,7 @@ function renderQs(){
   $('#next').textContent=step===STEPS.length-1?'Ver minha análise':'Continuar';
 }
 function missing(){return Q.filter(q=>q.s===step).filter(q=>{const v=A[q.id];if(q.type==='number'){const n=+v;return !v||n<q.min||n>q.max}return q.opt?false:!v})}
-function show(id){['landing','quiz','analysis','preview','report'].forEach(s=>{$('#'+s).hidden=s!==id});window.scrollTo({top:0,behavior:'smooth'})}
+function show(id){['landing','duelSec','quiz','analysis','preview','report'].forEach(s=>{$('#'+s).hidden=s!==id});window.scrollTo({top:0,behavior:'smooth'})}
 $('#start').addEventListener('click',()=>{step=0;show('quiz');renderQs()});
 $('#example').addEventListener('click',()=>{Object.keys(A).forEach(k=>delete A[k]);Object.assign(A,EXAMPLE);runAnalysis()});
 $('#back').addEventListener('click',()=>{if(step===0){show('landing');return}step--;renderQs()});
@@ -925,7 +940,7 @@ function atualT(r){
   const row=(l,f)=>`<tr><td>${l}</td><td class="n">${f(c)}</td><td class="n">${f(m)}</td></tr>`;
   return `<div class="panel"><div><h3>Seu tênis atual × o recomendado</h3><p class="muted" style="font-size:14px">O que muda saindo do ${esc(modelOf(c))} para o ${esc(modelOf(m))}.</p></div>
   <div class="two"><div>${VZ.hex(SX,[{name:modelOf(c)+' (atual)',v:ic,c:'var(--clay)',dash:1},{name:modelOf(m),v:im,c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}</div>
-  <div style="display:flex;flex-direction:column;gap:14px;min-width:0"><div class="tbl"><table style="min-width:0"><thead><tr><th><span class="a11y-sr">Característica</span></th><th>Atual</th><th>Recomendado</th></tr></thead><tbody>
+  <div style="display:flex;flex-direction:column;gap:14px;min-width:0"><div class="tbl"><table class="duelt" style="min-width:0"><thead><tr><th><span class="a11y-sr">Característica</span></th><th>Atual</th><th>Recomendado</th></tr></thead><tbody>
   ${row('Fit Score',x=>(x===c?cur.fit:w.fit)+'%')}${row('Preço',x=>priceTxt(x).replace(' (aprox.)',''))}${row('Peso',x=>x.g+' g')}${row('Espuma',x=>stackOf(x)+' / '+foreOf(x)+' mm')}${row('Drop',x=>dec1(x.dr)+' mm')}${row('Durabilidade',x=>x.du+' km')}${row('Custo por km',x=>kmCost(x).replace(' por km',''))}</tbody></table></div>
   ${out.length?`<ul class="why">${out.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</div></div></div>`;
 }
@@ -981,7 +996,9 @@ function attT(r){
 function renderReport(){
   const r=RES,a=r.a,w=r.fins[0],m=w.m,km=KMW[a.km===undefined?1:a.km],mo=Math.max(1,Math.round(m.du/km/4.3));
   const cols=['var(--pri)','var(--clay)','var(--muted)'];
-  let h=`
+  let h=`<div class="panel"><h3>Seus cards</h3><p class="muted">Prontos para story: o seu perfil de corredor e o tênis que mais combina com você, com o Match.</p>
+    <div id="cardsOut" class="cardpair"></div>
+    <div class="row"><button class="btn btn-pri" type="button" id="shareCards">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlRunner">Salvar card do corredor</button><button class="btn btn-ghost" type="button" id="dlShoe">Salvar card do tênis</button></div></div>
   <div class="panel winner">
     <p class="eyebrow">Seu tênis ideal</p>
     <div class="whead"><div><p class="eyebrow">${esc(m.b)}</p><h2>${esc(modelOf(m))}</h2><p class="muted mono" style="font-size:14px">Preço médio: ${priceTxt(m)}</p>${brandLink(m)}<p class="src">${m.ap?'Preço estimado':'Preço consultado em out/2026'} · ${m.fi?'specs da ficha da marca (sem medição de laboratório)':'specs de laboratório'} · ${m.nr?m.nr+(m.nr===1?' review lida':' reviews lidas')+(m.nc?` (${m.np} ${m.np===1?'profissional':'profissionais'}, ${m.nc} de ${m.nc===1?'cliente':'clientes'})`:''):'sem review independente ainda'}</p></div>
@@ -1029,10 +1046,7 @@ function renderReport(){
     if(r.second)h+=`<div class="panel"><h3>Segundo par para rodízio</h3><p class="muted">Quem alterna dois tênis teve 39% menos risco de lesão num estudo com 264 corredores. Use este ${r.second.c==='sup'?'só em prova e treinos-chave':r.second.c==='rap'?'nos treinos de ritmo e tiro':'na rodagem leve'}.</p><div class="whead"><div><p class="eyebrow">${esc(r.second.b)}</p><h2>${esc(modelOf(r.second))}</h2><p class="muted mono" style="font-size:14px">${priceTxt(r.second)} · ${CAT[r.second.c].n}</p>${brandLink(r.second)}</div></div><p class="note">Os dois pares juntos: ${brl(m.p+r.second.p)}. Custo por km do rodízio: ${('R$ '+((m.p+r.second.p)/(m.du+r.second.du)).toFixed(2)).replace('.',',')}.</p><div style="max-width:460px;width:100%;margin:0 auto">${VZ.hex(SX,[{name:modelOf(m),v:idx(m),c:'var(--pri)',fill:'var(--pri)',fo:.14},{name:modelOf(r.second),v:idx(r.second),c:'var(--ball)',fill:'var(--ball)',fo:.14}])}</div><p class="muted" style="font-size:14px;text-align:center">Juntos, os dois cobrem mais área do hexágono do que qualquer um sozinho.</p></div>`;
     h+=`<div class="panel"><h3>Para pagar menos</h3><ul class="why"><li>A versão da coleção anterior costuma sair 30% a 50% mais barata, com quase o mesmo desempenho.</li><li>Lançamentos raramente entram em promoção nos primeiros meses.</li><li>Compare o preço por km, não só o preço: um tênis mais caro que dura mais pode sair mais barato.</li></ul></div>`;
   }
-  h+=`<div class="panel"><h3>Seus cards</h3><p class="muted">Prontos para story: o seu perfil de corredor e o tênis que mais combina com você, com o Match.</p>
-    <div id="cardsOut" class="cardpair"></div>
-    <div class="row"><button class="btn btn-pri" type="button" id="shareCards">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlRunner">Salvar card do corredor</button><button class="btn btn-ghost" type="button" id="dlShoe">Salvar card do tênis</button></div></div>
-  <div class="row"><button class="btn btn-ghost" type="button" id="again">Refazer o teste</button></div>`;
+  h+=`  <div class="row"><button class="btn btn-pri" type="button" id="duelRep">Comparar com outro tênis</button><button class="btn btn-ghost" type="button" id="again">Refazer o teste</button></div>`;
   $('#report').innerHTML=h;
   {
     const cols=['var(--pri)','var(--clay)','var(--muted)'],avgKm=M.reduce((s,x)=>s+x.p/x.du,0)/M.length;
@@ -1048,15 +1062,51 @@ function renderReport(){
     setT(r.pref.length?'b':'g');
     const t10=o=>{document.querySelectorAll('[data-o]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.o===o));
       const L=r.top10.map((x,i)=>({...x,i})).sort((a,b)=>o==='p'?a.m.p-b.m.p:o==='km'?a.m.p/a.m.du-b.m.p/b.m.du:a.i-b.i);
-      $('#t10b').innerHTML=L.map(x=>`<tr class="${r.pref.includes(x.m.b)?'pref':''}"><td class="n">${x.i+1}º</td><td><b>${esc(modelOf(x.m))}</b>${x.m.url?`<br>${brandLink(x.m,'site da marca')}`:''}</td><td>${esc(x.m.b)}</td><td class="muted">${CAT[x.m.c].n}</td><td class="n">${priceTxt(x.m).replace(' (aprox.)','')}</td><td class="n">${kmCost(x.m).replace(' por km','')}</td><td><span class="mfit"><i style="width:${x.fit}%"></i></span><span class="mono" style="font-weight:700">${x.fit}%</span></td></tr>`).join('')};
+      $('#t10b').innerHTML=L.map(x=>`<tr class="${r.pref.includes(x.m.b)?'pref':''}"><td class="n">${x.i+1}º</td><td><b>${esc(modelOf(x.m))}</b></td><td>${esc(x.m.b)}</td><td class="muted">${CAT[x.m.c].n}</td><td class="n">${priceTxt(x.m).replace(' (aprox.)','')}</td><td class="n">${kmCost(x.m).replace(' por km','')}</td><td><span class="mfit"><i style="width:${x.fit}%"></i></span><span class="mono" style="font-weight:700">${x.fit}%</span></td></tr>`).join('')};
     document.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>t10(b.dataset.o));t10('fit');
   }
   const iv=v=>{document.querySelectorAll('#report [data-i]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.i===v));$('#ihex').hidden=v!=='hex';$('#ibar').hidden=v!=='bar'};
   document.querySelectorAll('#report [data-i]').forEach(b=>b.onclick=()=>iv(b.dataset.i));iv('hex');
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};
+  $('#duelRep').onclick=()=>openDuel(r.fins[0].m.n,r.fins[1].m.n,'report');
   showCards(r);
 }
 
+
+/* ---------- comparador: um tênis contra o outro ---------- */
+const catOpts=sel=>BRANDS.slice().sort((x,y)=>x.localeCompare(y,'pt',{sensitivity:'base'})).map(b=>`<optgroup label="${esc(b)}">${M.filter(m=>m.b===b).map(m=>`<option${m.n===sel?' selected':''}>${esc(m.n)}</option>`).join('')}</optgroup>`).join('');
+let duelFrom='landing';
+// Fit Score de um tênis para quem já fez o teste (fora da categoria indicada não tem Fit Score)
+const fitFor=m=>{if(!RES)return null;const x=RES.ranked.find(y=>y.m===m);return x?RES.fitOf(x.s):null};
+function duelHTML(a,b){
+  const ia=idx(a),ib=idx(b),na=modelOf(a),nb=modelOf(b),out=[];
+  const cmp=(d,lim,txt)=>{if(Math.abs(d)>=lim)out.push(txt(d))};
+  cmp(b.p-a.p,50,d=>`${esc(nb)} custa ${brl(Math.abs(d))} ${d<0?'a menos':'a mais'}`);
+  cmp(b.g-a.g,10,d=>`${esc(nb)} é ${Math.abs(d)} g ${d<0?'mais leve':'mais pesado'}`);
+  cmp(stackOf(b)-stackOf(a),3,d=>`${esc(nb)} tem ${dec1(Math.abs(d))} mm ${d>0?'a mais':'a menos'} de espuma no calcanhar`);
+  cmp(b.dr-a.dr,2,d=>`Drop de ${esc(nb)} é ${dec1(Math.abs(d))} mm ${d>0?'maior':'menor'}`);
+  cmp(ib[0]-ia[0],1,d=>`${esc(nb)} é ${d>0?'mais amortecido':'mais firme'}`);
+  cmp(ib[1]-ia[1],1,d=>`${esc(nb)} tem ${d>0?'mais':'menos'} resposta`);
+  cmp(ib[3]-ia[3],1,d=>`${esc(nb)} é ${d>0?'mais estável':'menos estável'}`);
+  cmp(b.du-a.du,100,d=>`${esc(nb)} dura uns ${Math.abs(d)} km ${d>0?'a mais':'a menos'}`);
+  if(a.c!==b.c)out.push(`Categorias diferentes: ${CAT[a.c].n.toLowerCase()} × ${CAT[b.c].n.toLowerCase()}`);
+  const fa=fitFor(a),fb=fitFor(b);
+  const row=(l,f)=>`<tr><td>${l}</td><td class="n">${f(a)}</td><td class="n">${f(b)}</td></tr>`;
+  return `<div class="two" style="margin-top:6px"><div>${VZ.hex(SX,[{name:na,v:ia,c:'var(--clay)',dash:1},{name:nb,v:ib,c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}</div>
+  <div style="display:flex;flex-direction:column;gap:14px;min-width:0"><div class="tbl"><table class="duelt" style="min-width:0"><thead><tr><th></th><th>${esc(na)}</th><th>${esc(nb)}</th></tr></thead><tbody>
+  ${RES?row('Seu Fit Score',x=>{const v=x===a?fa:fb;return v===null?'fora da sua categoria':v+'%'}):''}
+  ${row('Marca',x=>esc(x.b))}${row('Categoria',x=>CAT[x.c].n)}${row('Preço',x=>priceTxt(x).replace(' (aprox.)',''))}${row('Peso',x=>x.g+' g')}${row('Espuma',x=>stackOf(x)+' / '+foreOf(x)+' mm')}${row('Drop',x=>dec1(x.dr)+' mm')}${row('Durabilidade',x=>x.du+' km')}${row('Custo por km',x=>kmCost(x).replace(' por km',''))}${row('Reviews',x=>`${dec1(x.sc)} de 5 · ${x.np+x.nc}`)}${row('Specs',x=>x.fi?'da ficha':'de laboratório')}
+  </tbody></table></div>
+  ${out.length?`<ul class="why">${out.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p class="muted">Os dois são muito parecidos nas medidas.</p>'}</div></div>`;
+}
+function renderDuel(){const a=M.find(m=>m.n===$('#dA').value),b=M.find(m=>m.n===$('#dB').value);
+  $('#duelOut').innerHTML=a===b?'<p class="muted">Escolha dois tênis diferentes.</p>':duelHTML(a,b);
+  $('#duelCta').hidden=!!RES&&duelFrom==='report'}
+function openDuel(na,nb,from){duelFrom=from;$('#dA').innerHTML=catOpts(na);$('#dB').innerHTML=catOpts(nb);renderDuel();show('duelSec')}
+$('#dA').addEventListener('change',renderDuel);$('#dB').addEventListener('change',renderDuel);
+$('#duelGo').addEventListener('click',()=>openDuel('Nike Pegasus 42','adidas Supernova Rise 3','landing'));
+$('#duelBack').addEventListener('click',()=>show(duelFrom));
+$('#duelQuiz').addEventListener('click',()=>{step=0;show('quiz');renderQs()});
 
 /* ---------- cards para story: perfil de corredor e o tênis com o Match ---------- */
 function wrapText(x,t,maxW){const w=t.split(' ');const L=[];let l='';w.forEach(p=>{const tt=l?l+' '+p:p;if(x.measureText(tt).width>maxW&&l){L.push(l);l=p}else l=tt});if(l)L.push(l);return L}
