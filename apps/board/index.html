@@ -158,6 +158,28 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .mini .panel{gap:10px}
 .lock{border:1.5px dashed var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
 footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+/* prévia: as 3 finalistas e o relatório borrado no topo */
+.hook{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:28px;align-items:center}
+.rpeek{margin:0;position:relative;height:380px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.rpeek img{width:100%;display:block;filter:blur(3.5px) saturate(.9);transform:scale(1.04);transform-origin:top center}
+.rpeek::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,var(--bg) 100%)}
+.rpeek figcaption{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:1;background:#0E4D64;color:#FFFFFF;font-weight:700;font-size:14px;padding:8px 14px;border-radius:99px;white-space:nowrap}
+@media (max-width:760px){.hook{grid-template-columns:minmax(0,1fr)}.rpeek{height:260px}}
+/* Pix simulado */
+.btn-sm{min-height:40px;padding:8px 14px;font-size:14px;border-radius:10px}
+.modal{position:fixed;inset:0;background:rgba(5,22,29,.62);display:grid;place-items:center;padding:16px;z-index:50}
+.sheet{background:var(--surface);color:var(--ink);border-radius:20px;max-width:440px;width:100%;max-height:calc(100dvh - 32px);overflow:auto;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.phead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.qr{position:relative;width:200px;height:200px;margin:0 auto;background:#fff;border-radius:12px;padding:10px}
+.qr svg{width:100%;height:100%;display:block}
+.qr .wm{position:absolute;inset:auto 0 44% 0;text-align:center;font:700 13px var(--f-body);color:#8F5200;transform:rotate(-14deg);background:rgba(255,255,255,.85)}
+.paste{display:flex;gap:8px}
+.paste input{flex:1;min-width:0;font:12px var(--f-body);background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px}
+.timer{font-weight:700;font-variant-numeric:tabular-nums}
+.status{display:flex;align-items:center;gap:10px;font-weight:700}
+.pulse{width:10px;height:10px;border-radius:50%;background:var(--ball);box-shadow:0 0 0 0 var(--ball);animation:pl 1.4s infinite}
+@keyframes pl{to{box-shadow:0 0 0 12px transparent}}
+.okbig{font-size:48px;text-align:center;color:var(--pri);line-height:1}
 @media (max-width:760px){
   .hero,.two,.plans,.mini{grid-template-columns:minmax(0,1fr)}
   .diffs{grid-template-columns:minmax(0,1fr)}
@@ -498,6 +520,7 @@ table.cmpt{min-width:0}table.cmpt th:first-child{width:28%}table.cmpt tr.df td{b
     Board Match é um teste da família Match Lab. Protótipo. Recomendamos tudo, menos marca e shaper: com a ficha técnica você pede a prancha a qualquer shaper ou avalia uma usada. O motor foi calibrado com 422 casos reais: reviews de lojas e revistas, pranchas de atletas, tabelas de marcas e relatos de surfistas. A revisão por professor está em andamento. O consultor é opcional e pode receber comissão se você comprar com ele; a recomendação técnica é a mesma com ou sem compra.
   </footer>
 </div>
+<div id="modalRoot"></div>
 
 <script>
 (function(){
@@ -966,34 +989,41 @@ function levelTrack(r){
 const styleVec=r=>{const m=Math.max(...r.S)||1;return r.S.map(x=>x/m*10)};
 
 /* ---------- prévia ---------- */
+const PRICE=19.99,PRICE_TXT='R$ 19,99',PDF_PAGES=5;
 function renderPreview(){
   const r=RES,top=r.fins,v=r.d.V,lo=Math.round(v-r.rng),hi=Math.round(v+r.rng);
   const sk=(r.a.skills||[]).length;
+  /* topo: as 3 finalistas ocultas, o relatório borrado e o botão. O diagnóstico da prancha atual fica mais abaixo */
   $('#preview').innerHTML=`
   <div class="panel">
-    <p class="eyebrow">Análise concluída</p>
-    <h2>Encontramos 3 pranchas que combinam com você.</h2>
+    <div class="hook">
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <p class="eyebrow">Análise concluída</p>
+        <h2>Encontramos as 3 pranchas que mais combinam com você.</h2>
+        <div class="fin">${top.map((x,i)=>`
+          <div class="finrow"><span class="pos">${i+1}º</span>
+            <div><span class="blur" aria-label="Prancha oculta até o desbloqueio">${PN[x.k].replace(/[^ ]/g,'X')}</span><div class="meter"><i style="width:${x.fit}%"></i></div></div>
+            <span class="pct">${x.fit}%</span></div>`).join('')}
+        </div>
+        <button class="btn btn-go" type="button" data-buy style="width:100%">Revelar minha prancha · ${PRICE_TXT}</button>
+        <p class="note" style="margin:0">Pagamento único via Pix. O relatório sai na hora, também em PDF.</p>
+      </div>
+      <figure class="rpeek"><img src="../../assets/reports/board.webp" alt="Prévia borrada de um relatório completo do Board Match" loading="lazy"><figcaption>Relatório completo · ${PDF_PAGES} páginas em PDF</figcaption></figure>
+    </div>
+  </div>
+  <div class="panel">
+    <p class="eyebrow">O que está por trás</p>
     <div class="kpis">
       <div class="kpi"><b>${(NVAR*KEYS.length).toLocaleString('pt-BR')}</b><span>cruzamentos: ${NVAR} variáveis × ${KEYS.length} tipos</span></div>
       <div class="kpi"><b>${r.conf}%</b><span>confiança do resultado</span></div>
       <div class="kpi"><b>${lo}–${hi} L</b><span>quanto ela deve boiar</span></div>
     </div>
+    <p class="note">A porcentagem de cada finalista mostra o quanto ela combina com o seu perfil.</p>
   </div>
-  <div class="two">
-    <div class="panel">
-      <h3>Suas 3 finalistas</h3>
-      <div class="fin">${top.map((x,i)=>`
-        <div class="finrow"><span class="pos">${i+1}º</span>
-          <div><span class="blur" aria-label="Prancha oculta até o desbloqueio">${PN[x.k].replace(/[^ ]/g,'X')}</span><div class="meter"><i style="width:${x.fit}%"></i></div></div>
-          <span class="pct">${x.fit}%</span></div>`).join('')}
-      </div>
-      <p class="note">A porcentagem mostra o quanto cada prancha combina com o seu perfil.</p>
-    </div>
-    <div class="panel">
-      <div><p class="eyebrow">Seu nível</p><h3>${LV[r.lvl].n}</h3></div>
-      ${levelTrack(r)}
-      <p class="muted" style="font-size:15px">Calculado pelo que você já faz na água: como pega onda, como passa a arrebentação e o que faz na parede, não só pelo tempo de surf. É ele que define quanto a prancha precisa boiar.</p>
-    </div>
+  <div class="panel">
+    <div><p class="eyebrow">Seu nível</p><h3>${LV[r.lvl].n}</h3></div>
+    ${levelTrack(r)}
+    <p class="muted" style="font-size:15px">Calculado pelo que você já faz na água: como pega onda, como passa a arrebentação e o que faz na parede, não só pelo tempo de surf. É ele que define quanto a prancha precisa boiar.</p>
   </div>
   <div class="panel"><div class="two" style="align-items:center"><div id="cardPrev" class="cardwrap herocard" aria-label="Seu DNA de surf em card"></div><div style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow">Seu DNA de surf</p><h3>${esc(archetype(r))}</h3><p class="muted">O card com o seu perfil já está pronto. A prancha, as medidas e o card dela aparecem no relatório.</p></div></div></div>
   <div class="panel">
@@ -1003,16 +1033,59 @@ function renderPreview(){
   <div class="panel">
     <h2>Revele sua prancha</h2>
     <div class="plan one">
-      <div class="onep"><h3>Seu relatório completo</h3><span class="price">R$ 19,99</span><span class="note">pagamento único</span></div>
-      <ul><li>A prancha ideal, explicada em palavras simples</li><li>Todas as 17 variáveis: medidas, litros, formato, quilhas e construção</li><li>As outras 2 finalistas e o comparador entre modelos</li><li>Guia para achar a prancha numa loja e ficha técnica para qualquer shaper</li><li>Relatório em PDF (A4) para baixar e levar à loja</li><li>Seu Match: briefing pronto para fazer a prancha com um coach</li></ul>
-      <button class="btn btn-go" type="button" id="buy2">Pagar R$ 19,99 com Pix (simulação)</button>
+      <div class="onep"><h3>Seu relatório completo</h3><span class="price">${PRICE_TXT}</span><span class="note">pagamento único</span></div>
+      <ul><li>A prancha ideal, explicada em palavras simples</li><li>Todas as 17 variáveis: medidas, litros, formato, quilhas e construção</li><li>As outras 2 finalistas e o comparador entre modelos</li><li>Guia para achar a prancha numa loja e ficha técnica para qualquer shaper</li><li>Relatório em PDF (A4), ${PDF_PAGES} páginas, para baixar e levar à loja</li><li>Seu Match: briefing pronto para fazer a prancha com um coach</li></ul>
+      <button class="btn btn-go" type="button" data-buy>Pagar ${PRICE_TXT} com Pix (simulação)</button>
     </div>
     <p class="note">O cálculo já foi feito: o pagamento só revela o resultado. Nenhuma marca ou shaper paga para aparecer.</p>
     <div class="row"><button class="btn btn-ghost" type="button" id="redo">Refazer respostas</button></div>
   </div>`;
   drawDNA(cardData(r)).then(cv=>{const o=$('#cardPrev');if(o)o.innerHTML=cardImg(cv,'Card do DNA de surf: '+archetype(r))}).catch(()=>{});
-  $('#buy2').onclick=()=>{tier=2;renderReport();show('report')};
+  $('#preview').querySelectorAll('[data-buy]').forEach(b=>b.onclick=pix);
   $('#redo').onclick=()=>{step=0;show('quiz');renderQs()};
+}
+
+/* ---------- Pix simulado ---------- */
+function qrSVG(seed){
+  let s=seed;const rnd=()=>(s=(s*1103515245+12345)%2147483648)/2147483648;const N=29;let g='';
+  const fin=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7" fill="#000"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="#000"/>`;
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){const f=(x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9);if(!f&&rnd()>.52)g+=`<rect x="${x}" y="${y}" width="1" height="1" fill="#000"/>`}
+  return `<svg viewBox="-1 -1 ${N+2} ${N+2}" shape-rendering="crispEdges" aria-label="QR Code de simulação">${g}${fin(0,0)}${fin(N-7,0)}${fin(0,N-7)}</svg>`;
+}
+let pixTimer=null,pixKey=null;
+function closeModal(){clearInterval(pixTimer);if(pixKey)document.removeEventListener('keydown',pixKey);pixKey=null;$('#modalRoot').innerHTML=''}
+function pix(){
+  const code='00020126580014BR.GOV.BCB.PIX0136SIMULACAO-BOARDMATCH-'+Date.now().toString(36).toUpperCase()+'5204000053039865406'+PRICE.toFixed(2)+'5802BR5913MATCH LAB6009SAO PAULO6304SIMU';
+  $('#modalRoot').innerHTML=`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="pxT"><div class="sheet">
+    <div class="phead"><div><p class="eyebrow">Pagamento via Pix</p><h3 id="pxT">Relatório Board Match</h3></div><button class="btn btn-ghost btn-sm" id="pxX" type="button" aria-label="Fechar">Fechar</button></div>
+    <div class="phead"><span style="font-size:28px;font-weight:700;font-variant-numeric:tabular-nums">${PRICE_TXT}</span><span class="muted">expira em <span class="timer" id="pxTm">10:00</span></span></div>
+    <div id="pxBody">
+      <div class="qr">${qrSVG(Date.now()%100000)}<span class="wm">SIMULAÇÃO</span></div>
+      <p class="note" style="text-align:center;margin:8px 0">Abra o app do banco, escolha Pix e escaneie, ou copie o código.</p>
+      <div class="paste"><input type="text" readonly value="${code}" id="pxC" aria-label="Pix copia e cola"><button class="btn btn-pri btn-sm" id="pxCp" type="button">Copiar</button></div>
+      <div class="status" style="margin:14px 0 6px"><span class="pulse"></span><span>Aguardando pagamento…</span></div>
+      <button class="btn btn-go" id="pxOk" type="button" style="width:100%">Simular pagamento aprovado</button>
+      <p class="note" style="margin-top:8px">Protótipo: nenhum valor é cobrado.</p>
+    </div></div></div>`;
+  let left=600;clearInterval(pixTimer);pixTimer=setInterval(()=>{left--;const e=$('#pxTm');if(!e){clearInterval(pixTimer);return}e.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');if(left<=0){clearInterval(pixTimer);e.textContent='expirado'}},1000);
+  $('#pxX').onclick=closeModal;
+  $('.modal').addEventListener('click',e=>{if(e.target.classList.contains('modal'))closeModal()});
+  if(pixKey)document.removeEventListener('keydown',pixKey);pixKey=e=>{if(e.key==='Escape')closeModal()};document.addEventListener('keydown',pixKey);
+  $('#pxCp').onclick=async()=>{try{await navigator.clipboard.writeText(code);$('#pxCp').textContent='Copiado'}catch(e){$('#pxC').select();$('#pxCp').textContent='Selecione e copie'}};
+  $('#pxOk').onclick=()=>{
+    $('#pxBody').innerHTML=`<div class="status" style="justify-content:center;padding:28px 0"><span class="pulse"></span><span>Confirmando com o banco…</span></div>`;
+    setTimeout(()=>{
+      if(!$('#pxBody'))return;
+      tier=2;renderReport();show('report');
+      $('#pxBody').innerHTML=`<div class="okbig">✓</div><h3 style="text-align:center">Pagamento confirmado</h3><p class="muted" style="text-align:center">Seu relatório está liberado.</p>
+        <button class="btn btn-go" type="button" id="pxPdf" style="width:100%;margin-top:14px">Baixar relatório em PDF (A4)</button>
+        <button class="btn btn-ghost" type="button" id="pxSee" style="width:100%;margin-top:8px">Ver relatório na tela</button>
+        <p class="note pdfst" aria-live="polite" style="text-align:center;margin-top:8px"></p>`;
+      $('#pxPdf').onclick=async()=>{$('#pxPdf').disabled=true;const ok=await makePDF(RES);if(ok)closeModal();else{const b=$('#pxPdf');if(b)b.disabled=false}};
+      $('#pxSee').onclick=closeModal;$('#pxPdf').focus();
+    },1100);
+  };
+  $('#pxOk').focus();
 }
 
 /* ---------- relatório ---------- */
@@ -1442,7 +1515,7 @@ function origins(){
   return `<table class="pori"><thead><tr><th>Decisão</th>${F.map(f=>`<th>${f}</th>`).join('')}</tr></thead><tbody>${R.map(([n,on])=>`<tr><td>${n}</td>${F.map((_,i)=>`<td><i class="${on.includes(i)?'':'o'}"></i></td>`).join('')}</tr>`).join('')}</tbody></table>`;
 }
 function pdfPage(n,title,body){
-  return `<section class="pg"><header class="pgh"><div class="lg"><svg width="26" height="26" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="10" fill="#0E4D64"/><ellipse cx="22" cy="22" rx="4.5" ry="16" fill="#FFFFFF" transform="rotate(-32 22 22)"/><ellipse cx="22" cy="22" rx="4.5" ry="16" fill="#6CCFF6" transform="rotate(32 22 22)"/></svg><span>Board Match<small>by Match Lab</small></span></div><div class="pt"><b>${title}</b>Relatório de ${new Date().toLocaleDateString('pt-BR')}</div></header>${body}<footer class="pgf"><span>Board Match · by Match Lab · Um projeto Beyond the Work</span><span>Página ${n} de 5</span></footer></section>`;
+  return `<section class="pg"><header class="pgh"><div class="lg"><svg width="26" height="26" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="10" fill="#0E4D64"/><ellipse cx="22" cy="22" rx="4.5" ry="16" fill="#FFFFFF" transform="rotate(-32 22 22)"/><ellipse cx="22" cy="22" rx="4.5" ry="16" fill="#6CCFF6" transform="rotate(32 22 22)"/></svg><span>Board Match<small>by Match Lab</small></span></div><div class="pt"><b>${title}</b>Relatório de ${new Date().toLocaleDateString('pt-BR')}</div></header>${body}<footer class="pgf"><span>Board Match · by Match Lab · Um projeto Beyond the Work</span><span>Página ${n} de ${PDF_PAGES}</span></footer></section>`;
 }
 function pdfHTML(r){
   const k=r.k,d=r.d,dc=r.dc,w=r.fins[0],s2=r.fins[1],gap=w.fit-s2.fit,lo=Math.round(d.V-r.rng),hi=Math.round(d.V+r.rng),at=r.atual,a=r.a;
@@ -1525,7 +1598,7 @@ function inlineSVG(root){
 }
 let pdfBusy=false;
 async function makePDF(r){
-  if(pdfBusy)return;pdfBusy=true;const st=document.querySelectorAll('.pdfst'),say=t=>st.forEach(x=>x.textContent=t);
+  if(pdfBusy)return false;pdfBusy=true;let ok=false;const st=document.querySelectorAll('.pdfst'),say=t=>st.forEach(x=>x.textContent=t);
   say('Gerando o PDF…');let box;
   try{
     await Promise.all(LIBS.map(loadJS));
@@ -1536,9 +1609,10 @@ async function makePDF(r){
     for(let i=0;i<pages.length;i++){say(`Gerando o PDF… página ${i+1} de ${pages.length}`);
       const c=await html2canvas(pages[i],{scale:2.4,backgroundColor:'#FFFFFF',logging:false,windowWidth:900});
       if(i)pdf.addPage();pdf.addImage(c.toDataURL('image/jpeg',.86),'JPEG',0,0,210,297)}
-    pdf.save(`board-match-${k2slug(PN[r.k])}.pdf`);say('PDF baixado.');
+    pdf.save(`board-match-${k2slug(PN[r.k])}.pdf`);say('PDF baixado.');ok=true;
   }catch(e){say('Não deu para gerar o PDF agora. Confira a conexão e tente de novo.')}
   finally{if(box)box.remove();pdfBusy=false}
+  return ok;
 }
 const k2slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 
