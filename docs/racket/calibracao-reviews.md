@@ -5,6 +5,25 @@
 - Atletas: 45 de 58 raquetes com profissionais por linha. Incluídos nesta rodada: Dunlop CX (Mérida, Brooksby, Jamie Murray, Santamaria), Dunlop SX (Vallejo), Prince Tour (Pouille, customizada). Sem profissional confirmado: Clash, Shift, Instinct, Ti S6, Boost Drive, ProKennex, Phantom, Ripstick. Burn (Pavlyuchenkova) ficou de fora por fonte fraca (jan/2025).
 - Comparação com o Tennis Engineer no mesmo perfil (intermediário, cotovelo, Pure Strike 98): o top 3 deles (Shift 99, Extreme MP, Percept 100, todas 66–67 RA) fica entre 16º e 37º no nosso, por causa da dor no cotovelo; os dois motores concordam que vale trocar a Pure Strike.
 
+## Rodada 4 — mapa e ranking coerentes (28/out)
+
+Problema visto em teste real: o relatório recomendava raquete fora da "sua zona" no mapa peso × swingweight. A zona desenhada (peso ideal ±8 g, swingweight ideal ±6) era mais estreita do que o motor cobrava: abaixo da zona, o swingweight só era penalizado 6 pontos depois da borda, e o peso tinha penalidade leve (1/3 por grama).
+
+Simulação com 500 perfis aleatórios (todas as respostas sorteadas):
+| Versão | 1ª dentro da zona | Fora da zona havendo raquete dentro | Raquetes diferentes em 1º | Clash 100 v3 em 1º |
+|---|---|---|---|---|
+| Antes | 27% | 63% | 33 | 40% |
+| Penalidade a partir da borda (1,2 por g ou ponto de SW) | 41% | 48% | 28 | — |
+| **Publicado: penalidade da borda + zona no Match (±4 pontos)** | **75%** | **15%** | **31** | **14%** |
+
+Regra no motor:
+- Peso e swingweight passam a ser penalizados a partir da borda da zona do mapa (1,2 por grama ou ponto de swingweight).
+- Estar dentro da zona soma 4 pontos ao Match; fora, tira 4.
+- Quando a 1ª ainda fica fora da zona (sem raquete na zona, ou as da zona são bem piores por rigidez, preço etc.), o relatório diz por quê: qual a melhor dentro da zona, quantos pontos atrás e o motivo.
+- Exemplo pronto passa a preferir comprar no Brasil (antes recomendava a Black Ace 105, sem loja no Brasil).
+
+Limite: não foi refeita a validação com os 30 testadores da TW (os dados brutos não estão no repositório). Refazer quando a base voltar.
+
 ## Rodada 3 — 30 perfis, destro/canhoto, backhand e Clash (23/out)
 
 ### Evidência: o que muda a recomendação
