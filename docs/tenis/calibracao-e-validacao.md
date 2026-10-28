@@ -21,6 +21,7 @@ Simulação com 500 perfis aleatórios (todas as respostas sorteadas, mesma seme
 - Hexágono desenhado com a meta do motor: 1º com algum índice "um pouco abaixo do ideal" caiu de 311 para 205 perfis (62% → 41%). O que sobra é quase todo amortecimento (115 perfis), uma troca real que o chip vermelho já mostra.
 - Marcas em 1º (antes → depois): adidas 122 → 134, ASICS 66 → 67, Mizuno 62 → 62, Olympikus 61 → 57, Hoka 62 → 55, New Balance 42 → 43, Brooks 37 → 34, Nike 23 → 24, Puma 15 → 15, On 8 → 7.
 - Exemplo pronto: o 1º passa de Olympikus Corre 5 (treino diário) para Olympikus Corre Max 2 (máximo amortecimento), coerente com o texto. Custo: fôrma padrão para quem tem pé largo e specs só da ficha; os dois aparecem no relatório.
+- **Exemplo pronto, 28/out/2026:** a largura do pé passou de larga para normal, para o exemplo não recomendar fôrma padrão a quem tem pé largo. Novo pódio: Mizuno Wave Sky 9 (máximo amortecimento, R$ 699,89, 96%), Olympikus Corre Max 2 (92%) e Olympikus Corre 5 (77%). Ponto de atenção que fica: drop de 4,4 mm para quem pisa de calcanhar (o relatório avisa).
 
 **Regra no motor:**
 - `ZONA = 2` no placar (±4 no Match): tênis na categoria ideal e com preço até 8% acima do orçamento soma; o resto perde. Em categoria com menos de 10 modelos, metade (`ZONA_PEQ`).

@@ -42,6 +42,7 @@ Kayano 33, GT-2000 15, Nimbus 28, Novablast 6, Superblast 3, Adios Pro 5, Ultrab
 ## Resultado para o usuário
 - **Pódio:** a Fila não entra no top 3 nem como segundo par (decisão editorial de out/2026, ver rodada 3 em `calibracao-e-validacao.md`).
 - **Preço:** relatório único de R$ 9,99 com tudo abaixo (desde 24/out/2026; antes R$ 7,99 o tênis ideal e R$ 12,90 o setup completo).
+- **PDF A4 (desde 28/out/2026):** Pix simulado com confirmação que oferece "Baixar relatório em PDF (A4)" ou "Ver relatório na tela"; o mesmo botão no topo e no fim do relatório. 5 páginas no padrão de `docs/padrao-relatorio-pdf.md`: veredito, sua corrida × o tênis, ajuste e adaptação, pódio com o consenso das reviews, ranking e método. Sem atletas e sem trechos de review com fonte: o catálogo ainda não tem esses dados.
 - **Top 10:** os 10 tênis que mais combinam, com Fit Score, marca, categoria, preço e custo por km. Ordena por match, preço ou custo/km.
 - **Top 3:** escolha entre top 3 geral e top 3 de uma marca, com hexágono, mapa do catálogo e tabela.
 - **O melhor de cada marca:** o tênis que mais combina de cada uma das principais marcas (adidas, ASICS, Hoka, Mizuno, New Balance, Nike, Olympikus, On e Puma), em ordem alfabética e sem posição; as marcas preferidas da pessoa vêm primeiro. Pergunta opcional de marca preferida (até 3).
