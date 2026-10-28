@@ -6,7 +6,7 @@
 /* Layout: igual ao Racket Match (coluna de 960px); identidade Match Lab com o laranja do Tenis Match */
 :root{
   --bg:#EEF4F5; --surface:#FFFFFF; --ink:#0B2530; --muted:#4A6570; --line:#CFDEE2;
-  --pri:#0E4D64; --pri-ink:#FFFFFF; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#B4472F; --soft:#DCEBEF; --hexa:#F4F8F9; --hexb:#E7F0F2; --stage:radial-gradient(120% 90% at 50% 20%,#FFFFFF 0%,#E3EEF1 70%);
+  --pri:#0E4D64; --pri-ink:#FFFFFF; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#B4472F; --soft:#DCEBEF; --hexa:#F4F8F9; --hexb:#E7F0F2;
   --f-display:'Archivo', 'Helvetica Neue', system-ui, sans-serif;
   --f-body:'DM Sans', system-ui, -apple-system, sans-serif;
   --f-mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
@@ -14,10 +14,10 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#08222C; --surface:#0E3442; --ink:#EAF4F6; --muted:#9BB8C1; --line:#1C4B5A;
-  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --hexa:#0F3846; --hexb:#12404F; --stage:radial-gradient(120% 90% at 50% 20%,#1A5568 0%,#0B2A36 75%); color-scheme:dark}}
+  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --hexa:#0F3846; --hexb:#12404F; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#08222C; --surface:#0E3442; --ink:#EAF4F6; --muted:#9BB8C1; --line:#1C4B5A;
-  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --hexa:#0F3846; --hexb:#12404F; --stage:radial-gradient(120% 90% at 50% 20%,#1A5568 0%,#0B2A36 75%); color-scheme:dark}
+  --pri:#7FD0E6; --pri-ink:#08222C; --ball:#FF8A3D; --ball-ink:#0B2530; --clay:#FF8A7A; --soft:#12404F; --hexa:#0F3846; --hexb:#12404F; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
@@ -119,10 +119,10 @@ table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
 th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-.share{background:#0E4D64;color:#FFFFFF;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px;max-width:360px}
-.share .big{font-family:var(--f-display);font-size:28px;font-weight:800;line-height:1.05}
-.share .chip{display:inline-block;background:var(--ball);color:#0B2530;font-weight:700;font-size:13px;border-radius:99px;padding:4px 10px}
-.share small{opacity:.85}
+.herocol{display:flex;flex-direction:column;gap:18px;min-width:0}
+.homecard{min-height:420px}.homecard:empty{display:none}
+.cardimg{width:100%;max-width:230px;border-radius:16px;display:block;box-shadow:0 14px 34px rgba(0,0,0,.22);transform:rotate(-2deg)}
+.cardpair{display:flex;justify-content:center;align-items:flex-start;padding:6px 0 18px}.cardpair .cardimg{width:50%;max-width:220px}.cardpair .cardimg+.cardimg{transform:rotate(3deg) translateY(14px);margin-left:-14px}
 .mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .mini .panel{gap:10px}
 footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
@@ -146,7 +146,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .mist p{font-size:14px;color:var(--muted)}
 @media (max-width:760px){.bignums{grid-template-columns:minmax(0,1fr)}.mists{grid-template-columns:minmax(0,1fr)}}
 .brk{display:flex;flex-direction:column}
-.brow{display:grid;grid-template-columns:40px minmax(0,1fr) 120px;gap:12px;align-items:center;padding:10px 8px;border-bottom:1px solid var(--line)}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:12px;align-items:center;padding:10px 8px;border-bottom:1px solid var(--line)}
 .brow:last-child{border-bottom:0}
 .brow b{display:block;font-family:var(--f-display);font-size:16px}
 .brow small{display:block;font-size:12.5px}
@@ -162,11 +162,6 @@ table.t10 tr.pref td{background:var(--soft)}
 .blink:hover{border-bottom-color:var(--pri)}
 .blink:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
 /* visuais */
-.stage{background:var(--stage);border:1px solid var(--line);border-radius:16px;padding:8px;position:relative;display:flex;flex-direction:column;gap:6px;min-width:0}
-.s3d canvas{display:block;cursor:grab;border-radius:12px;touch-action:pan-y}
-.s3d canvas:active{cursor:grabbing}
-.s3d canvas:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
-.hint{font-size:12px;color:var(--muted);text-align:center}
 .seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
 .seg button{font:inherit;font-size:13px;font-weight:700;border:0;background:transparent;color:var(--muted);border-radius:999px;padding:7px 14px;cursor:pointer;min-height:36px}
 .seg button[aria-pressed="true"]{background:var(--pri);color:var(--pri-ink)}
@@ -179,10 +174,7 @@ table.t10 tr.pref td{background:var(--soft)}
 .labbar i{position:absolute;inset:0 auto 0 0;border-radius:99px;background:linear-gradient(90deg,var(--pri),color-mix(in srgb,var(--pri) 70%,var(--ball)));transition:width .5s}
 .labbar em{position:absolute;top:-4px;bottom:-4px;width:3px;margin-left:-1.5px;background:var(--ink);border-radius:2px}
 .labrow small{font-size:12.5px}
-.teaser{position:relative}
-.teaser .q3{position:absolute;inset:auto 0 14px 0;text-align:center;font-family:var(--f-display);font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .cmp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.cmp .stage{padding:6px}
 .cmp h4{margin:0;font-family:var(--f-display);font-size:16px}
 .kmbar{display:flex;align-items:center;gap:8px}
 .kmbar i{display:block;height:8px;border-radius:99px;background:var(--ball)}
@@ -197,8 +189,6 @@ table.t10 tr.pref td{background:var(--soft)}
 .fx.up{background:var(--soft);color:var(--ink)}
 .fx.dn{background:transparent;color:var(--clay);border-color:currentColor}
 .src{font-size:12px;color:var(--muted);margin-top:4px}
-.sharehex{--line:rgba(255,255,255,.25);--muted:rgba(255,255,255,.8);--hexa:rgba(255,255,255,.06);--hexb:rgba(255,255,255,.1);--ink:#fff;--surface:#0E4D64}
-.sharehex .legend{display:none}
 @media (max-width:760px){
   .hero,.two,.mini{grid-template-columns:minmax(0,1fr)}
   .diffs{grid-template-columns:minmax(0,1fr)}
@@ -223,13 +213,15 @@ table.t10 tr.pref td{background:var(--soft)}
       <div style="display:flex;flex-direction:column;gap:18px">
         <p class="eyebrow">Análise técnica independente</p>
         <h1>O tênis de corrida certo para o seu corpo e o seu treino.</h1>
-        <p class="lead">Responda 18 perguntas sobre seu corpo, sua corrida e seu objetivo. Você vê a análise inteira antes de pagar qualquer coisa.</p>
+        <p class="lead">Responda 19 perguntas sobre seu corpo, sua corrida e seu objetivo. Você vê a análise inteira antes de pagar qualquer coisa.</p>
         <div class="row">
           <button class="btn btn-go" id="start" type="button">Descobrir meu tênis</button>
           <button class="btn btn-ghost" id="example" type="button">Ver um exemplo pronto</button>
         </div>
         <p class="note">Grátis · 3 minutos · sem cadastro</p>
       </div>
+      <div class="herocol">
+      <div id="cardHome" class="homecard" aria-label="Exemplo dos cards: perfil de corredor e tênis com o Match"></div>
       <div class="court">
         <p class="eyebrow acc">O motor</p>
         <div class="stats">
@@ -240,11 +232,12 @@ table.t10 tr.pref td{background:var(--soft)}
         <p style="font-size:14px;opacity:.9">Peso, espuma, drop, durabilidade, preço médio e custo por km, cruzados com seu peso, seu ritmo, seus km por semana e seu objetivo.</p>
         <p class="mono acc" style="font-size:13px">Nenhuma marca paga para aparecer.</p>
       </div>
+      </div>
     </div>
     <div class="diffs">
       <div class="diff"><h3>Preço médio no Brasil</h3><p>Cada finalista com preço de referência e custo por km. Você sabe quanto vai gastar antes de abrir a loja.</p></div>
       <div class="diff"><h3>Sem mito da pisada</h3><p>Neutro por padrão, como mostram os estudos. Estabilidade só entra se você sente desconforto com neutro.</p></div>
-      <div class="diff"><h3>Ficha de laboratório</h3><p>Tênis em 3D, corte da espuma em mm e seis índices contra a média do catálogo.</p></div>
+      <div class="diff"><h3>Ficha de laboratório</h3><p>Peso, espuma e drop medidos e seis índices contra a média do catálogo.</p></div>
       <div class="diff"><h3>Quando trocar</h3><p>A data de troca pela sua quilometragem e um segundo par para rodízio, se fizer sentido.</p></div>
     </div>
     <div class="erra">
@@ -302,11 +295,10 @@ table.t10 tr.pref td{background:var(--soft)}
   <section id="report" hidden style="display:flex;flex-direction:column;gap:20px"></section>
 
   <footer>
-    Tenis Match é um teste da família Match Lab. Protótipo. Preços são de referência e mudam com promoção; os marcados como "aprox." são estimativas. Os links levam ao site oficial de cada marca; nenhuma marca paga para aparecer. Isto não substitui avaliação de médico ou fisioterapeuta em caso de dor ou lesão.
+    Tenis Match é um teste da família Match Lab. Protótipo. Preços são de referência e mudam com promoção; os marcados como "aprox." são estimativas. Os links levam a lojas no Brasil (site brasileiro da marca ou Centauro); tênis importados ficam sem link. Nenhuma marca paga para aparecer. Isto não substitui avaliação de médico ou fisioterapeuta em caso de dor ou lesão.
   </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -322,10 +314,6 @@ const CAT={
 };
 // catálogo: 227 tênis, 643 reviews (out/2026). n, marca, cat, preço, peso g, drop, maciez 1-5, durab. km, largo, preço aprox., nota, salto, antepé, resposta 1-5, estabilidade 1-5, aprovação 1-5, nº reviews, placa, usos, não indicado, perfil, vendido no Brasil
 const M=[
- ["361° Centauri 3", "361°", "dia", 699.0, 265, 10.0, 4.0, 600, 0, 0, "Diário macio e rolado (38/28 mm, drop 10), bom para rodagem e regenerativo; não pede ritmo forte.", 38.0, 28.0, 3.0, 3.0, 4.3, 2, "", "lon rod", "rap", "hee ini lon", 1, "", "https://www.361usa.com/products/mens-361-centauri-3-azure-blue-grey-blue", "produto", 1, 1, ""],
- ["361° Eleos", "361°", "dia", 749.0, 283, 6.0, 4.0, 700, 1, 0, "Macio com rebote e estável pela base larga; forma larga e calça curto. Pesado para ritmo e esquenta.", 36.0, 30.0, 4.0, 4.0, 4.1, 12, "", "dia lon mei rod", "cal rap", "ini lar lon pes", 1, "", "https://www.361usa.com/products/mens-361-eleos-black-heather-castlerock-final-sale", "produto", 8, 4, ""],
- ["361° Flame 4", "361°", "sup", 1100.0, 225, 6.0, 3.0, 500, 0, 0, "Carbono estável, durável e barato; firme e menos explosivo que os supertênis top; gola incomoda o Aquiles.", 39.0, 33.0, 4.0, 4.0, 4.0, 2, "carbono", "rit lon p10 mei mar", "ini len aqu dia", "rap fore", 1, "", "https://361europe.com/pages/flame-4", "produto", 2, 0, ""],
- ["361° Kairos 3", "361°", "est", 699.0, 303, 8.0, 3.0, 600, 0, 0, "Estabilidade leve e discreta com rocker, amortecido sem ser mole; pesado (~300 g) e não feito para ritmo.", 34.0, 26.0, 3.0, 4.0, 4.0, 1, "", "rod lon", "rap", "pro ini hee lon", 1, "", "https://www.361usa.com/products/mens-361-kairos-4-black-361-white", "produto", 1, 0, ""],
  ["ASICS Dynablast 6", "ASICS", "dia", 615.0, 268, 9.0, 2.5, 650, 0, 0, "Novablast antigo mais barato: base estável e muito amortecimento; firme, pesado e ponta rasa", 41.0, 32.0, 2.0, 4.0, 3.6, 2, "", "dia lon rod", "lar rap", "dia ini", 1, "", "https://www.asics.com.br/1011c372-400/p", "produto", 2, 0, ""],
  ["ASICS GT-1000 15", "ASICS", "est", 760.0, 272, 9.0, 2.4, 700, 0, 0, "Estabilidade barata, base larga e sola durável; espuma firme e sem vida, fraco para longões", 35.0, 26.0, 1.6, 4.6, 3.5, 5, "", "aca dia rod", "lon pes rap", "hee ini pro", 1, "", "https://www.asics.com.br/1011c230-003/p", "produto", 5, 0, ""],
  ["ASICS GT-2000 15", "ASICS", "est", 1000.0, 253, 8.0, 3.4, 750, 0, 0, "Estabilidade leve e discreta, mais leve e vivo que o 14; sola muito durável, ponta afunilada", 39.0, 31.0, 3.0, 4.0, 4.3, 11, "", "dia lon rit rod", "aqu lar rap", "dia hee ini pro", 1, "", "https://www.asics.com.br/colecao/gt-2000", "categoria", 9, 2, ""],
@@ -361,8 +349,8 @@ const M=[
  ["Brooks Hyperion Elite 5", "Brooks", "sup", 2399.9, 201, 9.3, 3.8, 400, 0, 0, "Supertênis de drop alto para quem pisa de calcanhar: saltado e rápido; instável, estreito, sola gasta cedo.", 38.2, 28.9, 4.6, 2.7, 4.0, 10, "carbono", "mar mei p10 rit tir", "dia fore lar len pro", "cal hee rap", 1, "resposta, nota geral", "https://www.brooksrunning.com.br/produto/tenis-brooks-hyperion-elite-5-unissex-150519", "produto", 10, 0, ""],
  ["Brooks Hyperion Max 3", "Brooks", "rap", 1599.9, 290, 7.7, 3.7, 650, 0, 0, "Super trainer alto com PEBA e placa de nylon, macio e com bom retorno para longão; pouco estável e caro.", 45.4, 37.7, 3.6, 2.9, 3.6, 10, "placa", "lon mar mei rit rod", "dia lar pro tir", "cal hee lon", 1, "nota geral", "https://www.brooksrunning.com.br/produto/tenis-brooks-hyperion-max-3-masculino-150487", "produto", 7, 3, ""],
  ["Brooks Launch 11", "Brooks", "dia", 599.9, 235, 8.0, 2.6, 750, 0, 0, "Leve, firme e saltitante, vai do treino diário ao tiro; durável e ótimo custo. Forma justa e baixa.", 35.0, 27.0, 3.6, 3.0, 4.2, 11, "", "mei p10 rit rod tir", "lar pes pro", "cal ini rap", 1, "", "https://www.brooksrunning.com.br/produto/tenis-brooks-launch-11-masculino-150561", "produto", 5, 6, ""],
- ["Brooks Revel 9", "Brooks", "ent", 864.0, 264, 9.0, 2.3, 700, 0, 1, "Entrada estável e barato para trote curto, academia e dia a dia; muito firme, bico baixo e sem retorno.", 33.0, 24.0, 2.2, 4.0, 3.6, 6, "", "aca dia rod", "lon rap", "dia hee ini", 0, "", "https://www.brooksrunning.com/en_gb/mens/road-running-shoes/revel-9/110499.html", "produto", 4, 2, ""],
- ["Brooks Trace 4", "Brooks", "ent", 864.0, 266, 12.0, 1.5, 700, 0, 1, "Básico de drop alto, estável e durável para iniciante que pisa de calcanhar; muito firme e pouco amortecido.", 34.0, 22.0, 2.0, 4.0, 4.2, 10, "", "aca dia rod", "cal fore lon rap", "dia hee ini", 0, "", "https://www.brooksrunning.com/en_it/mens/road-running-shoes/trace-4/110452.html", "produto", 2, 8, ""],
+ ["Brooks Revel 9", "Brooks", "ent", 864.0, 264, 9.0, 2.3, 700, 0, 1, "Entrada estável e barato para trote curto, academia e dia a dia; muito firme, bico baixo e sem retorno.", 33.0, 24.0, 2.2, 4.0, 3.6, 6, "", "aca dia rod", "lon rap", "dia hee ini", 0, "", "", "produto", 4, 2, ""],
+ ["Brooks Trace 4", "Brooks", "ent", 864.0, 266, 12.0, 1.5, 700, 0, 1, "Básico de drop alto, estável e durável para iniciante que pisa de calcanhar; muito firme e pouco amortecido.", 34.0, 22.0, 2.0, 4.0, 4.2, 10, "", "aca dia rod", "cal fore lon rap", "dia hee ini", 0, "", "", "produto", 2, 8, ""],
  ["Fila Float Maxxi 2", "Fila", "max", 550.0, 285, 8.0, 4.1, 500, 1, 1, "Macio, base larga e estável, antepé espaçoso (cogite meio número acima); pesado para treinos de ritmo.", 36.0, 28.0, 2.0, 4.0, 4.2, 5, "", "aca dia lon rod", "est rap", "dia hee ini lar pes", 1, "", "https://www.fila.com.br/tenis-fila-float-maxxi-2-masculino-1186838/p", "produto", 3, 2, ""],
  ["Fila KR7 Pro Speed Tech", "Fila", "ent", 340.0, 260, 8.0, 3.0, 450, 0, 1, "Entrada da Fila para começar a correr, em promoção frequente; sem ficha de medidas nem reviews.", 30.0, 22.0, 3.0, 3.0, 3.0, 1, "", "rod p10 aca dia", "lon pes", "ini dia", 1, "", "https://www.fila.com.br/tenis-fila-kr7-pro-speed-tech-masculino-1325208/p", "produto", 1, 0, ""],
  ["Fila Racer Carbon 3", "Fila", "sup", 900.0, 235, 8.0, 2.0, 600, 0, 0, "Carbono barato com ajuste melhor que o 2 e solado durável; espuma firme e propulsão abaixo dos rivais.", 39.0, 31.0, 3.0, 3.0, 3.0, 4, "carbono", "rit tir p10", "lar len aqu lon", "rap", 1, "", "https://www.fila.com.br/tenis-fila-racer-carbon-3-masculino-1291541/p", "produto", 4, 0, ""],
@@ -398,11 +386,11 @@ const M=[
  ["Mizuno Wave Daichi 9", "Mizuno", "tri", 566.99, 300, 6.0, 3.4, 700, 0, 0, "Trilha versátil e estável em terreno misto; Vibram agarra bem em pedra seca. Fraco na lama, forma estreita.", 34.0, 28.0, 3.0, 4.0, 3.7, 3, "", "dia lon tri", "lama lar pes rap", "ini", 1, "", "https://www.mizuno.com.br/tenis-de-trilha-masculino-mizuno-wave-daichi-9-102320001-1-201/p", "produto", 2, 1, ""],
  ["Mizuno Wave Falcon 4", "Mizuno", "ent", 359.99, 310, 10.0, 2.5, 500, 0, 0, "Entrada nacional confortável e bem avaliada por clientes, mas pesada (303 g no 40); para começar e dia a dia.", 32.0, 22.0, 2.0, 3.5, 3.6, 11, "", "aca dia rod", "lon pes rap", "dia ini", 1, "", "https://www.mizuno.com.br/tenis-de-corrida-mizuno-wave-falcon-5-feminino-azul-6734/p", "produto", 1, 10, ""],
  ["Mizuno Wave Frontier 15", "Mizuno", "ent", 499.99, 375, 9.0, 2.5, 700, 0, 0, "Entrada nacional robusta e estável com placa Infinity Wave, mas pesada (372 g no 40); sem reviews.", 34.0, 25.0, 2.0, 4.0, 3.0, 0, "", "rod dia aca", "rap lon", "ini hee dia", 1, "", "https://www.mizuno.com.br/tenis-de-corrida-mizuno-wave-frontier-15-masculino-preto-6752/p", "produto", 0, 0, ""],
- ["Mizuno Wave Horizon 9", "Mizuno", "est", 1555.0, 313, 8.0, 3.0, 750, 0, 1, "Estabilidade máxima sem post rígido, muito seguro. Pesado (~310 g), sem rebote e calcanhar duro na transição.", 41.0, 33.0, 2.0, 5.0, 3.5, 3, "", "dia lon rod", "hee rap", "dia pes pro", 0, "", "https://usa.mizuno.com/running-wave-horizon-9-mens", "produto", 3, 0, ""],
+ ["Mizuno Wave Horizon 9", "Mizuno", "est", 1555.0, 313, 8.0, 3.0, 750, 0, 1, "Estabilidade máxima sem post rígido, muito seguro. Pesado (~310 g), sem rebote e calcanhar duro na transição.", 41.0, 33.0, 2.0, 5.0, 3.5, 3, "", "dia lon rod", "hee rap", "dia pes pro", 0, "", "", "produto", 3, 0, ""],
  ["Mizuno Wave Ibuki 4", "Mizuno", "tri", 629.99, 305, 8.0, 3.0, 700, 0, 0, "Trilha de entrada 'porta à trilha' para terreno batido; pouco amortecimento p/ pesados e pega mal no molhado.", 30.0, 22.0, 3.0, 3.5, 3.0, 3, "", "tri rod dia", "lama rap pes", "ini", 1, "", "https://www.mizuno.com.br/tenis-de-trilha-masculino-mizuno-wave-ibuki-4-102091001-1-014/p", "produto", 3, 0, ""],
  ["Mizuno Wave Inspire 22", "Mizuno", "est", 999.9, 281, 8.0, 3.2, 800, 0, 0, "Estabilidade leve a moderada, firme e durável; solado quase não gasta. Sem rebote e calcanhar pode sobrar.", 37.0, 29.0, 2.1, 4.4, 3.7, 7, "", "dia lon rod", "rap", "hee pro", 1, "", "https://www.mizuno.com.br/tenis-de-corrida-mizuno-wave-inspire-22-102375001-030/p", "produto", 6, 1, ""],
  ["Mizuno Wave Mirai 5", "Mizuno", "ent", 399.99, 270, 9.0, 3.0, 500, 0, 0, "Entrada nacional com cabedal knit e placa Wave, voltada a saúde e bem-estar; pouca info técnica.", 30.0, 21.0, 2.0, 3.5, 3.5, 1, "", "rod dia aca", "rap lon pes", "ini dia", 1, "", "https://www.mizuno.com.br/tenis-de-corrida-mizuno-wave-mirai-5-masculino-azul-6688/p", "produto", 1, 0, ""],
- ["Mizuno Wave Mujin 11", "Mizuno", "tri", 1600.0, 330, 8.0, 3.5, 1000, 1, 1, "Trilha técnica e ultra: muito estável, protetor, durável e com ótima aderência na lama. Pesado e sem rebote.", 38.0, 30.0, 2.0, 5.0, 4.0, 3, "", "lon tri", "asf rap", "lama lar lon pes pro", 0, "", "https://sgp.mizuno.com/products/wave-mujin-11-j1gk2570-2025aw", "produto", 3, 0, ""],
+ ["Mizuno Wave Mujin 11", "Mizuno", "tri", 1600.0, 330, 8.0, 3.5, 1000, 1, 1, "Trilha técnica e ultra: muito estável, protetor, durável e com ótima aderência na lama. Pesado e sem rebote.", 38.0, 30.0, 2.0, 5.0, 4.0, 3, "", "lon tri", "asf rap", "lama lar lon pes pro", 0, "", "", "produto", 3, 0, ""],
  ["Mizuno Wave Prophecy 15", "Mizuno", "con", 1589.99, 371, 12.0, 1.5, 900, 0, 0, "Ícone de visual e estabilidade, mas pesadíssimo (371 g) e muito firme no laboratório; melhor no dia a dia.", 41.0, 30.0, 2.0, 4.5, 2.5, 2, "", "dia rod aca", "rap lon fore len", "hee pes dia", 1, "", "https://www.mizuno.com.br/tenis-mizuno-wave-prophecy-15-102365001-030/p", "produto", 2, 0, ""],
  ["Mizuno Wave Prorunner 25", "Mizuno", "dia", 699.99, 285, 12.0, 3.0, 600, 0, 1, "Diário nacional clássico (drop 12, placa Wave) em fim de linha, só estoque residual; sem reviews acessíveis.", 33.0, 21.0, 3.0, 3.5, 3.0, 0, "", "rod rit dia", "fore lon", "hee ini", 1, "", "https://www.mizuno.com.br/tenis-de-corrida-masculino-mizuno-wave-prorunner-25-4146815-1-004/p", "produto", 0, 0, ""],
  ["Mizuno Wave Rebellion Flash 3", "Mizuno", "rap", 749.99, 244, 7.5, 4.2, 650, 0, 0, "Treino de ritmo macio e vivo, geometria que empurra pra frente. Instável devagar; forma curta (½ nº acima).", 40.0, 32.5, 4.0, 2.3, 3.7, 9, "placa", "mar mei p10 rit rod tir", "aqu hee lar len pro", "fore rap", 1, "", "https://www.mizuno.com.br/tenis-de-corrida-mizuno-wave-rebellion-flash-3-102327001-021/p", "produto", 8, 1, ""],
@@ -413,43 +401,43 @@ const M=[
  ["Mizuno Wave Titan 3", "Mizuno", "ent", 299.99, 300, 10.0, 3.0, 500, 0, 0, "Entrada nacional barata focada em conforto, para começar a correr e uso diário. Sem reviews; notas pela ficha.", 32.0, 22.0, 2.0, 3.5, 3.0, 0, "", "rod dia aca", "rap lon pes", "ini dia", 1, "", "https://www.mizuno.com.br/tenis-de-corrida-mizuno-wave-titan-3-masculino-branco-11310/p", "produto", 0, 0, ""],
  ["Mizuno Wave Way 4", "Mizuno", "ent", 249.99, 317, 9.0, 2.5, 500, 0, 0, "Entrada mais barata da Mizuno, pesada; serve para caminhada e trote curto. Sem reviews; notas pela ficha.", 31.0, 22.0, 2.0, 3.5, 3.0, 0, "", "dia rod aca", "rap lon pes", "ini dia", 1, "", "https://www.mizuno.com.br/tenis-de-corrida-masculino-mizuno-wave-way-4-101083083-1-030/p", "produto", 0, 0, ""],
  ["New Balance 1080 v15", "New Balance", "dia", 899.89, 255, 6.0, 4.2, 600, 0, 0, "Espuma Infinion: 30 g mais leve e bem mais macio que o v14; ótimo para rodagem e longão, pouco estável.", 38.0, 31.0, 3.2, 2.6, 4.1, 10, "", "dia lon mar mei rod", "aqu pes pro rap", "dia lon", 1, "", "https://www.newbalance.com.br/tenis-new-balance-infinion-1080-v15-masculino-1348267/p", "produto", 10, 0, ""],
- ["New Balance DynaSoft Nitrel v6", "New Balance", "tri", 648.0, 291, 3.0, 2.0, 600, 0, 1, "Barato, estável e baixo para estradão, caminhada e viagem; pouca espuma e aderência fraca no técnico.", 23.0, 20.0, 2.0, 4.0, 4.3, 6, "", "dia rod tri", "hee lama lon pes", "dia ini", 0, "", "https://www.newbalance.com/pd/dynasoft-nitrel-v6/MTNTRV6-46540.html", "produto", 1, 5, ""],
+ ["New Balance DynaSoft Nitrel v6", "New Balance", "tri", 648.0, 291, 3.0, 2.0, 600, 0, 1, "Barato, estável e baixo para estradão, caminhada e viagem; pouca espuma e aderência fraca no técnico.", 23.0, 20.0, 2.0, 4.0, 4.3, 6, "", "dia rod tri", "hee lama lon pes", "dia ini", 0, "", "", "produto", 1, 5, ""],
  ["New Balance Ellipse v1", "New Balance", "dia", 799.89, 262, 9.0, 4.0, 550, 0, 0, "Macio e confortável para rodagem leve e uso casual; pouca resposta e espuma que cansa cedo. Tem versão 2E.", 37.0, 28.0, 2.5, 3.1, 3.9, 10, "", "dia lon rod", "aqu pro rap", "dia ini", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-ellipse-masculino-1348807/p", "produto", 10, 0, ""],
  ["New Balance Fresh Foam 520 v9", "New Balance", "ent", 549.9, 256, 7.0, 2.0, 500, 0, 0, "Estável e fácil de confiar para iniciante, mas firme e duro nas pernas: melhor até 10 km e no dia a dia.", 37.0, 30.0, 2.0, 4.0, 3.0, 1, "", "aca dia p10 rod", "lon pes rap", "dia ini", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-520-v9-masculino-1267460/p", "produto", 1, 0, ""],
  ["New Balance Fresh Foam 680 v9", "New Balance", "ent", 599.9, 258, 8.0, 3.7, 600, 0, 0, "Primeiro tênis honesto: macio, durável e bom também no dia a dia; pouco ventilado e sem graça em ritmo.", 33.0, 25.0, 2.5, 3.8, 4.3, 10, "", "aca dia rod", "pro rap", "dia ini", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-680v9-masculino-1355195/p", "produto", 1, 9, ""],
  ["New Balance Fresh Foam Arishi v4", "New Balance", "ent", 499.99, 242, 8.0, 3.4, 500, 0, 0, "Mais tênis de academia e dia a dia que de corrida: confortável e barato, mas instável e afunda em ritmo.", 28.0, 20.0, 2.5, 2.6, 3.5, 10, "", "aca dia rod", "lar lon pes pro rap", "dia ini", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-arishiv4-masculino-1350267/p", "produto", 2, 8, "pequeno"],
- ["New Balance Fresh Foam X 860 v15", "New Balance", "est", 1296.0, 330, 7.0, 3.8, 600, 1, 1, "Estabilidade medial de verdade num corpo alto e largo; muito pesado (330 g) e só para ritmo leve.", 40.0, 33.0, 2.3, 4.2, 3.6, 9, "placa", "dia lon mar rod", "aqu est rap", "dia ini lar lon pes pro", 0, "", "https://www.newbalance.com/pd/fresh-foam-x-860v15/M860V15_RU-FTW-802888.html", "produto", 6, 3, ""],
+ ["New Balance Fresh Foam X 860 v15", "New Balance", "est", 1296.0, 330, 7.0, 3.8, 600, 1, 1, "Estabilidade medial de verdade num corpo alto e largo; muito pesado (330 g) e só para ritmo leve.", 40.0, 33.0, 2.3, 4.2, 3.6, 9, "placa", "dia lon mar rod", "aqu est rap", "dia ini lar lon pes pro", 0, "", "", "produto", 6, 3, ""],
  ["New Balance Fresh Foam X 880 v15", "New Balance", "dia", 899.9, 290, 6.0, 2.9, 550, 1, 0, "Virou um quase-máximo estável e barato; mais firme e pesado (290 g) que o esperado, sem graça em ritmo.", 40.0, 34.0, 2.1, 4.1, 3.9, 11, "", "dia lon rod", "aqu rap", "hee ini lon pes pro", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-x-880v15-masculino-1347912/p", "produto", 6, 5, "pequeno"],
  ["New Balance Fresh Foam X Balos", "New Balance", "max", 1728.0, 245, 3.9, 4.8, 500, 1, 1, "Nuvem de PEBA leve e quicante pra rodagem e recuperação; rocker forte, pouco estável, toe box baixo e caro.", 35.6, 31.7, 2.9, 2.8, 4.0, 10, "", "dia lon rod", "aqu pes pro rap", "dia ini lon", 0, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-x-balos-masculino-1264583/p", "produto", 10, 0, ""],
- ["New Balance Fresh Foam X Garoé v2", "New Balance", "tri", 950.0, 269, 11.0, 3.5, 600, 0, 1, "Trilha de entrada macio e de drop alto para estradão e terra batida; biqueira justa e ruim no técnico.", 38.0, 27.0, 3.0, 3.0, 4.0, 2, "", "dia rod tri", "fore lama lar", "dia hee ini", 0, "", "https://www.newbalance.com/men/shoes/running/trail-running/", "categoria", 1, 1, ""],
+ ["New Balance Fresh Foam X Garoé v2", "New Balance", "tri", 950.0, 269, 11.0, 3.5, 600, 0, 1, "Trilha de entrada macio e de drop alto para estradão e terra batida; biqueira justa e ruim no técnico.", 38.0, 27.0, 3.0, 3.0, 4.0, 2, "", "dia rod tri", "fore lama lar", "dia hee ini", 0, "", "", "categoria", 1, 1, ""],
  ["New Balance Fresh Foam X Hierro v9", "New Balance", "tri", 1099.9, 309, 4.0, 4.0, 800, 1, 0, "Trilha macio e durável com Vibram Megagrip para longão em terreno moderado; pesado e justo no técnico.", 37.0, 33.0, 2.5, 3.5, 4.2, 10, "", "lon rod tri", "est hee lama", "fore lar lon", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-x-hierro-v9-masculino-1347985/p", "produto", 4, 6, "pequeno"],
  ["New Balance Fresh Foam X Kaiha Road v2", "New Balance", "ent", 699.99, 281, 4.0, 4.0, 600, 1, 0, "Muito amortecimento e base estável por preço de entrada; drop baixo, pesado e sem resposta para ritmo.", 36.0, 32.0, 2.5, 4.0, 4.0, 1, "", "rod lon dia", "rap", "ini lar fore dia", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-x-kaiha-road-v2-masculino-1350376/p", "produto", 1, 0, ""],
- ["New Balance Fresh Foam X More Trail v3", "New Balance", "tri", 1382.0, 306, 5.0, 4.9, 600, 1, 1, "Máximo amortecimento pra trilha leve e ultra sem pressa, forma espaçosa; pesado, inseguro no técnico.", 40.0, 35.0, 2.8, 3.8, 4.2, 12, "", "dia lon rod tri", "est lama rap", "lar lon pes", 0, "", "https://www.newbalance.com/pd/fresh-foam-x-trail-more-v3/MTMORV3-46428.html", "produto", 9, 3, ""],
+ ["New Balance Fresh Foam X More Trail v3", "New Balance", "tri", 1382.0, 306, 5.0, 4.9, 600, 1, 1, "Máximo amortecimento pra trilha leve e ultra sem pressa, forma espaçosa; pesado, inseguro no técnico.", 40.0, 35.0, 2.8, 3.8, 4.2, 12, "", "dia lon rod tri", "est lama rap", "lar lon pes", 0, "", "", "produto", 9, 3, ""],
  ["New Balance Fresh Foam X More v6", "New Balance", "max", 799.89, 302, 4.0, 4.9, 700, 0, 0, "Colchão estável de 42 mm e drop baixo para rodagem leve e recuperação; pesado (300 g) e quente.", 42.0, 38.0, 2.5, 3.9, 4.3, 13, "", "dia lon mar rod", "cal rap", "dia fore ini lon pes", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fresh-foam-x-more-v6-masculino-1315374/p", "produto", 5, 8, ""],
- ["New Balance Fresh Foam X Vongo v6", "New Balance", "est", 1296.0, 303, 6.0, 3.5, 550, 0, 1, "Estabilidade leve sem post, macio e com rocker pra rodagem e longão; pesado, sem resposta e sola fraca.", 38.0, 32.0, 2.0, 3.6, 4.1, 11, "", "dia lon rod", "cal rap", "dia ini lon pro", 0, "", "https://www.newbalance.com/pd/fresh-foam-x-vongo-v6/MVNGOV6-42958.html", "produto", 6, 5, ""],
- ["New Balance FuelCell Propel v5", "New Balance", "dia", 1037.0, 272, 7.0, 4.1, 600, 0, 1, "Treino diário macio, barato e durável pra rodagem e longão; pouco retorno, antepé mole e biqueira estreita.", 35.5, 29.0, 2.6, 2.9, 3.7, 11, "placa", "dia lon rod", "lar pro rap", "ini lon", 0, "", "https://www.newbalance.com/pd/fuelcell-propel-v5/MFCPRV5-49423.html", "produto", 4, 7, ""],
- ["New Balance FuelCell Rebel Trail", "New Balance", "tri", 1296.0, 302, 6.0, 3.0, 700, 0, 1, "Trilha ágil e reativo com Vibram, bom no técnico e em treino de qualidade; firme e pouco amortecido p/ ultra.", 34.0, 28.0, 3.5, 3.5, 4.0, 2, "", "mei p10 rit tri", "lama lon", "rap", 0, "", "https://www.newbalance.com/es/pd/fuelcell-rebel-trail/MRBTV1_RU-FTW-802442.html", "produto", 2, 0, ""],
+ ["New Balance Fresh Foam X Vongo v6", "New Balance", "est", 1296.0, 303, 6.0, 3.5, 550, 0, 1, "Estabilidade leve sem post, macio e com rocker pra rodagem e longão; pesado, sem resposta e sola fraca.", 38.0, 32.0, 2.0, 3.6, 4.1, 11, "", "dia lon rod", "cal rap", "dia ini lon pro", 0, "", "", "produto", 6, 5, ""],
+ ["New Balance FuelCell Propel v5", "New Balance", "dia", 1037.0, 272, 7.0, 4.1, 600, 0, 1, "Treino diário macio, barato e durável pra rodagem e longão; pouco retorno, antepé mole e biqueira estreita.", 35.5, 29.0, 2.6, 2.9, 3.7, 11, "placa", "dia lon rod", "lar pro rap", "ini lon", 0, "", "", "produto", 4, 7, ""],
+ ["New Balance FuelCell Rebel Trail", "New Balance", "tri", 1296.0, 302, 6.0, 3.0, 700, 0, 1, "Trilha ágil e reativo com Vibram, bom no técnico e em treino de qualidade; firme e pouco amortecido p/ ultra.", 34.0, 28.0, 3.5, 3.5, 4.0, 2, "", "mei p10 rit tri", "lama lon", "rap", 0, "", "", "produto", 2, 0, ""],
  ["New Balance FuelCell Rebel v5", "New Balance", "rap", 1099.99, 227, 7.0, 3.8, 450, 1, 0, "Leve (220 g) e saltitante sem placa: faz rodagem e ritmo no mesmo tênis; cabedal frágil e espuma cansa cedo.", 36.2, 28.0, 3.7, 3.0, 4.0, 10, "", "lon mei p10 rit rod tir", "cal pes pro rap", "fore lar rap", 1, "estabilidade", "https://www.newbalance.com.br/tenis-new-balance-fuelcell-rebel-v5-masculino-1314788/p", "produto", 10, 0, ""],
- ["New Balance FuelCell SuperComp Pacer v2", "New Balance", "sup", 1728.0, 204, 8.0, 2.9, 450, 0, 1, "Racer de carbono baixo, firme e ágil pra 5k à meia e tiros; contraforte machuca o Aquiles e forma justa.", 34.0, 26.0, 4.4, 3.0, 4.1, 12, "carbono", "mei p10 rit tir", "aqu lar len pro", "cal rap", 0, "", "https://www.newbalance.com/pd/fuelcell-supercomp-pacer-v2/MFCRRV2-50695.html", "produto", 6, 6, ""],
- ["New Balance FuelCell SuperComp Trail v2", "New Balance", "tri", 1901.0, 278, 8.0, 3.6, 600, 0, 1, "Trilha de prova com carbono, rápido em terreno corrível até ~60 km; instável no técnico, pouco grip molhado.", 39.0, 31.0, 4.2, 2.9, 4.3, 6, "carbono", "lon rit tri", "lama lar len pro", "rap", 0, "", "https://www.newbalance.com/pd/supercomp-trail/MTRXV2_RU-FTW-821890.html", "produto", 5, 1, ""],
+ ["New Balance FuelCell SuperComp Pacer v2", "New Balance", "sup", 1728.0, 204, 8.0, 2.9, 450, 0, 1, "Racer de carbono baixo, firme e ágil pra 5k à meia e tiros; contraforte machuca o Aquiles e forma justa.", 34.0, 26.0, 4.4, 3.0, 4.1, 12, "carbono", "mei p10 rit tir", "aqu lar len pro", "cal rap", 0, "", "", "produto", 6, 6, ""],
+ ["New Balance FuelCell SuperComp Trail v2", "New Balance", "tri", 1901.0, 278, 8.0, 3.6, 600, 0, 1, "Trilha de prova com carbono, rápido em terreno corrível até ~60 km; instável no técnico, pouco grip molhado.", 39.0, 31.0, 4.2, 2.9, 4.3, 6, "carbono", "lon rit tri", "lama lar len pro", "rap", 0, "", "", "produto", 5, 1, ""],
  ["New Balance FuelCell SuperComp Trainer v3", "New Balance", "rap", 1599.99, 268, 8.0, 3.4, 550, 0, 0, "Super trainer de carbono estável pra longão e ritmo de maratona; biqueira baixa e estreita, duro no trote.", 38.5, 30.0, 3.7, 3.8, 4.3, 13, "carbono", "lon mar mei rit rod tir", "lar len", "lon rap", 1, "", "https://www.newbalance.com.br/tenis-new-balance-fuelcell-supercomp-trainer-v3-masculino-1228415/p", "produto", 7, 6, "pequeno"],
- ["New Balance SuperComp Elite v6", "New Balance", "sup", 2376.0, 188, 9.0, 3.7, 400, 0, 1, "Supertênis leve (188 g) e explosivo com Infinion, do 5k à maratona; calcanhar instável, sola fina e caro.", 39.0, 30.0, 4.5, 2.8, 4.5, 10, "carbono", "mar mei p10 rit tir", "ini lar len pro", "rap", 0, "", "https://www.newbalance.com/pd/supercomp-elite-v6/MRCELV6_RU-FTW-826130.html", "produto", 9, 1, ""],
- ["New Balance SuperComp Rebel v1", "New Balance", "rap", 1728.0, 212, 8.0, 3.6, 550, 0, 1, "Sucessor leve (212 g) do SC Trainer: muito saltitante para ritmo, longão e prova; forma justa e pouco estável.", 39.0, 31.0, 4.6, 3.4, 4.6, 9, "carbono", "lon mar mei p10 rit rod tir", "lar len pro", "rap", 0, "", "https://www.newbalance.com/pd/supercomp-rebel/MREBXV1_RU-FTW-814193-PMG-NA.html", "produto", 5, 4, ""],
+ ["New Balance SuperComp Elite v6", "New Balance", "sup", 2376.0, 188, 9.0, 3.7, 400, 0, 1, "Supertênis leve (188 g) e explosivo com Infinion, do 5k à maratona; calcanhar instável, sola fina e caro.", 39.0, 30.0, 4.5, 2.8, 4.5, 10, "carbono", "mar mei p10 rit tir", "ini lar len pro", "rap", 0, "", "", "produto", 9, 1, ""],
+ ["New Balance SuperComp Rebel v1", "New Balance", "rap", 1728.0, 212, 8.0, 3.6, 550, 0, 1, "Sucessor leve (212 g) do SC Trainer: muito saltitante para ritmo, longão e prova; forma justa e pouco estável.", 39.0, 31.0, 4.6, 3.4, 4.6, 9, "carbono", "lon mar mei p10 rit rod tir", "lar len pro", "rap", 0, "", "", "produto", 5, 4, ""],
  ["Nike ACG Pegasus Trail", "Nike", "tri", 1044.99, 289, 8.0, 3.3, 700, 1, 0, "Híbrido asfalto-trilha versátil, com mais amortecimento e boa aderência; fraco em lama e trilha técnica", 34.0, 26.0, 3.1, 3.0, 4.0, 10, "", "dia rod tri", "lama pro rap", "dia ini lar", 1, "", "https://www.nike.com.br/tenis-nike-pegasus-trail-masculino-097813.html", "produto", 8, 2, "pequeno"],
  ["Nike ACG Ultrafly Trail", "Nike", "tri", 2374.99, 272, 9.0, 3.0, 600, 0, 0, "Supertênis de trilha com ZoomX e carbono, rápido e estável pro tamanho; caríssimo e cravo raso", 38.0, 28.0, 4.2, 3.7, 4.3, 10, "carbono", "lon mar mei p10 rit tir tri", "cal ini lama lar len", "lar lon rap", 1, "", "https://www.nike.com.br/tenis-nike-acg-ultrafly-trail-masculino-059605.html", "produto", 5, 5, ""],
  ["Nike ACG Zegama Trail", "Nike", "tri", 1139.99, 312, 4.0, 3.8, 650, 1, 0, "Trilha macio, estável e com Vibram que agarra em tudo, ótimo pra ultra; pesado (~310 g) e drop baixo.", 38.0, 34.0, 2.5, 4.0, 4.5, 10, "", "lon rod tri", "aqu cal hee rap", "fore lama lar lon", 1, "", "https://www.nike.com.br/tenis-nike-acg-zegama-trail-masculino-097794.html", "produto", 6, 4, ""],
  ["Nike Alphafly 3", "Nike", "sup", 1263.49, 201, 8.0, 3.5, 400, 0, 0, "Supertênis de maratona com retorno enorme e estabilidade razoável; caro cheio, solado gasta e arco estreito", 40.0, 32.0, 4.9, 3.1, 4.4, 11, "carbono", "lon mar mei p10", "hee ini lar len pro", "cal lon rap", 1, "maciez, estabilidade", "https://www.nike.com.br/tenis-nike-air-zoom-alphafly-3-masculino-028312.html", "produto", 9, 2, ""],
- ["Nike Alphafly 4", "Nike", "sup", 2419.0, 195, 8.0, 4.0, 400, 0, 1, "Alphafly mais leve e macio, antepé muito quicante pra maratona; calcanhar afunda, calça curto e range.", 39.0, 31.0, 5.0, 2.5, 4.5, 3, "carbono", "mar mei rit", "len pro ini hee pes", "rap lon fore", 0, "", "https://www.nike.com/t/alphafly-4-mens-road-racing-shoes-lw5UiD4C", "produto", 3, 0, ""],
+ ["Nike Alphafly 4", "Nike", "sup", 2419.0, 195, 8.0, 4.0, 400, 0, 1, "Alphafly mais leve e macio, antepé muito quicante pra maratona; calcanhar afunda, calça curto e range.", 39.0, 31.0, 5.0, 2.5, 4.5, 3, "carbono", "mar mei rit", "len pro ini hee pes", "rap lon fore", 0, "", "", "produto", 3, 0, ""],
  ["Nike Downshifter 14", "Nike", "ent", 427.49, 309, 10.0, 1.9, 600, 0, 0, "Barato, estável e durável pra caminhar, academia e trote curto; duro, pesado e sem amortecimento pra volume", 33.0, 23.0, 1.9, 4.0, 4.0, 11, "", "aca dia rod", "cal lar lon pes rap", "dia ini", 1, "", "https://www.nike.com.br/tenis-nike-downshifter-14-masculino-097816.html", "produto", 2, 9, ""],
  ["Nike Interact Run", "Nike", "ent", 398.99, 241, 9.0, 2.3, 400, 0, 0, "Leve e muito ventilado pro dia a dia e trote curto; espuma firme, forma pequena e cabedal gasta cedo.", 30.0, 20.0, 1.7, 3.5, 3.6, 10, "", "aca dia rod", "lar lon pes pro rap", "cal dia hee ini", 1, "", "https://www.nike.com.br/tenis-nike-interact-run-masculino-027297.html", "produto", 2, 8, ""],
  ["Nike Invincible 3", "Nike", "max", 1424.99, 290, 8.5, 4.8, 640, 0, 0, "ZoomX muito macio pra trote e longão lento; pesado, sem graça acima de 5:00/km e escorrega no molhado.", 38.0, 30.0, 3.0, 3.0, 3.8, 10, "", "dia lon rod", "lar pes rap", "hee ini lon", 1, "", "https://www.nike.com.br/tenis-nike-invincible-3-masculino-025231.html", "produto", 5, 5, ""],
  ["Nike Journey Run", "Nike", "ent", 522.49, 298, 9.0, 1.7, 600, 0, 0, "Entrada bem construída pra iniciante, trote curto e dia a dia; mais dura do que parece e cansa em distância.", 33.0, 24.0, 1.5, 4.1, 4.0, 10, "", "aca dia rod", "lar lon pes rap", "dia ini", 1, "", "https://www.nike.com.br/tenis-nike-journey-run-masculino-028657.html", "produto", 2, 8, ""],
  ["Nike Juniper Trail 3", "Nike", "tri", 599.99, 288, 11.0, 3.2, 600, 1, 0, "Trilha de entrada barato e espaçoso pra estradão e caminhada; firme, cravo raso e esquenta", 33.0, 22.0, 2.0, 3.5, 4.2, 10, "", "dia rod tri", "cal est fore lama lon rap", "dia hee ini lar", 1, "", "https://www.nike.com.br/tenis-nike-juniper-trail-3-masculino-029445.html", "produto", 1, 9, ""],
- ["Nike Kiger 10", "Nike", "tri", 1382.0, 262, 5.0, 2.0, 650, 0, 1, "Trilha baixo, ágil e rápido com Vibram que agarra bem; espuma básica e firme, ruim pra ultra", 29.0, 24.0, 3.0, 3.3, 3.9, 10, "", "mei p10 rit tri", "asf hee ini lama lar lon", "fore rap", 0, "", "https://www.nike.com/t/kiger-10-mens-trail-running-shoes-kG952w/FV3929-100", "produto", 6, 4, ""],
+ ["Nike Kiger 10", "Nike", "tri", 1382.0, 262, 5.0, 2.0, 650, 0, 1, "Trilha baixo, ágil e rápido com Vibram que agarra bem; espuma básica e firme, ruim pra ultra", 29.0, 24.0, 3.0, 3.3, 3.9, 10, "", "mei p10 rit tri", "asf hee ini lama lar lon", "fore rap", 0, "", "", "produto", 6, 4, ""],
  ["Nike Pegasus 42", "Nike", "dia", 949.99, 284, 10.0, 2.4, 700, 0, 0, "Burro de carga firme e estável, solado durável; pesado, antepé fino e sem graça em ritmo forte", 37.0, 27.0, 2.7, 4.0, 3.8, 11, "", "aca dia rod", "cal fore lar lon rap", "dia hee ini", 1, "", "https://www.nike.com.br/tenis-nike-air-zoom-pegasus-42-masculino-097736.html", "produto", 7, 4, ""],
- ["Nike Pegasus Plus 2", "Nike", "dia", 1234.99, 250, 10.0, 3.3, 600, 0, 0, "Pegasus mais macio e mais alto, bom pra rodagem e longão; drop alto, antepé firme e pouco explosivo", 38.0, 28.0, 3.1, 3.2, 4.1, 10, "", "lon rit rod", "cal fore lar pro rap", "hee lon", 1, "", "https://www.nike.com/t/pegasus-plus-2-mens-road-running-shoes-p9ePl101", "produto", 9, 1, ""],
+ ["Nike Pegasus Plus 2", "Nike", "dia", 1234.99, 250, 10.0, 3.3, 600, 0, 0, "Pegasus mais macio e mais alto, bom pra rodagem e longão; drop alto, antepé firme e pouco explosivo", 38.0, 28.0, 3.1, 3.2, 4.1, 10, "", "lon rit rod", "cal fore lar pro rap", "hee lon", 1, "", "https://www.nike.com.br/nav/esportes/corrida/genero/masculino/modelos/pegasus", "categoria", 9, 1, ""],
  ["Nike Pegasus Premium", "Nike", "max", 1434.49, 309, 10.0, 3.3, 630, 0, 0, "Muito amortecido e quicante, mas pesado (~310 g), caro e de forma estreita; calcanhar instável", 43.0, 33.0, 3.4, 2.5, 3.7, 10, "", "dia lon rit rod", "lar pro rap", "cal hee lon", 1, "", "https://www.nike.com.br/tenis-nike-pegasus-premium-masculino-106918.html", "produto", 10, 0, ""],
- ["Nike Quest 6", "Nike", "ent", 399.99, 283, 12.0, 2.8, 600, 0, 0, "Entrada barata e durável com bom calcanhar; espuma dura, drop de 12 mm e pouca resposta", 35.0, 23.0, 1.5, 4.0, 4.5, 10, "", "aca dia rod", "fore lon pro rap", "dia hee ini", 1, "", "https://www.nike.com/za/t/quest-6-mens-road-running-shoes-lk8VbB", "produto", 1, 9, ""],
+ ["Nike Quest 6", "Nike", "ent", 399.99, 283, 12.0, 2.8, 600, 0, 0, "Entrada barata e durável com bom calcanhar; espuma dura, drop de 12 mm e pouca resposta", 35.0, 23.0, 1.5, 4.0, 4.5, 10, "", "aca dia rod", "fore lon pro rap", "dia hee ini", 1, "", "https://www.nike.com.br/nav/categorias/tenis/esportes/corrida/modelos/quest", "categoria", 1, 9, ""],
  ["Nike Revolution 8", "Nike", "ent", 299.99, 266, 10.5, 1.5, 550, 0, 0, "Entrada leve e durável pra começar e pro dia a dia; firme, antepé fino e forma justa", 34.0, 24.0, 2.0, 3.8, 3.8, 10, "", "aca dia rod", "lar lon pes pro rap", "dia hee ini", 1, "", "https://www.nike.com.br/tenis-nike-revolution-8-masculino-058889.html", "produto", 2, 8, ""],
  ["Nike Rival Fly 4", "Nike", "rap", 549.99, 250, 8.0, 2.7, 400, 0, 0, "Flat de treino barato pra tiro, pista e 5-10k; firme, estreito, pouco propulsivo e escorrega no molhado.", 31.0, 23.0, 3.4, 3.5, 4.2, 8, "placa", "p10 rit rod tir", "lar len lon pes pro", "rap", 1, "", "https://www.nike.com.br/tenis-nike-rival-fly-4-masculino-031274.html", "produto", 2, 6, ""],
  ["Nike Streakfly 2", "Nike", "sup", 1196.99, 124, 4.0, 2.4, 250, 0, 0, "Sapatilha de carbono de ~125 g pra milha, 5k e tiros curtos; estreita, pouco protegida e gasta muito rápido.", 27.0, 23.0, 5.0, 1.6, 4.2, 12, "carbono", "p10 tir", "hee ini lar len lon pes pro", "cal fore rap", 1, "", "https://www.nike.com.br/tenis-nike-zoomx-streakfly-2-masculino-058406.html", "produto", 8, 4, ""],
@@ -459,7 +447,7 @@ const M=[
  ["Nike Vomero 18", "Nike", "max", 949.99, 298, 10.0, 3.9, 560, 1, 0, "Max-cushion estável e confortável pro trote e longão lento; pesado e sem resposta em ritmo", 43.0, 33.0, 2.2, 3.7, 4.1, 10, "", "dia lon mar rod", "cal rap", "dia hee ini lon pes", 1, "", "https://www.nike.com.br/tenis-nike-vomero-18-masculino-056401.html", "produto", 10, 0, ""],
  ["Nike Vomero Plus", "Nike", "max", 1234.99, 285, 10.0, 4.5, 670, 0, 0, "Max-cushion de ZoomX macio e quicante, estável pro tamanho; esquenta, forma justa e não é pra tiro", 43.0, 33.0, 3.6, 3.2, 4.6, 10, "", "dia lon mar rod", "cal lar pro rap tir", "hee lon", 1, "", "https://www.nike.com.br/tenis-nike-vomero-plus-masculino-059241.html", "produto", 10, 0, ""],
  ["Nike Vomero Premium", "Nike", "max", 1804.99, 330, 10.0, 4.9, 700, 0, 0, "Amortecimento extremo (50+ mm) pra trote de recuperação; pesadíssimo, caro e lento fora do ritmo leve", 53.0, 43.0, 3.2, 2.9, 3.9, 10, "", "dia lon rod", "cal lar lon p10 pro rap", "hee lon pes", 1, "resposta, estabilidade, nota geral", "https://www.nike.com.br/tenis-nike-vomero-premium-masculino-080162.html", "produto", 7, 3, ""],
- ["Nike Wildhorse 10", "Nike", "tri", 1426.0, 310, 9.5, 4.0, 550, 0, 1, "Trilha macio e confortável pra estradão e trilha leve; grip ATC fraco em pedra molhada, pesado e caro.", 38.0, 28.5, 3.1, 3.0, 3.7, 10, "", "lon rod tri", "cal fore lama lar pro rap", "dia hee lon", 0, "", "https://www.nike.com/t/wildhorse-10-mens-trail-running-shoes-juOQGIPO", "produto", 5, 5, ""],
+ ["Nike Wildhorse 10", "Nike", "tri", 1426.0, 310, 9.5, 4.0, 550, 0, 1, "Trilha macio e confortável pra estradão e trilha leve; grip ATC fraco em pedra molhada, pesado e caro.", 38.0, 28.5, 3.1, 3.0, 3.7, 10, "", "lon rod tri", "cal fore lama lar pro rap", "dia hee lon", 0, "", "", "produto", 5, 5, ""],
  ["Nike Winflo 12", "Nike", "dia", 664.99, 299, 10.0, 3.4, 700, 0, 0, "Muito tênis pelo preço: alto, estável e confortável pra rodar; pesado (~300 g) e lento em ritmo forte", 41.0, 30.0, 2.7, 4.4, 4.4, 10, "", "dia lon rod", "rap", "dia hee ini pes", 1, "", "https://www.nike.com.br/tenis-nike-winflo-12-masculino-097664.html", "produto", 2, 8, ""],
  ["Nike Zoom Fly 6", "Nike", "rap", 999.99, 247, 10.0, 3.2, 610, 0, 0, "Super trainer de carbono durável e mais barato que o Vaporfly, ótimo pra ritmo e longão; antepé apertado", 43.0, 33.0, 3.8, 3.3, 4.3, 10, "carbono", "lon mar mei p10 rit rod tir", "hee ini lar len pro", "lon rap", 1, "maciez, resposta", "https://www.nike.com.br/tenis-nike-zoom-fly-6-masculino-056330.html", "produto", 10, 0, ""],
  ["Olympikus Corre 4", "Olympikus", "dia", 400.0, 218, 8.0, 3.0, 700, 1, 0, "Leve, ventilado e vivo para o preço; firme, serve de rodagem a meia. Custo-benefício de referência no BR.", 32.0, 24.0, 4.0, 3.0, 4.0, 5, "", "mei p10 rit rod tir", "pes pro", "cal ini lar rap", 1, "", "https://www.olympikus.com.br/tenis-olympikus-corre-4-43720366-3-738/p", "produto", 5, 0, ""],
@@ -479,16 +467,16 @@ const M=[
  ["On Cloudboom Max", "On", "rap", 2099.0, 286, 9.0, 2.5, 800, 1, 0, "Placa de vidro, muito estável e durável: ótimo para longão e maratona em ~4h; pesado e caro.", 39.0, 30.0, 3.6, 4.7, 4.0, 11, "placa", "dia lon mar mei rit rod", "", "lar lon pes", 1, "", "https://www.on.com/pt-br/products/cloudboom-max-m-3mf3031/mens", "produto", 9, 2, ""],
  ["On Cloudboom Strike 2", "On", "sup", 2099.0, 200, 5.0, 3.3, 400, 0, 0, "Supertênis de maratona da On, leve e muito responsivo; calcanhar estreito e instável, pede pisada de antepé.", 40.0, 35.0, 4.4, 3.1, 4.7, 10, "carbono", "lon mar mei p10 rit", "aqu hee ini len pro", "fore lar lon rap", 1, "estabilidade", "https://www.on.com/pt-br/products/cloudboom-strike-2-ls-u-3ug3002/unisex", "produto", 10, 0, ""],
  ["On Cloudboom Volt", "On", "sup", 1599.0, 209, 8.0, 2.8, 500, 0, 0, "Supertênis de entrada da On: macio e eficiente até a meia; calcanhar estreito e antepé cede na maratona.", 39.0, 30.0, 3.7, 3.0, 4.1, 6, "carbono", "dia lon mar mei p10 rit rod tir", "hee len pro", "rap", 1, "", "https://www.on.com/pt-br/products/cloudboom-volt-m-3mf3098/mens/white-black-shoes-3MF30980462", "produto", 6, 0, ""],
- ["On Cloudboom Zone", "On", "rap", 1728.0, 223, 7.0, 2.0, 500, 0, 1, "Treino de ritmo/tiro leve e firme com PEBA, sem placa; pouco amortecido para longão ou maratona.", 37.0, 30.0, 4.2, 4.2, 3.2, 4, "", "p10 rit tir", "hee len lon", "rap", 0, "", "https://www.on.com/en-us/products/cloudboom-zone-3me3030", "produto", 4, 0, ""],
+ ["On Cloudboom Zone", "On", "rap", 1728.0, 223, 7.0, 2.0, 500, 0, 1, "Treino de ritmo/tiro leve e firme com PEBA, sem placa; pouco amortecido para longão ou maratona.", 37.0, 30.0, 4.2, 4.2, 3.2, 4, "", "p10 rit tir", "hee len lon", "rap", 0, "", "", "produto", 4, 0, ""],
  ["On Cloudflow 5", "On", "rap", 1399.0, 269, 5.7, 1.6, 550, 0, 0, "Treino de ritmo firme e baixo, com forma espaçosa; espuma sem retorno e pesado para um tênis rápido.", 38.9, 33.2, 2.9, 3.8, 3.4, 10, "placa", "p10 rit tir", "cal lar len lon", "cal fore rap", 1, "resposta", "https://www.on.com/pt-br/products/cloudflow-5-m-3mf1011/mens", "produto", 10, 0, ""],
  ["On Cloudflyer 5", "On", "est", 1299.0, 329, 8.0, 1.9, 750, 0, 0, "Estável, confortável e muito bem construído; porém firme, pesado (~330 g no lab) e sem vida.", 33.0, 25.0, 1.6, 4.2, 3.4, 10, "placa", "dia rod", "lon rap", "dia pes pro", 1, "", "https://www.on.com/pt-br/products/cloudflyer-5-3we3004/womens/black-white-shoes-3WE30040299", "produto", 6, 4, ""],
  ["On Cloudmonster 3", "On", "max", 1499.0, 298, 6.0, 2.1, 650, 0, 0, "Máximo amortecimento com pegada firme e estável; pesado, pouco retorno de energia e caro.", 38.0, 32.0, 2.3, 4.0, 3.2, 9, "placa", "dia lon rit rod", "aqu est rap", "dia pes", 1, "", "https://www.on.com/pt-br/products/cloudmonster-3-m-3mg1005", "produto", 8, 1, ""],
  ["On Cloudmonster 3 Hyper", "On", "rap", 1699.0, 264, 9.0, 3.1, 800, 0, 0, "Super trainer sem placa, estável e muito durável; firme para o tamanho da espuma e pouco ventilado.", 43.0, 34.0, 3.7, 4.1, 4.7, 10, "", "lon mar mei rit rod", "cal rap", "lon pes", 1, "", "https://www.on.com/pt-br/products/cloudmonster-3-hyper-3mg1006/mens", "produto", 10, 0, ""],
  ["On Cloudrunner 3", "On", "est", 999.0, 298, 8.0, 2.4, 750, 1, 0, "Estabilidade leve e muito controlada, sola durável; firme, pesado e sem retorno de energia nenhum.", 37.0, 29.0, 1.7, 4.6, 3.5, 11, "", "dia rod", "cal lon rap", "dia hee ini lar pro", 1, "", "https://www.on.com/pt-br/products/cloudrunner-3-m-3mg1007/mens", "produto", 8, 3, ""],
  ["On Cloudrunner 3 Max", "On", "est", 1399.0, 344, 10.0, 2.0, 700, 0, 0, "Estabilidade máxima da On com muita espuma; pesadíssimo (~345 g) e sem resposta. Poucas reviews.", 45.0, 35.0, 1.0, 4.7, 3.3, 4, "", "dia lon rod", "rap", "hee ini pes pro", 1, "", "https://www.on.com/pt-br/products/cloudrunner-3-max-m-3mg3020", "produto", 2, 2, ""],
- ["On Cloudsoma", "On", "tri", 1555.0, 225, 6.0, 2.0, 500, 0, 1, "Leve, ágil e versátil para estradão e trilha fácil saindo de casa; firme e pouco protegido em pedra.", 33.0, 27.0, 3.6, 3.2, 3.8, 5, "", "aca dia rit rod tri", "aqu est lama lar lon", "dia", 0, "", "https://www.on.com/en-us/products/cloudsoma-m-3mf3065", "produto", 5, 0, ""],
+ ["On Cloudsoma", "On", "tri", 1555.0, 225, 6.0, 2.0, 500, 0, 1, "Leve, ágil e versátil para estradão e trilha fácil saindo de casa; firme e pouco protegido em pedra.", 33.0, 27.0, 3.6, 3.2, 3.8, 5, "", "aca dia rit rod tri", "aqu est lama lar lon", "dia", 0, "", "", "produto", 5, 0, ""],
  ["On Cloudstratus 3", "On", "dia", 1399.0, 296, 9.0, 3.3, 720, 1, 0, "Treino diário confortável e estável, com placa que dá certo impulso; pesado e em fim de linha no Brasil.", 35.0, 26.0, 2.6, 4.2, 3.8, 11, "placa", "dia lon rod", "cal fore rap", "dia hee lar lon", 1, "", "https://www.on.com/pt-br/products/cloudstratus-3-3md3011/mens/pearl-ivory-shoes-3MD30112143", "produto", 5, 6, ""],
- ["On Cloudsurfer 3", "On", "dia", 1382.0, 301, 8.0, 4.0, 650, 1, 1, "Bem mais macio que o Cloudsurfer 2 e com forma espaçosa; pesado (~300 g) e sem graça para ritmo.", 45.0, 37.0, 3.1, 3.1, 4.1, 10, "", "dia lon rod", "est rap", "dia lar pes", 0, "", "https://www.on.com/en-us/collection/cloudsurfer3", "categoria", 8, 2, ""],
+ ["On Cloudsurfer 3", "On", "dia", 1382.0, 301, 8.0, 4.0, 650, 1, 1, "Bem mais macio que o Cloudsurfer 2 e com forma espaçosa; pesado (~300 g) e sem graça para ritmo.", 45.0, 37.0, 3.1, 3.1, 4.1, 10, "", "dia lon rod", "est rap", "dia lar pes", 0, "", "", "categoria", 8, 2, ""],
  ["On Cloudsurfer Max", "On", "max", 1399.0, 295, 6.4, 2.2, 650, 0, 0, "'Max' só no nome: firme, estável e bem acabado, mas pesado e com pouco retorno; bom para rodagem e dia a dia.", 37.6, 31.2, 1.9, 4.1, 3.1, 10, "", "dia lon rod", "cal rap", "dia hee pes", 1, "", "https://www.on.com/pt-br/products/cloudsurfer-max-m-3mf3043/mens/black-eclipse-shoes-3MF30430106", "produto", 10, 0, ""],
  ["On Cloudsurfer Next", "On", "ent", 999.0, 264, 5.0, 2.2, 650, 0, 0, "Porta de entrada da On: firme, leve para a categoria e versátil; forma estreita e pouco amortecimento macio.", 34.0, 29.0, 3.1, 3.3, 3.9, 12, "", "aca dia lon rit rod", "cal hee lar pro", "fore ini", 1, "", "https://www.on.com/pt-br/products/cloudsurfer-next-3me3002", "produto", 8, 4, ""],
  ["On Cloudsurfer Trail 2", "On", "tri", 1199.0, 283, 14.0, 3.1, 600, 0, 0, "Do asfalto à terra batida e parque; cravos rasos, drop alto no lab (14 mm) e sem graça na trilha técnica.", 41.0, 27.0, 2.2, 3.0, 3.4, 10, "", "dia rod tri", "fore lama lar", "dia hee", 1, "", "https://www.on.com/pt-br/products/cloudsurfer-trail-2-m-3mf3022/mens/", "produto", 6, 4, ""],
@@ -504,16 +492,16 @@ const M=[
  ["Puma Fast-R Nitro Elite 3", "Puma", "sup", 2199.9, 173, 8.9, 3.3, 300, 0, 0, "Um dos supertênis mais rápidos do mercado, mas muito instável, agressivo e frágil; só para prova.", 39.3, 30.4, 4.9, 1.8, 4.3, 10, "carbono", "mar mei p10 tir", "dia hee ini lar len pes pro", "fore rap", 1, "estabilidade", "https://br.puma.com/pd/tenis-de-corrida-fast-r-nitrotm-elite-3-masculino/312060.html", "produto", 10, 0, ""],
  ["Puma ForeverRun Nitro 2", "Puma", "est", 799.89, 292, 9.9, 2.9, 750, 0, 0, "Estabilidade discreta e durável, com ótima aderência; pesado e lento para treino de ritmo.", 37.3, 27.4, 2.7, 4.3, 4.0, 9, "", "dia lon rod", "lar rap", "dia hee ini pes pro", 1, "maciez", "https://br.puma.com/pd/tenis-de-corrida-foreverrun-nitrotm-2-masculino/310109.html", "produto", 7, 2, ""],
  ["Puma MagMax Nitro 2", "Puma", "max", 1399.9, 268, 8.8, 3.2, 650, 0, 0, "Muita espuma, estável e leve para a altura; pouco retorno e meio do pé estreito. Só para ritmo calmo.", 46.0, 35.0, 2.6, 4.1, 3.7, 10, "", "dia lon rod", "lar rap", "dia ini lon pes", 1, "resposta", "https://br.puma.com/pd/tenis-de-corrida-magmax-nitrotm-2-masculino/312125.html", "produto", 8, 2, ""],
- ["Puma Magnify Nitro 3", "Puma", "dia", 1382.0, 261, 10.2, 4.0, 620, 0, 1, "Treino diário macio e saltitante com PEBA; drop alto, forma estreita e cabedal quente.", 38.7, 28.5, 4.0, 2.5, 4.2, 11, "", "lon rit rod", "aqu cal fore lar pro", "hee lon", 0, "estabilidade", "https://us.puma.com/us/en/pd/magnify-nitro-3-mens-road-running-shoes/311046", "produto", 9, 2, ""],
+ ["Puma Magnify Nitro 3", "Puma", "dia", 1382.0, 261, 10.2, 4.0, 620, 0, 1, "Treino diário macio e saltitante com PEBA; drop alto, forma estreita e cabedal quente.", 38.7, 28.5, 4.0, 2.5, 4.2, 11, "", "lon rit rod", "aqu cal fore lar pro", "hee lon", 0, "estabilidade", "", "produto", 9, 2, ""],
  ["Puma Velocity Nitro 5", "Puma", "dia", 999.9, 242, 9.8, 2.9, 720, 0, 0, "Treino diário leve, flexível e muito aderente por bom preço; espuma menos viva que a v4 e forma estreita.", 35.0, 25.2, 3.0, 3.9, 4.0, 8, "", "dia p10 rit rod", "aqu lar lon pes", "dia ini", 1, "", "https://br.puma.com/pd/tenis-de-corrida-velocity-nitrotm-5-masculino/312944.html", "produto", 8, 0, ""],
- ["Salomon Aero Blaze 4", "Salomon", "dia", 1210.0, 237, 8.0, 2.5, 600, 0, 1, "Treino diário leve, firme e ágil, bom até ritmo forte e 15 km; pouca espuma para longão e sem molejo.", 35.0, 27.0, 3.0, 3.5, 3.8, 5, "", "rod rit p10 dia", "lon pro len", "rap cal", 0, "", "https://www.salomon.com/en-us/product/aero-blaze-4-li9270", "produto", 5, 0, ""],
- ["Salomon Aero Glide 4", "Salomon", "dia", 1382.0, 256, 9.7, 3.8, 550, 1, 1, "Muita espuma de eTPU com bom retorno por preço justo; drop alto (~12 mm) e antepé afunilado.", 42.5, 32.8, 3.7, 3.4, 4.2, 10, "", "lon mar rit rod", "fore lar rap", "hee lon", 0, "", "https://www.salomon.com/en-us/product/aero-glide-4-li8681/L49147100", "produto", 10, 0, ""],
- ["Salomon Genesis 2", "Salomon", "tri", 1296.0, 272, 8.0, 2.6, 750, 0, 1, "Trilha técnico muito estável, aderente e durável para treino e ultra; espuma firme e um pouco mais pesado.", 34.0, 26.0, 3.1, 4.6, 4.3, 11, "", "lon tri", "rap", "hee lama lon", 0, "", "https://www.salomon.com/en-us/product/genesis-2-li9180", "produto", 7, 4, ""],
- ["Salomon S/Lab Phantasm 3", "Salomon", "sup", 2419.0, 181, 7.0, 4.1, 450, 0, 1, "Supertênis muito leve e macio de PEBA, rende em ritmo bem forte (10 km a meia); caro, estreito e menos vivo.", 40.0, 33.0, 3.9, 3.2, 4.0, 10, "carbono", "mar mei p10 rit tir", "aqu ini lar len", "rap", 0, "", "https://www.salomon.com/en-us/product/s-lab-phantasm-3-li8687", "produto", 10, 0, ""],
- ["Salomon Sense Ride 5", "Salomon", "tri", 1044.9, 291, 10.0, 2.3, 650, 0, 1, "Híbrido asfalto-trilha firme, seguro e aderente para trilha leve; antepé fino para terreno duro e longas.", 30.0, 20.0, 2.5, 3.8, 4.3, 10, "", "dia lon rod tri", "fore lar lon", "dia", 1, "", "https://www.salomon.com/en-ca/product/sense-ride-5-li3121", "produto", 4, 6, ""],
- ["Salomon Speedcross 6", "Salomon", "tri", 1199.0, 295, 13.0, 2.2, 700, 0, 1, "Cravos agressivos para lama e subida técnica; firme, quente e escorrega em pedra lisa e no asfalto.", 33.0, 20.0, 2.0, 3.2, 4.0, 11, "", "dia tri", "asf cal fore lar lon", "hee lama", 1, "", "https://www.salomon.com/en-us/product/speedcross-6-lg9212", "produto", 8, 3, ""],
- ["Salomon Thundercross", "Salomon", "tri", 1210.0, 271, 3.0, 3.6, 600, 0, 1, "Trilha macio, de drop baixo e cravos fundos para lama e terreno misto; quente e folgado no técnico.", 28.0, 25.0, 2.9, 3.8, 4.0, 10, "", "lon rod tri", "cal hee", "fore lama lar", 0, "estabilidade", "https://sg.salomon.com/products/salomon-thundercross-mens-trail-running-shoes", "produto", 10, 0, ""],
- ["Salomon Ultra Glide 4", "Salomon", "tri", 1382.0, 295, 8.0, 4.0, 600, 0, 1, "Trilha com muito amortecimento, rocker suave e estável para ultras; pesado, pouco vivo e bico afunilado.", 39.0, 31.0, 2.7, 3.7, 4.2, 10, "", "dia lon rod tri", "cal lar rap", "lon", 0, "", "https://www.salomon.com/en-us/product/ultra-glide-4-li8842", "produto", 7, 3, ""],
+ ["Salomon Aero Blaze 4", "Salomon", "dia", 1210.0, 237, 8.0, 2.5, 600, 0, 1, "Treino diário leve, firme e ágil, bom até ritmo forte e 15 km; pouca espuma para longão e sem molejo.", 35.0, 27.0, 3.0, 3.5, 3.8, 5, "", "rod rit p10 dia", "lon pro len", "rap cal", 0, "", "", "produto", 5, 0, ""],
+ ["Salomon Aero Glide 4", "Salomon", "dia", 1382.0, 256, 9.7, 3.8, 550, 1, 1, "Muita espuma de eTPU com bom retorno por preço justo; drop alto (~12 mm) e antepé afunilado.", 42.5, 32.8, 3.7, 3.4, 4.2, 10, "", "lon mar rit rod", "fore lar rap", "hee lon", 0, "", "", "produto", 10, 0, ""],
+ ["Salomon Genesis 2", "Salomon", "tri", 1296.0, 272, 8.0, 2.6, 750, 0, 1, "Trilha técnico muito estável, aderente e durável para treino e ultra; espuma firme e um pouco mais pesado.", 34.0, 26.0, 3.1, 4.6, 4.3, 11, "", "lon tri", "rap", "hee lama lon", 0, "", "", "produto", 7, 4, ""],
+ ["Salomon S/Lab Phantasm 3", "Salomon", "sup", 2419.0, 181, 7.0, 4.1, 450, 0, 1, "Supertênis muito leve e macio de PEBA, rende em ritmo bem forte (10 km a meia); caro, estreito e menos vivo.", 40.0, 33.0, 3.9, 3.2, 4.0, 10, "carbono", "mar mei p10 rit tir", "aqu ini lar len", "rap", 0, "", "", "produto", 10, 0, ""],
+ ["Salomon Sense Ride 5", "Salomon", "tri", 1044.9, 291, 10.0, 2.3, 650, 0, 1, "Híbrido asfalto-trilha firme, seguro e aderente para trilha leve; antepé fino para terreno duro e longas.", 30.0, 20.0, 2.5, 3.8, 4.3, 10, "", "dia lon rod tri", "fore lar lon", "dia", 1, "", "https://www.centauro.com.br/tenis-masculino-salomon-sense-ride-5-cinza-e-rosa-masculino-m14dzw-mktp.html", "produto", 4, 6, ""],
+ ["Salomon Speedcross 6", "Salomon", "tri", 1199.0, 295, 13.0, 2.2, 700, 0, 1, "Cravos agressivos para lama e subida técnica; firme, quente e escorrega em pedra lisa e no asfalto.", 33.0, 20.0, 2.0, 3.2, 4.0, 11, "", "dia tri", "asf cal fore lar lon", "hee lama", 1, "", "https://www.centauro.com.br/tenis-salomon-speedcross-6-masculino-99768P.html", "produto", 8, 3, ""],
+ ["Salomon Thundercross", "Salomon", "tri", 1210.0, 271, 3.0, 3.6, 600, 0, 1, "Trilha macio, de drop baixo e cravos fundos para lama e terreno misto; quente e folgado no técnico.", 28.0, 25.0, 2.9, 3.8, 4.0, 10, "", "lon rod tri", "cal hee", "fore lama lar", 0, "estabilidade", "", "produto", 10, 0, ""],
+ ["Salomon Ultra Glide 4", "Salomon", "tri", 1382.0, 295, 8.0, 4.0, 600, 0, 1, "Trilha com muito amortecimento, rocker suave e estável para ultras; pesado, pouco vivo e bico afunilado.", 39.0, 31.0, 2.7, 3.7, 4.2, 10, "", "dia lon rod tri", "cal lar rap", "lon", 0, "", "", "produto", 7, 3, ""],
  ["Under Armour Infinite Elite 2", "Under Armour", "dia", 749.99, 290, 8.0, 3.7, 650, 0, 1, "Amortecido, estável e confortável para rodagem lenta e longão; pesado e sem explosão. Cabedal volumoso.", 40.0, 32.0, 2.9, 4.0, 3.8, 10, "", "dia lon rod", "est rap", "dia hee lon pes", 1, "", "https://www.underarmour.com.br/tenis-de-corrida-under-armour-infinite-elite-2-masculino-3028169-019/p", "produto", 7, 3, ""],
  ["Under Armour Infinite Pro", "Under Armour", "dia", 549.99, 305, 8.0, 3.6, 600, 0, 0, "Treino diário alto e estável para rodagem longa e lenta; pesado, rígido e com retorno modesto.", 41.0, 33.0, 2.3, 4.0, 4.2, 10, "", "dia lon rod", "lar rap", "dia hee ini", 1, "", "https://www.underarmour.com.br/tenis-de-corrida-masculino-under-armour-infinite-pro-3027326-100/p", "produto", 2, 8, ""],
  ["Under Armour Velociti Elite 2", "Under Armour", "sup", 1079.99, 257, 6.0, 2.6, 300, 0, 0, "Placa de carbono com antepé mais largo e boa aderência; pesado para prova e sola que gasta rápido.", 38.0, 32.0, 3.7, 3.0, 3.3, 10, "carbono", "mar mei p10 rit tir", "dia hee len lon pro", "fore rap", 1, "", "https://www.underarmour.com.br/tenis-de-corrida-under-armour-velociti-elite-2-3027338-100/p", "produto", 10, 0, ""],
@@ -530,15 +518,21 @@ const M=[
  ["adidas Response 2", "adidas", "ent", 360.99, 298, 10.0, 3.3, 650, 1, 0, "Entrada bem amortecida, estável e espaçosa, com rocker suave. Pesado (298 g) e sem retorno para ritmo.", 38.0, 27.0, 2.0, 4.0, 3.6, 3, "", "aca dia rod", "rap", "dia hee ini lar", 1, "", "https://www.adidas.com.br/tenis-corrida-response-2/KJ1750.html", "produto", 1, 2, ""],
  ["adidas Runfalcon 6", "adidas", "ent", 313.49, 277, 10.0, 1.4, 400, 0, 0, "Básico para caminhada, academia e trote curto. Duro, pesado e pouco durável para correr de verdade.", 35.0, 26.0, 1.0, 3.3, 3.2, 6, "", "aca dia rod", "fore lon pes rap", "dia hee ini", 1, "", "https://www.adidas.com.br/tenis-de-corrida-runfalcon-6-cloudfoam/IH9532.html", "produto", 2, 4, ""],
  ["adidas Supernova Glide", "adidas", "dia", 699.9, 282, 8.0, 3.4, 700, 0, 0, "Tênis confortável e estável para rodagem curta e dia a dia; firme e sem retorno. O Rise 3 roda melhor.", 36.0, 28.0, 2.5, 4.0, 4.1, 9, "", "aca dia rod", "fore lon rap", "dia hee ini", 1, "", "https://www.adidas.com.br/tenis-de-corrida-supernova-glide-m/KJ8758.html", "produto", 1, 8, ""],
- ["adidas Supernova Prima 3", "adidas", "max", 1382.0, 289, 11.0, 3.0, 700, 1, 1, "Treino bem amortecido, estável e com bom retorno; drop alto para quem pisa de calcanhar. Pesado e quente.", 39.0, 28.0, 4.0, 4.0, 4.2, 4, "", "dia lon mar rit rod", "cal est rap", "hee ini lar lon pes", 0, "", "https://www.adidas.com/us/supernova-prima-running-shoes/IH8640.html", "produto", 4, 0, ""],
+ ["adidas Supernova Prima 3", "adidas", "max", 1382.0, 289, 11.0, 3.0, 700, 1, 1, "Treino bem amortecido, estável e com bom retorno; drop alto para quem pisa de calcanhar. Pesado e quente.", 39.0, 28.0, 4.0, 4.0, 4.2, 4, "", "dia lon mar rit rod", "cal est rap", "hee ini lar lon pes", 0, "", "", "produto", 4, 0, ""],
  ["adidas Supernova Rise 3", "adidas", "dia", 738.88, 264, 8.0, 3.8, 700, 1, 0, "Treino diário macio, estável e com ótima aderência; forma espaçosa. Pouca vivacidade para ritmo.", 35.0, 27.0, 3.3, 3.8, 4.1, 11, "", "dia lon mei rod", "rap", "dia hee ini lar", 1, "", "https://www.adidas.com.br/tenis-de-corrida-supernova-rise-3/JQ8502.html", "produto", 6, 5, ""],
  ["adidas Supernova Stride 2", "adidas", "dia", 579.9, 275, 10.0, 3.0, 650, 0, 0, "Versão simples do Supernova Rise, para rodagem leve e dia a dia. Sem review especializada: notas estimadas.", 35.0, 25.0, 2.0, 4.0, 3.0, 0, "", "rod dia aca", "rap lon", "ini hee dia", 1, "", "https://www.adidas.com.br/tenis-supernova-stride-2.0-running/IH8658.html", "produto", 0, 0, ""],
  ["adidas Terrex Agravic 4", "adidas", "tri", 659.99, 278, 9.0, 2.5, 600, 0, 0, "Trilha versátil, estável e aderente (Continental) para treino e ultra; espuma firme e pouco ventilado.", 33.0, 24.0, 2.5, 4.0, 4.0, 3, "", "tri lon dia", "cal", "ini hee lama", 1, "", "https://www.adidas.com.br/tenis-para-corrida-de-trilha-terrex-agravic-4/KJ8870.html", "produto", 3, 0, ""],
  ["adidas Terrex Agravic Speed 2", "adidas", "tri", 699.99, 230, 8.0, 3.2, 700, 0, 0, "Trilha leve, ágil e mais estável que o Speed Ultra, para treino rápido e prova até 50 km; bico estreito.", 35.0, 27.0, 4.0, 3.0, 3.9, 10, "", "mei p10 rit tir tri", "hee lama lar", "cal fore rap", 1, "", "https://www.adidas.com.br/tenis-para-corrida-de-trilha-terrex-agravic-speed-2/JS3536.html", "produto", 4, 6, ""],
- ["adidas Terrex Agravic Speed Ultra 2", "adidas", "tri", 940.49, 268, 8.0, 3.6, 750, 0, 0, "Trilha muito rápida e propulsiva para prova em terreno corrível até ~80 km; justo e instável devagar.", 38.0, 30.0, 4.5, 2.0, 4.1, 8, "", "lon rit tri", "hee ini lar len pro", "cal fore rap", 1, "", "https://www.adidas.com/us/terrex-agravic-speed-ultra-2-trail-running-shoes/JS3534.html", "produto", 5, 3, ""],
+ ["adidas Terrex Agravic Speed Ultra 2", "adidas", "tri", 940.49, 268, 8.0, 3.6, 750, 0, 0, "Trilha muito rápida e propulsiva para prova em terreno corrível até ~80 km; justo e instável devagar.", 38.0, 30.0, 4.5, 2.0, 4.1, 8, "", "lon rit tri", "hee ini lar len pro", "cal fore rap", 1, "", "https://www.adidas.com.br/terrex-agravic", "categoria", 5, 3, ""],
  ["adidas Terrex Tracefinder 2", "adidas", "tri", 499.9, 340, 10.0, 2.0, 600, 0, 1, "Trilha de entrada barato e pesado, mais para caminhada, estradão e trote curto; tração básica.", 29.0, 19.0, 1.5, 4.0, 3.0, 1, "", "tri dia", "rap lon lama fore", "ini hee dia", 1, "", "https://www.adidas.com.br/tenis-corrida-trilha-tracefinder/JI4285.html", "produto", 1, 0, ""],
  ["adidas Ultraboost 5", "adidas", "con", 699.99, 274, 11.8, 3.4, 800, 0, 0, "Ótimo para o dia a dia e corrida leve: durável, aderente e espaçoso. Pesado e firme para longão ou ritmo.", 39.5, 27.7, 3.1, 3.0, 3.4, 11, "", "aca dia lon mei rod", "lon rap", "dia hee ini lar", 1, "maciez, estabilidade", "https://www.adidas.com.br/tenis-ultraboost-5/KI8561.html", "produto", 11, 0, ""]
-].map(x=>({n:x[0],b:x[1],c:x[2],p:x[3],g:x[4],dr:x[5],mz:x[6],du:x[7],lg:x[8],ap:x[9],nt:x[10],hs:x[11],fs:x[12],rs:x[13],es:x[14],sc:x[15],nr:x[16],pl:x[17],u:x[18].split(' ').filter(Boolean),nn:x[19].split(' ').filter(Boolean),o:x[20].split(' ').filter(Boolean),br:x[21],dv:x[22]||'',url:x[23],ut:x[24],np:x[25],nc:x[26],tam:x[27]}));
+].map(x=>({n:x[0],b:x[1],c:x[2],p:x[3],g:x[4],dr:x[5],mz:x[6],du:x[7],lg:x[8],ap:x[9],nt:x[10],hs:x[11],fs:x[12],rs:x[13],es:x[14],sc:x[15],nr:x[16],pl:x[17],u:x[18].split(' ').filter(Boolean),nn:x[19].split(' ').filter(Boolean),o:x[20].split(' ').filter(Boolean),br:x[21],dv:x[22]||'',url:x[23],ut:x[24],np:x[25],nc:x[26],tam:x[27],fi:[x[5],x[6],x[11],x[12],x[13],x[14]].every(v=>v%1===0)}));
+// fi: todas as medidas redondas = specs da ficha da marca, sem medição de laboratório
+// decisão editorial (out/2026): a Fila tem specs só de ficha e poucas reviews independentes
+const PODIO_FORA=['Fila'];
+// marcas do quadro "o melhor de cada marca" (as preferidas da pessoa entram também)
+const MARCAS=['adidas','ASICS','Hoka','Mizuno','New Balance','Nike','Olympikus','On','Puma'];
+const FICHA=1.2;
 const BUD=[[0,400],[400,700],[700,1000],[1000,1500],[1500,99999]];
 const PROF=['Primeiros Quilômetros','Corredor em Construção','Corredor Constante','Corredor de Prova','Corredor de Alta Quilometragem'];
 /* traços do corredor e usos pedidos, no mesmo vocabulário das reviews */
@@ -579,48 +573,65 @@ function engine(a,long){
   if(orc===0){add('ent',3);add('sup',-3);add('est',-1)}
   const cats=Object.entries(sc).filter(x=>x[1]>0).sort((p,q)=>q[1]-p[1]);
   const c1=cats[0][0],c2=cats[1]?cats[1][0]:c1;
+  // categoria com poucos modelos não monopoliza: a 2ª categoria chega mais perto
+  const w2=M.filter(m=>m.c===c1).length<10?8:6;
+  // o que o perfil pede em amortecimento, resposta, leveza e estabilidade (mesmos índices do hexágono)
+  const ID=idealVec(a);
+  // leveza só pesa para quem pediu leveza ou faz ritmo; "não indicado para ritmo" só pesa quando o tênis é para velocidade
+  const fast=c1==='rap'||c1==='sup',lw=prior===2||obj===1||g('treino',0)===2?0.45:0.15;
+  if(!fast)ID[1]=Math.min(ID[1],6);
   const [bmin,bmax]=BUD[orc];
   const pi=g('pisada',3);
   const sm=(m,relax)=>{
-    let s=m.c===c1?10:m.c===c2?6:relax?2:-99;
-    if(m.p>bmax*1.08)s-=6+(m.p-bmax)/150;else if(m.p<bmin*0.6&&orc>=2)s-=1.5;else s+=1.5;
-    s-=Math.abs(m.mz-[4.5,3.5,2.3][sens])*0.9;
+    let s=m.c===c1?10:m.c===c2?w2:relax?2:-99;
+    if(m.p>bmax*1.08)s-=6+(m.p-bmax)/150;else if(m.p>bmax)s-=0.5;else s+=1.5-(prior===3?0:Math.min(2,Math.max(0,bmin-m.p)/200));
+    s-=Math.abs(m.mz-[4.5,3.5,2.3][sens])*0.7;
+    // specs técnicas: falta do que você precisa pesa mais que sobra
+    const iv=idx(m);for(let i=0;i<4;i++){const d=iv[i]-ID[i];s-=d<0?-d*(i===2?lw:0.45):d*0.12}
     if(heavy&&m.mz>=4)s+=1.2;if(heavy&&m.g<215)s-=1;
     if(g('largura',1)===2&&m.lg)s+=2;if(g('largura',1)===2&&!m.lg)s-=0.6;
-    if(prior===1)s+=(m.du-550)/120;if(prior===2)s+=(260-m.g)/25;if(prior===3)s+=(700-m.p)/350;if(prior===0)s+=(m.mz-3)*0.6;
+    if(prior===1)s+=(m.du-550)/120;if(prior===2)s+=(260-m.g)/25;if(prior===3)s+=(700-m.p)/350;if(prior===0&&sens!==2)s+=(m.mz-3)*0.6;
     if(dor===4&&m.mz>=5)s-=1.5;
     if(pi===0&&m.dr<7)s-=1.2;if(pi===2&&m.dr>=10)s-=0.8;
     if(dor===6&&m.dr<7)s-=1.5;
     if(g('neutro',0)===1)s+=(m.es-3)*0.8;
     // consenso das reviews
     const uh=W.filter(w=>m.u.includes(w)).length;s+=Math.min(2.4,uh*1.2)-(uh?0:1);
-    const bad=m.nn.filter(t=>T.has(t)).length;s-=Math.min(8,bad*4);
+    // "não indicado" vem de 2+ reviews: com muitas reviews, 2 citações pesam um pouco menos
+    const nr=m.np+m.nc,bad=m.nn.filter(t=>T.has(t)).reduce((q,t)=>q+(t==='rap'&&!fast?0.35:1),0);s-=Math.min(7,bad*(3+Math.min(1,3/Math.max(1,nr))));
     s+=Math.min(1.6,m.o.filter(t=>T.has(t)).length*0.8);
-    s+=(m.sc-3.8)*1.5*Math.min(1,(m.np+m.nc*.35)/5);
-    if(m.ap)s-=0.3;
+    // nota das reviews puxada para a média quando há pouca evidência
+    const ne=m.np+m.nc*.35;s+=(m.sc-3.8)*1.8*ne/(ne+4);
+    if(m.ap)s-=0.6;
+    // specs só de ficha são menos confiáveis que as medidas em laboratório
+    if(m.fi)s-=FICHA;
     if(!m.br)s-=3;
-    if(m.np<2)s-=0.8*(2-m.np)/2;
+    s-=0.45*(4-Math.min(4,m.np));
     return s;
   };
-  const ranked=M.map(m=>({m,s:sm(m)})).filter(x=>x.s>-50).sort((p,q)=>q.s-p.s);
+  let ranked=M.map(m=>({m,s:sm(m)})).filter(x=>x.s>-50).sort((p,q)=>q.s-p.s);
+  // pódio e segundo par sem as marcas de PODIO_FORA; elas seguem no top 10 e no quadro de cada marca
+  const pod=ranked.filter(x=>!PODIO_FORA.includes(x.m.b)).slice(0,3);ranked=[...pod,...ranked.filter(x=>!pod.includes(x))];
   const top=ranked.slice(0,3);
   const t0=top[0].s;
   const fins=top.map((x,idx)=>({m:x.m,fit:Math.round(Math.max(70,Math.min(97,96-idx*2-(t0-x.s)*2))),s:x.s}));
   let second=null;
   if(g('pares',0)===1||km>=3){
     const want=c1==='rap'?'dia':(obj===3||obj===2)&&level>=3?'sup':c1==='tri'?'dia':'rap';
-    const pool=M.filter(m=>m.c===want&&!fins.some(f=>f.m===m)).map(m=>({m,s:sm({...m,c:c1})})).sort((p,q)=>q.s-p.s);
+    const pool=M.filter(m=>m.c===want&&!PODIO_FORA.includes(m.b)&&!fins.some(f=>f.m===m)).map(m=>({m,s:sm({...m,c:c1})})).sort((p,q)=>q.s-p.s);
     second=pool[0]?pool[0].m:null;
   }
   const conf=Math.min(96,(long?87:79)+(cats[0][1]-(cats[1]?cats[1][1]:0))*1.1);
   const tkPerfil=Math.round(fins.reduce((s,f)=>s+f.m.p,0)/fins.length);
   const pref=(a.marca||[]).map(i=>BRANDS[i-1]).filter(Boolean);
-  const best={};M.forEach(m=>{const v=sm(m,1);if(!best[m.b]||v>best[m.b].s)best[m.b]={m,s:v}});
+  // por marca, só modelos vendidos no Brasil
+  const best={};M.forEach(m=>{if(!m.br)return;const v=sm(m,1);if(!best[m.b]||v>best[m.b].s)best[m.b]={m,s:v}});
   const brands=Object.values(best).map(x=>({m:x.m,s:x.s,fit:Math.round(Math.max(50,Math.min(97,96-(t0-x.s)*2))),pref:pref.includes(x.m.b)})).sort((p,q)=>q.s-p.s);
   const fitOf=v=>Math.round(Math.max(50,Math.min(97,96-(t0-v)*2)));
   let last=99;const top10=ranked.slice(0,10).map((x,i)=>{const f=i<3?fins[i].fit:Math.min(last,Math.round(Math.max(50,96-i*2-(t0-x.s)*2)));last=f;return i<3?fins[i]:{m:x.m,s:x.s,fit:f}});
-  const byBrand=b=>M.filter(m=>m.b===b).map(m=>({m,s:sm(m,1)})).sort((p,q)=>q.s-p.s).slice(0,3).map(x=>({m:x.m,s:x.s,fit:fitOf(x.s)}));
-  return {top10,byBrand,pref,brands,level,c1,c2,fins,second,conf:Math.round(conf),long,a,peso,tkPerfil,T,W};
+  const byBrand=b=>M.filter(m=>m.b===b&&m.br).map(m=>({m,s:sm(m,1)})).sort((p,q)=>q.s-p.s).slice(0,3).map(x=>({m:x.m,s:x.s,fit:fitOf(x.s)}));
+  const cm=a.atual&&M.find(m=>m.n===a.atual);const atual=cm?{m:cm,fit:fins.some(f=>f.m===cm)?fins.find(f=>f.m===cm).fit:Math.round(Math.max(20,Math.min(97,96-(t0-sm(cm,1))*2)))}:null;
+  return {top10,byBrand,pref,brands,level,c1,c2,fins,second,atual,conf:Math.round(conf),long,a,peso,tkPerfil,T,W};
 }
 
 const BRANDS=[...new Set(M.map(m=>m.b))].sort((a,b)=>M.filter(m=>m.b===b).length-M.filter(m=>m.b===a).length||a.localeCompare(b));
@@ -629,7 +640,6 @@ function lifeText(m,a){const w=KMW[a.km===undefined?1:a.km];const weeks=Math.rou
 function sizeText(a){const n=a.numero;const base=n?('Seu número é '+n+'. '):'';return base+'Deixe um dedo (cerca de 1 cm) entre o dedão e a ponta. Em tênis de corrida muita gente sobe meio número ou um número'+(a.largura===2?'; prefira versão larga (2E/wide) quando houver.':'.')}
 const stackOf=m=>m.hs;
 const foreOf=m=>m.fs;
-const plateOf=m=>m.pl==='carbono'?'carbono':m.pl?'placa':'';
 const STK_M={};
 const cl10=x=>Math.max(1,Math.min(10,Math.round(x*10)/10));
 function idx(m){return [cl10(m.mz*2*.65+(m.hs-28)/(46-28)*10*.35),cl10(m.rs*2+(m.pl==='carbono'?.4:0)),cl10((320-m.g)/14),cl10(m.es*2),cl10(m.du/80),cl10(10-(m.p/m.du-0.5)*4)]}
@@ -651,126 +661,12 @@ function factors(r){const a=r.a,m=r.fins[0].m,out=[];const iv=idx(m),id=idealVec
   if(r.peso>=85&&stackOf(m)>=36)out.push(['+','Espuma alta para '+r.peso+' kg']);
   return out.slice(0,6)}
 const CATCOL={ent:'#8E9AA6',dia:'#2E86DE',max:'#8E44AD',est:'#16A085',rap:'#E4572E',sup:'#D4A017',tri:'#6B8E23',con:'#C0587E'};
-function shoeSVG(m){
-  const W=460,H=200,base=168,sc=1.35,heel=stackOf(m),fore=foreOf(m),spring=m.c==='sup'||m.c==='max'?14:m.c==='rap'?10:7;
-  const hx=78,tx=410,hY=base-heel*sc,fY=base-fore*sc;
-  const sole='M'+hx+' '+base+' C'+(hx+120)+' '+(base+1)+' '+(tx-110)+' '+(base+1)+' '+(tx-50)+' '+(base-2)+' Q'+(tx-8)+' '+(base-spring*0.6)+' '+tx+' '+(fY+2)+' L'+(tx-36)+' '+fY+' C'+(tx-130)+' '+(fY+1)+' '+(hx+120)+' '+(hY+2)+' '+hx+' '+hY+' Z';
-  const upper='M'+hx+' '+hY+' C'+(hx-10)+' '+(hY-28)+' '+(hx-4)+' '+(hY-66)+' '+(hx+18)+' '+(hY-74)+' Q'+(hx+60)+' '+(hY-58)+' '+(hx+104)+' '+(hY-66)+' L'+(hx+128)+' '+(hY-76)+' C'+(hx+200)+' '+(hY-56)+' '+(tx-70)+' '+(fY-40)+' '+(tx-22)+' '+(fY-22)+' Q'+(tx+8)+' '+(fY-10)+' '+tx+' '+(fY+2)+' L'+(tx-36)+' '+fY+' C'+(tx-130)+' '+(fY+1)+' '+(hx+120)+' '+(hY+2)+' '+hx+' '+hY+' Z';
-  const col='#FF8A3D';
-  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Perfil lateral do '+esc(m.n)+'" style="width:100%;max-width:460px;height:auto;display:block;margin:0 auto">';
-  s+='<path d="'+upper+'" fill="'+col+'" fill-opacity=".9"/>';
-  for(let j=0;j<5;j++){const lx=hx+140+j*30,ly=hY-70+j*9+(fY-hY)*j/8;s+='<line x1="'+(lx-8)+'" y1="'+(ly-2)+'" x2="'+(lx+8)+'" y2="'+(ly+4)+'" stroke="#fff" stroke-opacity=".8" stroke-width="2.5" stroke-linecap="round"/>'}
-  s+='<path d="'+sole+'" fill="var(--cartao)" stroke="var(--tinta)" stroke-width="1.6"/>';
-  const pl=plateOf(m);if(pl)s+='<path d="M'+(hx+16)+' '+(base-heel*sc*0.5)+' C'+(hx+140)+' '+(base-heel*sc*0.3)+' '+(tx-110)+' '+(base-fore*sc*0.3)+' '+(tx-14)+' '+(base-fore*sc*0.7)+'" fill="none" stroke="'+(pl==='carbono'?'#222':'#888')+'" stroke-width="3"/>';
-  s+='<text x="'+(hx-8)+'" y="'+(base-heel*sc/2+4)+'" text-anchor="end" font-size="13" fill="var(--tinta-2)" font-family="DM Sans,sans-serif">'+heel+' mm</text>';
-  s+='<text x="'+(W/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" fill="var(--tinta-2)" font-family="DM Sans,sans-serif">antepé '+fore+' mm · drop '+String(m.dr).replace('.',',')+' mm'+(pl?' · placa de '+(pl==='carbono'?'carbono':'propulsão'):'')+'</text>';
-  return s+'</svg>';
-}
-const brandLink=(m,t)=>m.url?`<a class="blink" href="${esc(m.url)}" target="_blank" rel="noopener">${t||(m.ut==='produto'?'Ver no site da '+esc(m.b):'Site da '+esc(m.b))} ↗</a>`:'';
+// links só de lojas no Brasil: site brasileiro da marca ou, quando a marca não tem, a Centauro; importados ficam sem link
+const brandLink=(m,t)=>m.url?`<a class="blink" href="${esc(m.url)}" target="_blank" rel="noopener">${t||(m.url.includes('centauro.com.br')?'Ver na Centauro':m.ut==='produto'?'Ver no site da '+esc(m.b):'Site da '+esc(m.b))} ↗</a>`:'';
 const priceTxt=m=>(m.ap?'~':'')+'R$ '+m.p.toLocaleString('pt-BR',{minimumFractionDigits:m.p%1?2:0,maximumFractionDigits:2})+(!m.br?' (importado)':m.ap?' (aprox.)':'');
 const kmCost=m=>'R$ '+(m.p/m.du).toFixed(2).replace('.',',')+' por km';
-/* ---------- visuais: tênis 3D, hexágono, barras, mapa do catálogo ---------- */
+/* ---------- visuais: hexágono, barras, mapa do catálogo ---------- */
 const VZ=(function(){
-const reduce=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
-const lerp=(a,b,t)=>a+(b-a)*t;
-const sstep=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
-function pw(kp,u){for(let i=1;i<kp.length;i++){if(u<=kp[i][0]){const t=(u-kp[i-1][0])/(kp[i][0]-kp[i-1][0]);const s=t*t*(3-2*t);return lerp(kp[i-1][1],kp[i][1],s)}}return kp[kp.length-1][1]}
-/* geometria paramétrica do tênis (mm) */
-function shape(m){
-  const heel=stackOf(m),fore=foreOf(m),L=285;
-  const spring=m.c==='sup'||m.c==='max'?16:m.c==='rap'?12:m.c==='tri'?7:9;
-  const wide=m.lg?1.07:1;
-  const W=[[0,30],[.04,62],[.1,74],[.3,66],[.45,68],[.68,98],[.82,96],[.94,72],[1,24]];
-  const w=u=>pw(W,u)*wide*(m.c==='max'||m.c==='est'?1.06:1);
-  const b=u=>(u<.07?Math.pow((.07-u)/.07,2)*9:0)+(u>.62?Math.pow((u-.62)/.38,2)*spring:0);
-  const st=u=>lerp(heel,fore,sstep(.18,.78,u))*(u<.02?.8:1);
-  const H=[[0,34],[.04,70],[.13,60],[.24,62],[.42,70],[.6,52],[.78,34],[.92,20],[1,8]];
-  const h=u=>pw(H,u)*(m.c==='tri'?1.04:1);
-  return {L,heel,fore,w,b,t:u=>b(u)+st(u),h,spring};
-}
-function loft(THREE,n,ringN,fn){
-  const pos=[],idx=[];
-  for(let i=0;i<=n;i++){const u=.003+(i/n)*.994;const ring=fn(u);ring.forEach(p=>pos.push(p[0],p[1],p[2]))}
-  for(let i=0;i<n;i++)for(let j=0;j<ringN;j++){const a=i*ringN+j,b=i*ringN+(j+1)%ringN,c=(i+1)*ringN+j,d=(i+1)*ringN+(j+1)%ringN;idx.push(a,c,b,b,c,d)}
-  // tampas
-  [0,n].forEach((i,k)=>{let cx=0,cy=0,cz=0;for(let j=0;j<ringN;j++){cx+=pos[(i*ringN+j)*3];cy+=pos[(i*ringN+j)*3+1];cz+=pos[(i*ringN+j)*3+2]}
-    const ci=pos.length/3;pos.push(cx/ringN,cy/ringN,cz/ringN);
-    for(let j=0;j<ringN;j++){const a=i*ringN+j,b=i*ringN+(j+1)%ringN;k?idx.push(ci,a,b):idx.push(ci,b,a)}});
-  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);g.computeVertexNormals();return g;
-}
-const se=(c,p)=>Math.sign(c)*Math.pow(Math.abs(c),2/p);
-const env=u=>Math.pow(Math.min(1,u/.035,(1-u)/.05),.5);
-function build(THREE,m,opt){
-  const S=shape(m),grp=new THREE.Group(),R=28,N=90;
-  const CW=[[0xff8a3d,0xf4f1ea],[0x0e4d64,0xff8a3d],[0xe9eef0,0x0e4d64],[0x1d2327,0xff8a3d],[0xc6f04a,0xf4f1ea],[0x2e86de,0xf4f1ea],[0xe4572e,0xf4f1ea],[0x6b8e23,0x2b2b2b]];
-  let hsh=0;for(const ch of m.n)hsh=(hsh*31+ch.charCodeAt(0))%9973;const cw=m.c==='tri'?CW[7]:CW[hsh%7];
-  const col=new THREE.Color(cw[0]);const acc=new THREE.Color(cw[1]);
-  const mat=(c,r,me)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:me||0,flatShading:false});
-  const sil=opt.silhouette;
-  const M1=sil?mat(0x0b2530,.6):mat(acc,.55),M2=sil?mat(0x0b2530,.6):mat(0x1b1f22,.9),M3=sil?mat(0x123845,.6):mat(col,.62),M4=mat(0xffffff,.5);
-  // sola externa
-  grp.add(new THREE.Mesh(loft(THREE,N,R,u=>{const e=env(u),w=(S.w(u)/2+1.2)*e,y0=S.b(u)-3,y1=S.b(u)+2;const r=[];for(let j=0;j<R;j++){const a=j/R*Math.PI*2;r.push([u*S.L,(y0+y1)/2+(y1-y0)/2*e*se(Math.sin(a),6),w*se(Math.cos(a),6)])}return r}),M2));
-  // entressola
-  grp.add(new THREE.Mesh(loft(THREE,N,R,u=>{const e=env(u),w=S.w(u)/2*e,y0=S.b(u),y1=S.t(u);const r=[];for(let j=0;j<R;j++){const a=j/R*Math.PI*2;const bulge=1+.05*Math.max(0,-Math.sin(a));r.push([u*S.L,(y0+y1)/2+(y1-y0)/2*e*se(Math.sin(a),5),w*bulge*se(Math.cos(a),5)])}return r}),M1));
-  // placa
-  const pl=plateOf(m);
-  if(pl&&!sil){grp.add(new THREE.Mesh(loft(THREE,N,12,u=>{const w=S.w(u)/2+.9,yc=S.b(u)+(S.t(u)-S.b(u))*(u<.5?.48:.42+(u-.5)*.25);const r=[];for(let j=0;j<12;j++){const a=j/12*Math.PI*2;r.push([u*S.L,yc+1.1*Math.sin(a),w*se(Math.cos(a),8)])}return r}),mat(pl==='carbono'?0x111111:0x8a8a8a,.25,.6)))}
-  // cabedal
-  const UR=30;
-  grp.add(new THREE.Mesh(loft(THREE,N,UR,u=>{const w=S.w(u)/2*.97,y0=S.t(u)-1,hh=S.h(u);const r=[];const half=UR-6;
-    for(let j=0;j<=half;j++){const a=j/half*Math.PI;const c=Math.cos(a),s=Math.sin(a);r.push([u*S.L,y0+hh*Math.pow(s,.9),w*se(c,2.6)*(1-.3*s*s)])}
-    for(let j=1;j<UR-half;j++){r.push([u*S.L,y0,-w+2*w*j/(UR-half)])}return r}),M3));
-  if(!sil){
-    // abertura do calcanhar
-    const op=new THREE.Mesh(new THREE.CylinderGeometry(1,1,1,32),mat(0x10181c,.9));
-    const uo=.14;op.scale.set(34,3,S.w(uo)*.26);op.position.set(uo*S.L+4,S.t(uo)+S.h(uo)-4,0);op.rotation.z=-.05;
-    const tab=new THREE.Mesh(new THREE.BoxGeometry(2.5,12,12),M4);tab.position.set(2,S.t(.02)+S.h(.04)-8,0);tab.rotation.z=.2;grp.add(tab);grp.add(op);
-    // cadarços
-    for(let k=0;k<5;k++){const u=.27+k*.05;const y=S.t(u)+S.h(u);const lb=new THREE.Mesh(new THREE.BoxGeometry(3.5,2.5,S.w(u)*.3),M4);lb.position.set(u*S.L,y-1.2,0);const dy=S.t(u+.01)+S.h(u+.01)-y;lb.rotation.z=Math.atan2(dy,.01*S.L);grp.add(lb)}
-    // contraforte
-    grp.add(new THREE.Mesh(loft(THREE,30,UR,u=>{const uu=u*.13,w=S.w(uu)/2*.99+.6,y0=S.t(uu)-1,hh=S.h(uu)*.55;const r=[];const half=UR-6;
-      for(let j=0;j<=half;j++){const a=j/half*Math.PI;const c=Math.cos(a),s=Math.sin(a);r.push([uu*S.L-.6,y0+hh*Math.pow(s,.9),w*se(c,2.6)*(1-.3*s*s)])}
-      for(let j=1;j<UR-half;j++){r.push([uu*S.L-.6,y0,-w+2*w*j/(UR-half)])}return r}),mat(col.clone().multiplyScalar(.7),.5)));
-  }
-  grp.position.set(-S.L/2,-40,0);
-  const outer=new THREE.Group();outer.add(grp);return outer;
-}
-const live=new Set();
-function mount(el,m,opt){
-  opt=opt||{};
-  const THREE=window.THREE;
-  if(!THREE){el.innerHTML=shoeSVG(m);return}
-  let rnd;try{rnd=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(e){el.innerHTML=shoeSVG(m);return}
-  el.innerHTML='';el.classList.add('s3d');
-  const cv=rnd.domElement;cv.setAttribute('role','img');cv.setAttribute('aria-label',opt.silhouette?'Silhueta 3D do tênis, modelo oculto':'Modelo 3D do '+m.n+'. Arraste para girar.');cv.tabIndex=0;
-  el.appendChild(cv);
-  rnd.setPixelRatio(Math.min(2,devicePixelRatio||1));
-  const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(30,1.6,1,2000);
-  cam.position.set(0,140,450);cam.lookAt(0,4,0);
-  sc.add(new THREE.HemisphereLight(0xffffff,0x6b8590,.95));
-  const dl=new THREE.DirectionalLight(0xffffff,.85);dl.position.set(200,400,300);sc.add(dl);
-  const dl2=new THREE.DirectionalLight(0xffb27a,.35);dl2.position.set(-300,100,-200);sc.add(dl2);
-  const shoe=build(THREE,m,opt);sc.add(shoe);
-  // sombra de contato
-  const sh=new THREE.Mesh(new THREE.CircleGeometry(1,40),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.16}));
-  sh.scale.set(165,48,1);sh.rotation.x=-Math.PI/2;sh.position.y=-44.5;sc.add(sh);
-  let ry=opt.silhouette?-.5:-.55,rx=.08,drag=null,auto=!reduce(),idle=0,alive=true,tY=ry;
-  const size=()=>{const w=el.clientWidth||400,h=Math.round(w/(opt.ratio||1.7));rnd.setSize(w,h,false);cv.style.width='100%';cv.style.height='auto';cam.aspect=w/h;cam.updateProjectionMatrix()};
-  size();
-  const ro=window.ResizeObserver?new ResizeObserver(size):null;ro&&ro.observe(el);
-  cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,ry,rx};auto=false;cv.setPointerCapture(e.pointerId)});
-  cv.addEventListener('pointermove',e=>{if(!drag)return;ry=drag.ry+(e.clientX-drag.x)*.01;rx=Math.max(-.2,Math.min(.9,drag.rx+(e.clientY-drag.y)*.006))});
-  const up=()=>{drag=null;idle=performance.now()};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
-  cv.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){ry-=.2;auto=false}if(e.key==='ArrowRight'){ry+=.2;auto=false}});
-  const api={set view(v){auto=false;tY=v==='lado'?0:v==='cima'?0:v==='tras'?Math.PI/2:-.55;rx=v==='cima'?.9:.08;ry=tY}};
-  let last=performance.now();
-  const loop=t=>{if(!alive)return;if(!el.isConnected){alive=false;ro&&ro.disconnect();rnd.dispose();live.delete(api);return}
-    const dt=Math.min(50,t-last);last=t;
-    if(!drag&&!auto&&idle&&t-idle>4000&&!reduce())auto=true;
-    if(auto)ry+=dt*.00035;
-    shoe.rotation.y=ry;shoe.rotation.x=rx;rnd.render(sc,cam);requestAnimationFrame(loop)};
-  requestAnimationFrame(loop);live.add(api);return api;
-}
 /* hexágono */
 function hex(labels,series,o){
   o=o||{};const cx=170,cy=158,R=104,n=labels.length;
@@ -816,29 +712,7 @@ function map(fins,o){
   return `<div class="tbl"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mapa do catálogo: ${M.length} tênis por peso e espuma, com os finalistas destacados" style="width:100%;min-width:420px;height:auto;display:block">${s}</svg></div>
   <div class="legend">${used.map(c=>`<span><i style="background:${CATCOL[c]};width:10px;height:10px;border-radius:50%"></i>${CAT[c].n}</span>`).join('')}</div>`;
 }
-/* corte lateral com medidas */
-function cut(m){
-  const S=shape(m),W=520,H=210,base=170,k=1.5,x0=40,sx=(W-80)/S.L;
-  const X=u=>x0+u*S.L*sx;let top='',bot='';
-  for(let i=0;i<=60;i++){const u=i/60;top+=(i?'L':'M')+X(u).toFixed(1)+' '+(base-S.t(u)*k).toFixed(1)+' ';}
-  for(let i=60;i>=0;i--){const u=i/60;bot+='L'+X(u).toFixed(1)+' '+(base-S.b(u)*k).toFixed(1)+' ';}
-  let up='';for(let i=0;i<=60;i++){const u=i/60;up+=(i?'L':'M')+X(u).toFixed(1)+' '+(base-(S.t(u)+S.h(u)*.9)*k).toFixed(1)+' ';}
-  for(let i=60;i>=0;i--){const u=i/60;up+='L'+X(u).toFixed(1)+' '+(base-S.t(u)*k).toFixed(1)+' ';}
-  const pl=plateOf(m);let plate='';
-  if(pl){for(let i=4;i<=58;i++){const u=i/60;const y=S.b(u)+(S.t(u)-S.b(u))*(u<.5?.48:.42+(u-.5)*.25);plate+=(i>4?'L':'M')+X(u).toFixed(1)+' '+(base-y*k).toFixed(1)+' '}}
-  const hu=.08,fu=.8;
-  const dim=(u,lab)=>{const x=X(u),y1=base-S.b(u)*k,y2=base-S.t(u)*k;return `<line x1="${x}" x2="${x}" y1="${y1}" y2="${y2}" stroke="var(--ink)" stroke-width="1.4" marker-start="url(#ar)" marker-end="url(#ar)"/><text x="${x+(u<.5?-8:8)}" y="${(y1+y2)/2+4}" text-anchor="${u<.5?'end':'start'}" font-size="13" font-weight="700" fill="var(--ink)" font-family="JetBrains Mono,monospace">${lab}</text>`};
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Corte lateral: salto ${S.heel} mm, antepé ${S.fore} mm, drop ${dec1(m.dr)} mm" style="width:100%;height:auto;display:block">
-  <defs><marker id="ar" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L4 4 L0 7" fill="none" stroke="var(--ink)" stroke-width="1.4"/></marker>
-  <pattern id="foam" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--soft)"/><circle cx="2" cy="2" r="1.1" fill="var(--line)"/><circle cx="6" cy="6" r="1.1" fill="var(--line)"/></pattern></defs>
-  <line x1="20" x2="${W-20}" y1="${base+3}" y2="${base+3}" stroke="var(--line)" stroke-width="2"/>
-  <path d="${up}Z" fill="${CATCOL[m.c]}" fill-opacity=".22" stroke="${CATCOL[m.c]}" stroke-width="1.5"/>
-  <path d="${top}${bot}Z" fill="url(#foam)" stroke="var(--ink)" stroke-width="1.6"/>
-  ${plate?`<path d="${plate}" fill="none" stroke="${pl==='carbono'?'var(--ink)':'var(--muted)'}" stroke-width="3" stroke-linecap="round"/>`:''}
-  ${dim(hu,S.heel+' mm')}${dim(fu,S.fore+' mm')}
-  <text x="${W/2}" y="${H-6}" text-anchor="middle" font-size="13" fill="var(--muted)">drop ${dec1(m.dr)} mm · curvatura na ponta ${S.spring} mm${pl?' · placa de '+(pl==='carbono'?'carbono':'propulsão'):''}</text></svg>`;
-}
-return {mount,hex,bars,map,cut,shape};
+return {hex,bars,map};
 })();
 
 /* ---------- app Tenis Match (mesma estrutura do Racket Match) ---------- */
@@ -866,11 +740,12 @@ const Q=[
  {s:3,id:'orc',t:'Quanto pretende investir?',o:O(['Até R$ 400','R$ 400 a 700','R$ 700 a 1.000','R$ 1.000 a 1.500','Acima de R$ 1.500'])},
  {s:3,id:'marca',multi:3,opt:1,t:'Tem marca preferida?',h:'Opcional. Escolha até 3. Não muda o ranking geral: mostramos o melhor tênis de cada marca para você.',o:O(['Sem preferência',...BRANDS])},
  {s:3,id:'uso',t:'Vai usar o tênis fora da corrida?',o:O(['Não, só para correr','Também na academia','Também no dia a dia'])},
+ {s:3,id:'atual',type:'select',opt:1,t:'Qual tênis você usa hoje?',h:'Opcional. No relatório você compara o seu tênis com o recomendado.'},
  {s:3,id:'pares',t:'Vai ser seu único tênis de corrida?',o:O(['Sim, único par','Não, quero montar um rodízio'])}
 ];
 const A={};let step=0;
 {const fmt=n=>n.toLocaleString('pt-BR');const NVAR=Q.length+8+6+4;$('#nVar').textContent=NVAR;$('#nVarQ').textContent=Q.length;$('#nCross').textContent=fmt(NVAR*M.length);$('#dcM').textContent=M.length;$('#dcS').textContent=M.length;$('#nComb').textContent=fmt(M.length*3*2*M.length);$('#nRk').textContent=M.length;$('#nBr').textContent=BRANDS.length}
-const EXAMPLE={marca:['2','3'],peso:'82',largura:'2',dor:'1',pisada:'0',calor:'0',uso:'0',tempo:'2',km:'2',pace:'2',terreno:'0',obj:'2',prova:'2',treino:'1',sens:'0',prior:'0',neutro:'0',orc:'1',pares:'1'};
+const EXAMPLE={atual:'Nike Pegasus 42',marca:['2','3'],peso:'82',largura:'2',dor:'1',pisada:'0',calor:'0',uso:'0',tempo:'2',km:'2',pace:'2',terreno:'0',obj:'2',prova:'2',treino:'1',sens:'0',prior:'0',neutro:'0',orc:'1',pares:'1'};
 
 function renderSteps(){$('#steps').innerHTML=STEPS.map((s,i)=>`<li class="${i===step?'on':i<step?'done':''}">${i+1}. ${s}</li>`).join('')}
 function renderQs(){
@@ -881,6 +756,9 @@ function renderQs(){
     if(q.type==='number'){
       fs.innerHTML=`<label class="ql" for="q_${q.id}">${q.t}</label>${q.h?`<p class="help">${q.h}</p>`:''}<input type="number" id="q_${q.id}" inputmode="numeric" min="${q.min}" max="${q.max}" step="${q.step}" placeholder="${q.ph}" style="width:180px">`;
       const inp=fs.querySelector('input');inp.value=A[q.id]||'';inp.addEventListener('input',()=>{A[q.id]=inp.value});
+    }else if(q.type==='select'){
+      fs.innerHTML=`<label class="ql" for="q_${q.id}">${q.t}</label>${q.h?`<p class="help">${q.h}</p>`:''}<select id="q_${q.id}" style="width:100%;max-width:420px"><option value="">Não sei ou não está na lista</option>${BRANDS.slice().sort((x,y)=>x.localeCompare(y,'pt',{sensitivity:'base'})).map(b=>`<optgroup label="${esc(b)}">${M.filter(m=>m.b===b).map(m=>`<option${A[q.id]===m.n?' selected':''}>${esc(m.n)}</option>`).join('')}</optgroup>`).join('')}</select>`;
+      const sel=fs.querySelector('select');sel.addEventListener('change',()=>{A[q.id]=sel.value});
     }else{
       fs.innerHTML=`<legend>${q.t}</legend>${q.h?`<p class="help">${q.h}</p>`:''}<div class="opts"></div>`;
       const g=fs.querySelector('.opts');
@@ -908,7 +786,7 @@ $('#next').addEventListener('click',()=>{
   if(m.length){$('#err').textContent='Falta responder: '+m.map(q=>q.t.replace('?','')).join(' · ');$('#err').hidden=false;return}
   if(step<STEPS.length-1){step++;renderQs();window.scrollTo({top:0,behavior:'smooth'})}else runAnalysis();
 });
-function conv(){const o={};Q.forEach(q=>{const v=A[q.id];if(v===undefined||v==='')return;o[q.id]=Array.isArray(v)?v.map(Number).filter(x=>x>0):Number(v)});return o}
+function conv(src=A){const o={};Q.forEach(q=>{const v=src[q.id];if(v===undefined||v==='')return;o[q.id]=q.type==='select'?v:Array.isArray(v)?v.map(Number).filter(x=>x>0):Number(v)});return o}
 
 /* ---------- análise ---------- */
 let RES=null;
@@ -961,38 +839,53 @@ function renderPreview(){
     </div>
     <div class="panel">
       <h3>Seu perfil: ${PROF[r.level]}</h3>
-      ${VZ.hex(RX,[{name:'Você',v:runnerVec(r.a).map(x=>x*10),c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}
+      <div id="cardPrev">${VZ.hex(RX,[{name:'Você',v:runnerVec(r.a).map(x=>x*10),c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}</div>
     </div>
   </div>
-  <div class="two">
-    <div class="panel">
-      <h3>Seu 1º lugar já está pronto</h3>
-      <div class="stage teaser"><div id="tease3d"></div><span class="q3">Modelo oculto</span></div>
-      <p class="muted" style="font-size:14px">A forma e a altura da espuma são do tênis escolhido para você. Marca, cores e nome aparecem no desbloqueio.</p>
-    </div>
-    <div class="panel">
-      <h3>Onde seus finalistas ficam no catálogo</h3>
-      ${VZ.map(r.fins,{hide:1})}
-    </div>
+  <div class="panel">
+    <h3>Onde seus finalistas ficam no catálogo</h3>
+    ${VZ.map(r.fins,{hide:1})}
   </div>
   <div class="panel">
     <h2>Revele seus tênis</h2>
     <div class="plans">
       <div class="plan best">
         <h3>Relatório completo</h3><span class="price">R$ 9,99</span>
-        <ul><li>Seu tênis ideal com Fit Score, ficha técnica e perfil lateral</li><li>Por que combina com você e pontos de atenção</li><li>Tamanho e data de troca</li><li>2º e 3º lugares, com marca e modelo</li><li>Seu top 10 com match, marca e preço</li><li>Top 3 geral ou top 3 da sua marca, lado a lado</li><li>Ranking por marca: o melhor de cada uma para você</li><li>Segundo par para rodízio</li><li>Dicas para pagar menos</li></ul>
+        <ul><li>Seu tênis ideal com Fit Score e ficha técnica</li><li>Por que combina com você e pontos de atenção</li><li>Tamanho e data de troca</li><li>Comparação com o seu tênis atual</li><li>2º e 3º lugares, com marca e modelo</li><li>Seu top 10 com match, marca e preço</li><li>Top 3 geral ou top 3 da sua marca, lado a lado</li><li>O melhor tênis de cada marca para você</li><li>Segundo par para rodízio</li><li>Dicas para pagar menos</li></ul>
         <button class="btn btn-go" type="button" id="buy">Pagar com Pix (simulação)</button>
       </div>
     </div>
     <p class="note">O cálculo já foi feito: o pagamento só revela o resultado. Se houver link de compra, ele aparece depois, e a recomendação não muda por isso.</p>
     <div class="row"><button class="btn btn-ghost" type="button" id="redo">Refazer respostas</button></div>
   </div>`;
-  VZ.mount($('#tease3d'),r.fins[0].m,{silhouette:1});
   $('#buy').onclick=()=>{renderReport();show('report')};
   $('#redo').onclick=()=>{step=0;show('quiz');renderQs()};
+  drawRunnerCard(runnerData(r)).then(cv=>{const o=$('#cardPrev');if(o)o.innerHTML=`<img class="cardimg" style="margin:0 auto;max-width:260px" alt="Seu card de corredor: ${esc(PROF[r.level])}" src="${cv.toDataURL('image/png')}">`}).catch(()=>{});
 }
 
 /* ---------- relatório ---------- */
+// comparação com o tênis que a pessoa usa hoje
+function atualT(r){
+  const cur=r.atual;if(!cur)return '';
+  const c=cur.m,w=r.fins[0],m=w.m;
+  if(c===m)return `<div class="panel"><h3>Seu tênis atual</h3><p>O ${esc(c.n)} que você usa hoje é o que mais combina com você. Na hora de trocar, pode repetir o modelo.</p></div>`;
+  const ic=idx(c),im=idx(m),out=[];
+  const dp=m.p-c.p;if(Math.abs(dp)>=100)out.push(`${brl(Math.abs(dp))} ${dp<0?'mais barato':'mais caro'}`);
+  if(r.a.largura===2&&m.lg&&!c.lg)out.push('Fôrma larga, como o seu pé (o atual é justo)');
+  const bad=c.nn.filter(t=>r.T.has(t)).length;if(bad)out.push(`As reviews apontam o atual como pouco indicado para o seu perfil em ${bad} ${bad===1?'ponto':'pontos'}`);
+  const dg=m.g-c.g;if(Math.abs(dg)>=10)out.push(`${Math.abs(dg)} g ${dg<0?'mais leve':'mais pesado'}`);
+  const ds=stackOf(m)-stackOf(c);if(Math.abs(ds)>=3)out.push(`${dec1(Math.abs(ds))} mm ${ds>0?'a mais':'a menos'} de espuma no calcanhar`);
+  const da=im[0]-ic[0];if(Math.abs(da)>=1)out.push(da>0?'Mais amortecido':'Menos amortecido e mais firme');
+  const de=im[3]-ic[3];if(Math.abs(de)>=1)out.push(de>0?'Mais estável':'Menos estável');
+  const dr=m.dr-c.dr;if(dr<=-3)out.push(`Drop ${dec1(-dr)} mm menor: faça a transição aos poucos, porque panturrilha e tendão de Aquiles trabalham mais`);else if(Math.abs(dr)>=2)out.push(`Drop ${dec1(Math.abs(dr))} mm ${dr>0?'maior':'menor'}`);
+  if(c.c!==m.c)out.push(`Categoria muda de ${CAT[c.c].n.toLowerCase()} para ${CAT[m.c].n.toLowerCase()}`);
+  const row=(l,f)=>`<tr><td>${l}</td><td class="n">${f(c)}</td><td class="n">${f(m)}</td></tr>`;
+  return `<div class="panel"><div><h3>Seu tênis atual × o recomendado</h3><p class="muted" style="font-size:14px">O que muda saindo do ${esc(modelOf(c))} para o ${esc(modelOf(m))}.</p></div>
+  <div class="two"><div>${VZ.hex(SX,[{name:modelOf(c)+' (atual)',v:ic,c:'var(--clay)',dash:1},{name:modelOf(m),v:im,c:'var(--pri)',fill:'var(--pri)',fo:.16,dots:1}])}</div>
+  <div style="display:flex;flex-direction:column;gap:14px;min-width:0"><div class="tbl"><table style="min-width:0"><thead><tr><th></th><th>Atual</th><th>Recomendado</th></tr></thead><tbody>
+  ${row('Fit Score',x=>(x===c?cur.fit:w.fit)+'%')}${row('Preço',x=>priceTxt(x).replace(' (aprox.)',''))}${row('Peso',x=>x.g+' g')}${row('Espuma',x=>stackOf(x)+' / '+foreOf(x)+' mm')}${row('Drop',x=>dec1(x.dr)+' mm')}${row('Durabilidade',x=>x.du+' km')}${row('Custo por km',x=>kmCost(x).replace(' por km',''))}</tbody></table></div>
+  ${out.length?`<ul class="why">${out.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</div></div></div>`;
+}
 function whyT(r){
   const a=r.a,f=r.fins[0].m,out=[];
   out.push(`Seu perfil (${PROF[r.level].toLowerCase()}) e o objetivo de ${OBJ[a.obj===undefined?1:a.obj].toLowerCase()} apontam para a categoria ${CAT[r.c1].n.toLowerCase()}.`);
@@ -1024,7 +917,7 @@ function renderReport(){
   let h=`
   <div class="panel winner">
     <p class="eyebrow">Seu tênis ideal</p>
-    <div class="whead"><div><p class="eyebrow">${esc(m.b)}</p><h2>${esc(modelOf(m))}</h2><p class="muted mono" style="font-size:14px">Preço médio: ${priceTxt(m)}</p>${brandLink(m)}<p class="src">${m.ap?'Preço estimado':'Preço consultado em out/2026'} · specs de laboratório ou ficha oficial · ${m.nr?m.nr+(m.nr===1?' review lida':' reviews lidas')+(m.nc?` (${m.np} ${m.np===1?'profissional':'profissionais'}, ${m.nc} de ${m.nc===1?'cliente':'clientes'})`:''):'sem review independente ainda'}</p></div>
+    <div class="whead"><div><p class="eyebrow">${esc(m.b)}</p><h2>${esc(modelOf(m))}</h2><p class="muted mono" style="font-size:14px">Preço médio: ${priceTxt(m)}</p>${brandLink(m)}<p class="src">${m.ap?'Preço estimado':'Preço consultado em out/2026'} · ${m.fi?'specs da ficha da marca (sem medição de laboratório)':'specs de laboratório'} · ${m.nr?m.nr+(m.nr===1?' review lida':' reviews lidas')+(m.nc?` (${m.np} ${m.np===1?'profissional':'profissionais'}, ${m.nc} de ${m.nc===1?'cliente':'clientes'})`:''):'sem review independente ainda'}</p></div>
       <div style="text-align:right"><div class="fit">${w.fit}%</div><span class="muted" style="font-size:13px">Fit Score</span></div></div>
     <div class="chips">${factors(r).map(f=>`<span class="fx ${f[0]==='+'?'up':'dn'}">${f[0]} ${esc(f[1])}</span>`).join('')}</div>
     <div class="specs">
@@ -1036,14 +929,10 @@ function renderReport(){
       <div class="spec"><span>Custo por km</span><b>${kmCost(m).replace(' por km','')}</b></div>
     </div>
     <div class="two">
+      <div><h3 style="margin-bottom:8px">Por que ele combina com você</h3><ul class="why">${whyT(r).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
       <div style="display:flex;flex-direction:column;gap:16px">
-        <div><h3 style="margin-bottom:8px">Por que ele combina com você</h3><ul class="why">${whyT(r).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
         <div><h3 style="margin-bottom:8px">Pontos de atenção</h3><ul class="why">${attT(r).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
         <div class="arm"><b>${mo}</b><div><strong>${mo===1?'Mês':'Meses'} até a troca</strong><p class="muted" style="font-size:14px">Com cerca de ${km} km por semana, ele dura uns ${mo} ${mo===1?'mês':'meses'} (${m.du} km).</p></div></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
-        <div class="vhead"><h3>Veja o tênis</h3><div class="seg" role="group" aria-label="Visualização do tênis"><button type="button" data-v="3d" aria-pressed="true">3D</button><button type="button" data-v="cut" aria-pressed="false">Corte</button></div></div>
-        <div class="stage"><div id="w3d"></div><div id="wcut" hidden style="padding:8px">${VZ.cut(m)}</div><p class="hint" id="w3dh">Arraste para girar · ${dec1(m.dr)} mm de drop</p></div>
       </div>
     </div>
   </div>
@@ -1055,6 +944,7 @@ function renderReport(){
       <div id="ibar">${VZ.bars(m)}</div>
     </div>
   </div>`;
+  h+=atualT(r);
   {
     h+=`<div class="mini">${r.fins.slice(1).map((x,i)=>`<div class="panel"><p class="eyebrow">${i+2}º lugar · ${esc(x.m.b)}</p><div class="whead"><h2>${esc(modelOf(x.m))}</h2><div class="fit" style="font-size:28px">${x.fit}%</div></div><p class="mono" style="font-size:14px">${priceTxt(x.m)} · ${x.m.g} g · drop ${dec1(x.m.dr)} mm · ${x.m.du} km</p><p style="font-size:15px">${esc(x.m.nt)}</p>${brandLink(x.m)}</div>`).join('')}</div>`;
     const t10=r.top10,mk=Math.max(...t10.map(x=>x.m.p/x.m.du));
@@ -1065,32 +955,28 @@ function renderReport(){
       <div class="row" style="gap:8px"><div class="seg" role="group" aria-label="Tipo de top 3"><button type="button" data-t="g" aria-pressed="true">Geral</button><button type="button" data-t="b" aria-pressed="false">Por marca</button></div>
       <select id="cmpBrand" aria-label="Marca" hidden>${BRANDS.map(b=>`<option${r.pref[0]===b?' selected':''}>${esc(b)}</option>`).join('')}</select></div></div>
       <div id="cmpBody"></div></div>`;
-    h+=`<div class="panel"><div class="vhead"><div><h3>Ranking por marca</h3><p class="muted" style="font-size:14px">O tênis de cada marca que mais combina com você${r.pref.length?'. Suas marcas preferidas estão destacadas':''}.</p></div></div>
+    h+=`<div class="panel"><div class="vhead"><div><h3>O melhor de cada marca</h3><p class="muted" style="font-size:14px">O tênis de cada uma das principais marcas que mais combina com você${r.pref.length?'. Suas marcas preferidas vêm primeiro':''}.</p></div></div>
       ${r.pref.length?`<div class="chips">${r.brands.filter(x=>x.pref).map(x=>`<span class="fx up">Seu melhor ${esc(x.m.b)}: ${esc(modelOf(x.m))} · ${x.fit}%</span>`).join('')}</div>`:''}
-      <div class="brk">${r.brands.map((x,i)=>`<div class="brow${x.pref?' pref':''}"><span class="pos">${i+1}º</span><div style="min-width:0"><p class="eyebrow">${esc(x.m.b)}${x.pref?' · sua preferida':''}</p><b>${esc(modelOf(x.m))}</b><small class="muted mono">${priceTxt(x.m).replace(' (aprox.)','')} · ${CAT[x.m.c].n}</small>${brandLink(x.m)}</div><div class="bfit"><span class="mono">${x.fit}%</span><div class="meter"><i style="width:${x.fit}%"></i></div></div></div>`).join('')}</div>
+      <div class="brk">${r.brands.filter(x=>x.pref||MARCAS.includes(x.m.b)).sort((p,q)=>q.pref-p.pref||p.m.b.localeCompare(q.m.b,'pt',{sensitivity:'base'})).map(x=>`<div class="brow${x.pref?' pref':''}"><div style="min-width:0"><p class="eyebrow">${esc(x.m.b)}${x.pref?' · sua preferida':''}</p><b>${esc(modelOf(x.m))}</b><small class="muted mono">${priceTxt(x.m).replace(' (aprox.)','')} · ${CAT[x.m.c].n}</small>${brandLink(x.m)}</div><div class="bfit"><span class="mono">${x.fit}%</span><div class="meter"><i style="width:${x.fit}%"></i></div></div></div>`).join('')}</div>
       <p class="note">Marcas com menos modelos no catálogo têm menos chance de ter um tênis da categoria ideal; por isso o Fit Score delas pode ser mais baixo.</p></div>`;
     if(r.second)h+=`<div class="panel"><h3>Segundo par para rodízio</h3><p class="muted">Quem alterna dois tênis teve 39% menos risco de lesão num estudo com 264 corredores. Use este ${r.second.c==='sup'?'só em prova e treinos-chave':r.second.c==='rap'?'nos treinos de ritmo e tiro':'na rodagem leve'}.</p><div class="whead"><div><p class="eyebrow">${esc(r.second.b)}</p><h2>${esc(modelOf(r.second))}</h2><p class="muted mono" style="font-size:14px">${priceTxt(r.second)} · ${CAT[r.second.c].n}</p>${brandLink(r.second)}</div></div><p class="note">Os dois pares juntos: ${brl(m.p+r.second.p)}. Custo por km do rodízio: ${('R$ '+((m.p+r.second.p)/(m.du+r.second.du)).toFixed(2)).replace('.',',')}.</p><div style="max-width:460px;width:100%;margin:0 auto">${VZ.hex(SX,[{name:modelOf(m),v:idx(m),c:'var(--pri)',fill:'var(--pri)',fo:.14},{name:modelOf(r.second),v:idx(r.second),c:'var(--ball)',fill:'var(--ball)',fo:.14}])}</div><p class="muted" style="font-size:14px;text-align:center">Juntos, os dois cobrem mais área do hexágono do que qualquer um sozinho.</p></div>`;
     h+=`<div class="panel"><h3>Para pagar menos</h3><ul class="why"><li>A versão da coleção anterior costuma sair 30% a 50% mais barata, com quase o mesmo desempenho.</li><li>Lançamentos raramente entram em promoção nos primeiros meses.</li><li>Compare o preço por km, não só o preço: um tênis mais caro que dura mais pode sair mais barato.</li></ul></div>`;
   }
-  h+=`<div class="panel"><h3>Seu perfil de corredor</h3><p class="muted">Card pronto para story. Mostra o perfil, não o modelo.</p>
-    <div class="share"><small class="mono">TENIS MATCH · PERFIL DE CORREDOR</small><div class="big">${PROF[r.level]}</div>
-    <div class="row"><span class="chip">${CAT[r.c1].n}</span><span class="chip">${esc(Q.find(q=>q.id==='km').o[a.km===undefined?1:a.km][1])} por semana</span></div>
-    <div class="sharehex">${VZ.hex(RX,[{name:'Perfil',v:runnerVec(a).map(x=>x*10),c:'#FF8A3D',fill:'#FF8A3D',fo:.25}])}</div>
-    <small>Fit Score do meu tênis: ${w.fit}%. Descubra o seu.</small></div></div>
+  h+=`<div class="panel"><h3>Seus cards</h3><p class="muted">Prontos para story: o seu perfil de corredor e o tênis que mais combina com você, com o Match.</p>
+    <div id="cardsOut" class="cardpair"></div>
+    <div class="row"><button class="btn btn-pri" type="button" id="shareCards">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlRunner">Salvar card do corredor</button><button class="btn btn-ghost" type="button" id="dlShoe">Salvar card do tênis</button></div></div>
   <div class="row"><button class="btn btn-ghost" type="button" id="again">Refazer o teste</button></div>`;
   $('#report').innerHTML=h;
-  VZ.mount($('#w3d'),m);
   {
     const cols=['var(--pri)','var(--clay)','var(--muted)'],avgKm=M.reduce((s,x)=>s+x.p/x.du,0)/M.length;
     const cmp=list=>{const maxKm=Math.max(...list.map(f=>f.m.p/f.m.du));
-      $('#cmpBody').innerHTML=`<div class="cmp">${list.map((f,k)=>`<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><div class="stage"><div id="c3d${k}"></div></div><h4>${k+1}º · ${esc(f.m.n)}</h4><p class="mono muted" style="font-size:13px">${f.fit}% · ${priceTxt(f.m).replace(' (aprox.)','')}</p>${brandLink(f.m)}</div>`).join('')}</div>
+      $('#cmpBody').innerHTML=`<div class="cmp">${list.map((f,k)=>`<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><h4>${k+1}º · ${esc(f.m.n)}</h4><p class="mono muted" style="font-size:13px">${f.fit}% · ${priceTxt(f.m).replace(' (aprox.)','')}</p>${brandLink(f.m)}</div>`).join('')}</div>
       <div class="two"><div>${VZ.hex(SX,list.map((f,k)=>({name:modelOf(f.m),v:idx(f.m),c:cols[k],fill:k?'none':cols[0],fo:k?0:.14,dots:k===0})))}</div>
       <div style="min-width:0"><h3 style="margin-bottom:8px">Mapa do catálogo</h3>${VZ.map(list)}</div></div>
-      <div class="tbl"><table><thead><tr><th>Modelo</th><th>Preço</th><th>Peso</th><th>Salto / antepé</th><th>Dura</th><th>Custo por km <span style="text-transform:none;letter-spacing:0">(média ${('R$ '+avgKm.toFixed(2)).replace('.',',')})</span></th></tr></thead><tbody>${list.map(f=>`<tr><td>${esc(f.m.n)}</td><td class="n">${priceTxt(f.m).replace(' (aprox.)','')}</td><td class="n">${f.m.g} g</td><td class="n">${stackOf(f.m)} / ${foreOf(f.m)} mm</td><td class="n">${f.m.du} km</td><td class="n"><span class="kmbar"><i style="width:${Math.round(f.m.p/f.m.du/maxKm*70)}px"></i>${kmCost(f.m).replace(' por km','')}</span></td></tr>`).join('')}</tbody></table></div>`;
-      list.forEach((f,k)=>VZ.mount($('#c3d'+k),f.m,{ratio:1.5}))};
+      <div class="tbl"><table><thead><tr><th>Modelo</th><th>Preço</th><th>Peso</th><th>Salto / antepé</th><th>Dura</th><th>Custo por km <span style="text-transform:none;letter-spacing:0">(média ${('R$ '+avgKm.toFixed(2)).replace('.',',')})</span></th></tr></thead><tbody>${list.map(f=>`<tr><td>${esc(f.m.n)}</td><td class="n">${priceTxt(f.m).replace(' (aprox.)','')}</td><td class="n">${f.m.g} g</td><td class="n">${stackOf(f.m)} / ${foreOf(f.m)} mm</td><td class="n">${f.m.du} km</td><td class="n"><span class="kmbar"><i style="width:${Math.round(f.m.p/f.m.du/maxKm*70)}px"></i>${kmCost(f.m).replace(' por km','')}</span></td></tr>`).join('')}</tbody></table></div>`;};
     const setT=t=>{document.querySelectorAll('#cmpP [data-t]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.t===t));const sel=$('#cmpBrand');sel.hidden=t!=='b';
       if(t==='g'){$('#cmpSub').textContent='Os três que mais combinam com você, de qualquer marca.';cmp(r.fins)}
-      else{const L=r.byBrand(sel.value);$('#cmpSub').textContent=L.length<3?`O catálogo tem ${L.length} ${L.length===1?'modelo':'modelos'} da ${sel.value}.`:`Os três ${sel.value} que mais combinam com você.`;cmp(L)}};
+      else{const L=r.byBrand(sel.value);$('#cmpSub').textContent=L.length<3?`O catálogo tem ${L.length} ${L.length===1?'modelo':'modelos'} da ${sel.value} à venda no Brasil.`:`Os três ${sel.value} que mais combinam com você.`;cmp(L)}};
     document.querySelectorAll('#cmpP [data-t]').forEach(b=>b.onclick=()=>setT(b.dataset.t));$('#cmpBrand').onchange=()=>setT('b');
     setT(r.pref.length?'b':'g');
     const t10=o=>{document.querySelectorAll('[data-o]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.o===o));
@@ -1098,11 +984,98 @@ function renderReport(){
       $('#t10b').innerHTML=L.map(x=>`<tr class="${r.pref.includes(x.m.b)?'pref':''}"><td class="n">${x.i+1}º</td><td><b>${esc(modelOf(x.m))}</b>${x.m.url?`<br>${brandLink(x.m,'site da marca')}`:''}</td><td>${esc(x.m.b)}</td><td class="muted">${CAT[x.m.c].n}</td><td class="n">${priceTxt(x.m).replace(' (aprox.)','')}</td><td class="n">${kmCost(x.m).replace(' por km','')}</td><td><span class="mfit"><i style="width:${x.fit}%"></i></span><span class="mono" style="font-weight:700">${x.fit}%</span></td></tr>`).join('')};
     document.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>t10(b.dataset.o));t10('fit');
   }
-  document.querySelectorAll('#report [data-v]').forEach(b=>b.onclick=()=>{const v=b.dataset.v;document.querySelectorAll('#report [data-v]').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#w3d').hidden=v!=='3d';$('#w3dh').hidden=v!=='3d';$('#wcut').hidden=v!=='cut'});
   const iv=v=>{document.querySelectorAll('#report [data-i]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.i===v));$('#ihex').hidden=v!=='hex';$('#ibar').hidden=v!=='bar'};
   document.querySelectorAll('#report [data-i]').forEach(b=>b.onclick=()=>iv(b.dataset.i));iv('hex');
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};
+  showCards(r);
 }
+
+
+/* ---------- cards para story: perfil de corredor e o tênis com o Match ---------- */
+function wrapText(x,t,maxW){const w=t.split(' ');const L=[];let l='';w.forEach(p=>{const tt=l?l+' '+p:p;if(x.measureText(tt).width>maxW&&l){L.push(l);l=p}else l=tt});if(l)L.push(l);return L}
+const runnerData=r=>({prof:PROF[r.level],sub:OBJ[r.a.obj===undefined?1:r.a.obj]+' · '+Q.find(q=>q.id==='km').o[r.a.km===undefined?1:r.a.km][1]+' por semana',v:runnerVec(r.a).map(x=>x*10),fit:r.fins[0].fit});
+const shoeData=r=>({m:r.fins[0].m,fit:r.fins[0].fit,top:r.fins.map(f=>({m:modelOf(f.m),f:f.fit})),n:M.length});
+/* logo do Tenis Match (o mesmo do topo) desenhado no canvas */
+function drawLogo(x,X,Y,S){const k=S/44;x.save();x.translate(X,Y);x.scale(k,k);
+  x.fillStyle='#0E4D64';x.beginPath();x.roundRect(0,0,44,44,10);x.fill();
+  x.save();x.translate(22,18);x.rotate(-32*Math.PI/180);x.fillStyle='#FFFFFF';x.beginPath();x.ellipse(0,0,4,13,0,0,Math.PI*2);x.fill();x.restore();
+  x.fillStyle='#FF8A3D';x.beginPath();x.ellipse(22,35,14,12,0,Math.PI,Math.PI*2);x.closePath();x.fill();x.restore()}
+async function drawRunnerCard(d){
+  try{await document.fonts.ready}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0E4D64');g.addColorStop(1,'#06222C');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='#FF8A3D';x.beginPath();x.arc(W-120,180,70,0,Math.PI*2);x.fill();
+  x.fillStyle='rgba(255,255,255,.85)';x.font='800 40px Syne, sans-serif';x.fillText('TENIS MATCH',90,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.65)';x.fillText('PERFIL DE CORREDOR',90,236);
+  x.fillStyle='#FFFFFF';x.font='700 100px "DM Sans", sans-serif';const lines=wrapText(x,d.prof,W-180);lines.forEach((l,i)=>x.fillText(l,90,360+i*112));
+  const ys=360+(lines.length-1)*112+76;x.fillStyle='rgba(255,255,255,.7)';x.font='500 36px "DM Sans", sans-serif';wrapText(x,d.sub,W-180).slice(0,2).forEach((l,i)=>x.fillText(l,90,ys+i*48));
+  const cx=W/2,cy=ys+470,R=290;
+  const pt=(i,v)=>{const a=-Math.PI/2+i*Math.PI/3;return [cx+Math.cos(a)*R*v/10,cy+Math.sin(a)*R*v/10]};
+  const path=f=>{x.beginPath();RX.forEach((k,i)=>{const p=pt(i,f(i));i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])});x.closePath()};
+  [10,7.5,5,2.5].forEach((v,i)=>{path(()=>v);x.fillStyle=i%2?'rgba(255,255,255,.04)':'rgba(255,255,255,.08)';x.fill();x.strokeStyle='rgba(255,255,255,.18)';x.lineWidth=2;x.stroke()});
+  const rg=x.createRadialGradient(cx,cy-60,20,cx,cy,R);rg.addColorStop(0,'rgba(255,138,61,.95)');rg.addColorStop(1,'rgba(127,208,230,.7)');
+  path(i=>cl(d.v[i],0,10));x.fillStyle=rg;x.fill();x.strokeStyle='#FF8A3D';x.lineWidth=6;x.stroke();
+  x.font='700 32px "DM Sans", sans-serif';x.textAlign='center';
+  RX.forEach((k,i)=>{const p=pt(i,12.8);x.fillStyle='rgba(255,255,255,.85)';x.fillText(k,p[0],p[1]+12);const q=pt(i,cl(d.v[i],0,10));x.fillStyle='#FF8A3D';x.beginPath();x.arc(q[0],q[1],11,0,7);x.fill()});
+  x.textAlign='left';let cxp=90;const cyp=cy+R+170;x.font='700 40px "DM Sans", sans-serif';
+  d.v.map((v,i)=>[v,i]).sort((p,q)=>q[0]-p[0]).slice(0,2).forEach(([v,i])=>{const t=`${RX[i]} ${dec1(v)}`;const w=x.measureText(t).width+60;x.fillStyle='#FF8A3D';x.beginPath();x.roundRect(cxp,cyp-52,w,76,38);x.fill();x.fillStyle='#0B2530';x.fillText(t,cxp+30,cyp);cxp+=w+20});
+  x.fillStyle='#FFFFFF';x.font='800 64px Archivo, sans-serif';x.fillText(`Match ${d.fit}%`,90,H-230);
+  x.fillStyle='rgba(255,255,255,.75)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E o seu? Faça o teste no Tenis Match',90,H-150);
+  return cv;
+}
+async function drawShoeCard(d){
+  try{await document.fonts.ready}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');const INK='#0B2530',PET='#0E4D64',m=d.m;
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#FFB98A');g.addColorStop(.55,'#FF8A3D');g.addColorStop(1,'#E9701F');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='rgba(14,77,100,.08)';x.beginPath();x.arc(W-60,560,430,0,Math.PI*2);x.fill();
+  drawLogo(x,90,140,96);
+  x.fillStyle=INK;x.font='800 44px Syne, sans-serif';x.fillText('TENIS MATCH',210,190);
+  x.font='600 30px "DM Sans", sans-serif';x.fillStyle='rgba(11,37,48,.7)';x.fillText('O TÊNIS DA MINHA CORRIDA',210,234);
+  x.fillStyle='rgba(11,37,48,.75)';x.font='700 36px "DM Sans", sans-serif';x.fillText((m.b+' · '+CAT[m.c].n).toUpperCase(),90,360);
+  x.fillStyle=INK;x.font='700 104px "DM Sans", sans-serif';const lines=wrapText(x,modelOf(m),900).slice(0,3);lines.forEach((l,i)=>x.fillText(l,90,470+i*112));
+  let y=470+lines.length*112+40;const y0=y;let chipR=0;
+  [[m.g+' g','peso'],[stackOf(m)+' mm','espuma'],[dec1(m.dr)+' mm','drop'],[m.du+' km','dura']].forEach(([v,l])=>{
+    x.font='700 36px "DM Sans", sans-serif';const wv=x.measureText(v).width;x.font='500 32px "DM Sans", sans-serif';const w=wv+x.measureText(l).width+78;chipR=Math.max(chipR,90+w);
+    x.fillStyle=INK;x.beginPath();x.roundRect(90,y,w,72,36);x.fill();
+    x.font='700 36px "DM Sans", sans-serif';x.fillStyle='#FF8A3D';x.fillText(v,118,y+48);
+    x.font='500 32px "DM Sans", sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText(l,118+wv+22,y+48);y+=92});
+  /* Match grande à direita das specs, no tamanho que couber */
+  const room=W-80-(chipR+50),num=String(d.fit),F=f=>`800 ${f}px Syne, sans-serif`;
+  let fs=280;x.font=F(fs);let wn=x.measureText(num).width;x.font=F(fs*.42);let wp=x.measureText('%').width;
+  if(wn+wp+8>room){fs=Math.floor(fs*room/(wn+wp+8));x.font=F(fs);wn=x.measureText(num).width;x.font=F(fs*.42);wp=x.measureText('%').width}
+  const base=y0+215+fs*.3,xr=W-80;x.fillStyle=INK;x.textAlign='right';
+  x.font=F(fs*.42);x.fillText('%',xr,base-fs*.33);x.font=F(fs);x.fillText(num,xr-wp-8,base);
+  x.fillStyle='rgba(11,37,48,.75)';x.font='700 34px "DM Sans", sans-serif';x.fillText('MATCH',xr-wp-12,base-fs*.78);x.textAlign='left';
+  x.fillStyle=INK;x.font='600 34px "DM Sans", sans-serif';x.fillText(priceTxt(m),90,y+30);
+  const by=Math.max(1250,y+150),bh=440;x.fillStyle=PET;x.beginPath();x.roundRect(60,by,W-120,bh,36);x.fill();
+  x.fillStyle='#FF8A3D';x.font='700 30px "DM Sans", sans-serif';x.fillText(`ESCOLHIDO ENTRE ${d.n} TÊNIS`,100,by+70);
+  d.top.forEach((t,i)=>{const yy=by+150+i*100,win=i===0;x.globalAlpha=win?1:.6;
+    x.fillStyle='#FFFFFF';x.font=(win?'700':'500')+' 38px "DM Sans", sans-serif';x.fillText(`${i+1}º  ${t.m}`,100,yy);
+    x.fillStyle='rgba(255,255,255,.15)';x.beginPath();x.roundRect(100,yy+22,W-340,16,8);x.fill();
+    x.fillStyle=win?'#FF8A3D':'rgba(255,255,255,.55)';x.beginPath();x.roundRect(100,yy+22,(W-340)*t.f/100,16,8);x.fill();
+    x.textAlign='right';x.fillStyle=win?'#FF8A3D':'#FFFFFF';x.font='700 44px Archivo, sans-serif';x.fillText(t.f+'%',W-100,yy+40);x.textAlign='left';x.globalAlpha=1});
+  x.fillStyle='rgba(11,37,48,.8)';x.font='500 38px "DM Sans", sans-serif';x.fillText('E o seu? Faça o teste no Tenis Match',90,Math.min(H-60,by+bh+100));
+  return cv;
+}
+const pairHTML=(a,b,ra,rb)=>`<img class="cardimg" alt="Card de corredor: ${esc(ra.prof)}, Match ${ra.fit}%" src="${a.toDataURL('image/png')}"><img class="cardimg" alt="Card do tênis: ${esc(rb.m.n)}, Match ${rb.fit}%" src="${b.toDataURL('image/png')}">`;
+const toBlob=cv=>new Promise(res=>cv.toBlob(res,'image/png'));
+function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+function showCards(r){
+  const ra=runnerData(r),rb=shoeData(r);
+  Promise.all([drawRunnerCard(ra),drawShoeCard(rb)]).then(([a,b])=>{
+    const o=$('#cardsOut');if(!o)return;o.innerHTML=pairHTML(a,b,ra,rb);
+    $('#dlRunner').onclick=async()=>saveBlob(await toBlob(a),'tenis-match-corredor.png');
+    $('#dlShoe').onclick=async()=>saveBlob(await toBlob(b),'tenis-match-tenis.png');
+    $('#shareCards').onclick=async()=>{const txt=`Meu perfil no Tenis Match: ${ra.prof}. Meu tênis: ${rb.m.n}, Match ${rb.fit}%. E o seu?`;
+      try{const files=[new File([await toBlob(a)],'tenis-match-corredor.png',{type:'image/png'}),new File([await toBlob(b)],'tenis-match-tenis.png',{type:'image/png'})];
+        if(navigator.canShare&&navigator.canShare({files})){await navigator.share({files,text:txt});return}
+        if(navigator.share){await navigator.share({text:txt});return}}catch(e){if(e&&e.name==='AbortError')return}
+      try{await navigator.clipboard.writeText(txt);alert('Texto copiado. Use "Salvar card" para as imagens.')}catch(e){saveBlob(await toBlob(a),'tenis-match-corredor.png')}};
+  }).catch(()=>{const p=$('#cardsOut');if(p)p.closest('.panel').remove()});
+}
+/* cards de exemplo na home, com as respostas do exemplo pronto */
+(function(){const o=$('#cardHome');try{const r=engine(conv(EXAMPLE),true),ra=runnerData(r),rb=shoeData(r);
+  Promise.all([drawRunnerCard(ra),drawShoeCard(rb)]).then(([a,b])=>{o.innerHTML=`<div class="cardpair">${pairHTML(a,b,ra,rb)}</div>`}).catch(()=>o.remove())}catch(e){o&&o.remove()}})();
 
 })();
 </script>
