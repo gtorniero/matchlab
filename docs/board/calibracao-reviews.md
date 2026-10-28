@@ -48,3 +48,14 @@ Sem casos novos; correções de regra encontradas testando perfis-limite no moto
 - **Groveler em onda de 1,5 m para cima**: −6. Antes, um intermediário que gosta de manobra recebia groveler em onda de 1,5 a 2,5 m; agora recebe evolution.
 - O perfil do "Ver um exemplo pronto" não mudou (Mid-length 96%, 37,6 L).
 - Não houve nova medição nos 422 casos (a base não está no repositório). Rodar de novo na próxima rodada, junto com os 30–50 alunos do Gustavo.
+
+## Rodada 3: questionário e litragem de avançado (25/out/2026)
+Ajustes pedidos depois do teste do dono do projeto (avançado, dor no ombro, recebeu groveler de 28 L com uma evolution de 30 L).
+- **Pergunta nova: dor ou lesão** (ombro, joelho/quadril, lombar, mobilidade; pode marcar mais de uma). Litros a mais: ombro +2,5 L; joelho/quadril +1,5 L; mobilidade +1,5 L; lombar +1 L. Joelho, quadril ou mobilidade puxam para tipos mais estáveis; ombro e lombar, um pouco. O relatório mostra aviso de saúde (fisioterapeuta).
+- **Avançado:** fator de litragem de 0,385→0,36 para 0,40→0,37 L/kg. O mínimo antigo ficava abaixo do observado nos casos reais de avançado (0,375–0,41) e igual ao de profissional (0,365).
+- **Groveler:** multiplicador de volume 1,06 → 1,10. Groveler costuma ter igual ou mais volume que a pranchinha da pessoa.
+- Resultado no perfil de teste (75 kg, avançado, onda pequena): groveler de ~28,6 L para 31,8 L sem dor e 34,3 L com dor no ombro.
+- **Saíram as perguntas** de roupa (lycra/john) e de fundo do pico. Valem o padrão: sem ajuste de roupa e beach break.
+- **"Onde vai usar" e "papel da prancha" viraram uma pergunta só:** "Para que vai usar essa prancha?" (única, dias pequenos, dias grandes, viagem, piscina, mar e piscina).
+- O questionário passou de 20–25 para 18–23 perguntas. O "Ver um exemplo pronto" não mudou (Mid-length 96%, 37,6 L).
+- A validar com o Gustavo: os litros a mais por dor e a nova faixa de avançado.
