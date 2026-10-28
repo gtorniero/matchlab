@@ -706,7 +706,6 @@ const Q=[
  {s:0,id:'dom',t:'Mão dominante',o:[['L','Canhoto'],['R','Destro']]},
  {s:0,id:'str',t:'E a sua força, comparada a quem joga com você?',o:[['low','Abaixo da média','Em bola pesada, o golpe sai atrasado e sem peso'],['mid','Na média','Aguenta a troca de bola, mas nem sempre consegue acelerar'],['high','Acima da média','Gera velocidade sem esforço, até em posição difícil'],['vhigh','Muito acima','Faz academia com frequência ou tem força de sobra']]},
  {s:0,id:'cond',t:'Como está o seu fôlego em quadra?',o:[['0','Perco rendimento cedo','No meio do jogo os golpes já perdem força'],['1','Termino, mas no limite','O fim da partida é bem pior que o começo'],['2','Jogo a partida toda bem','Canso no fim, como todo mundo, sem mudar o jogo'],['3','Sobra gás','Jogaria outra partida em seguida no mesmo nível']]},
- {s:0,id:'hand',type:'number',t:'Medida da mão (opcional)',h:'Em cm, da linha do meio da palma até a ponta do dedo anelar. Usamos para indicar o '+'<button type="button" class="gl" data-g="grip">grip</button>.',min:9,max:13,step:.1,opt:true},
  {s:1,id:'arm',t:'Você sente dor no braço quando joga?',h:'Cotovelo, ombro ou punho.',o:[['no','Nunca tive'],['past','Já tive, hoje não'],['now','Tenho hoje']]},
  {s:1,id:'joint',multi:3,if:()=>A.arm&&A.arm!=='no',t:'Onde dói ou doía?',h:'Marque todas que se aplicam. Cada articulação pede um ajuste diferente.',o:[['elbow','Cotovelo','Vibração e rigidez pesam mais'],['shoulder','Ombro','Peso e swingweight pesam mais'],['wrist','Punho','Balanço e torção pesam mais']]},
  {s:1,id:'pain',if:()=>A.arm&&A.arm!=='no',t:'Qual a intensidade da dor?',o:[['1','Leve','Incômodo depois de jogar'],['2','Moderada','Dói durante o jogo'],['3','Forte','Dói em golpes específicos ou no dia a dia']]},
@@ -723,7 +722,8 @@ const Q=[
  {s:3,id:'miss',t:'Onde você mais erra?',o:[['short','Bola curta, sem peso'],['long','Bola longa, para fora'],['net','Na rede'],['frame','Pego fora do centro','A raquete torce na mão']]},
  {s:4,id:'cur',type:'select',t:'Qual a sua raquete atual?',h:'Se não estiver na lista, escolha "Outra". Com ela, fazemos o diagnóstico da sua raquete.'},
  {s:4,id:'curAge',if:()=>A.cur&&A.cur!=='none',t:'Há quanto tempo você usa essa raquete?',o:[['0','Menos de 1 ano'],['1','1 a 3 anos'],['3','Mais de 3 anos']]},
- {s:4,id:'grip',t:'Qual o grip (cabo) da sua raquete?',h:'Vem escrito na base do cabo: L1 a L5 ou 4 1/8 a 4 5/8.',o:[['1','L1','4 1/8'],['2','L2','4 1/4'],['3','L3','4 3/8'],['4','L4','4 1/2'],['5','L5','4 5/8']],opt:true},
+ {s:4,id:'hand',type:'number',t:'Medida da mão (opcional)',h:'Se souber: em cm, da linha do meio da palma até a ponta do dedo anelar. Usamos para indicar o '+'<button type="button" class="gl" data-g="grip">grip</button>. Se não souber, pule.',min:9,max:13,step:.1,opt:true},
+ {s:4,id:'grip',t:'Qual o grip (cabo) da sua raquete?',h:'Vem escrito na base do cabo: L1 a L5 ou 4 1/8 a 4 5/8.',o:[['1','L1','4 1/8'],['2','L2','4 1/4'],['3','L3','4 3/8'],['4','L4','4 1/2'],['5','L5','4 5/8'],['0','Não sei']],opt:true},
  {s:4,id:'feel',if:()=>A.cur!=='none',t:'Como você sente sua raquete hoje?',o:[['light','Leve demais','Treme contra bola pesada'],['ok','No ponto'],['heavy','Pesada demais','Cansa ou chega atrasado']]},
  {s:4,id:'why',t:'Por que você quer trocar?',o:[['broken','Quebrou ou está velha','Quero algo parecido, só que melhor'],['pain','Dor no braço','Prioridade é proteger o braço'],['level','Subi de nível','A atual ficou limitada'],['feel','Quero outra sensação','Mais potência, controle ou spin'],['first','É a minha primeira raquete boa']]},
  {s:4,id:'want',multi:2,t:'O que você quer ganhar com a troca?',h:'Escolha até 2.',o:[['power','Mais potência'],['control','Mais controle'],['comfort','Mais conforto'],['spin','Mais spin'],['maneuver','Mais leveza na mão'],['stability','Mais estabilidade']]},
@@ -1232,7 +1232,7 @@ function pix(t){
 function gripSize(){
   const h=parseFloat(String(A.hand||'').replace(',','.'));
   if(h>=9&&h<=13){const g=h<10.65?1:h<10.95?2:h<11.25?3:h<11.55?4:5;return {g,src:`pela medida da mão (${dec(h)} cm)`}}
-  if(A.grip)return {g:+A.grip,src:'mantendo o grip da sua raquete atual'};
+  if(A.grip&&A.grip!=='0')return {g:+A.grip,src:'mantendo o grip da sua raquete atual'};
   return null;
 }
 function why(r,c,T){
