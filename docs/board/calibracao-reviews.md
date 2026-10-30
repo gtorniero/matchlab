@@ -51,7 +51,7 @@ Sem casos novos; correções de regra encontradas testando perfis-limite no moto
 
 ## Rodada 3: questionário e litragem de avançado (25/out/2026)
 Ajustes pedidos depois do teste do dono do projeto (avançado, dor no ombro, recebeu groveler de 28 L com uma evolution de 30 L).
-- **Pergunta nova: dor ou lesão** (ombro, joelho/quadril, lombar, mobilidade; pode marcar mais de uma). Litros a mais: ombro +2,5 L; joelho/quadril +1,5 L; mobilidade +1,5 L; lombar +1 L. Joelho, quadril ou mobilidade puxam para tipos mais estáveis; ombro e lombar, um pouco. O relatório mostra aviso de saúde (fisioterapeuta).
+- **Pergunta nova: dor ou lesão** (ombro, joelho/quadril, lombar, mobilidade; pode marcar mais de uma). Litros a mais: ombro +2,5 L; joelho/quadril +1,5 L; mobilidade +1,5 L; lombar +1 L. Joelho, quadril ou mobilidade puxam para tipos mais estáveis; ombro e lombar, um pouco. Sem aviso de fisioterapeuta no relatório (tirado a pedido do dono do projeto em 30/out).
 - **Avançado:** fator de litragem de 0,385→0,36 para 0,40→0,37 L/kg. O mínimo antigo ficava abaixo do observado nos casos reais de avançado (0,375–0,41) e igual ao de profissional (0,365).
 - **Groveler:** multiplicador de volume 1,06 → 1,10. Groveler costuma ter igual ou mais volume que a pranchinha da pessoa.
 - Resultado no perfil de teste (75 kg, avançado, onda pequena): groveler de ~28,6 L para 31,8 L sem dor e 34,3 L com dor no ombro.

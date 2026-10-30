@@ -1095,8 +1095,6 @@ function attB(r){
   if(['short','step','gun'].includes(k)&&r.lvl<3)out.push('É um shape exigente para o seu nível: só funciona com remada forte e técnica de cavada.');
   if(a.tam!==undefined&&a.tam>=3&&!['step','gun','short','mid'].includes(k))out.push('Em dias acima de 1,5 m ela perde controle; vale ter uma prancha maior e mais fina para esses dias.');
   if(/Epóxi/.test(r.dc.constr[0])&&a.onde!==1)out.push('Epóxi é leve e flutua mais, mas trepida com vento e mar mexido.');
-  if(a.onde===1||a.onde===2)out.push('Confira as regras da piscina antes: muitas exigem prancha de espuma nas sessões de iniciante e algumas limitam o tamanho da prancha.');
-  {const dr=a.dor||[],P=['ombro','joelho ou quadril','lombar','mobilidade'];if(dr.length)out.push(`Por causa da dor (${dr.map(x=>P[x]).join(', ')}), a prancha ficou com mais flutuação${dr.some(x=>x===1||x===3)?' e estabilidade':''}. Ela ajuda, mas não trata: converse com um fisioterapeuta antes de aumentar o volume de surf.`)}
   if(!out.length)out.push('Nenhum ponto crítico para o seu perfil. Se puder, teste uma parecida antes de comprar.');
   return out;
 }
@@ -1108,15 +1106,6 @@ function feelB(r){
   rows.push(['Espessura',frac(c.d.T),frac(n.d.T),n.d.T>c.d.T+0.1?'Mais grossa: rema melhor':n.d.T<c.d.T-0.1?'Mais fina: mais sensível na borda':'Espessura parecida']);
   rows.push(['Tipo',PN[c.k],PN[n.k],c.k===n.k?'Mesmo tipo, ajustado ao seu nível':PD[n.k]]);
   return rows;
-}
-function storeGuide(r){
-  const d=r.d,dc=r.dc,k=r.k,v=d.V;
-  const take=[['Tipo',ARCH[k].n],['Comprimento',ftin(d.L-2)+' a '+ftin(d.L+2)],['Largura',frac(d.W-0.25)+' a '+frac(d.W+0.25)],['Espessura',frac(d.T-0.125)+' a '+frac(d.T+0.125)],['Litragem',dec1(v-1.5)+' a '+dec1(v+1.5)+' L'],['Rabeta',dc.tail],['Quilhas',FINSET[dc.setup]],['Construção',dc.constr[0]],['Acabamento',dc.finish]];
-  r._shop=['LEVE À LOJA · BOARD MATCH',...take.map(x=>x[0]+': '+x[1])].join('\n');
-  return `<details class="panel fold"><summary><span><b>Como achar essa prancha numa loja</b><small>Faixas aceitáveis e o que conferir antes de comprar</small></span></summary><p class="muted">Mostre esta lista ao vendedor ou use para conferir sozinho. Dentro das faixas, a prancha serve.</p>
-  <div class="specs">${take.map(x=>`<div class="spec"><span>${x[0]}</span><b style="font-size:14px">${esc(x[1])}</b></div>`).join('')}</div>
-  <ol class="why"><li><b>Peça pelo tipo e pelo tamanho:</b> "procuro um(a) ${esc(ARCH[k].n.toLowerCase())} entre ${ftin(d.L-2)} e ${ftin(d.L+2)}".</li><li><b>Confira as medidas no fundo da prancha,</b> perto da longarina ou da rabeta, no formato ${ftin(d.L)} x ${frac(d.W)} x ${frac(d.T)}.</li><li><b>Confira a litragem</b> junto das medidas ou na etiqueta. Se não estiver lá, pergunte ou procure o modelo no site da marca. É o número que mais importa.</li><li><b>Olhe o formato:</b> rabeta ${esc(dc.tail.toLowerCase())}, ${esc(FINSET[dc.setup].toLowerCase())}.</li><li><b>Se for usada:</b> aperte o deck procurando partes moles, veja trincas perto das caixas de quilha e consertos amarelados.</li></ol>
-  <div class="row"><button class="btn btn-go" type="button" id="scopy">Copiar lista para a loja</button><span class="note" id="scopied"></span></div></details>`;
 }
 function whyB(r){
   const a=r.a,S=r.S,out=[];const t=S.indexOf(Math.max(...S));
@@ -1307,6 +1296,7 @@ function renderReport(){
   const series=[{name:'Nova prancha',v:r.ix}];if(r.atual)series.push({name:'Sua atual',v:r.atual.ix});
   const pdfBtn=id=>`<div class="pdfbar"><button class="btn btn-pri" type="button" id="${id}">Baixar relatório em PDF (A4)</button><span class="note pdfst" aria-live="polite"></span></div>`;
   let h=`${pdfBtn('pdfTop')}
+  <div class="panel bcard"><div class="two" style="align-items:center"><div id="cardBoard" class="cardwrap herocard" aria-label="Card da sua prancha"></div><div style="display:flex;flex-direction:column;gap:12px"><p class="eyebrow">A prancha do seu surf</p><h2>${PN[k]} · ${w.fit}%</h2><p class="muted">O resumo da sua prancha num card: tipo, medidas, litros, rabeta, quilhas e o pódio entre os ${KEYS.length} tipos. Mostre na loja ou mande para o shaper.</p><div class="row"><button class="btn btn-go" type="button" id="shareBoard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlBoard">Salvar card da prancha</button></div></div></div></div>
   <div class="panel winner">
     <p class="eyebrow">Sua prancha ideal</p>
     <div class="whead"><div style="display:flex;flex-direction:column;gap:8px;min-width:0"><h2>${PN[k]}</h2><span class="tech">Em palavras simples: <b>${PL[k]}</b></span><p class="muted" style="font-size:16px;max-width:56ch">${PD[k]}</p></div>
@@ -1315,9 +1305,7 @@ function renderReport(){
     ${TIMG.has(k)?timg(k,'',dc.tail):`<div class="hboard">${boardSVG(k,d,dc,{h:true})}</div>`}
     ${heroTiles(r)}
     <div class="w-sec"><h3>Por que ela combina com você</h3><div class="why-cards">${whyV(r)}</div></div>
-    <div class="w-sec"><h3>Fique atento</h3><div class="att-cards">${attB(r).map(x=>`<div class="att${/Nenhum ponto/.test(x)?' ok':''}">${ICO[/Nenhum ponto/.test(x)?'ok':'warn']}<p>${esc(x)}</p></div>`).join('')}</div></div>
   </div>
-  ${cardsPanel()}
   ${varMap(r)}
   <div class="panel">
     <div><p class="eyebrow">Passo 1</p><h3>As 3 medidas da sua prancha</h3><p class="muted" style="margin-top:4px">Toda prancha é descrita por comprimento, largura e espessura. Juntas, elas dão os litros.</p></div>
@@ -1352,10 +1340,11 @@ function renderReport(){
   if(tier>=2){
     h+=`<div class="mini">${r.fins.slice(1).map((x,i)=>{const dd=dims(x.k,x.vol,r.peso,r.alt);return `<div class="panel"><p class="eyebrow">${i+2}º lugar</p>${timg(x.k,'sm').replace(/<figcaption>.*?<\/figcaption>/,'')}<div class="whead"><div><h3>${PN[x.k]}</h3><span class="tech">${PL[x.k]}</span></div><div class="fit" style="font-size:26px">${x.fit}%</div></div><p class="mono" style="font-size:14px">${ftin(dd.L)} × ${frac(dd.W)} × ${frac(dd.T)} · ${dec1(dd.V)} L</p><p style="font-size:15px" class="muted">${esc(PD[x.k])}</p></div>`}).join('')}</div>`;
     const rows=[['Bico',dc.nose],['Ponto mais largo',dc.wide],['Rabeta',dc.tail],['Borda',dc.rail],['Curva (rocker)','Bico '+frac(dc.rocker[0])+' · rabeta '+frac(dc.rocker[1])],['Fundo',dc.bottom],['Quilhas',FINSET[dc.setup]+' · tamanho '+dc.finSize],['Formato da quilha',dc.template],['Caixas de quilha',dc.boxes],['Construção',dc.constr[0]+'. '+dc.constr[1]],['Laminação',dc.lam],['Acabamento',dc.finish]];
-    h+=storeGuide(r);
+    h+=cardsPanel();
     const ficha=['FICHA TÉCNICA · BOARD MATCH','Tipo: '+ARCH[k].n,'Medidas: '+ftin(d.L)+' x '+frac(d.W)+' x '+frac(d.T),'Litragem: '+dec1(d.V)+' L',...rows.map(x=>x[0]+': '+x[1]),'Surfista: '+r.peso+' kg, '+r.alt+' cm, '+LV[r.lvl].n.toLowerCase()].join('\n');r._ficha=ficha;
     h+=`<details class="panel fold"><summary><span><b>Ficha técnica para qualquer shaper</b><small>As 12 decisões de shape, prontas para copiar</small></span></summary><pre class="mono" style="white-space:pre-wrap;font-size:13px;margin:0;background:var(--bg);border-radius:12px;padding:14px;overflow-x:auto">${esc(ficha)}</pre><div class="row"><button class="btn btn-ghost" type="button" id="fcopy">Copiar ficha técnica</button><span class="note" id="fcopied"></span></div></details>`;
   }
+  if(tier<2)h+=cardsPanel();
   h+=matchSection(r);
   h+=pdfBtn('pdfBot');
   h+=`<div class="row"><button class="btn btn-ghost" type="button" id="again">Refazer o teste</button></div>`;
@@ -1366,9 +1355,10 @@ function renderReport(){
   $('#again').onclick=()=>{step=0;show('quiz');renderQs()};
   ['#pdfTop','#pdfBot'].forEach(id=>{$(id).onclick=()=>makePDF(r)});
   const copy=(btn,txt,out)=>{const b=$(btn);if(b)b.onclick=()=>{navigator.clipboard.writeText(txt()).then(()=>{$(out).textContent='Copiado'},()=>{$(out).textContent='Selecione o texto e copie'})}};
-  copy('#scopy',()=>r._shop,'#scopied');copy('#fcopy',()=>r._ficha,'#fcopied');
+  copy('#fcopy',()=>r._ficha,'#fcopied');
 }
 
+if(window.CanvasRenderingContext2D&&!CanvasRenderingContext2D.prototype.roundRect)CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){r=Math.min(+r||0,w/2,h/2);this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath();return this};
 /* ---------- cards para compartilhar: DNA de surf e a prancha (mesmo formato do Racket Match, 1080×1920) ---------- */
 const ARCHN=['Surfista de linha','Surfista de curvas','Surfista de manobras','Caçador de tubos','Surfista aéreo','Surfista clássico'];
 function archetype(r){const t=r.S.indexOf(Math.max(...r.S)),tam=r.a.tam===undefined?1:r.a.tam;return `${ARCHN[t]} de ${tam<=1?'onda pequena':tam===2?'onda média':'onda grande'}`}
@@ -1437,27 +1427,27 @@ async function drawBoardCard(d){
 }
 const cardImg=(cv,alt)=>`<img class="cardimg" alt="${esc(alt)}" src="${cv.toDataURL('image/png')}">`;
 async function saveCanvas(cv,name){const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
-async function shareDNA(r){
-  const txt=`Meu DNA de surf no Board Match: ${archetype(r)}. E o seu?`;
-  try{const cv=await drawDNA(cardData(r));const blob=await new Promise(z=>cv.toBlob(z,'image/png'));const file=new File([blob],'board-match-dna.png',{type:'image/png'});
+function cardsPanel(){return `<div class="panel"><div class="two" style="align-items:center">
+  <div id="cardOut" class="cardwrap herocard" aria-label="Seu DNA de surf em card"></div>
+  <div style="display:flex;flex-direction:column;gap:12px"><p class="eyebrow">Seu DNA de surf</p><h2 id="cardArch"></h2>
+    <p class="muted">O card do seu perfil está pronto para o story do Instagram ou o status do WhatsApp.</p>
+    <p style="font-weight:600">E o seu parceiro de surf, pega onda como você?</p>
+    <div class="row"><button class="btn btn-go" type="button" id="shareCard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlCard">Salvar card do DNA</button></div><p class="note" id="cardMsg" aria-live="polite"></p>
+  </div></div></div>`}
+async function shareCanvas(cv,name,txt){
+  try{const blob=await new Promise(z=>cv.toBlob(z,'image/png'));const file=new File([blob],name,{type:'image/png'});
     if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text:txt});return}
     if(navigator.share){await navigator.share({text:txt});return}
   }catch(e){if(e&&e.name==='AbortError')return}
-  try{await navigator.clipboard.writeText(txt);$('#cardMsg').textContent='Texto copiado. Use "Salvar card do DNA" para a imagem.'}catch(e){saveCanvas(await drawDNA(cardData(r)),'board-match-dna.png')}
-}
-function cardsPanel(){return `<div class="panel"><div class="two" style="align-items:center">
-  <div id="cardOut" class="cardwrap herocard" aria-label="Seus cards: DNA de surf e a prancha"></div>
-  <div style="display:flex;flex-direction:column;gap:12px"><p class="eyebrow">Seu DNA de surf</p><h2 id="cardArch"></h2>
-    <p class="muted">Os dois cards estão prontos para o story do Instagram ou o status do WhatsApp: o seu perfil e a prancha que combina com ele.</p>
-    <p style="font-weight:600">E o seu parceiro de surf, pega onda como você?</p>
-    <div class="row"><button class="btn btn-go" type="button" id="shareCard">Compartilhar</button><button class="btn btn-ghost" type="button" id="dlCard">Salvar card do DNA</button><button class="btn btn-ghost" type="button" id="dlBoard">Salvar card da prancha</button></div><p class="note" id="cardMsg" aria-live="polite"></p>
-  </div></div></div>`}
+  saveCanvas(cv,name)}
 async function wireCards(r){
   $('#cardArch').textContent=archetype(r);
-  $('#shareCard').onclick=()=>shareDNA(r);
+  $('#shareCard').onclick=async()=>shareCanvas(await drawDNA(cardData(r)),'board-match-dna.png',`Meu DNA de surf no Board Match: ${archetype(r)}. E o seu?`);
   $('#dlCard').onclick=async()=>saveCanvas(await drawDNA(cardData(r)),'board-match-dna.png');
+  $('#shareBoard').onclick=async()=>shareCanvas(await drawBoardCard(boardCardData(r)),'board-match-prancha.png',`Minha prancha no Board Match: ${PN[r.k]}, ${r.fins[0].fit}%. E a sua?`);
   $('#dlBoard').onclick=async()=>saveCanvas(await drawBoardCard(boardCardData(r)),'board-match-prancha.png');
-  try{const [a,b]=await Promise.all([drawDNA(cardData(r)),drawBoardCard(boardCardData(r))]);const o=$('#cardOut');if(o)o.innerHTML=`<div class="cardpair">${cardImg(a,'Card do DNA de surf: '+archetype(r))}${cardImg(b,'Card da prancha: '+PN[r.k]+', Match '+r.fins[0].fit+'%')}</div>`}catch(e){}
+  try{const b=await drawBoardCard(boardCardData(r));const o=$('#cardBoard');if(o)o.innerHTML=cardImg(b,'Card da prancha: '+PN[r.k]+', Match '+r.fins[0].fit+'%')}catch(e){const o=$('#cardBoard');if(o)o.closest('.panel').remove()}
+  try{const a=await drawDNA(cardData(r));const o=$('#cardOut');if(o)o.innerHTML=cardImg(a,'Card do DNA de surf: '+archetype(r))}catch(e){}
 }
 /* exemplo na abertura, com o mesmo perfil do "Ver um exemplo pronto" */
 (function(){try{
