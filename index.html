@@ -143,8 +143,8 @@ section{padding-block:72px}
 .tile .tn{display:flex;flex-direction:column;gap:2px;min-width:0}
 .tile .tn b{font-family:var(--f-display);font-size:1.3rem;font-weight:800}
 .tile .tn span{font-size:.88rem;color:#A3A3A0}
-.tile .go{margin-left:auto;font-weight:700;font-size:.88rem;background:var(--area);color:#0B2530;padding:9px 14px;border-radius:99px;white-space:nowrap}
-@media (max-width:480px){.tile .go{display:none}.tile .tn b{font-size:1.15rem}}
+.tile .go i{font-style:normal}.tile .go{margin-left:auto;font-weight:700;font-size:.88rem;background:var(--area);color:#0B2530;padding:9px 14px;border-radius:99px;white-space:nowrap}
+@media (max-width:480px){.hero-txt .chooser{padding:20px 16px}.hero-txt .tile{gap:10px;padding:8px 10px 8px 8px}.tile .tn b{font-size:1rem!important;white-space:nowrap}.tile .tn span{font-size:.8rem}.tile .go{font-size:.78rem;padding:8px 10px}.tile .go i{display:none}.tile svg{width:40px;height:40px;flex:none}}
 .model{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:center}
 @media (max-width:900px){.model{grid-template-columns:minmax(0,1fr)}}
 .muted-p{color:var(--muted);margin:0 0 24px;max-width:34em}
@@ -192,6 +192,21 @@ main:focus{outline:none}
 .fan figcaption{text-align:center;font-size:.86rem;color:var(--muted)}
 @media (max-width:940px){.hero-grid{gap:0}.hero-txt{display:contents}.hero-txt .eyebrow{order:1}.hero-txt h1{order:2}.hero-txt .lede{order:3;margin-bottom:8px}.fan{order:4;margin:4px 0 26px}.hero-txt .chooser{order:5}.fan-stage{max-width:480px}}
 @media (prefers-reduced-motion: reduce){.fcard{transition:none}.fan-stage:hover .fcard.f0,.fan-stage:hover .fcard.f2{transform:none}}
+/* mobile: escolher com botão, racket pré-selecionado, apps em carrossel */
+.tile.sel{border-color:var(--area);background:color-mix(in srgb,var(--area) 12%,#1A1A1A)}
+.adots{display:none}
+@media (max-width:940px){
+  #areas .areas{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:-16px;padding:4px 16px 8px;scroll-padding-inline:16px;scrollbar-width:none;overscroll-behavior-x:contain}
+  #areas .areas::-webkit-scrollbar{display:none}
+  #areas .areas>.area-card{flex:0 0 86%;scroll-snap-align:center}
+  #areas .areas:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+  .adots{display:flex;justify-content:flex-start;gap:8px;margin:-8px 0 14px;flex-wrap:wrap}
+  .adot{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 12px 6px 6px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:700 .82rem var(--f-body);cursor:pointer}
+  .adot svg{border-radius:6px}
+  .adot[aria-pressed="true"]{border-color:var(--ink);background:color-mix(in srgb,var(--area) 35%,var(--surface))}
+  .adot:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+}
+@media (max-width:480px){.adot span{display:none}.adot{padding:6px}}
 /* par de cards nos apps */
 .pair{position:relative;display:flex;justify-content:center;align-items:flex-start;padding:26px 20px 46px;background:color-mix(in srgb,var(--area) 22%,var(--surface));text-decoration:none;overflow:hidden}
 .pair img{width:44%;height:auto;border-radius:14px;box-shadow:0 20px 40px -22px rgba(0,0,0,.6);transition:transform .3s}
@@ -538,27 +553,9 @@ function heroReport(){
   return `${reportFrame("racket", 500)}
   `;
 }
-function home(){
-  const feat = ORDER.flatMap(k => byArea(k).filter(x=>x.cat==="escolher").slice(0,2));
-  return `
-  <section class="hero"><div class="wrap hero-grid">
-    <div class="hero-txt">
-      <div class="eyebrow">MATCH LAB · Find your match</div>
-      <h1>O equipamento certo muda o seu <span class="hl">jogo</span>.</h1>
-      <p class="lede">Você responde algumas perguntas sobre seu corpo, seu nível e seu estilo. A gente cruza com a ficha técnica de cada equipamento e entrega um relatório que explica o porquê de cada escolha.</p>
-      <div class="chooser">
-        <h2>Escolher meu esporte</h2>
-        <div class="tiles">${ORDER.map(k=>{const a=AREAS[k];return `<a class="tile ${a.cls}" href="${a.quiz}">${ICON[k](52)}<span class="tn"><b>${a.name}</b><span>${a.sport}</span></span><span class="go">Fazer o teste →</span></a>`}).join("")}</div>
-        <p>Teste grátis e sem cadastro.</p>
-      </div>
-    </div>
-    <figure class="fan">
-      <div class="fan-stage">${ORDER.map((k,i)=>`<a class="fcard f${i} ${AREAS[k].cls}" href="${AREAS[k].quiz}" aria-label="Fazer o teste do ${AREAS[k].name}">${cardImg(k,"produto")}</a>`).join("")}</div>
-      <figcaption>Exemplos de resultado. O seu sai do teste, pronto para compartilhar.</figcaption>
-    </figure>
-  </div></section>
-
-  <section class="band" id="conceito"><div class="wrap">
+const MOB_Q = matchMedia("(max-width:940px)");
+const MOB_HOME = ()=>MOB_Q.matches;
+const conceitoSec = ()=>`<section class="band" id="conceito"><div class="wrap">
     <div class="shead"><div><div class="eyebrow">Como funciona</div><h2>Ficha técnica é confusa. A escolha não precisa ser.</h2></div><p>Equipamento caro, erro caro. A maioria compra pela marca, pelo ídolo ou pelo vendedor. O MATCH LAB traduz especificação em sensação e mostra o que muda no seu jogo.</p></div>
     <div class="steps">
       <div class="step"><span class="n">PASSO 1</span><h3>Responda o teste</h3><p>Corpo, nível, frequência, histórico de dor e o que você sente hoje no equipamento atual. Sem cadastro.</p></div>
@@ -571,18 +568,39 @@ function home(){
       <div class="principle"><span class="ck">✓</span><div><b>Afiliado só depois, e declarado</b><span>Links de compra entram após a recomendação e não alteram a conta.</span></div></div>
       <div class="principle"><span class="ck">✓</span><div><b>Regras revisadas por quem ensina</b><span>Professores de cada esporte validam os critérios de recomendação.</span></div></div>
     </div>
-  </div></section>
-
-  <section id="areas"><div class="wrap">
+  </div></section>`;
+const areasSec = ()=>`  <section id="areas"><div class="wrap">
     <div class="shead"><div><div class="eyebrow">Três apps, um método</div><h2>Comece pelo seu esporte.</h2></div><p>Cada app tem o próprio teste, um relatório com a análise completa e um blog com guias.</p></div>
-    <div class="areas">${ORDER.map(k=>{const a=AREAS[k];return `<article class="area-card ${a.cls}">
+    <div class="adots" role="group" aria-label="Escolher app no carrossel">${ORDER.map((k,i)=>`<button type="button" class="adot ${AREAS[k].cls}" data-slide="${i}" aria-pressed="${i===0}" aria-label="${AREAS[k].name}">${ICON[k](20)}<span>${AREAS[k].name}</span></button>`).join("")}</div>
+    <div class="areas" id="areasTrack" role="region" aria-roledescription="carrossel" aria-label="Apps do MATCH LAB">${ORDER.map(k=>{const a=AREAS[k];return `<article class="area-card ${a.cls}">
       <a class="banner" href="#${k}" data-go="${k}">${MARK[k]()}<div><span class="wordmark">${a.w1} <em>Match</em></span><small>${a.sport} · by MATCH LAB</small></div></a>
       <a class="pair" href="${a.quiz}" aria-label="Fazer o teste do ${a.name}">${cardImg(k,"perfil","p1")}${cardImg(k,"produto","p2")}<span class="pair-cap">${k==="racket"?"Seu DNA de jogo e a sua raquete":k==="board"?"Seu DNA de surf e a sua prancha":"Seu perfil de corredor e o seu tênis"}</span></a>
       <div class="body"><p class="q">${a.q}</p>${vars(a)}
       <span class="meta">${a.facts[0][0]} ${a.facts[0][1]} · ${byArea(k).length} guias</span>
       <div class="row"><a class="btn btn-area" href="${a.quiz}">Fazer o teste <span class="arr">→</span></a><a class="btn btn-ghost" href="#${k}" data-go="${k}">Ver o app</a></div></div>
     </article>`}).join("")}</div>
+  </div></section>`;
+function home(){
+  const feat = ORDER.flatMap(k => byArea(k).filter(x=>x.cat==="escolher").slice(0,2));
+  return `
+  <section class="hero"><div class="wrap hero-grid">
+    <div class="hero-txt">
+      <div class="eyebrow">MATCH LAB · Find your match</div>
+      <h1>O equipamento certo muda o seu <span class="hl">jogo</span>.</h1>
+      <p class="lede">Você responde algumas perguntas sobre seu corpo, seu nível e seu estilo. A gente cruza com a ficha técnica de cada equipamento e entrega um relatório que explica o porquê de cada escolha.</p>
+      <div class="chooser">
+        <h2>Escolher meu esporte</h2>
+        <div class="tiles">${ORDER.map((k,i)=>{const a=AREAS[k];return `<a class="tile ${a.cls}${i===0?" sel":""}" href="${a.quiz}">${ICON[k](52)}<span class="tn"><b>${a.name}</b><span>${a.sport}</span></span><span class="go">Fazer o teste<i aria-hidden="true"> →</i></span></a>`}).join("")}</div>
+        <p>Teste grátis e sem cadastro.</p>
+      </div>
+    </div>
+    <figure class="fan">
+      <div class="fan-stage">${ORDER.map((k,i)=>`<a class="fcard f${i} ${AREAS[k].cls}" href="${AREAS[k].quiz}" aria-label="Fazer o teste do ${AREAS[k].name}">${cardImg(k,"produto")}</a>`).join("")}</div>
+      <figcaption>Exemplos de resultado. O seu sai do teste, pronto para compartilhar.</figcaption>
+    </figure>
   </div></section>
+
+  ${MOB_HOME()?areasSec()+conceitoSec():conceitoSec()+areasSec()}
 
   <section style="padding-top:0"><div class="wrap a-board">${TOOLBOX}</div></section>
   <section id="modelo" style="padding-top:0"><div class="wrap" id="modelBox">${modelSec()}</div></section>
@@ -766,10 +784,24 @@ function setNav(view){
 }
 let firstRender=true;
 function say(t){const l=document.getElementById("a11yLive");l.textContent="";setTimeout(()=>{l.textContent=t},80)}
+function initAreas(){
+  const tr=document.getElementById("areasTrack"); if(!tr) return;
+  const dots=[...document.querySelectorAll(".adot")];
+  const cards=[...tr.children];
+  const mark=i=>dots.forEach((d,j)=>d.setAttribute("aria-pressed",String(i===j)));
+  let raf=0;
+  tr.addEventListener("scroll",()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>{
+    const r=tr.getBoundingClientRect(), x=r.left+r.width/2; let best=0,bd=1e9;
+    cards.forEach((c,i)=>{const b=c.getBoundingClientRect(),d=Math.abs(b.left+b.width/2-x); if(d<bd){bd=d;best=i}}); mark(best); }); },{passive:true});
+  dots.forEach((d,i)=>d.addEventListener("click",()=>{ const c=cards[i];
+    const r=tr.getBoundingClientRect(),b=c.getBoundingClientRect();
+    tr.scrollTo({left:tr.scrollLeft+(b.left+b.width/2)-(r.left+r.width/2),behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); mark(i); }));
+}
+MOB_Q.addEventListener("change",()=>{ const h=(location.hash||"#inicio").slice(1); if(h==="inicio"||h===""){ const y=scrollY; app.innerHTML=home(); initAreas(); scrollTo(0,y); } });
 function render(view){
   view = LEGACY[view] || view || "inicio";
   let html, after;
-  if(view==="inicio"||view==="conceito"){ html = home(); }
+  if(view==="inicio"||view==="conceito"){ html = home(); after=initAreas; }
   else if(AREAS[view]){ hubFilter="todos"; curHub=view; html = hub(view); after=()=>fillHub(view); }
   else if(view==="blog"){ html = library(); after=fillLib; }
   else if(view.startsWith("a-")){ html = article(view.slice(2)); }
