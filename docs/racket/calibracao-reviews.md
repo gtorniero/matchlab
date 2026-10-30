@@ -5,6 +5,28 @@
 - Atletas: 45 de 58 raquetes com profissionais por linha. Incluídos nesta rodada: Dunlop CX (Mérida, Brooksby, Jamie Murray, Santamaria), Dunlop SX (Vallejo), Prince Tour (Pouille, customizada). Sem profissional confirmado: Clash, Shift, Instinct, Ti S6, Boost Drive, ProKennex, Phantom, Ripstick. Burn (Pavlyuchenkova) ficou de fora por fonte fraca (jan/2025).
 - Comparação com o Tennis Engineer no mesmo perfil (intermediário, cotovelo, Pure Strike 98): o top 3 deles (Shift 99, Extreme MP, Percept 100, todas 66–67 RA) fica entre 16º e 37º no nosso, por causa da dor no cotovelo; os dois motores concordam que vale trocar a Pure Strike.
 
+## Rodada 5 — iniciante leve, zona sempre com raquete, Match legível e tensão (30/out)
+
+Caso real: iniciante leve (perfil de mulher adulta, força abaixo da média). Peso ideal calculado 248 g → zona 240–256 g sem nenhuma raquete adulta no catálogo (a mais leve tem 260 g). Resultado: 1ª fora da zona, Match máximo 74% e 10º com 46%; tensão sugerida 55–57 lb com nylon.
+
+Mudanças:
+- Peso ideal com piso de 258 g para adulto (14 anos ou mais).
+- Zona do mapa alarga aos poucos até ter pelo menos 3 raquetes do catálogo.
+- A 1ª fica sempre na zona: a melhor da zona sobe para 1º se estiver até 10 pontos atrás.
+- Escala do Match: a melhor para o perfil fica entre 90 e 96; as demais caem 0,8 ponto por ponto de diferença. A ordem do ranking não muda.
+- Tensão (base): iniciante com nylon 54 → 50 lb e sem o +2 de "quero controle" (para iniciante, tensão baixa dá saída de bola e ponto doce maior); poliéster 51 → 48 lb; poliéster facetado (avançado com muito spin) 51 → 49 lb; híbrido para braço sensível 50 → 49 lb.
+- Relatório abre com um parágrafo em linguagem simples dizendo por que aquela raquete.
+
+Simulação com 500 perfis aleatórios:
+| | Rodada 4 | Rodada 5 |
+|---|---|---|
+| 1ª dentro da zona | 75% | 99% |
+| Match da 1ª (mín / p10 / mediana / máx) | — | 84 / 91 / 94 / 96 |
+| Match da 10ª (mín / p10 / mediana / máx) | — | 61 / 73 / 81 / 93 |
+| Raquetes diferentes em 1º | 31 | 32 |
+
+Caso real depois: Head Boom Team 94% (dentro da zona 248–268 g), top 3 entre 86% e 94%, tensão 48–50 lb.
+
 ## Rodada 4 — mapa e ranking coerentes (28/out)
 
 Problema visto em teste real: o relatório recomendava raquete fora da "sua zona" no mapa peso × swingweight. A zona desenhada (peso ideal ±8 g, swingweight ideal ±6) era mais estreita do que o motor cobrava: abaixo da zona, o swingweight só era penalizado 6 pontos depois da borda, e o peso tinha penalidade leve (1/3 por grama).

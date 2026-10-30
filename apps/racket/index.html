@@ -271,6 +271,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .rpeek::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,var(--bg) 100%)}
 .rpeek figcaption{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:1;background:#0E4D64;color:#FFFFFF;font-weight:700;font-size:14px;padding:8px 14px;border-radius:99px;white-space:nowrap}
 @media (max-width:760px){.hook{grid-template-columns:minmax(0,1fr)}.rpeek{height:260px}}
+.whypara{font-size:17px;line-height:1.55;margin:0;max-width:70ch}
 .herocol{display:flex;flex-direction:column;gap:18px;min-width:0}.homecard{min-height:0}
 .cardpair{display:flex;justify-content:center;align-items:flex-start;padding:6px 0 10px}.cardpair .cardimg{width:50%;max-width:220px}.cardpair .cardimg+.cardimg{transform:rotate(3deg) translateY(14px);margin-left:-14px}.herocard .cardimg{max-width:300px}
 @media (max-width:620px){.dnagrid{grid-template-columns:minmax(0,1fr)}.cardwrap{margin:0 auto}}
@@ -713,18 +714,18 @@ const Q=[
  {s:0,id:'str',t:'E a sua força, comparada a quem joga com você?',o:[['low','Abaixo da média','Em bola pesada, o golpe sai atrasado e sem peso'],['mid','Na média','Aguenta a troca de bola, mas nem sempre consegue acelerar'],['high','Acima da média','Gera velocidade sem esforço, até em posição difícil'],['vhigh','Muito acima','Faz academia com frequência ou tem força de sobra']]},
  {s:0,id:'cond',t:'Como está o seu fôlego em quadra?',o:[['0','Perco rendimento cedo','No meio do jogo os golpes já perdem força'],['1','Termino, mas no limite','O fim da partida é bem pior que o começo'],['2','Jogo a partida toda bem','Canso no fim, como todo mundo, sem mudar o jogo'],['3','Sobra gás','Jogaria outra partida em seguida no mesmo nível']]},
  {s:1,id:'arm',t:'Você sente dor no braço quando joga?',h:'Cotovelo, ombro ou punho.',o:[['no','Nunca tive'],['past','Já tive, hoje não'],['now','Tenho hoje']]},
- {s:1,id:'joint',multi:3,if:()=>A.arm&&A.arm!=='no',t:'Onde dói ou doía?',h:'Marque todas que se aplicam. Cada articulação pede um ajuste diferente.',o:[['elbow','Cotovelo','Vibração e rigidez pesam mais'],['shoulder','Ombro','Peso e swingweight pesam mais'],['wrist','Punho','Balanço e torção pesam mais']]},
+ {s:1,id:'joint',multi:3,if:()=>A.arm&&A.arm!=='no',t:'Onde dói ou doía?',h:'Marque todas que se aplicam. Cada articulação pede um ajuste diferente.',o:[['elbow','Cotovelo','Pede raquete que vibra menos na batida'],['shoulder','Ombro','Pede raquete mais fácil de acelerar'],['wrist','Punho','Pede raquete leve na ponta e que não torce na mão']]},
  {s:1,id:'pain',if:()=>A.arm&&A.arm!=='no',t:'Qual a intensidade da dor?',o:[['1','Leve','Incômodo depois de jogar'],['2','Moderada','Dói durante o jogo'],['3','Forte','Dói em golpes específicos ou no dia a dia']]},
  {s:1,id:'lim',if:()=>A.arm&&A.arm!=='no',t:'A dor limita o seu jogo?',o:[['0','Não limita'],['1','Jogo menos vezes'],['2','Evito golpes','Saque, backhand ou voleio'],['3','Estou em tratamento ou parado']]},
  {s:2,id:'lvl',t:'Qual o seu nível?',h:'Usamos a escala '+'<button type="button" class="gl" data-g="ntrp">NTRP</button>'+', de 1.0 a 7.0. Na dúvida, escolha o nível de baixo.',o:[['beg','Iniciante','NTRP 2.0 a 2.5 · ainda erra a troca de bola em ritmo médio'],['int','Intermediário','NTRP 3.0 a 3.5 · troca bola com consistência e joga partidas'],['adv_int','Intermediário avançado','NTRP 4.0 · golpes confiáveis, varia direção e spin'],['adv','Avançado','NTRP 4.5+ · compete, usa potência e spin como arma']]},
  {s:2,id:'years',t:'Há quanto tempo você joga?',o:[['0','Menos de 1 ano'],['1','1 a 3 anos'],['3','3 a 10 anos'],['10','Mais de 10 anos']]},
  {s:2,id:'freq',t:'Quantas vezes por semana você joga?',o:[['1','1 vez'],['2','2 a 3 vezes'],['4','4 ou mais']]},
  {s:2,id:'swing',t:'Como é o seu swing?',h:'O tamanho e a velocidade do movimento até a bola. '+'<button type="button" class="gl" data-g="swing">Entenda</button>',o:[['short','Curto e compacto','Pouca preparação, bloqueia a bola'],['mid','Médio','Preparação moderada'],['long','Longo e rápido','Preparação ampla e aceleração forte']]},
- {s:2,id:'spin',t:'Quanto topspin você usa?',o:[['low','Pouco','Bola mais reta'],['mid','Médio'],['high','Muito','Bola alta e pesada']]},
- {s:2,id:'bh',t:'Seu backhand é de uma ou de duas mãos?',o:[['two','Duas mãos'],['one','Uma mão','Pede mais massa e estabilidade']]},
- {s:2,id:'serve',t:'Como é o seu saque hoje?',h:'Seja sincero: isso muda a recomendação.',o:[['weak','Ainda inseguro','Faço dupla falta com frequência'],['push','Só coloco em jogo','Saque lento, quase empurrado'],['safe','Seguro','Raramente erro, mas não ganho ponto com ele'],['flat','Chapado e forte','Busco o ponto direto'],['kick','Com efeito','Slice ou kick para abrir a quadra'],['mix','Vario tudo','Chapado, slice e kick conforme o ponto']]},
- {s:3,id:'style',multi:2,scale:['Mais básico','Mais avançado'],t:'Como você joga?',h:'Escolha até 2. Do jogo mais básico (esquerda) ao mais avançado (direita).',o:[['keep','Mantenho a bola em jogo','Ainda estou firmando os golpes'],['cnt','Devolvo tudo','Consistência e contra-ataque'],['agg','Ataco do fundo','Busco a bola vencedora da linha de base'],['all','Jogo completo','Fundo e rede conforme o ponto'],['netc','Subo quando a bola deixa','Fecho o ponto no voleio'],['net','Saque e voleio','Pressiono a rede o tempo todo']]},
- {s:3,id:'opp',t:'Como é a bola dos seus adversários?',o:[['soft','Mais lenta','Bola sem peso, você que gera'],['mix','Variada'],['heavy','Pesada e rápida','A raquete às vezes treme']]},
+ {s:2,id:'spin',t:'Quanto topspin você usa?',h:'Topspin é o efeito em que a raquete sobe por trás da bola: ela gira para a frente, passa alta sobre a rede e cai rápido dentro da quadra. Se você bate a bola mais reta ou não sabe, escolha "Pouco".',o:[['low','Pouco','Bola mais reta, quase sem girar'],['mid','Médio','Bola com algum giro, passa a rede com folga'],['high','Muito','Bola alta e pesada, que quica alto no adversário']]},
+ {s:2,id:'bh',t:'Seu backhand é de uma ou de duas mãos?',h:'Backhand é o golpe do lado contrário à mão que segura a raquete. Para quem é destro, a bola que vem pela esquerda.',o:[['two','Duas mãos'],['one','Uma mão','Pede mais massa e estabilidade']]},
+ {s:2,id:'serve',t:'Como é o seu saque hoje?',h:'Seja sincero: isso muda a recomendação.',o:[['weak','Ainda inseguro','Faço dupla falta com frequência'],['push','Só coloco em jogo','Saque lento, quase empurrado'],['safe','Seguro','Raramente erro, mas não ganho ponto com ele'],['flat','Chapado e forte','Bola reta e rápida, sem efeito, para ganhar o ponto direto'],['kick','Com efeito','A bola faz curva (slice) ou quica alto (kick)'],['mix','Vario tudo','Reto ou com efeito, conforme o ponto']]},
+ {s:3,id:'style',multi:2,scale:['Mais básico','Mais avançado'],t:'Como você joga?',h:'Escolha até 2. Do jogo mais básico (esquerda) ao mais avançado (direita).',o:[['keep','Mantenho a bola em jogo','Ainda estou firmando os golpes'],['cnt','Devolvo tudo','Consistência e contra-ataque'],['agg','Ataco do fundo','Busco a bola vencedora da linha de base'],['all','Jogo completo','Fundo e rede conforme o ponto'],['netc','Subo quando a bola deixa','Fecho o ponto no voleio, a batida antes de a bola quicar'],['net','Saque e voleio','Saco e já corro para a rede']]},
+ {s:3,id:'opp',t:'Como é a bola dos seus adversários?',o:[['soft','Mais lenta','Bola sem peso, você que gera'],['mix','Variada','Às vezes lenta, às vezes forte'],['heavy','Pesada e rápida','A raquete às vezes treme']]},
  {s:3,id:'miss',t:'Onde você mais erra?',o:[['short','Bola curta, sem peso'],['long','Bola longa, para fora'],['net','Na rede'],['frame','Pego fora do centro','A raquete torce na mão']]},
  {s:4,id:'cur',type:'select',t:'Qual a sua raquete atual?',h:'Se não estiver na lista, escolha "Outra". Com ela, fazemos o diagnóstico da sua raquete.'},
  {s:4,id:'curAge',if:()=>A.cur&&A.cur!=='none',t:'Há quanto tempo você usa essa raquete?',o:[['0','Menos de 1 ano'],['1','1 a 3 anos'],['3','Mais de 3 anos']]},
@@ -732,9 +733,9 @@ const Q=[
  {s:4,id:'grip',t:'Qual o grip (cabo) da sua raquete?',h:'Vem escrito na base do cabo: L1 a L5 ou 4 1/8 a 4 5/8.',o:[['1','L1','4 1/8'],['2','L2','4 1/4'],['3','L3','4 3/8'],['4','L4','4 1/2'],['5','L5','4 5/8'],['0','Não sei']],opt:true},
  {s:4,id:'feel',if:()=>A.cur!=='none',t:'Como você sente sua raquete hoje?',o:[['light','Leve demais','Treme contra bola pesada'],['ok','No ponto'],['heavy','Pesada demais','Cansa ou chega atrasado']]},
  {s:4,id:'why',t:'Por que você quer trocar?',o:[['broken','Quebrou ou está velha','Quero algo parecido, só que melhor'],['pain','Dor no braço','Prioridade é proteger o braço'],['level','Subi de nível','A atual ficou limitada'],['feel','Quero outra sensação','Mais potência, controle ou spin'],['first','É a minha primeira raquete boa']]},
- {s:4,id:'want',multi:2,t:'O que você quer ganhar com a troca?',h:'Escolha até 2.',o:[['power','Mais potência'],['control','Mais controle'],['comfort','Mais conforto'],['spin','Mais spin'],['maneuver','Mais leveza na mão'],['stability','Mais estabilidade']]},
+ {s:4,id:'want',multi:2,t:'O que você quer ganhar com a troca?',h:'Escolha até 2.',o:[['power','Mais potência','A bola sai mais forte com o mesmo esforço'],['control','Mais controle','A bola vai mais onde você mira'],['comfort','Mais conforto','Menos vibração chegando ao braço'],['spin','Mais spin','Mais efeito: a bola gira mais e cai dentro'],['maneuver','Mais leveza na mão','Raquete mais rápida de mexer, na rede e na defesa'],['stability','Mais estabilidade','Não treme contra bola forte']]},
  {s:4,id:'headp',t:'Tamanho de cabeça que você prefere',h:'Em polegadas quadradas. '+'<button type="button" class="gl" data-g="head">Entenda</button>',o:[['any','Tanto faz'],['98','Até 98 pol²','Mais precisão'],['100','100 pol²','O equilíbrio'],['104','102 ou mais','Mais perdão e saída de bola']]},
- {s:5,id:'string',t:'Qual corda você usa hoje?',o:[['?','Não sei / a que veio'],['poly','Poliéster','Dura, a mais comum entre quem tem topspin'],['multi','Multifilamento ou sintético','Mais macia'],['gut','Tripa natural'],['hyb','Híbrido','Uma em cada direção']]},
+ {s:5,id:'string',t:'Qual corda você usa hoje?',o:[['?','Não sei / a que veio'],['poly','Poliéster','Dura, a mais comum entre quem tem topspin'],['multi','Multifilamento ou sintético','Mais macia'],['gut','Tripa natural','A mais macia e mais cara'],['hyb','Híbrido','Duas cordas diferentes, uma em cada direção']]},
  {s:5,id:'tens',t:'Qual tensão você usa?',h:'A <button type="button" class="gl" data-g="tension">libragem</button> que você pede ao encordoador.',o:[['?','Não sei'],['46','Até 47 lb','Até 21 kg'],['50','48 a 52 lb','22 a 24 kg'],['54','53 a 56 lb','24 a 25 kg'],['58','57 lb ou mais','26 kg ou mais']]},
  {s:5,id:'restr',t:'De quanto em quanto tempo você troca a corda?',o:[['zero','Nunca troquei','Nunca arrebentou, então nunca troquei'],['never','Só quando arrebenta'],['6m','A cada 6 meses ou mais'],['3m','A cada 2 a 3 meses'],['1m','Todo mês ou menos']]},
  {s:5,id:'imp',t:'Compraria uma raquete importada?',h:'Algumas marcas quase não são vendidas no Brasil.',o:[['yes','Sim','Compro fora ou encomendo'],['no','Prefiro achar aqui','Loja no Brasil, troca fácil']]},
@@ -950,6 +951,8 @@ function targetWeight(){
   const c=curRacket();
   if(A.feel==='heavy')w=Math.min(w,(c?c.wt:w)-10); if(A.feel==='light')w=Math.max(w,(c?c.wt:w)+8);
   if(A.arm==='now')w=Math.max(w,280);
+  /* raquete adulta mais leve do catálogo tem 260 g: abaixo disso a zona ficaria vazia */
+  if(AG>=14)w=Math.max(w,258);
   return Math.round(w);
 }
 /* faixas ideais por especificação, usadas nas barras e no mapa */
@@ -1009,6 +1012,8 @@ let RES=null,tier=0,ZZ=null;
 const inZone=r=>!!ZZ&&r.wt>=ZZ.wt[0]&&r.wt<=ZZ.wt[1]&&r.sw>=ZZ.sw[0]&&r.sw<=ZZ.sw[1];
 function compute(){
   const T=target(),tw=targetWeight(),c=curRacket();ZZ=zones(T,tw);
+  /* a zona do mapa precisa ter raquete de verdade: alarga aos poucos até caber pelo menos 3 do catálogo */
+  for(let n=0;n<20&&RK.filter(r=>(!c||r.id!==c.id)&&inZone(r)).length<3;n++){ZZ.wt=[ZZ.wt[0]-2,ZZ.wt[1]+2];ZZ.sw=[ZZ.sw[0]-1,ZZ.sw[1]+1]}
   const all=RK.map(r=>({r,...score(r,T,tw,c)}));
   /* escala relativa: a mais próxima do seu perfil fica perto de 95; cada décimo de distância a mais custa ~1 ponto */
   const dbest=Math.min(...all.filter(x=>!c||x.r.id!==c.id).map(x=>x.dist));
@@ -1016,12 +1021,16 @@ function compute(){
   /* peso e swingweight dentro da zona do mapa contam a favor; fora dela, contra (o mapa e o ranking dizem a mesma coisa) */
   all.forEach(x=>{const g=cl(1-(x.dist-dbest)/1.2,0,1);x.inZ=inZone(x.r);x.fit=cl(Math.round(93-11*(x.dist-dbest)-3*Math.max(0,dbest-1.3)-x.p*.8+x.qb+x.qa*g+(x.inZ?4:-4)),30,98)});
   const ranked=all.filter(x=>!c||x.r.id!==c.id).sort((a,b)=>b.fit-a.fit);
+  /* a recomendação fica sempre dentro da zona do mapa: a melhor da zona sobe para 1º se estiver até 10 pontos atrás */
+  if(!ranked[0].inZ){const j=ranked.findIndex(x=>x.inZ);if(j>0&&ranked[0].fit-ranked[j].fit<=10){const z=ranked.splice(j,1)[0];z.fit=ranked[0].fit;z.promo=true;ranked.unshift(z)}}
+  /* escala do Match: a melhor para o seu perfil fica entre 90 e 96; as demais caem 0,8 ponto por ponto de diferença */
+  {const R0=ranked[0].fit,lift=v=>cl(Math.round(96-(R0-v)*.8-Math.max(0,92-R0)*.3),30,97);all.forEach(x=>{x.raw=x.fit;x.fit=lift(x.fit)})}
   const curFit=c?all.find(x=>x.r.id===c.id):null;
   if(curFit){const seen=new Set();curFit.pen=curFit.pen.filter(p=>{if(/sua atual|à sua atual|no Brasil/.test(p[1])||p[0]<1)return false;const k=p[1].split(' ')[0];if(seen.has(k))return false;seen.add(k);return true})}
   const answered=Q.filter(q=>vis(q)&&A[q.id]&&(!q.multi||A[q.id].length)).length;
   const gap=ranked[0].fit-ranked[4].fit;
   const conf=cl(Math.round(68+answered*1+gap*.8),70,97);
-  return {T,tw,c,ranked,all,curFit,conf,answered,Z:zones(T,tw)};
+  return {T,tw,c,ranked,all,curFit,conf,answered,Z:ZZ};
 }
 
 /* ---------- Análise ---------- */
@@ -1261,6 +1270,15 @@ function gripSize(){
   if(A.grip&&A.grip!=='0')return {g:+A.grip,src:'mantendo o grip da sua raquete atual'};
   return null;
 }
+/* parágrafo de abertura do relatório: por que esta raquete, sem jargão */
+function whyPara(x,T){const r=x.r;const lv={beg:'iniciante',int:'intermediário',adv_int:'intermediário avançado',adv:'avançado'}[A.lvl]||'';
+  const top=KEYS.filter(k=>T[k]>=6).sort((a,b)=>T[b]-T[a]).slice(0,2);const out=[];
+  out.push(`Entre as ${RK.length} raquetes do catálogo, a ${esc(r.model)} é a que mais combina com o seu jogo: ${esc(archetype().toLowerCase())}${lv?', nível '+lv:''}.`);
+  if(top.length)out.push(`O que o seu jogo mais pede é ${top.map(k=>LBL[k].toLowerCase()).join(' e ')}, e ela ${top.every(k=>r.ix[k]>=T[k]-.5)?'entrega isso':'chega perto disso'} sem abrir mão do resto.`);
+  if(inZone(r))out.push(`Com ${r.wt} g, fica dentro do peso que calculamos para a sua força e o seu nível.`);
+  if(A.arm!=='no')out.push(`A rigidez de ${r.ra} RA ${r.ra<=63?'manda menos vibração para o braço':'está dentro do limite para quem já teve dor'}.`);
+  if(r.price&&r.price[0]<=+A.budget)out.push('E cabe no orçamento que você indicou.');
+  return out.join(' ')}
 function why(r,c,T){
   const out=[];const ranked=KEYS.map(k=>({k,d:Math.abs(r.ix[k]-T[k]),t:T[k]})).filter(x=>x.t>=6).sort((a,b)=>a.d-b.d);
   ranked.slice(0,2).forEach(x=>out.push(`${LBL[x.k]} ${dec(r.ix[x.k])} para um alvo de ${dec(x.t)}: o índice que o seu jogo mais pede.`));
@@ -1304,12 +1322,12 @@ function stringSetup(r){
   let s,base;const sensitive=A.arm==='now'||(A.arm!=='no'&&(J('wrist')||J('elbow')));
   const sev=A.arm!=='no'&&(A.pain==='3'||A.lim==='3');
   if(A.arm==='now'||sev){s='Multifilamento 1,30 mm';base=sev?48:50}
-  else if(A.lvl==='beg'){s='Sintético (nylon) 1,30 mm';base=54}
-  else if(sensitive){s='Híbrido: poliéster macio 1,25 mm nas verticais e multifilamento 1,30 mm nas horizontais';base=50}
-  else if(A.spin==='high'&&(A.lvl==='adv'||A.lvl==='adv_int')){s='Poliéster facetado 1,25 mm';base=51}
-  else {s='Poliéster redondo 1,25 mm';base=51}
+  else if(A.lvl==='beg'){s='Sintético (nylon) 1,30 mm';base=50}
+  else if(sensitive){s='Híbrido: poliéster macio 1,25 mm nas verticais e multifilamento 1,30 mm nas horizontais';base=49}
+  else if(A.spin==='high'&&(A.lvl==='adv'||A.lvl==='adv_int')){s='Poliéster facetado 1,25 mm';base=49}
+  else {s='Poliéster redondo 1,25 mm';base=48}
   const want=A.want||[];const steps=[['Base para a corda indicada e o seu perfil',base]];const adj=(c,v,t)=>{if(c){base+=v;steps.push([t,v])}};
-  adj(want.includes('power'),-2,'Você quer mais potência');adj(want.includes('control'),2,'Você quer mais controle');adj(r.pat==='18x20',1,'Padrão fechado 18×20');adj(r.ra>=68&&A.arm!=='no',-1,'Quadro rígido com histórico de dor');adj(A.opp==='heavy',1,'Bola pesada dos adversários');adj(A.swing==='short'&&!want.includes('power'),-1,'Swing curto: corda solta ajuda a bola sair');
+  adj(want.includes('power'),-2,'Você quer mais potência');adj(want.includes('control')&&A.lvl!=='beg',2,'Você quer mais controle');adj(r.pat==='18x20',1,'Padrão fechado 18×20');adj(r.ra>=68&&A.arm!=='no',-1,'Quadro rígido com histórico de dor');adj(A.opp==='heavy',1,'Bola pesada dos adversários');adj(A.swing==='short'&&!want.includes('power'),-1,'Swing curto: corda solta ajuda a bola sair');
   if(false)base-=2;
   const kg=lb=>dec(lb*0.4536);
   const swap={'1':'a cada 3 meses','2':'a cada 6 a 8 semanas','4':'a cada 3 a 4 semanas'}[A.freq];
@@ -1349,6 +1367,7 @@ function renderReport(){
   <div class="panel winner">
     <p class="eyebrow">A raquete que mais encaixa no seu jogo</p>
     ${racketHead(w)}
+    <p class="whypara">${whyPara(w,T)}</p>
     ${setup6(r,gs,st)}
     <div class="hero-r">
       <div id="cardOut" class="cardwrap herocard" aria-label="Seu DNA de jogo em card"></div>
